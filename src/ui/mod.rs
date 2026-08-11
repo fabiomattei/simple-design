@@ -1,0 +1,8 @@
+pub mod color_picker;
+pub mod icons;
+pub mod inspector;
+pub mod layers_panel;
+pub mod pages_bar;
+pub mod palette_panel;
+pub mod rename_all;
+pub mod toolbar;
