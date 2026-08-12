@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architecture — Simple Design Docs</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="brand" href="index.html">Simple Design</a>
+  <div class="tagline">Developer &amp; user docs</div>
+  <ul>
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="getting-started.html">Getting Started</a></li>
+    <li><a href="features.html">Tools &amp; Features</a></li>
+    <li><a class="active" href="architecture.html">Architecture</a></li>
+    <li><a href="text-and-fonts.html">Text &amp; Fonts</a></li>
+    <li><a href="file-format.html">File Format</a></li>
+  </ul>
+</nav>
+<main>
+<h1>Architecture</h1>
+<p class="lede">Module map and the conventions that hold the codebase together.</p>
+
+<h2>Module map</h2>
+
+<h3>Data model</h3>
+<table>
+  <tr><th>Module</th><th>Responsibility</th></tr>
+  <tr><td><code>model/document.rs</code></td><td><code>Document</code> (name, <code>pages</code>, <code>active_page</code>, shared <code>text_styles</code>/<code>layer_styles</code> libraries, <code>palette</code>) and <code>Page</code> (id, name, <code>layers</code>, <code>guides</code>).</td></tr>
+  <tr><td><code>model/layer.rs</code></td><td><code>Layer</code>, <code>LayerKind</code>, <code>Frame</code>, <code>Style</code>/<code>Paint</code>/<code>Stroke</code>/<code>Gradient</code>, <code>Shadow</code>, <code>LayerStyle</code>, <code>TextStyle</code>, and every shape-specific payload type. The largest file in <code>model/</code> and the source of truth for the document schema — see <a href="#data-model">Data model</a> below.</td></tr>
+  <tr><td><code>model/text_runs.rs</code></td><td>The per-character rich-text model and its invariant-maintaining algorithms. See <a href="text-and-fonts.html">Text &amp; Fonts</a>.</td></tr>
+  <tr><td><code>model/guide.rs</code></td><td><code>Guide</code>/<code>GuideOrientation</code> — user-placed ruler guides, stored on <code>Page.guides</code>.</td></tr>
+  <tr><td><code>model/palette.rs</code></td><td><code>Palette</code>/<code>PaletteColor</code> — a document's color-swatch library (<code>Document.palette</code>); see <code>palette_io.rs</code> for its on-disk <code>.gpl</code> form.</td></tr>
+  <tr><td><code>model/artboard_presets.rs</code></td><td><code>ArtboardPreset</code> plus the fixed <code>SCREEN_PRESETS</code>/<code>PAPER_PRESETS</code> lists offered when creating an Artboard. UI-facing constants, not part of the document schema.</td></tr>
+</table>
+
+<h3>Canvas &amp; rendering</h3>
+<table>
+  <tr><th>Module</th><th>Responsibility</th></tr>
+  <tr><td><code>canvas.rs</code></td><td>The interactive canvas: coordinate transforms, hit-testing, drawing, and all drag/click gesture handling. The largest and most subtle file (~7,000 lines) — see the drag state machine below.</td></tr>
+  <tr><td><code>export.rs</code></td><td>Renders a single <code>Layer</code> subtree to a <code>tiny-skia</code> <code>Pixmap</code> and saves PNG. A completely separate implementation from the canvas renderer, not shared code — any new <code>LayerKind</code>/<code>Paint</code> variant needs a matching implementation here too.</td></tr>
+  <tr><td><code>shapes.rs</code></td><td>Pure geometry generators (ellipse/star/polygon points, rounded corners, rotation) shared by the canvas renderer, PNG exporter, and boolean-op flattening — no egui painter / tiny-skia dependency.</td></tr>
+  <tr><td><code>masking.rs</code></td><td>The one masking algorithm both <code>canvas.rs</code> and <code>export.rs</code> share, so they can never disagree about what a mask looks like. Operates purely on <code>tiny_skia::Pixmap</code>/<code>Layer</code>, no egui dependency.</td></tr>
+  <tr><td><code>shadow.rs</code></td><td>Drop ("outer") and inner shadow rendering (<code>Style::shadows</code>/<code>inner_shadows</code>). Same shared-algorithm-over-<code>Pixmap</code> shape as <code>masking.rs</code>; blur is a 3-pass box blur approximating Gaussian.</td></tr>
+  <tr><td><code>noise_fill.rs</code> / <code>halftone_fill.rs</code></td><td>Procedural fill samplers backing <code>Paint::Noise</code>/<code>Paint::Halftone</code>. Each exposes one deterministic <code>sample(..)</code> function called independently by <code>canvas.rs</code> and <code>export.rs</code>, so the same seed/params rasterize identically at any resolution with no shared texture.</td></tr>
+  <tr><td><code>text_layout.rs</code> / <code>text_outline.rs</code></td><td>Canvas-side text layout (egui <code>Galley</code>s, plain and rich) and glyph-to-vector-outline conversion, respectively.</td></tr>
+  <tr><td><code>fonts.rs</code> / <code>system_fonts.rs</code></td><td>Bundled and OS-discovered font registration; the single source of truth mapping any <code>TextFont</code> to raw bytes. See <a href="text-and-fonts.html">Text &amp; Fonts</a>.</td></tr>
+</table>
+
+<h3>Editing operations</h3>
+<p>Mutate a <code>Page</code>/selection; called from <code>app.rs</code> after <code>history.snapshot()</code>.</p>
+<table>
+  <tr><th>Module</th><th>Responsibility</th></tr>
+  <tr><td><code>grouping.rs</code></td><td>Group/ungroup and duplicate tree-surgery operations on a <code>Page</code>.</td></tr>
+  <tr><td><code>alignment.rs</code></td><td>Align/distribute selected layers along an edge or center.</td></tr>
+  <tr><td><code>transform_ops.rs</code></td><td>Whole-layer geometric transforms that are neither tree surgery nor a single drag gesture: flip, rotate copies, flatten.</td></tr>
+  <tr><td><code>boolean_ops.rs</code></td><td>Union/Subtract/Intersect/Difference/Add, backing the non-destructive <code>BooleanGroup</code> layer kind; recomputed live from <code>children</code> on every call, no caching.</td></tr>
+  <tr><td><code>grid_ops.rs</code></td><td>"Make Grid" — duplicates a layer across a cols × rows grid.</td></tr>
+  <tr><td><code>image_ops.rs</code></td><td>Pixel-level operations for <code>LayerKind::Image</code>: decode/encode, Color Adjust, Crop, Fill, Magic Wand, Trim Transparent Pixels, Remove Background, Minimize File Size.</td></tr>
+  <tr><td><code>clipboard.rs</code></td><td>OS-clipboard copy/paste of layers, sentinel-prefixed so pasting arbitrary external text is a no-op rather than a parse error.</td></tr>
+  <tr><td><code>numeric_input.rs</code></td><td>Parses Inspector dimension fields' typed text, including Sketch's relative-operator (<code>+</code>/<code>-</code>/<code>*</code>/<code>/</code>) and anchor-suffix syntax.</td></tr>
+  <tr><td><code>palette_io.rs</code></td><td>Load/save <code>Palette</code> as Aseprite's GIMP-Palette-derived <code>.gpl</code> format.</td></tr>
+</table>
+
+<h3>App shell &amp; UI</h3>
+<table>
+  <tr><th>Module</th><th>Responsibility</th></tr>
+  <tr><td><code>app.rs</code></td><td>Owns <code>History</code>, <code>selection: Vec&lt;LayerId&gt;</code>, the current <code>Tool</code>, and per-panel UI state; wires panels together each frame, applies their action enums to <code>History</code>, and owns all keyboard shortcuts. The only place panel actions get applied.</td></tr>
+  <tr><td><code>history.rs</code></td><td>Undo/redo. Whole-<code>Document</code> snapshot cloning, not a command pattern.</td></tr>
+  <tr><td><code>tools.rs</code></td><td>The <code>Tool</code> enum and keyboard shortcut mapping.</td></tr>
+  <tr><td><code>io.rs</code></td><td>File dialogs (<code>rfd</code>) and JSON load/save for <code>.sdesign</code> documents.</td></tr>
+  <tr><td><code>ui/layers_panel.rs</code>, <code>ui/inspector.rs</code>, <code>ui/toolbar.rs</code>, <code>ui/pages_bar.rs</code>, <code>ui/palette_panel.rs</code></td><td>Each returns an action enum describing <em>what the user asked for</em> rather than mutating <code>Document</code>/<code>History</code> directly.</td></tr>
+  <tr><td><code>ui/color_picker.rs</code></td><td>The palette swatch button widget and color-picker popup, shared between <code>ui/palette_panel.rs</code> and the Inspector's fill/stroke editors.</td></tr>
+  <tr><td><code>ui/rename_all.rs</code></td><td>Batch layer renaming (case, find/replace, numeric sequencing) over the current selection.</td></tr>
+  <tr><td><code>ui/icons.rs</code></td><td>Hand-drawn vector line icons for toolbar buttons, drawn directly with <code>egui::Painter</code> so they stay crisp at any DPI and follow the current theme.</td></tr>
+</table>
+
+<h2 id="data-model">Data model</h2>
+<p>
+The document schema is a tree, all pure serde-serializable data with no UI-framework
+dependency beyond plain <code>egui</code> geometry/color types:
+</p>
+<pre><code>Document
+├─ name: String, active_page: usize
+├─ text_styles: Vec&lt;TextStyle&gt;     (shared paragraph-level text styles)
+├─ layer_styles: Vec&lt;LayerStyle&gt;   (shared fill/stroke/shadow styles)
+├─ palette: Palette                (color-swatch library)
+└─ pages: Vec&lt;Page&gt;
+   └─ Page { id, name, guides: Vec&lt;Guide&gt;, layers: Vec&lt;Layer&gt; }
+      └─ Layer (recursive; children only for Artboard/Group/BooleanGroup)</code></pre>
+
+<p>
+<code>Layer</code> is the schema's atom — every shape, container, text box, and image on the
+canvas is one. Besides <code>id</code>/<code>name</code>/<code>kind</code>, every layer carries:
+</p>
+<ul>
+  <li><code>frame: Frame { pos, size, rotation }</code> — parent-relative position/size (see
+      <a href="#coordinate-system">Coordinate system convention</a> below); <code>rotation</code>
+      only ever nonzero on a leaf shape.</li>
+  <li><code>style: Style</code> — <code>fill: Option&lt;Paint&gt;</code>,
+      <code>stroke: Option&lt;Stroke&gt;</code>, independent <code>fill_opacity</code>/
+      <code>stroke_opacity</code>, and stacked <code>shadows</code>/<code>inner_shadows</code>.</li>
+  <li><code>visible</code>, <code>locked</code>, and <code>opacity</code> (multiplies into
+      descendants' effective opacity when drawn).</li>
+  <li><code>is_mask</code>/<code>ignore_mask</code> — Sketch-style "use as mask"; see
+      <code>masking.rs</code>.</li>
+  <li><code>bool_op: BoolOp</code> — meaningful only as a direct child of a
+      <code>BooleanGroup</code>, ignored everywhere else.</li>
+  <li><code>style_id: Option&lt;Uuid&gt;</code> — links to a <code>Document::layer_styles</code>
+      entry; a direct style edit leaves the link in place, only "Detach" clears it.</li>
+</ul>
+
+<p>
+<code>LayerKind</code> has thirteen variants — <code>Artboard</code>/<code>Group</code>/
+<code>BooleanGroup</code> (the only three with <code>children: Vec&lt;Layer&gt;</code>),
+<code>Rectangle</code>, <code>Oval</code>, <code>Line</code>, <code>Star</code>,
+<code>Polygon</code>, <code>Arrow</code>, <code>Path</code>, <code>CompoundPath</code>,
+<code>Text</code>, and <code>Image</code>. See <a href="file-format.html">File Format</a>
+for the full field-by-field table and JSON shape of each.
+</p>
+
+<p>
+<code>Paint</code> — a fill or stroke color source — is <code>#[serde(untagged)]</code> so a
+plain <code>Solid</code> color round-trips as a bare <code>Color32</code>, the shape older save
+files already used:
+</p>
+<ul>
+  <li><code>Solid(Color32)</code></li>
+  <li><code>Gradient(Gradient)</code> — <code>Linear</code>/<code>Radial</code>,
+      <code>stops: Vec&lt;GradientStop&gt;</code>, <code>from</code>/<code>to</code> normalized
+      <code>0.0..=1.0</code> points in the shape's unrotated bounding box.</li>
+  <li><code>Noise(NoiseFill)</code> — procedural grain (fill-only); see <code>noise_fill.rs</code>.</li>
+  <li><code>Halftone(HalftoneFill)</code> — procedural dot grid (fill-only); see <code>halftone_fill.rs</code>.</li>
+  <li><code>Pattern(PatternFill)</code> — tiled bitmap (fill-only); PNG bytes + <code>tile_width</code>.</li>
+</ul>
+
+<p>
+Two shared style libraries live on <code>Document</code>, each linked from a layer by a
+<code>style_id</code> that a direct edit leaves untouched:
+</p>
+<ul>
+  <li><code>TextStyle</code> (<code>Document::text_styles</code>) — every per-layer
+      <code>Text</code> style field except <code>content</code>/geometry, linked via
+      <code>LayerKind::Text::style_id</code>. Applying one to a layer with rich per-run
+      formatting resets that layer back to uniform styling.</li>
+  <li><code>LayerStyle</code> (<code>Document::layer_styles</code>) — every <code>Style</code>
+      field (fill/stroke/opacities/shadows) plus <code>id</code>/<code>name</code>, linked via
+      <code>Layer::style_id</code>.</li>
+</ul>
+
+<p>
+Most schema growth is purely additive — a new field gets <code>#[serde(default)]</code>
+(<code>opacity</code>, <code>rotation</code>, <code>runs</code>, <code>is_mask</code>, …) so
+old documents just load with that default. <code>CornerRadii</code> is the one exception, and
+the reference pattern for any future non-additive change: it has a hand-written
+<code>Deserialize</code> accepting either a bare number (pre-per-corner-rounding files, applied
+uniformly to all four corners) or the current four-field object.
+</p>
+
+<h2 id="coordinate-system">Coordinate system convention</h2>
+<p>
+A <code>Layer.frame.pos</code> is <strong>relative to its parent</strong> (the page, or an
+enclosing <code>Artboard</code>/<code>Group</code>), not absolute. Two things follow
+everywhere shapes are drawn, hit-tested, or exported:
+</p>
+<ul>
+  <li>To get a layer's position in page/doc-space, add the accumulated offset of its
+      ancestors — <code>Page::absolute_offset(id)</code> computes exactly that by walking
+      down from the page root.</li>
+  <li>Recursion into children always threads <code>offset + layer.frame.pos.to_vec2()</code>
+      as the new base offset (<code>canvas.rs::draw_layer</code>,
+      <code>export.rs::draw_layer</code>, <code>hit_test_layers</code>). Any new recursive
+      traversal over the layer tree must follow the same accumulation, or nested shapes will
+      render/hit-test in the wrong place.</li>
+</ul>
+<p>
+Separately, <code>Frame</code> (<code>model/layer.rs</code>) stores raw <code>pos</code> +
+<code>size</code>, where <code>size</code> <strong>can be negative</strong> — this preserves
+drag direction for the Line/Arrow shapes (a line dragged bottom-right→top-left renders
+correctly). Use <code>frame.bounds()</code> to get a normalized, axis-aligned
+<code>egui::Rect</code> for anything that isn't direction-sensitive (hit-testing, fill/stroke
+rendering, resize-handle placement) — don't assume <code>frame.pos</code> is the visual
+top-left. When rotation is involved, use <code>frame.rotated_bounds()</code> instead, which
+gives the shape's actual on-screen footprint.
+</p>
+
+<h2>Drag state machine (<code>canvas.rs</code>)</h2>
+<p>
+All mouse interaction on the canvas — panning, shape creation, marquee/rubber-band select,
+single moves, group moves, single-layer resize, group bounding-box resize, and rotation — is
+modeled as one <code>DragState</code> enum, set on <code>drag_started()</code>, advanced on
+<code>dragged()</code>, and resolved on <code>drag_stopped()</code>. Adding a new canvas
+interaction means adding a new <code>DragState</code> variant rather than introducing separate
+ad hoc mutable fields.
+</p>
+<p>Representative variants:</p>
+<ul>
+  <li><code>PanningView</code>, <code>CreatingShape</code></li>
+  <li><code>Marquee</code> — rubber-band selection over empty canvas, tracking
+      <code>additive</code>/<code>contained_only</code>/<code>ignore_groups</code>/<code>invert</code>
+      modifier state captured at drag start</li>
+  <li><code>MarqueePoints</code> — the same idea for selecting points on a single active Path</li>
+  <li><code>MovingSelection</code></li>
+  <li><code>ResizingLine</code> — special-cased single-line endpoint drag that preserves exact
+      drag direction, which a bounds-based scale transform would lose</li>
+  <li><code>ResizingGroup</code> — captures every selected layer's absolute bounds
+      <em>before</em> the drag begins, then applies one scale+translate transform per frame;
+      covers single non-line resize and multi-selection group resize alike</li>
+</ul>
+<blockquote>
+Two resize code paths intentionally exist side by side: <code>ResizingLine</code> (exact
+endpoint/direction) and <code>ResizingGroup</code> (bounding-box proportional scale, used for
+everything else). A mixed multi-select that includes a <code>Line</code> falls back to the
+bounding-box path and loses exact line-direction fidelity — a known, accepted tradeoff.
+</blockquote>
+
+<h2>Undo model (<code>history.rs</code>)</h2>
+<p>
+<code>History</code> wraps the live <code>Document</code> plus <code>past</code>/<code>future</code>
+stacks of full <code>Document</code> clones — there is no command/diff pattern. The convention
+used everywhere: call <code>history.snapshot()</code> <strong>before</strong> mutating (it
+pushes the current state to <code>past</code>), then mutate via <code>history.mutate()</code>.
+For a continuous gesture (a drag), only snapshot on the frame the gesture <em>starts</em> — see
+<code>ui/inspector.rs</code>'s <code>should_snapshot()</code> helper for the pattern.
+</p>
+
+<h2>Known simplifications</h2>
+<p>These are accepted tradeoffs, not open bugs — see <code>ROADMAP.md</code> for the full gap list vs. Sketch:</p>
+<ul>
+  <li>Rotation is only ever nonzero on a leaf shape layer. A <code>Group</code>/<code>Artboard</code>/<code>BooleanGroup</code>'s own <code>rotation</code> is always <code>0.0</code>; rotating one bakes the angle into each descendant's own frame instead.</li>
+  <li>Text supports the Sketch-style single-style-per-layer typography properties <em>and</em> per-character rich text, but no italic/oblique <em>face</em> selection (italic is always the faux-shear trick), no text-on-a-path, and no OpenType features.</li>
+  <li>Marquee-select only matches top-level layers on the active page by default; shift-click reaches descendants directly, and holding <kbd>⌘</kbd> while marquee-dragging descends into groups/artboards.</li>
+  <li>Snap candidates (other layers' edges/centers, plus guides) are built from top-level layers only, same simplification as marquee-select.</li>
+  <li><code>show_rulers</code>/<code>show_grid</code>/<code>snap_enabled</code> are runtime View-menu toggles, not persisted with the document — only guides themselves are (<code>Page.guides</code>).</li>
+</ul>
+
+<h2>Adding a new shape/tool</h2>
+<p>Touch points, in order:</p>
+<ol>
+  <li><code>tools.rs</code> — add the <code>Tool</code> variant and its keyboard shortcut</li>
+  <li><code>model/layer.rs</code> — add the <code>LayerKind</code> variant</li>
+  <li><code>canvas.rs</code> — <code>new_layer_for_tool</code>, <code>draw_layer</code> (<code>hit_test_layers</code> already handles bounds generically via <code>frame.bounds()</code>)</li>
+  <li><code>export.rs</code> — <code>draw_layer</code>; PNG rendering is a separate implementation from the canvas one, not shared</li>
+  <li><code>ui/inspector.rs</code> — property editing UI</li>
+  <li><code>ui/layers_panel.rs</code>'s <code>icon_for</code> — label only</li>
+</ol>
+
+<div class="footer-nav">
+  <a href="features.html">← Tools &amp; Features</a>
+  <a href="text-and-fonts.html">Text &amp; Fonts →</a>
+</div>
+</main>
+</div>
+</body>
+</html>

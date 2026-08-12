@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting Started — Simple Design Docs</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="brand" href="index.html">Simple Design</a>
+  <div class="tagline">Developer &amp; user docs</div>
+  <ul>
+    <li><a href="index.html">Overview</a></li>
+    <li><a class="active" href="getting-started.html">Getting Started</a></li>
+    <li><a href="features.html">Tools &amp; Features</a></li>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="text-and-fonts.html">Text &amp; Fonts</a></li>
+    <li><a href="file-format.html">File Format</a></li>
+  </ul>
+</nav>
+<main>
+<h1>Getting Started</h1>
+<p class="lede">Build, run, and test the app from a fresh checkout.</p>
+
+<h2>Requirements</h2>
+<ul>
+  <li>A recent stable Rust toolchain (edition 2024) — install via <a href="https://rustup.rs" target="_blank" rel="noopener">rustup</a></li>
+  <li>macOS or Linux — <code>system_fonts.rs</code> discovers OS-installed fonts on these platforms via <code>fontdb</code></li>
+  <li>No web/webview runtime, no Node — this is a native <code>eframe</code> window</li>
+</ul>
+
+<h2>Commands</h2>
+<table>
+  <tr><th>Command</th><th>What it does</th></tr>
+  <tr><td><code>cargo build</code></td><td>Compile the app</td></tr>
+  <tr><td><code>cargo check</code></td><td>Type-check only — fast, prefer this while iterating</td></tr>
+  <tr><td><code>cargo run</code></td><td>Launch the app — opens a native window, it's a GUI app, not a CLI</td></tr>
+  <tr><td><code>cargo test</code></td><td>Run all tests</td></tr>
+  <tr><td><code>cargo test &lt;test_name&gt;</code></td><td>Run one test, e.g. <code>cargo test renders_filled_rect_at_correct_size_and_color</code></td></tr>
+</table>
+
+<p>
+Tests currently live alongside <code>src/export.rs</code> and <code>src/io.rs</code>
+(<code>#[cfg(test)] mod tests</code>), primarily covering the PNG renderer's pixel output and
+file round-trips. There is no separate lint/format CI — <code>cargo check</code> emitting no
+warnings is the bar to clear before considering a change done.
+</p>
+
+<h2>First run</h2>
+<pre><code>git clone &lt;repo-url&gt;
+cd simple-design
+cargo run</code></pre>
+<p>
+A blank document opens with one page. Use the toolbar or keyboard shortcuts (see
+<a href="features.html">Tools &amp; Features</a>) to start drawing — <kbd>R</kbd> for a
+rectangle, <kbd>O</kbd> for an oval, <kbd>T</kbd> for text, and so on. <kbd>⌘S</kbd> saves a
+<code>.sdesign</code> file (see <a href="file-format.html">File Format</a>).
+</p>
+
+<h2>Working on this codebase</h2>
+<p>
+This project pins <code>egui</code>/<code>eframe</code> <strong>0.36</strong>, which is
+bleeding-edge enough that its APIs differ from most existing documentation and training data —
+notably the <code>App::ui</code> signature, panel construction
+(<code>egui::Panel::top/bottom/left/right</code> instead of separate
+<code>TopBottomPanel</code>/<code>SidePanel</code> types), and menu bars
+(<code>egui::MenuBar::new().ui(...)</code>). Before assuming an API from memory, check
+<code>~/.cargo/registry/src/*/egui-0.36.0/src/</code> directly. See the repository's
+<code>CLAUDE.md</code> for the full list of gotchas.
+</p>
+<p>
+When adding a new shape or tool, the touch points (in order) are: <code>tools.rs</code>,
+<code>model/layer.rs</code>, <code>canvas.rs</code>, <code>export.rs</code>,
+<code>ui/inspector.rs</code>, and <code>ui/layers_panel.rs</code> — see
+<a href="architecture.html">Architecture</a> for what each one needs.
+</p>
+
+<div class="footer-nav">
+  <a href="index.html">← Overview</a>
+  <a href="features.html">Tools &amp; Features →</a>
+</div>
+</main>
+</div>
+</body>
+</html>

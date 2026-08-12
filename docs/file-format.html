@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>File Format — Simple Design Docs</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="brand" href="index.html">Simple Design</a>
+  <div class="tagline">Developer &amp; user docs</div>
+  <ul>
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="getting-started.html">Getting Started</a></li>
+    <li><a href="features.html">Tools &amp; Features</a></li>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="text-and-fonts.html">Text &amp; Fonts</a></li>
+    <li><a class="active" href="file-format.html">File Format</a></li>
+  </ul>
+</nav>
+<main>
+<h1>File Format</h1>
+<p class="lede">The <code>.sdesign</code> document format: plain, pretty-printed JSON with no binary payload beyond base64-encoded image bytes.</p>
+
+<p>
+A <code>.sdesign</code> file is exactly a serde-serialized <code>model::Document</code>
+(<code>serde_json::to_string_pretty</code>, written verbatim by <code>io::save_to</code>) —
+there's no separate schema, versioning header, or compression. Loading
+(<code>io::load_from</code>) just parses it back with <code>serde_json::from_str</code>.
+Every field added since the format's first version is annotated
+<code>#[serde(default)]</code> in the Rust structs, so older files always load — missing
+fields fall back to a value that reproduces the pre-existing behavior exactly (e.g. a missing
+<code>opacity</code> defaults to <code>1.0</code>, a missing <code>rotation</code> defaults to
+<code>0.0</code>).
+</p>
+
+<h2>Top-level shape</h2>
+<pre><code>{
+  "name": "Untitled",
+  "pages": [ /* Page[] */ ],
+  "active_page": 0,
+  "text_styles": [ /* TextStyle[], shared/linked text styles */ ],
+  "layer_styles": [ /* LayerStyle[], shared/linked fill+stroke+shadow styles */ ],
+  "palette": { /* Palette — color-swatch library, see model/palette.rs */ }
+}</code></pre>
+<p>
+<code>text_styles</code>, <code>layer_styles</code>, and <code>palette</code> were all added
+after the format's first version, so each is <code>#[serde(default)]</code> — files saved
+before they existed simply load with an empty style library and the default DawnBringer DB32
+palette.
+</p>
+
+<h2>Page</h2>
+<pre><code>{
+  "id": "e3b0c442-...",
+  "name": "Page 1",
+  "layers": [ /* Layer[], top-level layers on this page */ ],
+  "guides": [ /* Guide[], ruler guides — see model/guide.rs */ ]
+}</code></pre>
+
+<h2>Layer</h2>
+<p>
+Every layer — regardless of kind — shares the same envelope. <code>frame.pos</code> is
+<strong>relative to the parent</strong> (page, or enclosing Artboard/Group/BooleanGroup), not
+an absolute page coordinate; see <a href="architecture.html">Architecture</a> for why.
+<code>kind</code> is a serde-tagged enum, so its own fields sit inline alongside the shared
+ones (internally tagged on a <code>kind</code>-shaped structure — the exact wire encoding
+depends on the specific <code>LayerKind</code> variant).
+</p>
+<pre><code>{
+  "id": "9c858901-...",
+  "name": "Rectangle 1",
+  "frame": { "pos": [40.0, 60.0], "size": [200.0, 120.0], "rotation": 0.0 },
+  "style": {
+    "fill": [216, 216, 216, 255],
+    "stroke": { "paint": [30, 30, 30, 255], "width": 1.0 },
+    "fill_opacity": 1.0,
+    "stroke_opacity": 1.0
+  },
+  "visible": true,
+  "locked": false,
+  "opacity": 1.0,
+  "is_mask": false,
+  "ignore_mask": false,
+  "bool_op": "Union",
+  "kind": {
+    "Rectangle": {
+      "corner_radius": { "top_left": 0.0, "top_right": 0.0, "bottom_right": 0.0, "bottom_left": 0.0 }
+    }
+  }
+}</code></pre>
+
+<h3>Layer kinds</h3>
+<table>
+  <tr><th>Kind</th><th>Notable fields</th></tr>
+  <tr><td><code>Artboard</code></td><td><code>children: Layer[]</code>, <code>background: Color32</code></td></tr>
+  <tr><td><code>Group</code></td><td><code>children: Layer[]</code></td></tr>
+  <tr><td><code>Rectangle</code></td><td><code>corner_radius</code> — independent per-corner</td></tr>
+  <tr><td><code>Oval</code>, <code>Line</code></td><td>Geometry comes entirely from <code>frame</code></td></tr>
+  <tr><td><code>Star</code></td><td><code>points: u32</code>, <code>inner_ratio: f32</code></td></tr>
+  <tr><td><code>Polygon</code></td><td><code>sides: u32</code></td></tr>
+  <tr><td><code>Arrow</code></td><td><code>start_cap</code>, <code>end_cap: ArrowCap</code></td></tr>
+  <tr><td><code>Path</code></td><td><code>points: PathPoint[]</code> (anchor + bezier handles + point type + corner radius), <code>closed: bool</code></td></tr>
+  <tr><td><code>CompoundPath</code></td><td><code>polygons: PathPolygon[]</code> — flattened boolean-op result, each with <code>exterior</code> + <code>holes</code></td></tr>
+  <tr><td><code>BooleanGroup</code></td><td><code>children: Layer[]</code> — kept editable; the combined shape is recomputed live, never flattened into storage</td></tr>
+  <tr><td><code>Text</code></td><td><code>content</code>, <code>font_size</code>, <code>font: TextFont</code>, <code>align</code>, <code>vertical_align</code>, <code>resize</code>, <code>line_height</code>, <code>letter_spacing</code>, <code>paragraph_spacing</code>, <code>bold</code>/<code>italic</code>/underline/strikethrough, <code>runs: TextRun[]</code> (empty = uniform style)</td></tr>
+  <tr><td><code>Image</code></td><td><code>encoded: String</code> (base64 PNG bytes), plus pixel width/height</td></tr>
+</table>
+
+<h2>Paint encoding (fill / stroke color)</h2>
+<p>
+<code>style.fill</code> and <code>stroke.paint</code> both hold a <code>Paint</code>, which is
+<code>#[serde(untagged)]</code> — serde tries each variant's shape in turn, so a plain solid
+color serializes as a bare <code>[r, g, b, a]</code> array rather than a wrapped object. This is
+deliberate: it's the exact shape those fields used before <code>Paint</code> existed, so every
+older <code>.sdesign</code> file still loads unchanged, with every solid color becoming
+<code>Paint::Solid</code>.
+</p>
+<pre><code>"fill": [216, 216, 216, 255]                             // Solid
+
+"fill": {                                                 // Gradient
+  "kind": "Linear",
+  "stops": [
+    { "offset": 0.0, "color": [255, 0, 0, 255] },
+    { "offset": 1.0, "color": [0, 0, 255, 255] }
+  ],
+  "from": [0.0, 0.0], "to": [1.0, 1.0]
+}
+
+"fill": { "base": [128,128,128,255], "intensity": 0.3,    // Noise
+          "scale": 4.0, "seed": 1234 }
+
+"fill": { "background": [255,255,255,255],                // Halftone
+          "dot": [0,0,0,255], "scale": 8.0, "coverage": 0.6 }
+
+"fill": { "encoded": "iVBORw0KG...", "tile_width": 64.0 } // Pattern (base64 PNG)</code></pre>
+<p>
+Gradient/Noise/Halftone/Pattern are fill-only in the UI (a stroke can only ever be
+<code>Solid</code>/<code>Gradient</code>) but the type itself doesn't enforce that — a
+hand-edited document with a textured stroke paint would still deserialize fine, just never be
+reachable from the Inspector.
+</p>
+
+<h2>Shared style libraries</h2>
+<p>
+<code>text_styles</code> and <code>layer_styles</code> (top-level, see above) hold named,
+reusable styles a layer links to by id rather than embeds:
+</p>
+<pre><code>// TextStyle — Document.text_styles[i]
+{
+  "id": "b1a2...", "name": "Heading/H1",
+  "font_size": 32.0, "font": "Proportional", "align": "Left",
+  "vertical_align": "Top", "line_height": null, "letter_spacing": 0.0,
+  "paragraph_spacing": 0.0, "bold": true, "italic": false,
+  "underline": false, "strikethrough": false, "transform": "None",
+  "list": "None", "list_start": 1, "fill": [20, 20, 20, 255]
+}
+
+// LayerStyle — Document.layer_styles[i]
+{
+  "id": "c3d4...", "name": "Card/Elevated",
+  "fill": [255, 255, 255, 255],
+  "stroke": { "paint": [220, 220, 220, 255], "width": 1.0 },
+  "fill_opacity": 1.0, "stroke_opacity": 1.0,
+  "shadows": [ { "color": [0,0,0,80], "offset": [0.0, 4.0], "blur": 8.0, "spread": 0.0 } ],
+  "inner_shadows": []
+}</code></pre>
+<p>
+A layer links to one via <code>style_id</code> (<code>LayerKind::Text::style_id</code> for a
+<code>TextStyle</code>, <code>Layer::style_id</code> for a <code>LayerStyle</code>) — applying
+one is a straight field copy onto the layer, so the layer's own fields stay independently
+editable afterward and only drift out of sync with the library entry until the next
+"Update Style"/re-apply. Editing a linked layer's fields directly does <em>not</em> clear
+<code>style_id</code>; only an explicit "Detach" does.
+</p>
+
+<h2>Round-trip guarantees</h2>
+<ul>
+  <li>An <code>Image</code> layer's bytes survive a full save/load cycle through
+      <code>serde_json::to_string_pretty</code> unmodified — covered by an automated test in
+      <code>io.rs</code>.</li>
+  <li>A <code>System(String)</code> font referenced by a layer that isn't installed on the
+      machine opening the file falls back to <code>Proportional</code> at load/render time —
+      the document itself still stores the original family name, so it renders correctly again
+      on a machine that has it.</li>
+  <li>Loading never panics on a missing newer field; every addition to the format is
+      backward-compatible via <code>#[serde(default)]</code>.</li>
+</ul>
+
+<h2>Exporting</h2>
+<p>
+PNG export (<kbd>⌘E</kbd>, or right-click in the Layers panel) is a one-way operation — it
+rasterizes a single selected layer and its children through the independent
+<code>export.rs</code> renderer (<code>tiny-skia</code>), and does not round-trip back into
+<code>.sdesign</code>.
+</p>
+
+<div class="footer-nav">
+  <a href="text-and-fonts.html">← Text &amp; Fonts</a>
+  <span></span>
+</div>
+</main>
+</div>
+</body>
+</html>

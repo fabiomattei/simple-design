@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text &amp; Fonts — Simple Design Docs</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="brand" href="index.html">Simple Design</a>
+  <div class="tagline">Developer &amp; user docs</div>
+  <ul>
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="getting-started.html">Getting Started</a></li>
+    <li><a href="features.html">Tools &amp; Features</a></li>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a class="active" href="text-and-fonts.html">Text &amp; Fonts</a></li>
+    <li><a href="file-format.html">File Format</a></li>
+  </ul>
+</nav>
+<main>
+<h1>Text &amp; Fonts</h1>
+<p class="lede">Typography, font resolution, and the per-character rich text model.</p>
+
+<h2>Font tiers</h2>
+<p>
+<code>TextFont</code> has three tiers, all drawn from the exact same font files on both the
+canvas (egui) and PNG export/outline-conversion (<code>ab_glyph</code>, which never goes
+through egui's font registry). <code>fonts::ab_glyph_bytes</code> is the single place that maps
+any <code>TextFont</code> to raw bytes for the latter two, so it must stay in sync with
+whatever the canvas side resolves to.
+</p>
+<table>
+  <tr><th>Tier</th><th>Source</th><th>Notes</th></tr>
+  <tr><td><code>Proportional</code> / <code>Monospace</code></td><td>egui's own built-in default families</td><td><code>Ubuntu-Light</code> / <code>Hack-Regular</code> from <code>epaint_default_fonts</code>. No setup needed.</td></tr>
+  <tr><td><code>Serif</code> / <code>Display</code> / <code>Handwriting</code></td><td>Bundled in <code>assets/fonts/</code></td><td>Google Fonts, OFL-licensed (Merriweather, Poppins, Caveat); registered as named egui <code>FontFamily</code>s once at startup via <code>fonts::install_fonts</code>.</td></tr>
+  <tr><td><code>System(String)</code></td><td>An OS-installed font, by family name</td><td>Discovered via <code>fontdb</code> (<code>system_fonts.rs</code>) on macOS/Linux, no system library dependency. A <code>.sdesign</code> file referencing a family that isn't installed on the current machine falls back to <code>Proportional</code> everywhere — canvas, export, outlines — rather than panicking.</td></tr>
+</table>
+
+<h3>Two System-font gotchas</h3>
+<ul>
+  <li><code>egui::Context::add_font</code> only takes effect "at the start of the next pass" —
+      laying out text against a <code>FontFamily::Name</code> before egui has bound it panics.
+      Always resolve through <code>system_fonts::resolve_family(ctx, name)</code> (or
+      <code>resolve_family_bold</code>), never construct that <code>FontFamily</code> by hand.</li>
+  <li><code>TextFont</code> is <code>Clone</code> but not <code>Copy</code> (it holds a
+      <code>String</code> for <code>System</code>) — call sites need <code>.clone()</code> or a
+      reference-based match.</li>
+</ul>
+
+<h2>Bold and italic</h2>
+<p>
+Bold is a real font-weight swap, not a paint-time trick — <strong>except</strong> for a whole
+uniformly-styled layer (<code>runs</code> empty), which still uses the old "draw the
+galley/glyphs twice, offset" fake, since egui 0.36's <code>FontId</code> has no weight field at
+all. Every one of the five built-in tiers therefore ships a bundled bold-weight file too
+(including <code>Ubuntu-Bold.ttf</code>/<code>Hack-Bold.ttf</code>, since
+<code>epaint_default_fonts</code> only ships their regular weight). <code>System</code>'s bold
+face is looked up via <code>fontdb</code>'s <code>Weight::BOLD</code> query and, same
+graceful-degradation precedent as a missing family, silently falls back to the regular face if
+the family has no distinct bold one.
+</p>
+<p>
+Italic has no bundled/OS face lookup at all — it's always the faux-shear trick, for both
+uniform and rich text.
+</p>
+
+<h2>Rich text (<code>model/text_runs.rs</code>)</h2>
+<p>
+A <code>Text</code> layer's <code>runs: Vec&lt;TextRun&gt;</code> field is either empty
+(uniform style — every one of <code>LayerKind::Text</code>'s scalar fields, plus
+<code>Layer::style.fill</code>, applies to all of <code>content</code>) or non-empty and spans
+the <em>entire</em> content, each <code>TextRun { len: usize, style: RunStyle }</code> covering
+<code>len</code> <strong>chars</strong> (not bytes — matches egui's <code>CCursor</code>
+indexing) at a given font/size/color/bold/italic/underline/strikethrough. Paragraph-level
+properties (alignment, resize, line/letter/paragraph spacing, transform, list) stay
+layer-level only, never per-run.
+</p>
+
+<h3>The three entry points</h3>
+<table>
+  <tr><th>Function</th><th>Purpose</th></tr>
+  <tr><td><code>splice(runs, change_start, chars_removed, chars_inserted, base)</code></td><td>Keeps <code>runs</code> in sync with every content edit (typing/deleting/pasting), called after diffing the old and new buffer.</td></tr>
+  <tr><td><code>apply(content, runs, base, char_range, edit)</code></td><td>The "make this selection bold" entry point — lazily materializes <code>runs</code> from empty if needed, splits at the range's boundaries, edits, then coalesces adjacent equal-style runs back together.</td></tr>
+  <tr><td><code>mixed_or(runs, char_range, field)</code></td><td><code>None</code> if a selection spans differing values for a property (drives the Inspector's "Mixed" dual-mode controls), <code>Some(value)</code> if uniform.</td></tr>
+</table>
+
+<h3>Every render/measure site branches on <code>runs.is_empty()</code></h3>
+<p>The non-empty branch is always new code added alongside the untouched original, never a modification of it:</p>
+<ul>
+  <li><code>canvas.rs::draw_layer</code>'s Text arm and <code>apply_text_auto_resize</code> call <code>text_layout::layout_paragraphs_rich</code> instead of <code>layout_paragraphs</code></li>
+  <li><code>export.rs::draw_text</code> has a <code>draw_text_rich</code> sibling, with its own <code>wrap_line_rich</code> that walks character-by-character to look up the right run's face</li>
+  <li><code>text_outline.rs::convert_to_outlines</code> has a <code>convert_to_outlines_rich</code> sibling</li>
+</ul>
+<p>
+All three rich paths share <code>text_layout::tagged_lines</code> (run-boundary + transform +
+list-prefix tagging) so they can't silently disagree on where a run boundary falls.
+</p>
+
+<h3>In-place editing over rich content</h3>
+<p>
+The canvas's <code>editing_text</code> overlay, when <code>runs</code> is non-empty, swaps
+<code>TextEdit::multiline</code>'s plain <code>.font()</code>/<code>.text_color()</code> for a
+custom <code>.layouter()</code> (<code>text_layout::editor_layout_job</code>) — a whole-buffer
+single-<code>Galley</code> sibling of <code>layout_paragraphs_rich</code>, deliberately
+skipping <code>tagged_lines</code>'s transform/list-prefix cosmetics, since injecting
+characters that don't exist in the real buffer would desync egui's char-index
+cursor/selection from the actual content. Because egui uses that same returned
+<code>Galley</code> for both painting and all click/drag/keyboard selection, the Inspector just
+reads the resulting <code>CCursorRange</code> off <code>CanvasWidget::text_edit_selection</code>
+each frame — no custom hit-testing was written for this.
+</p>
+
+<h2>Not supported</h2>
+<ul>
+  <li>Text-on-a-path</li>
+  <li>OpenType features</li>
+  <li>"Sticky" formatting for the next typed character after a collapsed cursor</li>
+  <li>Applying a saved Text Style to a layer with rich per-run formatting resets it to uniform — Text Styles remain a whole-layer/paragraph concept, not a per-run one</li>
+</ul>
+
+<div class="footer-nav">
+  <a href="architecture.html">← Architecture</a>
+  <a href="file-format.html">File Format →</a>
+</div>
+</main>
+</div>
+</body>
+</html>

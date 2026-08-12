@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tools &amp; Features — Simple Design Docs</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="brand" href="index.html">Simple Design</a>
+  <div class="tagline">Developer &amp; user docs</div>
+  <ul>
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="getting-started.html">Getting Started</a></li>
+    <li><a class="active" href="features.html">Tools &amp; Features</a></li>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="text-and-fonts.html">Text &amp; Fonts</a></li>
+    <li><a href="file-format.html">File Format</a></li>
+  </ul>
+</nav>
+<main>
+<h1>Tools &amp; Features</h1>
+<p class="lede">Every tool, menu command, and keyboard shortcut, as a user-facing tour.</p>
+
+<h2>Tools</h2>
+<p>Selected from the toolbar or via a single-letter shortcut (no modifier — plain <kbd>R</kbd>, not <kbd>⌘R</kbd>):</p>
+<table>
+  <tr><th>Tool</th><th>Key</th><th>What it does</th></tr>
+  <tr><td>Select</td><td><kbd>V</kbd></td><td>Click, drag, marquee-select, move, and resize layers</td></tr>
+  <tr><td>Pan</td><td><kbd>H</kbd></td><td>Drag to pan the canvas (space-bar-hold also works from Select)</td></tr>
+  <tr><td>Artboard</td><td><kbd>A</kbd></td><td>Draw a named artboard frame; shapes drawn on top auto-nest into it</td></tr>
+  <tr><td>Rectangle</td><td><kbd>R</kbd></td><td>Drag to draw; independent per-corner radius in the Inspector</td></tr>
+  <tr><td>Oval</td><td><kbd>O</kbd></td><td>Drag to draw an ellipse</td></tr>
+  <tr><td>Line</td><td><kbd>L</kbd></td><td>Drag between two endpoints; exact direction is preserved on resize</td></tr>
+  <tr><td>Arrow</td><td><kbd>W</kbd></td><td>Like Line, with configurable start/end cap markers</td></tr>
+  <tr><td>Star</td><td><kbd>S</kbd></td><td>Regular star; point count and inner radius ratio are adjustable</td></tr>
+  <tr><td>Polygon</td><td><kbd>G</kbd></td><td>Regular N-gon; side count is adjustable</td></tr>
+  <tr><td>Pen</td><td><kbd>P</kbd></td><td>Freeform vector path — click for corner points, drag for bezier handles</td></tr>
+  <tr><td>Text</td><td><kbd>T</kbd></td><td>Click for an auto-sizing label, or drag for a fixed-width wrapping box</td></tr>
+  <tr><td>Scissors</td><td><kbd>C</kbd></td><td>Cut a path at a point, splitting it into open segments</td></tr>
+</table>
+
+<h2>Menus</h2>
+
+<h3>File</h3>
+<ul>
+  <li><strong>New</strong>, <strong>Open…</strong>, <strong>Save</strong> (<kbd>⌘S</kbd>), <strong>Save As…</strong> (<kbd>⇧⌘S</kbd>)</li>
+  <li><strong>Export Selection as PNG…</strong> (<kbd>⌘E</kbd>) — enabled with exactly one layer selected; renders that layer and its children via the standalone <code>export.rs</code> rasterizer</li>
+  <li><strong>Reduce File Size</strong> — resamples every image in the document down to its on-screen pixel size</li>
+</ul>
+
+<h3>Insert</h3>
+<p>Switches to a shape/text tool, or opens a multi-file picker for <strong>Image…</strong> (placed in an auto-arranged grid if several are chosen at once).</p>
+
+<h3>Edit</h3>
+<ul>
+  <li><strong>Undo</strong> / <strong>Redo</strong> — <kbd>⌘Z</kbd> / <kbd>⇧⌘Z</kbd> (or <kbd>⌘Y</kbd>)</li>
+  <li><strong>Duplicate</strong> (<kbd>⌘D</kbd>) / <strong>Duplicate Below</strong> (<kbd>⇧⌘D</kbd>), with a configurable default offset</li>
+  <li><strong>Group</strong> (<kbd>⌘G</kbd>) / <strong>Ungroup</strong> (<kbd>⇧⌘G</kbd>)</li>
+  <li><strong>Use as Mask</strong> (<kbd>⇧⌘M</kbd>)</li>
+  <li><strong>Flip Horizontal</strong> (<kbd>⇧H</kbd>) / <strong>Flip Vertical</strong> (<kbd>⇧V</kbd>)</li>
+  <li><strong>Rotate Copies</strong> — duplicates a selection N times around a center, stepping by a given angle</li>
+  <li><strong>Make Grid</strong> — duplicates a single layer across a cols × rows grid with configurable gutters</li>
+  <li><strong>Union / Subtract / Intersect / Difference / Add</strong> — boolean shape combine (needs 2+ selected layers), plus <strong>Flatten</strong> to bake any compound shape down to a plain path</li>
+  <li><strong>Convert to Outlines</strong> (<kbd>⌥⌘O</kbd>) — turns a single Text layer's glyphs into editable vector shapes</li>
+  <li><strong>Rename All…</strong> and <strong>Rename with Last Format</strong> — batch rename with numbering/case rules</li>
+</ul>
+
+<h3>View</h3>
+<ul>
+  <li><strong>Rulers</strong>, <strong>Pixel Grid</strong>, <strong>Snapping</strong> — runtime toggles, not saved in the document</li>
+  <li><strong>Clear Guides</strong> — removes this page's ruler guides (guides themselves <em>are</em> saved per-page)</li>
+</ul>
+
+<h2>Selection &amp; editing shortcuts</h2>
+<table>
+  <tr><th>Shortcut</th><th>Action</th></tr>
+  <tr><td><kbd>⌘C</kbd> / <kbd>⌘V</kbd> / <kbd>⇧⌘V</kbd></td><td>Copy / Paste / Paste Over — round-trips through the OS clipboard, so it works across separate running instances of the app</td></tr>
+  <tr><td><kbd>⌘A</kbd></td><td>Select every layer among the current selection's siblings (or the whole page); on a single selected Path, selects every point on it instead</td></tr>
+  <tr><td>Arrow keys</td><td>Nudge selection 1px (10px with <kbd>⇧</kbd>)</td></tr>
+  <tr><td><kbd>⌘</kbd> + Arrow keys</td><td>Resize selection by the same step instead of moving it</td></tr>
+  <tr><td><kbd>⌘R</kbd></td><td>Inline-rename a single selection, or open Rename All for a multi-selection</td></tr>
+  <tr><td><kbd>K</kbd></td><td>Enter Scale mode — subsequent resizes scale stroke width and corner radius proportionally too</td></tr>
+  <tr><td><kbd>↵</kbd></td><td>Exit Scale mode, or start in-place editing on a selected Text layer</td></tr>
+  <tr><td><kbd>⌥⌘L</kbd></td><td>Toggle aspect-ratio lock while resizing</td></tr>
+  <tr><td><kbd>Delete</kbd> / <kbd>Backspace</kbd></td><td>Delete the selection, or delete selected path points while editing a Path</td></tr>
+  <tr><td><kbd>Esc</kbd></td><td>Clear selection</td></tr>
+</table>
+
+<h2>Canvas interactions</h2>
+<ul>
+  <li><strong>Marquee select</strong> — drag on empty canvas; hold <kbd>⌥</kbd> for "must be fully contained" instead of "overlaps," hold <kbd>⌘</kbd> to descend into groups/artboards, hold <kbd>⇧⌘</kbd> to invert against the current selection instead of adding to it</li>
+  <li><strong>Shift-click</strong> — toggle a layer into/out of the selection; reaches into groups/artboards directly even without marquee's <kbd>⌘</kbd> modifier</li>
+  <li><strong>Group move / resize</strong> — dragging a multi-selection moves all of it; dragging a handle scales the whole bounding box proportionally</li>
+  <li><strong>Rotate</strong> — drag a selected shape's rotation handle; only ever applies to a single leaf shape, never to a Group/Artboard itself</li>
+  <li><strong>Snapping</strong> — edges/centers of top-level layers and guides act as snap targets while dragging or resizing</li>
+</ul>
+
+<div class="footer-nav">
+  <a href="getting-started.html">← Getting Started</a>
+  <a href="architecture.html">Architecture →</a>
+</div>
+</main>
+</div>
+</body>
+</html>

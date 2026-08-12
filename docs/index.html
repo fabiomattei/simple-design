@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simple Design — Documentation</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="brand" href="index.html">Simple Design</a>
+  <div class="tagline">Developer &amp; user docs</div>
+  <ul>
+    <li><a class="active" href="index.html">Overview</a></li>
+    <li><a href="getting-started.html">Getting Started</a></li>
+    <li><a href="features.html">Tools &amp; Features</a></li>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="text-and-fonts.html">Text &amp; Fonts</a></li>
+    <li><a href="file-format.html">File Format</a></li>
+  </ul>
+</nav>
+<main>
+<h1>Simple Design</h1>
+<p class="lede">A native, incremental Sketch-like vector design tool, built in pure Rust with egui/eframe.</p>
+
+<p>
+Simple Design is a desktop app for building UI mockups and vector artwork: pages full of
+artboards, shapes, paths, text, and images, with the layer/inspector/canvas workflow
+familiar from tools like Sketch or Figma. It's a native window (not a web app or webview) —
+everything from rendering to hit-testing to PNG export is implemented from scratch on top of
+<a href="https://github.com/emilk/egui" target="_blank" rel="noopener">egui</a>.
+</p>
+
+<div class="cards">
+  <div class="card">
+    <a href="getting-started.html">
+      <h3>Getting Started →</h3>
+      <p>Build, run, and test the app from a fresh checkout.</p>
+    </a>
+  </div>
+  <div class="card">
+    <a href="features.html">
+      <h3>Tools &amp; Features →</h3>
+      <p>Every tool, menu command, and keyboard shortcut in the app.</p>
+    </a>
+  </div>
+  <div class="card">
+    <a href="architecture.html">
+      <h3>Architecture →</h3>
+      <p>Module map, coordinate system, drag state machine, undo model.</p>
+    </a>
+  </div>
+  <div class="card">
+    <a href="text-and-fonts.html">
+      <h3>Text &amp; Fonts →</h3>
+      <p>Typography, bundled/system fonts, and the per-character rich text model.</p>
+    </a>
+  </div>
+  <div class="card">
+    <a href="file-format.html">
+      <h3>File Format →</h3>
+      <p>The <code>.sdesign</code> JSON document format, top to bottom.</p>
+    </a>
+  </div>
+</div>
+
+<h2>What's implemented</h2>
+<p>Simple Design covers a substantial slice of a "core vector editor" feature set:</p>
+<ul>
+  <li>Pages, artboards, groups, and a recursive layer tree with fill/stroke styling</li>
+  <li>Shape tools — Rectangle (per-corner radius), Oval, Line, Arrow, Star, Polygon, and a
+      freeform vector Pen tool with bezier handles</li>
+  <li>Boolean shape operations (Union / Subtract / Intersect / Difference / Add) as a
+      non-destructive, live-recomputed <code>BooleanGroup</code></li>
+  <li>Text layers with rich typography — five bundled font families plus any OS-installed
+      font, real bold/italic, alignment, lists, and per-character rich-text formatting</li>
+  <li>Images — insert, crop, magic-wand select, background removal, color adjustment</li>
+  <li>Masking ("use as mask"), alignment/distribution, grids, rotate-copies, flip, flatten</li>
+  <li>Rulers, guides, snapping, and a pixel grid overlay</li>
+  <li>Undo/redo, copy/paste (including cross-instance via the OS clipboard), PNG export</li>
+</ul>
+
+<p>
+For the full running list of what's done vs. planned, see <code>ROADMAP.md</code> in the
+repository root.
+</p>
+
+<h2>Project layout</h2>
+<table>
+  <tr><th>Path</th><th>What lives there</th></tr>
+  <tr><td><code>src/model/</code></td><td>Pure data model — <code>Document</code> → <code>Page</code> → <code>Layer</code> tree, serialized to <code>.sdesign</code> JSON</td></tr>
+  <tr><td><code>src/canvas.rs</code></td><td>The interactive canvas: coordinate transforms, hit-testing, drawing, all drag/click gestures</td></tr>
+  <tr><td><code>src/ui/</code></td><td>Panels — layers panel, inspector, toolbar, pages bar — each emitting action enums</td></tr>
+  <tr><td><code>src/app.rs</code></td><td>Owns undo history, selection, current tool; wires panels together each frame</td></tr>
+  <tr><td><code>src/export.rs</code></td><td>Renders a layer subtree to a PNG via <code>tiny-skia</code>, independent of the canvas renderer</td></tr>
+  <tr><td><code>src/history.rs</code></td><td>Snapshot-based undo/redo</td></tr>
+</table>
+<p>See <a href="architecture.html">Architecture</a> for the full module map and the
+conventions that span it.</p>
+
+<div class="footer-nav">
+  <span></span>
+  <a href="getting-started.html">Getting Started →</a>
+</div>
+</main>
+</div>
+</body>
+</html>
