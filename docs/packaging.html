@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Packaging — Simple Design Docs</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="brand" href="index.html">Simple Design</a>
+  <div class="tagline">Developer &amp; user docs</div>
+  <ul>
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="getting-started.html">Getting Started</a></li>
+    <li><a href="features.html">Tools &amp; Features</a></li>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="text-and-fonts.html">Text &amp; Fonts</a></li>
+    <li><a href="file-format.html">File Format</a></li>
+    <li><a class="active" href="packaging.html">Packaging</a></li>
+  </ul>
+</nav>
+<main>
+<h1>Packaging</h1>
+<p class="lede">Two ways to get a system-integrated build on Linux: a plain <code>.desktop</code> entry, or a sandboxed Flatpak.</p>
+
+<p>
+<code>cargo run</code> / a bare release binary never gets a dock, alt-tab, or app-grid icon on
+GNOME under Wayland. Wayland only resolves a window's icon through a <code>.desktop</code>
+file matched by the window's <code>app_id</code> — there's no other mechanism for a toolkit
+to hand the compositor an icon directly. <code>src/main.rs</code> sets
+<code>with_app_id("simple-design")</code> for exactly this reason; both packaging methods
+below rely on it matching a <code>.desktop</code> file's <code>StartupWMClass</code>.
+</p>
+
+<h2>Desktop entry (unsandboxed)</h2>
+<p>
+The plain option: install a <code>.desktop</code> file pointing at the locally built
+binary, no sandboxing involved. Files live in <code>packaging/linux/</code>.
+</p>
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td><code>simple-design.desktop</code></td><td>Template with <code>__EXEC_PATH__</code> / <code>__ICON_PATH__</code> placeholders</td></tr>
+  <tr><td><code>install.sh</code></td><td><code>sed</code>-substitutes the placeholders with absolute paths into <code>~/.local/share/applications/</code></td></tr>
+</table>
+<pre><code>cargo build --release
+./packaging/linux/install.sh</code></pre>
+<p>
+This resolves <code>${repo}/target/release/simple-design</code> and
+<code>${repo}/assets/icon.png</code> to absolute paths at install time, so the entry only
+works from this checkout — rebuilding in place is enough to pick up updates, no reinstall
+needed. If the icon still doesn't show up after installing, log out/in or restart GNOME
+Shell (<kbd>Alt</kbd>+<kbd>F2</kbd>, <code>r</code>) — the shell caches app icons.
+</p>
+
+<h2>Flatpak (sandboxed)</h2>
+<p>
+The distributable option: a real Flatpak app, <code>io.github.fabiomattei.simple-design</code>,
+built entirely from this repo. Files live in <code>packaging/flatpak/</code>.
+</p>
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td><code>io.github.fabiomattei.simple-design.yml</code></td><td>The build manifest</td></tr>
+  <tr><td><code>io.github.fabiomattei.simple-design.desktop</code></td><td>Flatpak-specific desktop entry (<code>Exec=simple-design</code>, <code>Icon=&lt;app-id&gt;</code>)</td></tr>
+  <tr><td><code>io.github.fabiomattei.simple-design.metainfo.xml</code></td><td>AppStream metadata (license, summary, releases)</td></tr>
+  <tr><td><code>icon.png</code></td><td>256×256 square version of <code>assets/icon.png</code> — Flatpak's exporter rejects non-square icons, and the source asset is 333×346</td></tr>
+</table>
+
+<h3>Build setup</h3>
+<p>Runtime: <code>org.freedesktop.Platform</code> / <code>org.freedesktop.Sdk</code> 25.08, plus the <code>rust-stable</code> SDK extension (installed once, system-wide):</p>
+<pre><code>flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//25.08</code></pre>
+
+<h3>Build &amp; install</h3>
+<pre><code>cd packaging/flatpak
+flatpak-builder --force-clean --user --install builddir \
+  io.github.fabiomattei.simple-design.yml</code></pre>
+<p>Run it with:</p>
+<pre><code>flatpak run io.github.fabiomattei.simple-design</code></pre>
+
+<h3>Sandbox permissions</h3>
+<p>
+The app requests the minimum needed to draw a window and open files — nothing broader:
+</p>
+<ul>
+  <li><code>--socket=wayland</code>, <code>--socket=fallback-x11</code> — display access</li>
+  <li><code>--device=dri</code> — GPU access for the <code>glow</code>/<code>wgpu</code> renderer</li>
+  <li><code>--share=ipc</code> — required alongside the display sockets</li>
+</ul>
+<p>
+No <code>--filesystem</code> permission is granted. <code>rfd</code> (the file-dialog crate)
+pulls in <code>zbus</code>, not GTK — on Linux it talks to the
+<code>org.freedesktop.portal.FileChooser</code> portal, which grants access to whatever the
+user picks in the dialog without the sandbox needing broad filesystem access up front.
+</p>
+
+<h3>Known limitation: not Flathub-ready</h3>
+<p>
+The manifest builds with <code>--share=network</code> and lets <code>cargo build --release</code>
+fetch dependencies from crates.io live, inside the sandbox, on every clean build. That's fine
+for local use but is exactly what Flathub's review process rejects — submissions must build
+with network access disabled, which means vendoring every crate as a manifest source
+(typically generated from <code>Cargo.lock</code> via
+<a href="https://github.com/flatpak/flatpak-builder-tools/tree/master/cargo" target="_blank" rel="noopener">flatpak-cargo-generator</a>
+into a <code>generated-sources.json</code> included as a module source). That step hasn't been
+done here.
+</p>
+
+<div class="footer-nav">
+  <a href="file-format.html">← File Format</a>
+  <span></span>
+</div>
+</main>
+</div>
+</body>
+</html>
