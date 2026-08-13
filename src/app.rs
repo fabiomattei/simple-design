@@ -1014,7 +1014,26 @@ impl eframe::App for App {
 
         egui::Panel::bottom("pages_bar").show(ui, |ui| {
             let doc = self.history.get();
-            let action = self.pages_bar.ui(ui, &doc.pages, doc.active_page);
+            let mut action = None;
+            egui::Sides::new().show(
+                ui,
+                |ui| {
+                    action = self.pages_bar.ui(ui, &doc.pages, doc.active_page);
+                },
+                |ui| {
+                    let mut zoom_pct = self.canvas.zoom * 100.0;
+                    let resp = ui.add(
+                        egui::DragValue::new(&mut zoom_pct)
+                            .suffix("%")
+                            .range(10.0..=800.0)
+                            .speed(1.0),
+                    );
+                    if resp.changed() {
+                        self.canvas.zoom = zoom_pct / 100.0;
+                    }
+                    resp.on_hover_text("Zoom: Ctrl + Scroll (or pinch), or drag/click to set");
+                },
+            );
             match action {
                 Some(PagesAction::Select(idx)) => {
                     self.history.mutate().active_page = idx;
