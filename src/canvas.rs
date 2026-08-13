@@ -1034,6 +1034,12 @@ const PEN_HANDLE_MIN_DRAG: f32 = 2.0;
 pub struct CanvasWidget {
     pub pan: Vec2,
     pub zoom: f32,
+    /// The on-screen size (in points) of `canvas_rect` as of last frame's
+    /// `ui()` call — the piece of doc-space actually visible is
+    /// `last_canvas_size / zoom`. One frame stale for panels drawn earlier
+    /// in the same pass (e.g. `ui/minimap_panel.rs`'s viewport rectangle),
+    /// which is imperceptible since it only changes on window resize.
+    pub last_canvas_size: Vec2,
     pub show_rulers: bool,
     pub show_grid: bool,
     pub snap_enabled: bool,
@@ -1154,6 +1160,7 @@ impl Default for CanvasWidget {
         Self {
             pan: Vec2::ZERO,
             zoom: 1.0,
+            last_canvas_size: Vec2::ZERO,
             show_rulers: true,
             show_grid: true,
             snap_enabled: true,
@@ -2006,6 +2013,7 @@ impl CanvasWidget {
         let full_rect = response.rect;
         let ruler_size = if self.show_rulers { RULER_SIZE } else { 0.0 };
         let canvas_rect = Rect::from_min_max(full_rect.min + Vec2::splat(ruler_size), full_rect.max);
+        self.last_canvas_size = canvas_rect.size();
         let origin = canvas_rect.min;
         // Everything drawn on the document itself (background, grid, layers,
         // guides, drag previews) is clipped to `canvas_rect` so none of it

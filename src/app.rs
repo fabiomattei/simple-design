@@ -19,7 +19,7 @@ use crate::ui::pages_bar::{PagesAction, PagesBar};
 use crate::ui::palette_panel::PaletteAction;
 use crate::ui::rename_all::{self, RenameAllAction, RenameAllConfig, RenameAllState};
 use crate::ui::toolbar::ToolbarAction;
-use crate::ui::{inspector, palette_panel, toolbar};
+use crate::ui::{inspector, minimap_panel, palette_panel, toolbar};
 
 pub struct App {
     history: History,
@@ -53,6 +53,10 @@ pub struct App {
     /// runtime-only convention as `show_palette_panel`.
     show_layers_panel: bool,
     show_inspector_panel: bool,
+    /// View menu toggle for the Minimap panel (`ui/minimap_panel.rs`) — an
+    /// Aseprite-style bird's-eye view of the active page with a draggable
+    /// viewport outline. Same runtime-only convention as `show_palette_panel`.
+    show_minimap_panel: bool,
 }
 
 impl App {
@@ -77,6 +81,7 @@ impl App {
             show_palette_panel: false,
             show_layers_panel: true,
             show_inspector_panel: true,
+            show_minimap_panel: true,
         }
     }
 
@@ -989,6 +994,9 @@ impl eframe::App for App {
                     if ui.checkbox(&mut self.show_inspector_panel, "Inspector").clicked() {
                         ui.close();
                     }
+                    if ui.checkbox(&mut self.show_minimap_panel, "Minimap").clicked() {
+                        ui.close();
+                    }
                     ui.separator();
                     let has_guides = !self.history.get().active_page().guides.is_empty();
                     if ui
@@ -1183,6 +1191,20 @@ impl eframe::App for App {
             Some(InspectorAction::Flatten) => self.flatten_selection(),
             Some(InspectorAction::InsertArtboardPreset(size)) => self.insert_artboard_preset(size),
             None => {}
+        }
+
+        if self.show_minimap_panel {
+            egui::Panel::right("minimap_panel")
+                .default_size(220.0)
+                .show(ui, |ui| {
+                    minimap_panel::ui(
+                        ui,
+                        self.history.get().active_page(),
+                        &mut self.canvas.pan,
+                        self.canvas.zoom,
+                        self.canvas.last_canvas_size,
+                    );
+                });
         }
 
         egui::CentralPanel::default().show(ui, |ui| {
