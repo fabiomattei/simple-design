@@ -5,5 +5,6 @@ pub mod layers_panel;
 pub mod minimap_panel;
 pub mod pages_bar;
 pub mod palette_panel;
+pub mod panel_rail;
 pub mod rename_all;
 pub mod toolbar;

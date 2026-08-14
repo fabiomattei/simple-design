@@ -19,7 +19,7 @@ use crate::ui::pages_bar::{PagesAction, PagesBar};
 use crate::ui::palette_panel::PaletteAction;
 use crate::ui::rename_all::{self, RenameAllAction, RenameAllConfig, RenameAllState};
 use crate::ui::toolbar::ToolbarAction;
-use crate::ui::{inspector, minimap_panel, palette_panel, toolbar};
+use crate::ui::{inspector, minimap_panel, palette_panel, panel_rail, toolbar};
 
 pub struct App {
     history: History,
@@ -57,6 +57,12 @@ pub struct App {
     /// Aseprite-style bird's-eye view of the active page with a draggable
     /// viewport outline. Same runtime-only convention as `show_palette_panel`.
     show_minimap_panel: bool,
+    /// Mouse-draggable heights for the stacked right-side panels (see
+    /// `panel_rail::stacked_panel`), used whenever that panel isn't the bottommost
+    /// currently open one — the bottommost always fills the leftover height instead.
+    layers_panel_height: f32,
+    palette_panel_height: f32,
+    inspector_panel_height: f32,
 }
 
 impl App {
@@ -82,6 +88,9 @@ impl App {
             show_layers_panel: true,
             show_inspector_panel: true,
             show_minimap_panel: true,
+            layers_panel_height: 260.0,
+            palette_panel_height: 220.0,
+            inspector_panel_height: 300.0,
         }
     }
 
@@ -1068,135 +1077,171 @@ impl eframe::App for App {
             }
         });
 
-        if self.show_layers_panel {
-            egui::Panel::left("layers_panel")
-                .default_size(220.0)
-                .show(ui, |ui| {
-                    let actions =
-                        self.layers_panel
-                            .ui(ui, self.history.get().active_page(), &mut self.selection);
-                    if !actions.is_empty() {
-                        // Copy/Paste/PasteOver manage their own history snapshot
-                        // (Copy doesn't mutate the document at all; Paste/
-                        // PasteOver snapshot inside `paste_selection`) — folding
-                        // them into this blanket pre-snapshot would either
-                        // record a spurious no-op undo step (Copy) or double up
-                        // (Paste/PasteOver).
-                        let needs_snapshot = actions.iter().any(|a| {
-                            !matches!(
-                                a,
-                                LayerAction::Copy(_) | LayerAction::Paste | LayerAction::PasteOver | LayerAction::Close
-                            )
-                        });
-                        if needs_snapshot {
-                            self.history.snapshot();
-                        }
-                        for action in actions {
-                            match action {
-                                LayerAction::Close => self.show_layers_panel = false,
-                                LayerAction::Copy(id) => clipboard::copy_selection(&self.history, &[id]),
-                                LayerAction::Paste => self.paste_selection(false),
-                                LayerAction::PasteOver => self.paste_selection(true),
-                                LayerAction::ToggleVisible(id) => {
-                                    if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
-                                        l.visible = !l.visible;
+        // Pinned to the outer right edge (added before the four content panels below, so
+        // egui's panel stacking keeps it outermost) — same direct-mutation convention as the
+        // View menu checkboxes above, since visibility toggles have no history to snapshot.
+        const PANEL_RAIL_WIDTH: f32 = 40.0;
+        egui::Panel::right("panel_rail").exact_size(PANEL_RAIL_WIDTH).show(ui, |ui| {
+            panel_rail::ui(
+                ui,
+                &mut self.show_layers_panel,
+                &mut self.show_palette_panel,
+                &mut self.show_inspector_panel,
+                &mut self.show_minimap_panel,
+            );
+        });
+
+        // All four panels dock into one shared right-side column, stacked top-to-bottom in
+        // fixed order (same order as the rail's icons) rather than as separate side-by-side
+        // columns — see `panel_rail::stacked_panel`'s doc comment for the IntelliJ-style
+        // rationale. `last_visible_panel` is this frame's index (into that fixed order) of
+        // the bottommost open panel, which fills the remaining height with no dead space.
+        let last_visible_panel = [
+            self.show_layers_panel,
+            self.show_palette_panel,
+            self.show_inspector_panel,
+            self.show_minimap_panel,
+        ]
+        .iter()
+        .rposition(|&open| open);
+
+        if last_visible_panel.is_some() {
+            egui::Panel::right("panels_column").default_size(260.0).show(ui, |ui| {
+                if self.show_layers_panel {
+                    // `stacked_panel`'s closure below calls several `self.foo(...)` methods, so
+                    // it must capture `self` as a whole — the height can't be borrowed straight
+                    // out of `self` for the same call without conflicting with that capture.
+                    let mut height = self.layers_panel_height;
+                    panel_rail::stacked_panel(ui, "layers_panel", &mut height, last_visible_panel == Some(0), |ui| {
+                        let actions =
+                            self.layers_panel
+                                .ui(ui, self.history.get().active_page(), &mut self.selection);
+                        if !actions.is_empty() {
+                            // Copy/Paste/PasteOver manage their own history snapshot
+                            // (Copy doesn't mutate the document at all; Paste/
+                            // PasteOver snapshot inside `paste_selection`) — folding
+                            // them into this blanket pre-snapshot would either
+                            // record a spurious no-op undo step (Copy) or double up
+                            // (Paste/PasteOver).
+                            let needs_snapshot = actions.iter().any(|a| {
+                                !matches!(
+                                    a,
+                                    LayerAction::Copy(_) | LayerAction::Paste | LayerAction::PasteOver | LayerAction::Close
+                                )
+                            });
+                            if needs_snapshot {
+                                self.history.snapshot();
+                            }
+                            for action in actions {
+                                match action {
+                                    LayerAction::Close => self.show_layers_panel = false,
+                                    LayerAction::Copy(id) => clipboard::copy_selection(&self.history, &[id]),
+                                    LayerAction::Paste => self.paste_selection(false),
+                                    LayerAction::PasteOver => self.paste_selection(true),
+                                    LayerAction::ToggleVisible(id) => {
+                                        if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
+                                            l.visible = !l.visible;
+                                        }
                                     }
-                                }
-                                LayerAction::ToggleLocked(id) => {
-                                    if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
-                                        l.locked = !l.locked;
+                                    LayerAction::ToggleLocked(id) => {
+                                        if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
+                                            l.locked = !l.locked;
+                                        }
                                     }
-                                }
-                                LayerAction::Delete(id) => {
-                                    let page = self.history.mutate().active_page_mut();
-                                    let context = grouping::parent_and_index(&page.layers, id);
-                                    page.remove(id);
-                                    self.selection.retain(|&s| s != id);
-                                    if let Some((Some(parent_id), index)) = context {
-                                        let next_selected = page.find(parent_id).and_then(|parent| {
-                                            let children = parent.kind.children()?;
-                                            children.get(index).or(children.last()).map(|l| l.id)
-                                        });
-                                        self.selection = vec![next_selected.unwrap_or(parent_id)];
-                                        self.canvas.insert_hint_parent = Some(parent_id);
+                                    LayerAction::Delete(id) => {
+                                        let page = self.history.mutate().active_page_mut();
+                                        let context = grouping::parent_and_index(&page.layers, id);
+                                        page.remove(id);
+                                        self.selection.retain(|&s| s != id);
+                                        if let Some((Some(parent_id), index)) = context {
+                                            let next_selected = page.find(parent_id).and_then(|parent| {
+                                                let children = parent.kind.children()?;
+                                                children.get(index).or(children.last()).map(|l| l.id)
+                                            });
+                                            self.selection = vec![next_selected.unwrap_or(parent_id)];
+                                            self.canvas.insert_hint_parent = Some(parent_id);
+                                        }
                                     }
-                                }
-                                LayerAction::Duplicate(id) => {
-                                    let offset = self.canvas.duplicate_offset;
-                                    let new_ids = grouping::duplicate_layers(
-                                        self.history.mutate().active_page_mut(),
-                                        &[id],
-                                        offset,
-                                    );
-                                    if let Some(&new_id) = new_ids.first() {
-                                        self.selection = vec![new_id];
+                                    LayerAction::Duplicate(id) => {
+                                        let offset = self.canvas.duplicate_offset;
+                                        let new_ids = grouping::duplicate_layers(
+                                            self.history.mutate().active_page_mut(),
+                                            &[id],
+                                            offset,
+                                        );
+                                        if let Some(&new_id) = new_ids.first() {
+                                            self.selection = vec![new_id];
+                                        }
                                     }
-                                }
-                                LayerAction::Rename(id, name) => {
-                                    if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
-                                        l.name = name;
+                                    LayerAction::Rename(id, name) => {
+                                        if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
+                                            l.name = name;
+                                        }
                                     }
-                                }
-                                LayerAction::ToggleMask(id) => {
-                                    if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
-                                        l.is_mask = !l.is_mask;
+                                    LayerAction::ToggleMask(id) => {
+                                        if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
+                                            l.is_mask = !l.is_mask;
+                                        }
                                     }
-                                }
-                                LayerAction::ToggleIgnoreMask(id) => {
-                                    if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
-                                        l.ignore_mask = !l.ignore_mask;
+                                    LayerAction::ToggleIgnoreMask(id) => {
+                                        if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
+                                            l.ignore_mask = !l.ignore_mask;
+                                        }
                                     }
-                                }
-                                LayerAction::Move { id, new_parent, index } => {
-                                    grouping::move_layer(self.history.mutate().active_page_mut(), id, new_parent, index);
-                                }
-                                LayerAction::SetChildBoolOp(id, op) => {
-                                    if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
-                                        l.bool_op = op;
+                                    LayerAction::Move { id, new_parent, index } => {
+                                        grouping::move_layer(self.history.mutate().active_page_mut(), id, new_parent, index);
+                                    }
+                                    LayerAction::SetChildBoolOp(id, op) => {
+                                        if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
+                                            l.bool_op = op;
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                });
-        }
+                    });
+                    self.layers_panel_height = height;
+                }
 
-        if self.show_palette_panel {
-            egui::Panel::left("palette_panel")
-                .default_size(220.0)
-                .show(ui, |ui| {
-                    let action = palette_panel::ui(ui, &self.history.get().palette, !self.selection.is_empty());
-                    self.apply_palette_action(action);
-                });
-        }
+                if self.show_palette_panel {
+                    let mut height = self.palette_panel_height;
+                    panel_rail::stacked_panel(ui, "palette_panel", &mut height, last_visible_panel == Some(1), |ui| {
+                        let action = palette_panel::ui(ui, &self.history.get().palette, !self.selection.is_empty());
+                        self.apply_palette_action(action);
+                    });
+                    self.palette_panel_height = height;
+                }
 
-        let mut inspector_action = None;
-        if self.show_inspector_panel {
-            egui::Panel::right("inspector_panel")
-                .default_size(240.0)
-                .show(ui, |ui| {
-                    inspector_action = inspector::ui(ui, &mut self.history, &self.selection, &mut self.canvas, self.tool);
-                });
-        }
-        match inspector_action {
-            Some(InspectorAction::Close) => self.show_inspector_panel = false,
-            Some(InspectorAction::Duplicate) => self.duplicate_selection(),
-            Some(InspectorAction::Group) => self.group_selection(),
-            Some(InspectorAction::Ungroup) => self.ungroup_selection(),
-            Some(InspectorAction::Boolean(op)) => self.boolean_op_selection(op),
-            Some(InspectorAction::Align(edge, to_artboard)) => self.align_selection(edge, to_artboard),
-            Some(InspectorAction::Distribute(axis)) => self.distribute_selection(axis),
-            Some(InspectorAction::Tidy(spacing)) => self.tidy_selection(spacing),
-            Some(InspectorAction::Flip(axis)) => self.flip_selection(axis),
-            Some(InspectorAction::Flatten) => self.flatten_selection(),
-            Some(InspectorAction::InsertArtboardPreset(size)) => self.insert_artboard_preset(size),
-            None => {}
-        }
+                let mut inspector_action = None;
+                if self.show_inspector_panel {
+                    panel_rail::stacked_panel(ui, "inspector_panel", &mut self.inspector_panel_height, last_visible_panel == Some(2), |ui| {
+                        // Unlike Layers/Palette, `inspector::ui`'s body doesn't scroll itself —
+                        // wrapped here (rather than inside `inspector.rs`) so a tall property
+                        // list can't get silently clipped by the panel's fixed stacked height.
+                        egui::ScrollArea::vertical().show(ui, |ui| {
+                            inspector_action = inspector::ui(ui, &mut self.history, &self.selection, &mut self.canvas, self.tool);
+                        });
+                    });
+                }
+                match inspector_action {
+                    Some(InspectorAction::Close) => self.show_inspector_panel = false,
+                    Some(InspectorAction::Duplicate) => self.duplicate_selection(),
+                    Some(InspectorAction::Group) => self.group_selection(),
+                    Some(InspectorAction::Ungroup) => self.ungroup_selection(),
+                    Some(InspectorAction::Boolean(op)) => self.boolean_op_selection(op),
+                    Some(InspectorAction::Align(edge, to_artboard)) => self.align_selection(edge, to_artboard),
+                    Some(InspectorAction::Distribute(axis)) => self.distribute_selection(axis),
+                    Some(InspectorAction::Tidy(spacing)) => self.tidy_selection(spacing),
+                    Some(InspectorAction::Flip(axis)) => self.flip_selection(axis),
+                    Some(InspectorAction::Flatten) => self.flatten_selection(),
+                    Some(InspectorAction::InsertArtboardPreset(size)) => self.insert_artboard_preset(size),
+                    None => {}
+                }
 
-        if self.show_minimap_panel {
-            egui::Panel::right("minimap_panel")
-                .default_size(220.0)
-                .show(ui, |ui| {
+                // Minimap is always last in the fixed stacking order, so whenever it's open
+                // it's the bottommost panel (see `last_visible_panel` above) — it always fills
+                // the leftover height directly, with no height field or splitter of its own.
+                if self.show_minimap_panel {
                     minimap_panel::ui(
                         ui,
                         self.history.get().active_page(),
@@ -1204,7 +1249,8 @@ impl eframe::App for App {
                         self.canvas.zoom,
                         self.canvas.last_canvas_size,
                     );
-                });
+                }
+            });
         }
 
         egui::CentralPanel::default().show(ui, |ui| {

@@ -55,6 +55,27 @@ pub fn tool_button(ui: &mut Ui, tool: Tool, selected: bool) -> Response {
     response
 }
 
+/// Draws a toggle-style icon button from an arbitrary draw closure, e.g. for the panel rail
+/// (`ui/panel_rail.rs`) — same highlight-when-selected behavior as `tool_button`, but not tied
+/// to the `Tool` enum.
+pub fn toggle_icon_button(ui: &mut Ui, selected: bool, draw: impl FnOnce(&Painter, Rect, Color32)) -> Response {
+    let (rect, response) = ui.allocate_exact_size(Vec2::splat(BUTTON_SIZE), Sense::click());
+    if ui.is_rect_visible(rect) {
+        let visuals = ui.style().interact_selectable(&response, selected);
+        if selected || response.hovered() {
+            ui.painter().rect_filled(rect, 6.0, visuals.weak_bg_fill);
+        }
+        let color = if selected {
+            ui.visuals().selection.stroke.color
+        } else {
+            ui.visuals().text_color()
+        };
+        let icon_rect = Rect::from_center_size(rect.center(), Vec2::splat(ICON_SIZE));
+        draw(ui.painter(), icon_rect, color);
+    }
+    response
+}
+
 /// Draws a plain (non-toggling) icon button, e.g. for "Insert Image...".
 pub fn icon_button(ui: &mut Ui, draw: impl FnOnce(&Painter, Rect, Color32)) -> Response {
     let (rect, response) = ui.allocate_exact_size(Vec2::splat(BUTTON_SIZE), Sense::click());
@@ -686,6 +707,44 @@ pub fn close_button(ui: &mut Ui) -> Response {
         ui.painter().line_segment([icon_rect.right_top(), icon_rect.left_bottom()], s);
     }
     response.on_hover_text("Close")
+}
+
+/// Draws the panel rail's "Layers" glyph: a diamond with two chevrons stacked below it, the
+/// standard "layers" icon shorthand.
+pub fn draw_layers_icon(painter: &Painter, rect: Rect, color: Color32) {
+    let s = stroke(color);
+    painter.add(Shape::closed_line(
+        vec![p(rect, 0.5, 0.08), p(rect, 0.92, 0.34), p(rect, 0.5, 0.60), p(rect, 0.08, 0.34)],
+        s,
+    ));
+    painter.add(Shape::line(vec![p(rect, 0.08, 0.50), p(rect, 0.5, 0.76), p(rect, 0.92, 0.50)], s));
+    painter.add(Shape::line(vec![p(rect, 0.08, 0.64), p(rect, 0.5, 0.90), p(rect, 0.92, 0.64)], s));
+}
+
+/// Draws the panel rail's "Palette" glyph: a ring of color swatches.
+pub fn draw_palette_icon(painter: &Painter, rect: Rect, color: Color32) {
+    painter.circle_stroke(rect.center(), rect.width() * 0.44, stroke(color));
+    for (x, y) in [(0.34, 0.32), (0.62, 0.30), (0.72, 0.56), (0.38, 0.62)] {
+        painter.circle_filled(p(rect, x, y), rect.width() * 0.09, color);
+    }
+}
+
+/// Draws the panel rail's "Inspector" glyph: three property sliders.
+pub fn draw_inspector_icon(painter: &Painter, rect: Rect, color: Color32) {
+    let s = stroke(color);
+    for (y, knob_x) in [(0.28, 0.62), (0.5, 0.38), (0.72, 0.74)] {
+        painter.line_segment([p(rect, 0.08, y), p(rect, 0.92, y)], s);
+        painter.circle_filled(p(rect, knob_x, y), rect.width() * 0.07, color);
+    }
+}
+
+/// Draws the panel rail's "Minimap" glyph: a document frame with the visible-viewport box
+/// inside it, matching what `ui/minimap_panel.rs` actually renders.
+pub fn draw_minimap_icon(painter: &Painter, rect: Rect, color: Color32) {
+    let outer = Rect::from_min_max(p(rect, 0.08, 0.12), p(rect, 0.92, 0.88));
+    painter.rect_stroke(outer, 1.0, stroke(color), StrokeKind::Middle);
+    let inner = Rect::from_min_max(p(rect, 0.34, 0.36), p(rect, 0.74, 0.64));
+    painter.rect_stroke(inner, 1.0, Stroke::new(STROKE_WIDTH * 1.3, color), StrokeKind::Middle);
 }
 
 /// Draws the "Insert Image..." glyph: a picture frame with a sun and mountains.
