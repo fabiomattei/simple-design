@@ -105,7 +105,15 @@ impl MaskedGroupTextureCache {
             // own top-left) lands at the scratch pixmap's `(0, 0)` — same
             // idea as `export::render_layer`'s `offset` computation.
             let render_offset = Vec2::new(-bounds.min.x, -bounds.min.y);
-            crate::masking::composite_masked_run(&mut pixmap, mask, content, render_offset, 1.0, crate::export::draw_layer_with_shadows);
+            // `mask` is the best root available here for resolving a
+            // `path_attachment` (this cache has no page/document context) —
+            // covers attaching within the mask's own subtree, not to a
+            // target elsewhere on the page. See `export.rs`'s `root`
+            // threading for the fully page-aware path (used by PNG export
+            // and "Convert to Outlines").
+            crate::masking::composite_masked_run(&mut pixmap, mask, content, render_offset, 1.0, |px, l, off, op| {
+                crate::export::draw_layer_with_shadows(px, l, mask, off, op)
+            });
             let color_image = egui::ColorImage::from_rgba_premultiplied([width as usize, height as usize], pixmap.data());
             let texture = ctx.load_texture(format!("mask-group-{}", mask.id), color_image, egui::TextureOptions::LINEAR);
             self.0.insert(
@@ -1302,6 +1310,7 @@ impl CanvasWidget {
                 list_start: 1,
                 style_id: None,
                 runs: Vec::new(),
+                path_attachment: None,
             },
         );
         label.style = Style { fill: Some(Paint::Solid(Color32::BLACK)), stroke: None, ..Default::default() };
@@ -2219,6 +2228,7 @@ impl CanvasWidget {
             &mut self.pattern_cache,
             &mut self.shadow_cache,
             &page.layers,
+            page,
             Vec2::ZERO,
             origin,
             self.pan,
@@ -4749,6 +4759,7 @@ fn new_layer_for_tool(tool: Tool, frame: Frame) -> Option<Layer> {
                     list_start: 1,
                     style_id: None,
                     runs: Vec::new(),
+                    path_attachment: None,
                 },
             );
             layer.style =
@@ -5005,6 +5016,7 @@ fn draw_children(
     pattern_cache: &mut PatternTextureCache,
     shadow_cache: &mut ShadowTextureCache,
     children: &[Layer],
+    page: &Page,
     parent_offset: Vec2,
     origin: Pos2,
     pan: Vec2,
@@ -5015,7 +5027,7 @@ fn draw_children(
     for unit in crate::masking::partition_mask_runs(children) {
         match unit {
             crate::masking::RenderUnit::Plain(child) => {
-                draw_layer(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, child, parent_offset, origin, pan, zoom, opacity, editing_text);
+                draw_layer(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, child, page, parent_offset, origin, pan, zoom, opacity, editing_text);
             }
             crate::masking::RenderUnit::Masked { mask, content } => {
                 draw_masked_run(painter, ctx, mask_cache, mask, &content, parent_offset, origin, pan, zoom, opacity);
@@ -5063,6 +5075,7 @@ fn draw_layer(
     pattern_cache: &mut PatternTextureCache,
     shadow_cache: &mut ShadowTextureCache,
     layer: &Layer,
+    page: &Page,
     parent_offset: Vec2,
     origin: Pos2,
     pan: Vec2,
@@ -5121,11 +5134,11 @@ fn draw_layer(
                 Color32::from_gray(100),
             );
             let child_offset = parent_offset + layer.frame.pos.to_vec2();
-            draw_children(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, children, child_offset, origin, pan, zoom, opacity, editing_text);
+            draw_children(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, children, page, child_offset, origin, pan, zoom, opacity, editing_text);
         }
         LayerKind::Group { children } => {
             let child_offset = parent_offset + layer.frame.pos.to_vec2();
-            draw_children(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, children, child_offset, origin, pan, zoom, opacity, editing_text);
+            draw_children(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, children, page, child_offset, origin, pan, zoom, opacity, editing_text);
         }
         LayerKind::Rectangle { corner_radius } => {
             let bounds = layer.frame.bounds();
@@ -5328,6 +5341,7 @@ fn draw_layer(
             list,
             list_start,
             runs,
+            path_attachment,
             ..
         } => {
             // While this layer is being edited in place, the floating
@@ -5348,22 +5362,14 @@ fn draw_layer(
                     list: *list,
                     list_start: *list_start,
                 };
-                let wrap_width = match resize {
-                    TextResize::Auto => f32::INFINITY,
-                    TextResize::AutoHeight | TextResize::Fixed => bounds.width() * zoom,
-                };
                 let color = with_opacity(
                     layer.style.fill.as_ref().map(Paint::to_color32).unwrap_or(Color32::BLACK),
                     opacity * layer.style.fill_opacity,
                 );
-                // `runs` non-empty is the rich-text path (see
-                // `LayerKind::Text::runs`'s doc comment) — everything below
-                // this `if` is untouched from before that feature existed,
-                // reached only for the (overwhelmingly common) uniform-style
-                // case, so it can't regress.
-                let galleys = if runs.is_empty() {
-                    text_layout::layout_paragraphs(ctx, content, &style, zoom, color, wrap_width)
-                } else {
+                let attached_outline = path_attachment
+                    .as_ref()
+                    .and_then(|a| crate::text_path_geometry::resolve_target_outline(&page.layers, a.target).map(|o| (a, o)));
+                if let Some((attachment, (outline, closed))) = attached_outline {
                     let base_style = crate::model::text_runs::RunStyle {
                         font: font.clone(),
                         font_size: *font_size,
@@ -5373,68 +5379,134 @@ fn draw_layer(
                         underline: *underline,
                         strikethrough: *strikethrough,
                     };
-                    text_layout::layout_paragraphs_rich(ctx, content, runs, &base_style, &style, zoom, color, wrap_width)
-                };
-                let (offsets, total_size) = text_layout::stack_paragraphs(&galleys, *paragraph_spacing * zoom);
-
-                let start_y = match vertical_align {
-                    VerticalAlign::Top => bounds.min.y,
-                    VerticalAlign::Middle => bounds.center().y - (total_size.y / zoom) / 2.0,
-                    VerticalAlign::Bottom => bounds.max.y - total_size.y / zoom,
-                };
-                let anchor_x = match align {
-                    TextAlign::Left | TextAlign::Justify => bounds.min.x,
-                    TextAlign::Center => bounds.center().x,
-                    TextAlign::Right => bounds.max.x,
-                };
-                let base = to_screen(Pos2::new(anchor_x, start_y));
-
-                let clip_painter;
-                let text_painter = if *resize == TextResize::Fixed {
-                    let screen_rect = Rect::from_two_pos(to_screen(bounds.min), to_screen(bounds.max));
-                    clip_painter = painter.with_clip_rect(screen_rect);
-                    &clip_painter
-                } else {
-                    painter
-                };
-                // egui's `TextShape` rotates about its own `pos` (the
-                // unrotated top-left of that galley), not about a shared
-                // pivot — so a multi-line/multi-paragraph text layer needs
-                // each galley's `pos` individually rotated about the whole
-                // layer's own bounds center first, with the same angle then
-                // applied to each galley so every line still reads upright
-                // relative to the others.
-                let screen_center = to_screen(bounds.center());
-                let angle_rad = layer.frame.rotation.to_radians();
-                let draw_rotated_galley = |p: &egui::Painter, pos: Pos2, galley: std::sync::Arc<egui::Galley>, color: Color32| {
-                    if galley.is_empty() {
-                        return;
+                    let screen_points: Vec<Pos2> = outline.iter().map(|&p| to_screen(p)).collect();
+                    match attachment.mode {
+                        crate::model::TextPathMode::OnPath => {
+                            let glyphs = crate::text_on_path_layout::layout_glyphs_on_path(
+                                ctx,
+                                content,
+                                runs,
+                                &base_style,
+                                &style,
+                                zoom,
+                                color,
+                                &screen_points,
+                                closed,
+                                attachment.offset * zoom,
+                                attachment.start,
+                                attachment.flip,
+                            );
+                            for glyph in glyphs {
+                                let mut shape = egui::epaint::TextShape::new(glyph.pos, glyph.galley, color);
+                                shape.angle = glyph.angle;
+                                painter.add(egui::Shape::Text(shape));
+                            }
+                        }
+                        crate::model::TextPathMode::AreaInside => {
+                            let lines = crate::text_area_layout::layout_text_in_area(
+                                ctx,
+                                content,
+                                runs,
+                                &base_style,
+                                &style,
+                                zoom,
+                                color,
+                                &screen_points,
+                                attachment.offset * zoom,
+                            );
+                            for line in lines {
+                                if line.galley.is_empty() {
+                                    continue;
+                                }
+                                painter.add(egui::Shape::Text(egui::epaint::TextShape::new(line.pos, line.galley, color)));
+                            }
+                        }
                     }
-                    let mut shape = egui::epaint::TextShape::new(
-                        rotate_point(pos, screen_center, layer.frame.rotation),
-                        galley,
-                        color,
-                    );
-                    shape.angle = angle_rad;
-                    p.add(egui::Shape::Text(shape));
-                };
-                for (galley, y_off) in galleys.into_iter().zip(offsets) {
-                    let pos = base + Vec2::new(0.0, y_off);
-                    draw_rotated_galley(text_painter, pos, galley.clone(), color);
-                    if *bold && runs.is_empty() {
-                        // No real bold weight is available for any of the
-                        // bundled fonts (see `TextFont`) — fake it by
-                        // drawing a second copy offset by half a screen
-                        // pixel, regardless of zoom. The rich-text path
-                        // (`runs` non-empty) doesn't need this: bold there
-                        // is already a real bold-weight font family baked
-                        // into the galley per run (see `fonts.rs`'s "Bold"
-                        // doc section). Passing the plain unrotated offset
-                        // through the same `draw_rotated_galley` rotation
-                        // (which is linear in the pos-minus-pivot deviation)
-                        // keeps the nudge aligned with the rotated baseline,
-                        // without double-applying the rotation.
-                        draw_rotated_galley(text_painter, pos + Vec2::new(0.6, 0.0), galley, color);
+                } else {
+                    let wrap_width = match resize {
+                        TextResize::Auto => f32::INFINITY,
+                        TextResize::AutoHeight | TextResize::Fixed => bounds.width() * zoom,
+                    };
+                    // `runs` non-empty is the rich-text path (see
+                    // `LayerKind::Text::runs`'s doc comment) — everything below
+                    // this `if` is untouched from before that feature existed,
+                    // reached only for the (overwhelmingly common) uniform-style
+                    // case, so it can't regress.
+                    let galleys = if runs.is_empty() {
+                        text_layout::layout_paragraphs(ctx, content, &style, zoom, color, wrap_width)
+                    } else {
+                        let base_style = crate::model::text_runs::RunStyle {
+                            font: font.clone(),
+                            font_size: *font_size,
+                            color: layer.style.fill.as_ref().map(Paint::to_color32),
+                            bold: *bold,
+                            italic: *italic,
+                            underline: *underline,
+                            strikethrough: *strikethrough,
+                        };
+                        text_layout::layout_paragraphs_rich(ctx, content, runs, &base_style, &style, zoom, color, wrap_width)
+                    };
+                    let (offsets, total_size) = text_layout::stack_paragraphs(&galleys, *paragraph_spacing * zoom);
+
+                    let start_y = match vertical_align {
+                        VerticalAlign::Top => bounds.min.y,
+                        VerticalAlign::Middle => bounds.center().y - (total_size.y / zoom) / 2.0,
+                        VerticalAlign::Bottom => bounds.max.y - total_size.y / zoom,
+                    };
+                    let anchor_x = match align {
+                        TextAlign::Left | TextAlign::Justify => bounds.min.x,
+                        TextAlign::Center => bounds.center().x,
+                        TextAlign::Right => bounds.max.x,
+                    };
+                    let base = to_screen(Pos2::new(anchor_x, start_y));
+
+                    let clip_painter;
+                    let text_painter = if *resize == TextResize::Fixed {
+                        let screen_rect = Rect::from_two_pos(to_screen(bounds.min), to_screen(bounds.max));
+                        clip_painter = painter.with_clip_rect(screen_rect);
+                        &clip_painter
+                    } else {
+                        painter
+                    };
+                    // egui's `TextShape` rotates about its own `pos` (the
+                    // unrotated top-left of that galley), not about a shared
+                    // pivot — so a multi-line/multi-paragraph text layer needs
+                    // each galley's `pos` individually rotated about the whole
+                    // layer's own bounds center first, with the same angle then
+                    // applied to each galley so every line still reads upright
+                    // relative to the others.
+                    let screen_center = to_screen(bounds.center());
+                    let angle_rad = layer.frame.rotation.to_radians();
+                    let draw_rotated_galley = |p: &egui::Painter, pos: Pos2, galley: std::sync::Arc<egui::Galley>, color: Color32| {
+                        if galley.is_empty() {
+                            return;
+                        }
+                        let mut shape = egui::epaint::TextShape::new(
+                            rotate_point(pos, screen_center, layer.frame.rotation),
+                            galley,
+                            color,
+                        );
+                        shape.angle = angle_rad;
+                        p.add(egui::Shape::Text(shape));
+                    };
+                    for (galley, y_off) in galleys.into_iter().zip(offsets) {
+                        let pos = base + Vec2::new(0.0, y_off);
+                        draw_rotated_galley(text_painter, pos, galley.clone(), color);
+                        if *bold && runs.is_empty() {
+                            // No real bold weight is available for any of the
+                            // bundled fonts (see `TextFont`) — fake it by
+                            // drawing a second copy offset by half a screen
+                            // pixel, regardless of zoom. The rich-text path
+                            // (`runs` non-empty) doesn't need this: bold there
+                            // is already a real bold-weight font family baked
+                            // into the galley per run (see `fonts.rs`'s "Bold"
+                            // doc section). Passing the plain unrotated offset
+                            // through the same `draw_rotated_galley` rotation
+                            // (which is linear in the pos-minus-pivot deviation)
+                            // keeps the nudge aligned with the rotated baseline,
+                            // without double-applying the rotation.
+                            draw_rotated_galley(text_painter, pos + Vec2::new(0.6, 0.0), galley, color);
+                        }
                     }
                 }
             }

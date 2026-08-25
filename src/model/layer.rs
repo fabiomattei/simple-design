@@ -620,6 +620,13 @@ pub enum LayerKind {
         /// directly outside of those.
         #[serde(default, skip_serializing_if = "Vec::is_empty")]
         runs: Vec<TextRun>,
+        /// Non-destructive link to another layer's outline this text follows
+        /// or fills — see `TextPathAttachment`. `None` (the default, and
+        /// always true for documents saved before this field existed) means
+        /// plain rectangular layout via `frame`, exactly as if this field
+        /// didn't exist.
+        #[serde(default)]
+        path_attachment: Option<TextPathAttachment>,
     },
     /// A bitmap image, always stored PNG-encoded regardless of the format it
     /// was originally inserted as (see `image_ops::decode`), so every
@@ -722,6 +729,61 @@ pub enum ListType {
     None,
     Bullet,
     Numbered,
+}
+
+/// How a `Text` layer's `path_attachment` shapes its layout, relative to
+/// `target`'s own outline (see `text_path_geometry::resolve_target_outline`
+/// for how that outline is derived from any attachable `LayerKind`).
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+pub enum TextPathMode {
+    /// The baseline runs along `target`'s outline, like a classic "Type on a
+    /// Path": a straight or closed Pen curve, or any other shape's own
+    /// perimeter (attaching this way to a closed shape is also how "text
+    /// around the outside of a circle/star/etc." is achieved — the contour
+    /// *is* the path, there's no separate mode for it).
+    OnPath,
+    /// The text reflows to fit inside `target`'s closed outline, wrapping
+    /// each line to whatever width the shape's own boundary allows at that
+    /// height (an "Area Type" box). Only meaningful when `target`'s outline
+    /// is closed; a `Text` layer attached this way to an open path renders
+    /// with no text (nothing to wrap inside of).
+    AreaInside,
+}
+
+/// Links a `Text` layer to another layer's outline (see `LayerKind::Text::path_attachment`).
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq)]
+pub struct TextPathAttachment {
+    /// The layer whose outline this text follows or fills. Resolved fresh
+    /// from the document on every render (like `BooleanGroup::children`,
+    /// not cached) so moving/resizing/reshaping the target updates the
+    /// text's layout automatically. If the id no longer resolves to an
+    /// attachable shape (deleted, or changed to a kind with no fillable
+    /// outline), the text falls back to its plain `frame`-based layout.
+    pub target: LayerId,
+    pub mode: TextPathMode,
+    /// Perpendicular distance from `target`'s outline, in document units.
+    /// `OnPath`: shifts the baseline off the path (positive = away from the
+    /// path's own "inside"/fill side). `AreaInside`: inward padding between
+    /// the shape's boundary and the wrapped text.
+    pub offset: f32,
+    /// `OnPath` only: starting position along the path, as a fraction
+    /// (`0.0..=1.0`) of its total arc length. Wraps for a closed path;
+    /// clamps to the path's ends for an open one.
+    pub start: f32,
+    /// `OnPath` only: reverses the direction of travel along the path.
+    pub flip: bool,
+}
+
+impl Default for TextPathAttachment {
+    fn default() -> Self {
+        Self {
+            target: LayerId::nil(),
+            mode: TextPathMode::OnPath,
+            offset: 0.0,
+            start: 0.0,
+            flip: false,
+        }
+    }
 }
 
 /// An `Arrow` layer's end-marker style, drawn pointing along the segment's

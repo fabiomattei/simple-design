@@ -12,5 +12,6 @@ pub use palette::{Palette, PaletteColor};
 pub use layer::{
     ArrowCap, BoolOp, ColorAdjust, CornerRadii, Frame, Gradient, GradientKind, GradientStop, HalftoneFill, Layer,
     LayerId, LayerKind, LayerStyle, ListType, NoiseFill, Paint, PathPoint, PathPolygon, PatternFill, PointType,
-    Shadow, Style, Stroke, TextAlign, TextFont, TextResize, TextStyle, TextTransform, VerticalAlign,
+    Shadow, Style, Stroke, TextAlign, TextFont, TextPathAttachment, TextPathMode, TextResize, TextStyle,
+    TextTransform, VerticalAlign,
 };

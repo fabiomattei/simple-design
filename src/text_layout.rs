@@ -168,7 +168,7 @@ fn font_id_bold(ctx: &egui::Context, font: &TextFont, size: f32) -> FontId {
 /// list-prefix characters, which don't belong to any run). Paragraph-level
 /// fields (`extra_letter_spacing`/`line_height`) still come from the
 /// layer-wide `layer_style`, matching `text_format`.
-fn run_text_format(ctx: &egui::Context, run_style: &RunStyle, layer_style: &TextStyleParams, zoom: f32, layer_color: Color32) -> TextFormat {
+pub(crate) fn run_text_format(ctx: &egui::Context, run_style: &RunStyle, layer_style: &TextStyleParams, zoom: f32, layer_color: Color32) -> TextFormat {
     let font_size = run_style.font_size * zoom;
     let font_id = if run_style.bold {
         font_id_bold(ctx, &run_style.font, font_size)

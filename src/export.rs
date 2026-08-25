@@ -29,7 +29,7 @@ pub fn render_layer(layer: &Layer) -> Option<Pixmap> {
     let height = (bounds.height() + 2.0 * pad).round().max(1.0) as u32;
     let mut pixmap = Pixmap::new(width, height)?;
     let offset = egui::Vec2::new(-bounds.min.x + pad, -bounds.min.y + pad);
-    draw_layer_with_shadows(&mut pixmap, layer, offset, 1.0);
+    draw_layer_with_shadows(&mut pixmap, layer, layer, offset, 1.0);
     Some(pixmap)
 }
 
@@ -45,7 +45,7 @@ pub(crate) fn render_layer_plain(layer: &Layer) -> Option<(Pixmap, egui::Rect)> 
     let height = bounds.height().round().max(1.0) as u32;
     let mut pixmap = Pixmap::new(width, height)?;
     let offset = egui::Vec2::new(-bounds.min.x, -bounds.min.y);
-    draw_layer(&mut pixmap, layer, offset, 1.0);
+    draw_layer(&mut pixmap, layer, layer, offset, 1.0);
     Some((pixmap, bounds))
 }
 
@@ -59,7 +59,7 @@ pub fn export_layer_to_png(layer: &Layer, path: &std::path::Path) -> anyhow::Res
 /// `pub(crate)` (rather than private) so `masking.rs` can use it as the
 /// per-layer drawing callback for both `export.rs`'s own masked runs and
 /// `canvas.rs`'s masked-group texture cache — see `masking::composite_masked_run`.
-pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, offset: egui::Vec2, parent_opacity: f32) {
+pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, root: &Layer, offset: egui::Vec2, parent_opacity: f32) {
     if !layer.visible {
         return;
     }
@@ -69,11 +69,11 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, offset: egui::Vec2,
         LayerKind::Artboard { children, background } => {
             fill_rect(pixmap, bounds, to_color_with_opacity(*background, opacity));
             let child_offset = offset + layer.frame.pos.to_vec2();
-            draw_children(pixmap, children, child_offset, opacity);
+            draw_children(pixmap, children, root, child_offset, opacity);
         }
         LayerKind::Group { children } => {
             let child_offset = offset + layer.frame.pos.to_vec2();
-            draw_children(pixmap, children, child_offset, opacity);
+            draw_children(pixmap, children, root, child_offset, opacity);
         }
         LayerKind::Rectangle { corner_radius } => {
             let Some(path) = rounded_rect_path(bounds, *corner_radius) else {
@@ -227,8 +227,75 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, offset: egui::Vec2,
             list,
             list_start,
             runs,
+            path_attachment,
             ..
         } => {
+            let attached = path_attachment.as_ref().and_then(|attachment| {
+                let (outline, closed) =
+                    crate::text_path_geometry::resolve_target_outline(std::slice::from_ref(root), attachment.target)?;
+                // `resolve_target_outline` returns points relative to `root`
+                // itself (offset `0` at `root`'s own top level) — converting
+                // that into whatever pixmap-space `offset` this call happens
+                // to be accumulating needs `root`'s own position in that same
+                // space, which `absolute_offset_of` gives without threading a
+                // second offset accumulator through every draw function
+                // alongside `root` (see that function's doc comment).
+                let self_root_offset = crate::text_path_geometry::absolute_offset_of(std::slice::from_ref(root), layer.id).unwrap_or(egui::Vec2::ZERO);
+                let pixmap_shift = offset - self_root_offset;
+                let absolute_outline: Vec<egui::Pos2> = outline.iter().map(|&p| p + pixmap_shift).collect();
+                Some((attachment, absolute_outline, closed))
+            });
+            if let Some((attachment, outline, closed)) = attached {
+                match attachment.mode {
+                    crate::model::TextPathMode::OnPath => {
+                        draw_text_on_path(
+                            pixmap,
+                            layer,
+                            content,
+                            *font_size,
+                            font,
+                            *align,
+                            *letter_spacing,
+                            *bold,
+                            *transform,
+                            &outline,
+                            closed,
+                            attachment.offset,
+                            attachment.start,
+                            attachment.flip,
+                            opacity,
+                        );
+                        return;
+                    }
+                    crate::model::TextPathMode::AreaInside => {
+                        if let Some(area_bounds) = approximate_area_bounds(&outline, attachment.offset) {
+                            if runs.is_empty() {
+                                draw_text(
+                                    pixmap, layer, area_bounds, content, *font_size, font, *align, *vertical_align, TextResize::Fixed,
+                                    *line_height, *letter_spacing, *paragraph_spacing, *bold, *italic, *underline, *strikethrough,
+                                    *transform, *list, *list_start, opacity,
+                                );
+                            } else if let Some(fill) = layer.style.fill.as_ref() {
+                                let base = RunStyle {
+                                    font: font.clone(),
+                                    font_size: *font_size,
+                                    color: Some(fill.to_color32()),
+                                    bold: *bold,
+                                    italic: *italic,
+                                    underline: *underline,
+                                    strikethrough: *strikethrough,
+                                };
+                                draw_text_rich(
+                                    pixmap, area_bounds, content, runs, &base, *align, *vertical_align, TextResize::Fixed,
+                                    *line_height, *letter_spacing, *paragraph_spacing, *transform, *list, *list_start,
+                                    opacity * layer.style.fill_opacity,
+                                );
+                            }
+                        }
+                        return;
+                    }
+                }
+            }
             // `runs` non-empty is the rich-text path (see
             // `LayerKind::Text::runs`'s doc comment) — `draw_text` below is
             // untouched from before that feature existed, reached only for
@@ -327,6 +394,155 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, offset: egui::Vec2,
     }
 }
 
+/// Renders `content`'s first line along `path_points` (already in the same
+/// pixmap coordinate space `pixmap` is drawn in), one glyph at a time — the
+/// export-side counterpart to `text_on_path_layout::layout_glyphs_on_path`,
+/// built on `ab_glyph`/`tiny_skia` instead of `egui::Galley` (see `draw_text`'s
+/// doc comment on canvas/export being separate render paths). Unlike the
+/// canvas path, this only ever uses the layer's uniform scalar style — rich
+/// per-character `runs` formatting isn't supported for on-path export text (a
+/// documented v1 limit: it renders in the layer's base font/weight instead of
+/// its live per-run colors/fonts/styling).
+#[allow(clippy::too_many_arguments)]
+fn draw_text_on_path(
+    pixmap: &mut Pixmap,
+    layer: &Layer,
+    content: &str,
+    font_size: f32,
+    font: &TextFont,
+    align: TextAlign,
+    letter_spacing: f32,
+    bold: bool,
+    transform: TextTransform,
+    path_points: &[egui::Pos2],
+    closed: bool,
+    path_offset: f32,
+    start: f32,
+    flip: bool,
+    opacity: f32,
+) {
+    if crate::text_path_geometry::polyline_length(path_points, closed) < 1.0 {
+        return;
+    }
+    let Some(fill) = layer.style.fill.as_ref() else { return };
+    let color = with_opacity(fill.to_color32(), opacity * layer.style.fill_opacity);
+    let (font_bytes, face_index) = crate::fonts::ab_glyph_bytes(font);
+    let Ok(face) = FontRef::try_from_slice_and_index(&font_bytes, face_index) else { return };
+    let scale = ab_glyph::PxScale::from(font_size);
+    let scaled = face.as_scaled(scale);
+
+    let display = crate::text_layout::display_string(content, transform, ListType::None, 1);
+    let first_line = display.split('\n').next().unwrap_or("");
+    if first_line.is_empty() {
+        return;
+    }
+
+    let points: Vec<egui::Pos2> = if flip { path_points.iter().rev().copied().collect() } else { path_points.to_vec() };
+    let total = crate::text_path_geometry::polyline_length(&points, closed);
+
+    let mut widths = Vec::with_capacity(first_line.chars().count());
+    let mut prev: Option<GlyphId> = None;
+    for c in first_line.chars() {
+        let id = scaled.glyph_id(c);
+        let kern = prev.map(|p| scaled.kern(p, id)).unwrap_or(0.0);
+        widths.push((id, scaled.h_advance(id) + letter_spacing + kern));
+        prev = Some(id);
+    }
+    let text_len: f32 = widths.iter().map(|(_, w)| *w).sum();
+    let start_distance = start * total
+        - match align {
+            TextAlign::Center => text_len / 2.0,
+            TextAlign::Right => text_len,
+            TextAlign::Left | TextAlign::Justify => 0.0,
+        };
+
+    let mut distance = start_distance;
+    for (id, width) in widths {
+        if let Some((point, angle)) = crate::text_path_geometry::point_and_tangent_at(&points, closed, distance) {
+            let normal = egui::Vec2::new(-angle.sin(), angle.cos());
+            draw_rotated_glyph(pixmap, &face, id, scale, point + normal * path_offset, angle, color, bold);
+        }
+        distance += width;
+    }
+}
+
+/// Rasterizes one glyph unrotated into a scratch pixmap sized to its own
+/// outline bounds, then composites it onto `pixmap` rotated by `angle`
+/// (radians, clockwise) about `anchor` — `anchor` is the glyph's baseline-left
+/// origin (the point passed to `ab_glyph`'s `with_scale_and_position`), so
+/// rotating about it tilts the glyph tangent to the path, mirroring
+/// `text_on_path_layout::PathGlyph`'s "rotate about `pos`" convention. Glyph
+/// rasterization writes pixels directly (`ab_glyph`'s `outline.draw`
+/// callback), bypassing `tiny_skia::Transform` entirely — so, same as
+/// `draw_layer`'s whole-layer rotation branch above, this renders unrotated
+/// into a scratch pixmap first and composites that with a rotate transform,
+/// just applied once per glyph instead of once per layer. `bold` fakes a
+/// heavier weight via the same double-draw-offset hack `draw_text_glyph`
+/// uses; italic isn't supported here — its shear math assumes a shared,
+/// unrotated baseline, which doesn't hold per-glyph on a curve.
+#[allow(clippy::too_many_arguments)]
+fn draw_rotated_glyph(pixmap: &mut Pixmap, face: &FontRef, id: GlyphId, scale: ab_glyph::PxScale, anchor: egui::Pos2, angle: f32, color: egui::Color32, bold: bool) {
+    let x_offsets: &[f32] = if bold { &[0.0, 0.6] } else { &[0.0] };
+    for &dx in x_offsets {
+        let glyph = id.with_scale_and_position(scale, ab_glyph::point(dx, 0.0));
+        let Some(outlined) = face.outline_glyph(glyph) else { continue };
+        let px_bounds = outlined.px_bounds();
+        let w = px_bounds.width().ceil().max(1.0) as u32;
+        let h = px_bounds.height().ceil().max(1.0) as u32;
+        let Some(mut sub) = Pixmap::new(w, h) else { continue };
+        outlined.draw(|gx, gy, coverage| {
+            blend_glyph_pixel(&mut sub, gx as i32, gy as i32, coverage, color);
+        });
+        let paint = PixmapPaint { opacity: 1.0, blend_mode: tiny_skia::BlendMode::SourceOver, quality: tiny_skia::FilterQuality::Bilinear };
+        let transform = Transform::from_translate(anchor.x + px_bounds.min.x, anchor.y + px_bounds.min.y)
+            .post_rotate_at(angle.to_degrees(), anchor.x, anchor.y);
+        pixmap.draw_pixmap(0, 0, sub.as_ref(), &paint, transform, None);
+    }
+}
+
+/// A rectangle guaranteed to fit inside the closed outline `points` (inset by
+/// `padding`), used as an approximation for exporting/outlining
+/// `TextPathMode::AreaInside` text: sampled at several heights across the
+/// shape and intersected down to the narrowest usable span, so the result
+/// never overflows the shape, then fed through the existing `draw_text`/
+/// `draw_text_rich` rectangle-wrap machinery unmodified. This is deliberately
+/// coarser than the live canvas view (`text_area_layout::layout_text_in_area`,
+/// which hugs each line's own contour) — a documented v1 limit: exported/
+/// outlined area-type text sits inside a conservative inscribed rectangle
+/// rather than following the shape's curves line by line.
+fn approximate_area_bounds(points: &[egui::Pos2], padding: f32) -> Option<egui::Rect> {
+    if points.len() < 3 {
+        return None;
+    }
+    let min_y = points.iter().map(|p| p.y).fold(f32::INFINITY, f32::min);
+    let max_y = points.iter().map(|p| p.y).fold(f32::NEG_INFINITY, f32::max);
+    if !(min_y.is_finite() && max_y.is_finite()) || max_y <= min_y {
+        return None;
+    }
+    const SAMPLES: usize = 12;
+    let mut x0 = f32::NEG_INFINITY;
+    let mut x1 = f32::INFINITY;
+    let mut any = false;
+    for i in 0..SAMPLES {
+        let t = (i as f32 + 0.5) / SAMPLES as f32;
+        let y = min_y + t * (max_y - min_y);
+        let widest = crate::text_path_geometry::horizontal_spans_at_y(points, y)
+            .into_iter()
+            .map(|(a, b)| (a + padding, b - padding))
+            .filter(|(a, b)| b > a)
+            .max_by(|a, b| (a.1 - a.0).partial_cmp(&(b.1 - b.0)).unwrap_or(std::cmp::Ordering::Equal));
+        if let Some((a, b)) = widest {
+            x0 = x0.max(a);
+            x1 = x1.min(b);
+            any = true;
+        }
+    }
+    if !any || x1 <= x0 {
+        return None;
+    }
+    Some(egui::Rect::from_min_max(egui::Pos2::new(x0, min_y + padding), egui::Pos2::new(x1, max_y - padding)))
+}
+
 /// Draws one parent's `children` (an `Artboard`/`Group`'s, already offset to
 /// that parent's coordinate space), applying `Layer::is_mask`/`ignore_mask`
 /// via `masking::partition_mask_runs` — see that function's doc comment for
@@ -336,12 +552,14 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, offset: egui::Vec2,
 /// from its children's *shapes*, not from halos of the children's own
 /// shadows. `draw_children_with_shadows` is the shadow-aware sibling used
 /// for real rendering.
-fn draw_children(pixmap: &mut Pixmap, children: &[Layer], offset: egui::Vec2, opacity: f32) {
+fn draw_children(pixmap: &mut Pixmap, children: &[Layer], root: &Layer, offset: egui::Vec2, opacity: f32) {
     for unit in crate::masking::partition_mask_runs(children) {
         match unit {
-            crate::masking::RenderUnit::Plain(child) => draw_layer(pixmap, child, offset, opacity),
+            crate::masking::RenderUnit::Plain(child) => draw_layer(pixmap, child, root, offset, opacity),
             crate::masking::RenderUnit::Masked { mask, content } => {
-                crate::masking::composite_masked_run(pixmap, mask, &content, offset, opacity, draw_layer);
+                crate::masking::composite_masked_run(pixmap, mask, &content, offset, opacity, |px, l, off, op| {
+                    draw_layer(px, l, root, off, op)
+                });
             }
         }
     }
@@ -351,12 +569,14 @@ fn draw_children(pixmap: &mut Pixmap, children: &[Layer], offset: egui::Vec2, op
 /// draws every child (plain or masked-run content) through
 /// `draw_layer_with_shadows` instead of plain `draw_layer`, so nested
 /// layers at any depth get their own `Style::shadows`/`inner_shadows`.
-fn draw_children_with_shadows(pixmap: &mut Pixmap, children: &[Layer], offset: egui::Vec2, opacity: f32) {
+fn draw_children_with_shadows(pixmap: &mut Pixmap, children: &[Layer], root: &Layer, offset: egui::Vec2, opacity: f32) {
     for unit in crate::masking::partition_mask_runs(children) {
         match unit {
-            crate::masking::RenderUnit::Plain(child) => draw_layer_with_shadows(pixmap, child, offset, opacity),
+            crate::masking::RenderUnit::Plain(child) => draw_layer_with_shadows(pixmap, child, root, offset, opacity),
             crate::masking::RenderUnit::Masked { mask, content } => {
-                crate::masking::composite_masked_run(pixmap, mask, &content, offset, opacity, draw_layer_with_shadows);
+                crate::masking::composite_masked_run(pixmap, mask, &content, offset, opacity, |px, l, off, op| {
+                    draw_layer_with_shadows(px, l, root, off, op)
+                });
             }
         }
     }
@@ -377,7 +597,7 @@ fn draw_children_with_shadows(pixmap: &mut Pixmap, children: &[Layer], offset: e
 /// callback through `draw_layer`'s signature — `draw_layer` itself must stay
 /// shadow-free (see `draw_children`'s doc comment for why), so it can't just
 /// call back into this function for its own recursion.
-pub(crate) fn draw_layer_with_shadows(pixmap: &mut Pixmap, layer: &Layer, offset: egui::Vec2, parent_opacity: f32) {
+pub(crate) fn draw_layer_with_shadows(pixmap: &mut Pixmap, layer: &Layer, root: &Layer, offset: egui::Vec2, parent_opacity: f32) {
     if !layer.visible {
         return;
     }
@@ -403,13 +623,13 @@ pub(crate) fn draw_layer_with_shadows(pixmap: &mut Pixmap, layer: &Layer, offset
             let bounds = layer.frame.bounds().translate(offset);
             fill_rect(pixmap, bounds, to_color_with_opacity(*background, opacity));
             let child_offset = offset + layer.frame.pos.to_vec2();
-            draw_children_with_shadows(pixmap, children, child_offset, opacity);
+            draw_children_with_shadows(pixmap, children, root, child_offset, opacity);
         }
         LayerKind::Group { children } => {
             let child_offset = offset + layer.frame.pos.to_vec2();
-            draw_children_with_shadows(pixmap, children, child_offset, opacity);
+            draw_children_with_shadows(pixmap, children, root, child_offset, opacity);
         }
-        _ => draw_layer(pixmap, layer, offset, parent_opacity),
+        _ => draw_layer(pixmap, layer, root, offset, parent_opacity),
     }
 
     if let (true, Some((silhouette, bounds))) = (has_inner, &silhouette) {
@@ -1587,7 +1807,7 @@ mod tests {
         layer.style.fill = None;
 
         let mut pixmap = Pixmap::new(40, 40).unwrap();
-        draw_layer(&mut pixmap, &layer, egui::Vec2::ZERO, 1.0);
+        draw_layer(&mut pixmap, &layer, &layer, egui::Vec2::ZERO, 1.0);
         let on_line = pixmap.pixel(20, 20).expect("on-line pixel");
         assert_eq!(on_line.alpha(), 255);
         let off_line = pixmap.pixel(20, 5).expect("off-line pixel");
@@ -1605,7 +1825,7 @@ mod tests {
         layer.style.fill = None;
 
         let mut pixmap = Pixmap::new(40, 40).unwrap();
-        draw_layer(&mut pixmap, &layer, egui::Vec2::ZERO, 1.0);
+        draw_layer(&mut pixmap, &layer, &layer, egui::Vec2::ZERO, 1.0);
         // Well inside the triangle wing (cap size = max(6*3.5, 8) = 21, base
         // at x=19, half-width 7.5 at x=25) but clearly outside the shaft's
         // own stroke half-width (3, so shaft covers y 17..23 only).
@@ -2116,6 +2336,7 @@ mod tests {
                 list_start: 1,
                 style_id: None,
                 runs: Vec::new(),
+                path_attachment: None,
             },
         );
         layer.style.fill = Some(crate::model::Paint::Solid(Color32::BLACK));
@@ -2152,6 +2373,7 @@ mod tests {
                 list_start: 1,
                 style_id: None,
                 runs: Vec::new(),
+                path_attachment: None,
             },
         );
         layer.style.fill = Some(crate::model::Paint::Solid(Color32::BLACK));
@@ -2188,6 +2410,7 @@ mod tests {
                 list_start: 1,
                 style_id: None,
                 runs: Vec::new(),
+                path_attachment: None,
             },
         );
         layer.style.fill = Some(crate::model::Paint::Solid(Color32::BLACK));
@@ -2248,6 +2471,7 @@ mod tests {
                 list_start: 1,
                 style_id: None,
                 runs: Vec::new(),
+                path_attachment: None,
             },
         );
         layer.style.fill = Some(crate::model::Paint::Solid(Color32::BLACK));
@@ -2601,5 +2825,84 @@ mod tests {
         let second = pixmap.pixel(2 + tile_width as u32, y).expect("second tile pixel");
         assert!(first.red() > 150 && first.blue() < 100, "first tile should start reddish");
         assert!(second.red() > 150 && second.blue() < 100, "pattern should repeat: second tile should also start reddish");
+    }
+
+    fn text_path_attachment_layer(target: crate::model::LayerId, mode: crate::model::TextPathMode) -> Layer {
+        let mut text = Layer::new(
+            "Label",
+            Frame { pos: Pos2::new(0.0, 0.0), size: egui::Vec2::new(10.0, 10.0), rotation: 0.0 },
+            LayerKind::Text {
+                content: "HELLO".to_string(),
+                font_size: 20.0,
+                font: TextFont::Proportional,
+                align: TextAlign::Left,
+                vertical_align: VerticalAlign::Top,
+                resize: TextResize::Auto,
+                line_height: None,
+                letter_spacing: 0.0,
+                paragraph_spacing: 0.0,
+                bold: false,
+                italic: false,
+                underline: false,
+                strikethrough: false,
+                transform: TextTransform::None,
+                list: ListType::None,
+                list_start: 1,
+                style_id: None,
+                runs: Vec::new(),
+                path_attachment: Some(crate::model::TextPathAttachment { target, mode, offset: 0.0, start: 0.0, flip: false }),
+            },
+        );
+        text.style.fill = Some(crate::model::Paint::Solid(Color32::BLACK));
+        text.style.stroke = None;
+        text
+    }
+
+    #[test]
+    fn on_path_text_renders_glyphs_along_the_targets_outline() {
+        let mut guide = Layer::new(
+            "Guide",
+            Frame::from_two_points(Pos2::new(10.0, 30.0), Pos2::new(190.0, 30.0)),
+            LayerKind::Line,
+        );
+        guide.style.fill = None;
+        guide.style.stroke = None;
+        let target_id = guide.id;
+
+        let text = text_path_attachment_layer(target_id, crate::model::TextPathMode::OnPath);
+
+        let mut artboard = Layer::new_artboard("Board", Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(200.0, 60.0)));
+        if let LayerKind::Artboard { children, .. } = &mut artboard.kind {
+            children.push(guide);
+            children.push(text);
+        }
+
+        let pixmap = render_layer(&artboard).expect("should render");
+        let any_opaque = pixmap.pixels().iter().any(|p| p.alpha() > 0);
+        assert!(any_opaque, "expected on-path text glyphs to render along the guide line, but the canvas is empty");
+    }
+
+    #[test]
+    fn area_inside_text_stays_within_an_approximated_rectangle() {
+        let mut rect = Layer::new(
+            "Guide",
+            Frame::from_two_points(Pos2::new(10.0, 10.0), Pos2::new(190.0, 90.0)),
+            LayerKind::Rectangle { corner_radius: CornerRadii::ZERO },
+        );
+        rect.style.fill = None;
+        rect.style.stroke = None;
+        let target_id = rect.id;
+
+        let text = text_path_attachment_layer(target_id, crate::model::TextPathMode::AreaInside);
+
+        let mut artboard = Layer::new_artboard("Board", Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(200.0, 100.0)));
+        if let LayerKind::Artboard { children, .. } = &mut artboard.kind {
+            children.push(rect);
+            children.push(text);
+        }
+
+        let pixmap = render_layer(&artboard).expect("should render");
+        let any_opaque = pixmap.pixels().iter().any(|p| p.alpha() > 0);
+        assert!(any_opaque, "expected area-type text glyphs to render inside the guide rectangle, but the canvas is empty");
     }
 }

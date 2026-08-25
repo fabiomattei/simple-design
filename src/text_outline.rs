@@ -528,6 +528,7 @@ mod tests {
                 list_start: 1,
                 style_id: None,
                 runs: Vec::new(),
+                path_attachment: None,
             },
         );
         layer.style.fill = Some(Paint::Solid(egui::Color32::BLACK));

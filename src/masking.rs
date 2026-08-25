@@ -122,7 +122,7 @@ pub fn mask_covers_point(mask: &Layer, point: Pos2) -> bool {
     let height = bounds.height().round().max(1.0) as u32;
     let Some(mut pixmap) = Pixmap::new(width, height) else { return false };
     let render_offset = Vec2::new(-bounds.min.x, -bounds.min.y);
-    crate::export::draw_layer(&mut pixmap, mask, render_offset, 1.0);
+    crate::export::draw_layer(&mut pixmap, mask, mask, render_offset, 1.0);
     let px = ((point.x - bounds.min.x).floor().max(0.0) as u32).min(width.saturating_sub(1));
     let py = ((point.y - bounds.min.y).floor().max(0.0) as u32).min(height.saturating_sub(1));
     pixmap.pixel(px, py).is_some_and(|p| p.alpha() > 0)
@@ -161,7 +161,7 @@ mod tests {
         let mask = oval_layer("Mask", Pos2::new(0.0, 0.0), Vec2::new(100.0, 100.0));
 
         let mut target = Pixmap::new(100, 100).unwrap();
-        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, crate::export::draw_layer);
+        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, &mask, off, op));
 
         // Center: inside both the square and the circle -> opaque red.
         let center = pixel(&target, 50, 50);
@@ -210,7 +210,7 @@ mod tests {
         mask.style.fill = Some(Paint::Solid(Color32::from_rgb(0, 255, 0))); // distinct from both Square's red and transparent.
 
         let mut target = Pixmap::new(100, 100).unwrap();
-        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, crate::export::draw_layer);
+        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, &mask, off, op));
 
         let center = pixel(&target, 50, 50);
         assert!(center.green() < 50, "mask's own green fill should not appear in the output");
