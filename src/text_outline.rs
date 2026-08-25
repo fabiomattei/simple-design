@@ -39,7 +39,17 @@ const ITALIC_SHEAR: f32 = 0.22;
 /// real bold-weight face's own outlines (see `convert_to_outlines_rich`).
 /// `TextAlign::Justify` is treated as `Left`. Returns `None` for empty
 /// content or if the bundled font fails to load (shouldn't happen).
-pub fn convert_to_outlines(layer: &Layer) -> Option<Vec<PathPolygon>> {
+///
+/// `roots` resolves `path_attachment` (a page's top-level layers, or a
+/// single exported layer's subtree via `std::slice::from_ref`), same
+/// convention as `text_path_geometry::resolve_target_outline`'s own
+/// callers. If the layer has a `path_attachment` that resolves against
+/// `roots`, the glyphs are placed along/inside that target's outline
+/// instead — see `convert_to_outlines_on_path`/`convert_to_outlines_in_area`
+/// — falling back to the plain frame-based layout below if it doesn't
+/// resolve (deleted target, `roots` not covering it), same graceful
+/// fallback `canvas.rs`/`export.rs` use.
+pub fn convert_to_outlines(layer: &Layer, roots: &[Layer]) -> Option<Vec<PathPolygon>> {
     let LayerKind::Text {
         content,
         font_size,
@@ -56,6 +66,7 @@ pub fn convert_to_outlines(layer: &Layer) -> Option<Vec<PathPolygon>> {
         list,
         list_start,
         runs,
+        path_attachment,
         ..
     } = &layer.kind
     else {
@@ -63,6 +74,39 @@ pub fn convert_to_outlines(layer: &Layer) -> Option<Vec<PathPolygon>> {
     };
     if content.is_empty() {
         return None;
+    }
+    if let Some(attachment) = path_attachment {
+        let base = RunStyle {
+            font: font.clone(),
+            font_size: *font_size,
+            color: None,
+            bold: *bold,
+            italic: *italic,
+            underline: false,
+            strikethrough: false,
+        };
+        let resolved = crate::text_path_geometry::resolve_target_outline(roots, attachment.target).map(|(outline, closed)| {
+            let self_root_offset = crate::text_path_geometry::absolute_offset_of(roots, layer.id).unwrap_or(egui::Vec2::ZERO);
+            let relative: Vec<Pos2> = outline.iter().map(|&p| p - self_root_offset - layer.frame.pos.to_vec2()).collect();
+            (relative, closed)
+        });
+        if let Some((outline, closed)) = resolved {
+            return match attachment.mode {
+                crate::model::TextPathMode::OnPath => {
+                    let tagged_first_line = crate::text_layout::tagged_lines(content, runs, *transform, ListType::None, 1).into_iter().next().unwrap_or_default();
+                    if tagged_first_line.is_empty() {
+                        return Some(Vec::new());
+                    }
+                    convert_to_outlines_on_path(
+                        &tagged_first_line, runs, &base, *letter_spacing, *align, &outline, closed, attachment.offset,
+                        attachment.start, attachment.flip,
+                    )
+                }
+                crate::model::TextPathMode::AreaInside => convert_to_outlines_in_area(
+                    content, runs, &base, *align, *line_height, *letter_spacing, *transform, &outline, attachment.offset,
+                ),
+            };
+        }
     }
     if !runs.is_empty() {
         let base = RunStyle {
@@ -214,19 +258,7 @@ fn convert_to_outlines_rich(
     list: ListType,
     list_start: i32,
 ) -> Option<Vec<PathPolygon>> {
-    let mut byte_bufs: Vec<(std::borrow::Cow<'static, [u8]>, u32)> = Vec::with_capacity(runs.len() + 1);
-    byte_bufs.push(if base.bold {
-        crate::fonts::ab_glyph_bytes_bold(&base.font)
-    } else {
-        crate::fonts::ab_glyph_bytes(&base.font)
-    });
-    for run in runs {
-        byte_bufs.push(if run.style.bold {
-            crate::fonts::ab_glyph_bytes_bold(&run.style.font)
-        } else {
-            crate::fonts::ab_glyph_bytes(&run.style.font)
-        });
-    }
+    let byte_bufs = crate::fonts::run_font_byte_bufs(base, runs);
     let base_face = FontRef::try_from_slice_and_index(&byte_bufs[0].0, byte_bufs[0].1).ok()?;
     let mut faces: Vec<FontRef> = vec![base_face];
     let mut face_for_run: Vec<usize> = Vec::with_capacity(runs.len());
@@ -376,6 +408,249 @@ fn convert_to_outlines_rich(
         }
     }
 
+    Some(polygons)
+}
+
+/// Vector counterpart to `export.rs`'s `draw_text_on_path` — places
+/// `tagged_first_line`'s glyphs one at a time along `points`, walking arc
+/// length exactly like the raster version, but transforms each glyph's own
+/// outline contours by a plain point rotation instead of rasterizing into a
+/// scratch pixmap and compositing: `place_glyph_contours_on_path` rotates
+/// each contour point about the glyph's anchor directly, which is all a
+/// vector transform needs (no rasterization/anti-aliasing to preserve).
+/// `underline`/`strikethrough` are never reproduced (decorations, not glyph
+/// shapes — same limit `convert_to_outlines`'s plain path already has).
+#[allow(clippy::too_many_arguments)]
+fn convert_to_outlines_on_path(
+    tagged_first_line: &[(char, Option<usize>)],
+    runs: &[TextRun],
+    base: &RunStyle,
+    letter_spacing: f32,
+    align: TextAlign,
+    points: &[Pos2],
+    closed: bool,
+    path_offset: f32,
+    start: f32,
+    flip: bool,
+) -> Option<Vec<PathPolygon>> {
+    if crate::text_path_geometry::polyline_length(points, closed) < 1.0 {
+        return Some(Vec::new());
+    }
+    let byte_bufs = crate::fonts::run_font_byte_bufs(base, runs);
+    let base_face = FontRef::try_from_slice_and_index(&byte_bufs[0].0, byte_bufs[0].1).ok()?;
+    let mut faces: Vec<FontRef> = vec![base_face];
+    let mut face_for_run: Vec<usize> = Vec::with_capacity(runs.len());
+    for (bytes, index) in &byte_bufs[1..] {
+        match FontRef::try_from_slice_and_index(bytes, *index) {
+            Ok(f) => {
+                face_for_run.push(faces.len());
+                faces.push(f);
+            }
+            Err(_) => face_for_run.push(0),
+        }
+    }
+    let style_of = |idx: Option<usize>| -> &RunStyle {
+        match idx {
+            None => base,
+            Some(i) => runs.get(i).map_or(base, |r| &r.style),
+        }
+    };
+    let face_index_of = |idx: Option<usize>| -> usize {
+        match idx {
+            None => 0,
+            Some(i) => face_for_run.get(i).copied().unwrap_or(0),
+        }
+    };
+    let scale_of = |idx: Option<usize>| ab_glyph::PxScale::from(style_of(idx).font_size);
+
+    let points_vec: Vec<Pos2> = if flip { points.iter().rev().copied().collect() } else { points.to_vec() };
+    let total = crate::text_path_geometry::polyline_length(&points_vec, closed);
+
+    let mut glyphs = Vec::with_capacity(tagged_first_line.len());
+    let mut prev: Option<(GlyphId, usize)> = None;
+    for &(c, idx) in tagged_first_line {
+        let face_idx = face_index_of(idx);
+        let scaled = faces[face_idx].as_scaled(scale_of(idx));
+        let id = scaled.glyph_id(c);
+        let kern = match prev {
+            Some((prev_id, prev_face_idx)) if prev_face_idx == face_idx => scaled.kern(prev_id, id),
+            _ => 0.0,
+        };
+        let width = scaled.h_advance(id) + letter_spacing + kern;
+        glyphs.push((id, face_idx, idx, width));
+        prev = Some((id, face_idx));
+    }
+    let text_len: f32 = glyphs.iter().map(|&(.., w)| w).sum();
+    let start_distance = start * total
+        - match align {
+            TextAlign::Center => text_len / 2.0,
+            TextAlign::Right => text_len,
+            TextAlign::Left | TextAlign::Justify => 0.0,
+        };
+
+    let mut polygons = Vec::new();
+    let mut distance = start_distance;
+    for (id, face_idx, idx, width) in glyphs {
+        if let Some((point, angle)) = crate::text_path_geometry::point_and_tangent_at(&points_vec, closed, distance) {
+            let normal = egui::Vec2::new(-angle.sin(), angle.cos());
+            let anchor = point + normal * path_offset;
+            let face = &faces[face_idx];
+            let scale_factor = face.as_scaled(scale_of(idx)).scale_factor();
+            if let Some(outline) = face.outline(id) {
+                let contours = glyph_contours(&outline.curves);
+                let placed = place_glyph_contours_on_path(contours, scale_factor, style_of(idx).italic, anchor, angle);
+                polygons.extend(group_contours_into_polygons(placed));
+            }
+        }
+        distance += width;
+    }
+    Some(polygons)
+}
+
+/// Rotates one glyph's already-flattened local-space contours (still in raw
+/// font units) about `anchor` by `angle` (radians, clockwise — same
+/// convention as `text_path_geometry::point_and_tangent_at`/
+/// `shapes::rotate_point`), after scaling to pixel units and applying the
+/// italic shear (relative to the glyph's own baseline, `y = 0`, same as
+/// `export.rs`'s `draw_rotated_glyph`). The vector equivalent of that
+/// function's "scratch pixmap + `Transform::post_rotate_at`" trick — a
+/// plain point rotation is all that's needed here, no rasterization to
+/// preserve.
+fn place_glyph_contours_on_path(contours: Vec<Vec<Point>>, scale_factor: ab_glyph::PxScaleFactor, italic: bool, anchor: Pos2, angle: f32) -> Vec<Vec<Pos2>> {
+    let (sin_a, cos_a) = angle.sin_cos();
+    contours
+        .into_iter()
+        .map(|contour| {
+            contour
+                .into_iter()
+                .map(|p| {
+                    let mut x = p.x * scale_factor.horizontal;
+                    let y = p.y * -scale_factor.vertical;
+                    if italic {
+                        x -= y * ITALIC_SHEAR;
+                    }
+                    let rx = x * cos_a - y * sin_a;
+                    let ry = x * sin_a + y * cos_a;
+                    Pos2::new(anchor.x + rx, anchor.y + ry)
+                })
+                .collect()
+        })
+        .filter(|c: &Vec<Pos2>| c.len() >= 3)
+        .collect()
+}
+
+/// Vector counterpart to `export.rs`'s `draw_text_in_area` — wraps `content`
+/// via the same shared, backend-agnostic `text_area_wrap::wrap_in_area`
+/// decision (an `ab_glyph`-measured `measure` closure here instead of an
+/// `egui::Galley`'s width), then places each row's glyph outlines at its own
+/// `(x, y)` — the same per-row loop `convert_to_outlines_rich` already uses,
+/// just fed rows from the shape-aware wrapper instead of a fixed-width one.
+#[allow(clippy::too_many_arguments)]
+fn convert_to_outlines_in_area(
+    content: &str,
+    runs: &[TextRun],
+    base: &RunStyle,
+    align: TextAlign,
+    line_height: Option<f32>,
+    letter_spacing: f32,
+    transform: TextTransform,
+    outline_points: &[Pos2],
+    padding: f32,
+) -> Option<Vec<PathPolygon>> {
+    let byte_bufs = crate::fonts::run_font_byte_bufs(base, runs);
+    let base_face = FontRef::try_from_slice_and_index(&byte_bufs[0].0, byte_bufs[0].1).ok()?;
+    let mut faces: Vec<FontRef> = vec![base_face];
+    let mut face_for_run: Vec<usize> = Vec::with_capacity(runs.len());
+    for (bytes, index) in &byte_bufs[1..] {
+        match FontRef::try_from_slice_and_index(bytes, *index) {
+            Ok(f) => {
+                face_for_run.push(faces.len());
+                faces.push(f);
+            }
+            Err(_) => face_for_run.push(0),
+        }
+    }
+    let style_of = |idx: Option<usize>| -> &RunStyle {
+        match idx {
+            None => base,
+            Some(i) => runs.get(i).map_or(base, |r| &r.style),
+        }
+    };
+    let face_index_of = |idx: Option<usize>| -> usize {
+        match idx {
+            None => 0,
+            Some(i) => face_for_run.get(i).copied().unwrap_or(0),
+        }
+    };
+    let scale_of = |idx: Option<usize>| ab_glyph::PxScale::from(style_of(idx).font_size);
+
+    let measure = |chars: &[(char, Option<usize>)]| -> f32 {
+        let mut width = 0.0;
+        let mut prev: Option<(GlyphId, usize)> = None;
+        for &(c, idx) in chars {
+            let face_idx = face_index_of(idx);
+            let scaled = faces[face_idx].as_scaled(scale_of(idx));
+            let id = scaled.glyph_id(c);
+            if let Some((prev_id, prev_face_idx)) = prev {
+                if prev_face_idx == face_idx {
+                    width += scaled.kern(prev_id, id);
+                }
+            }
+            width += scaled.h_advance(id) + letter_spacing;
+            prev = Some((id, face_idx));
+        }
+        width
+    };
+
+    let base_scaled = faces[0].as_scaled(scale_of(None));
+    let resolved_line_height = line_height.unwrap_or_else(|| base_scaled.height() + base_scaled.line_gap()).max(1.0);
+    let rows = crate::text_area_wrap::wrap_in_area(content, runs, transform, &measure, resolved_line_height, align, outline_points, padding);
+
+    let mut polygons = Vec::new();
+    for row in rows {
+        let ascent = row
+            .chars
+            .iter()
+            .map(|&(_, idx)| faces[face_index_of(idx)].as_scaled(scale_of(idx)).ascent())
+            .fold(base_scaled.ascent(), f32::max);
+        let baseline_y = row.y + ascent;
+
+        let mut cursor_x = row.x;
+        let mut prev: Option<(GlyphId, usize)> = None;
+        for &(c, idx) in &row.chars {
+            let face_idx = face_index_of(idx);
+            let style = style_of(idx);
+            let scaled = faces[face_idx].as_scaled(scale_of(idx));
+            let scale_factor = scaled.scale_factor();
+            let id = scaled.glyph_id(c);
+            if let Some((prev_id, prev_face_idx)) = prev {
+                if prev_face_idx == face_idx {
+                    cursor_x += scaled.kern(prev_id, id);
+                }
+            }
+            if let Some(outline) = faces[face_idx].outline(id) {
+                let contours = glyph_contours(&outline.curves);
+                let placed: Vec<Vec<Pos2>> = contours
+                    .into_iter()
+                    .map(|contour| {
+                        contour
+                            .into_iter()
+                            .map(|p| {
+                                let x = p.x * scale_factor.horizontal + cursor_x;
+                                let y = p.y * -scale_factor.vertical + baseline_y;
+                                let x = if style.italic { x + (baseline_y - y) * ITALIC_SHEAR } else { x };
+                                Pos2::new(x, y)
+                            })
+                            .collect()
+                    })
+                    .filter(|c: &Vec<Pos2>| c.len() >= 3)
+                    .collect();
+                polygons.extend(group_contours_into_polygons(placed));
+            }
+            cursor_x += scaled.h_advance(id) + letter_spacing;
+            prev = Some((id, face_idx));
+        }
+    }
     Some(polygons)
 }
 
@@ -553,7 +828,7 @@ mod tests {
         if let LayerKind::Text { runs, .. } = &mut layer.kind {
             *runs = vec![TextRun { len: 1, style: run_style(false) }, TextRun { len: 1, style: run_style(true) }];
         }
-        let polygons = convert_to_outlines(&layer).expect("should produce outlines for a rich two-run layer");
+        let polygons = convert_to_outlines(&layer, &[]).expect("should produce outlines for a rich two-run layer");
         assert!(!polygons.is_empty(), "expected at least one filled polygon for 'Ab'");
     }
 
@@ -575,12 +850,61 @@ mod tests {
             *runs = vec![TextRun { len: 1, style: run_style(true) }];
         }
 
-        let plain_area: f32 = convert_to_outlines(&plain).unwrap().iter().map(|p| polygon_area(&p.exterior)).sum();
-        let bold_area: f32 = convert_to_outlines(&bold).unwrap().iter().map(|p| polygon_area(&p.exterior)).sum();
+        let plain_area: f32 = convert_to_outlines(&plain, &[]).unwrap().iter().map(|p| polygon_area(&p.exterior)).sum();
+        let bold_area: f32 = convert_to_outlines(&bold, &[]).unwrap().iter().map(|p| polygon_area(&p.exterior)).sum();
 
         assert!(
             bold_area > plain_area,
             "a bold run's real bold-weight outline (area={bold_area}) should cover more area than the regular weight (area={plain_area})"
         );
+    }
+
+    fn attached_text_layer(content: &str, target: crate::model::LayerId, mode: crate::model::TextPathMode) -> Layer {
+        let mut layer = text_layer(content);
+        if let LayerKind::Text { path_attachment, .. } = &mut layer.kind {
+            *path_attachment = Some(crate::model::TextPathAttachment { target, mode, offset: 0.0, start: 0.0, flip: false });
+        }
+        layer
+    }
+
+    #[test]
+    fn on_path_attachment_places_outlines_along_the_targets_line() {
+        let guide = Layer::new("Guide", Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(300.0, 0.0)), LayerKind::Line);
+        let target_id = guide.id;
+        let text = attached_text_layer("HI", target_id, crate::model::TextPathMode::OnPath);
+
+        let polygons = convert_to_outlines(&text, &[guide, text.clone()]).expect("should produce on-path outlines");
+        assert!(!polygons.is_empty(), "expected glyph outlines placed along the guide line");
+
+        // The guide is a horizontal line at y=0 (in the same absolute space
+        // both layers share here, both top-level with no ancestor offset) —
+        // every outline point should sit close to that baseline, not down
+        // near where an unattached layer's frame (y=0..100) would place it.
+        let max_y = polygons.iter().flat_map(|p| p.exterior.iter()).map(|p| p.y).fold(f32::NEG_INFINITY, f32::max);
+        assert!(max_y < 80.0, "expected on-path outlines to hug the guide line (max y={max_y}), not spill down the unattached frame's full height");
+    }
+
+    #[test]
+    fn area_inside_attachment_places_outlines_inside_the_targets_rectangle() {
+        let guide = Layer::new(
+            "Guide",
+            Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(300.0, 100.0)),
+            LayerKind::Rectangle { corner_radius: crate::model::CornerRadii::ZERO },
+        );
+        let target_id = guide.id;
+        let text = attached_text_layer("Hello world", target_id, crate::model::TextPathMode::AreaInside);
+
+        let polygons = convert_to_outlines(&text, &[guide, text.clone()]).expect("should produce area-type outlines");
+        assert!(!polygons.is_empty(), "expected glyph outlines wrapped inside the guide rectangle");
+    }
+
+    #[test]
+    fn unresolvable_attachment_falls_back_to_plain_layout() {
+        // A `path_attachment` whose target isn't in `roots` at all (deleted,
+        // or `roots` doesn't cover it) must still produce the ordinary
+        // frame-based outlines, not silently return nothing.
+        let text = attached_text_layer("Hi", uuid::Uuid::new_v4(), crate::model::TextPathMode::OnPath);
+        let polygons = convert_to_outlines(&text, &[]).expect("should fall back to plain layout");
+        assert!(!polygons.is_empty(), "expected plain frame-based outlines when the attachment target doesn't resolve");
     }
 }

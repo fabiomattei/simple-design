@@ -1,14 +1,13 @@
-//! Line-wrapping for a `Text` layer whose `path_attachment.mode` is
-//! `TextPathMode::AreaInside` ("Area Type"): each line is fit to whatever
-//! horizontal span the target shape's outline (from `text_path_geometry`)
-//! actually offers at that height, rather than a fixed rectangle width.
+//! Canvas-side rendering for a `Text` layer whose `path_attachment.mode` is
+//! `TextPathMode::AreaInside` ("Area Type"): turns `text_area_wrap`'s
+//! backend-agnostic wrapping decision into `egui::Galley`s. The wrapping
+//! itself (where each line breaks, its `x`/`y`) lives in `text_area_wrap.rs`,
+//! shared with `export.rs`'s `ab_glyph`-based rendering, so the two can't
+//! disagree on where a line breaks or sits.
 //!
-//! `list`/`paragraph_spacing` are deliberately not honored here (only
-//! `transform` and per-character `runs` are) — list bullets and extra
-//! paragraph gaps assume a fixed line start column/rectangle, which an
-//! area shape doesn't have one of; keeping area-type to plain wrapped
-//! paragraphs avoids that mismatch rather than fudging it. All spatial
-//! inputs/outputs are in the same already-zoom-scaled space as
+//! `list`/`paragraph_spacing` are deliberately not honored (only `transform`
+//! and per-character `runs` are) — see `text_area_wrap.rs`'s module doc.
+//! All spatial inputs/outputs are in the same already-zoom-scaled space as
 //! `text_on_path_layout.rs`.
 
 use std::sync::Arc;
@@ -17,9 +16,8 @@ use egui::text::LayoutJob;
 use egui::{Color32, Galley, Pos2};
 
 use crate::model::text_runs::{RunStyle, TextRun};
-use crate::model::{ListType, TextAlign};
-use crate::text_layout::{run_text_format, tagged_lines, TextStyleParams};
-use crate::text_path_geometry::horizontal_spans_at_y;
+use crate::text_area_wrap::wrap_in_area;
+use crate::text_layout::{run_text_format, TextStyleParams};
 
 /// One wrapped line's already-laid-out `Galley` and top-left position.
 pub struct AreaLine {
@@ -28,12 +26,9 @@ pub struct AreaLine {
 }
 
 /// Word-wraps `content` to fit inside the closed outline `target_points`,
-/// inset by `padding` on every side. Returns one `AreaLine` per visual line,
-/// top-aligned starting just inside the shape's topmost point; wrapping
-/// stops (remaining text is dropped, like `TextResize::Fixed` clipping)
-/// once there's no more vertical room inside the shape's bounds. A height
-/// with no usable span at all (e.g. between a star's points) is skipped
-/// rather than breaking the line count.
+/// inset by `padding` on every side. Returns one `AreaLine` per visual line;
+/// wrapping stops (remaining text is dropped, like `TextResize::Fixed`
+/// clipping) once there's no more vertical room inside the shape's bounds.
 #[allow(clippy::too_many_arguments)]
 pub fn layout_text_in_area(
     ctx: &egui::Context,
@@ -46,129 +41,17 @@ pub fn layout_text_in_area(
     target_points: &[Pos2],
     padding: f32,
 ) -> Vec<AreaLine> {
-    if target_points.len() < 3 {
-        return Vec::new();
-    }
-    let min_y = target_points.iter().map(|p| p.y).fold(f32::INFINITY, f32::min);
-    let max_y = target_points.iter().map(|p| p.y).fold(f32::NEG_INFINITY, f32::max);
-    if !(min_y.is_finite() && max_y.is_finite()) || max_y <= min_y {
-        return Vec::new();
-    }
-
     let line_height = style
         .line_height
         .map(|h| h * zoom)
         .unwrap_or_else(|| build_run_job(ctx, &[(' ', None)], runs, base, style, zoom, layer_color).rect.height())
         .max(1.0);
+    let measure = |chars: &[(char, Option<usize>)]| build_run_job(ctx, chars, runs, base, style, zoom, layer_color).rect.width();
 
-    let mut queue: Vec<(Vec<(char, Option<usize>)>, bool)> = Vec::new();
-    for (paragraph_index, paragraph) in tagged_lines(content, runs, style.transform, ListType::None, 1).into_iter().enumerate() {
-        let tokens = tokenize(&paragraph);
-        if tokens.is_empty() {
-            queue.push((Vec::new(), paragraph_index > 0));
-        } else {
-            for (i, token) in tokens.into_iter().enumerate() {
-                queue.push((token, i == 0 && paragraph_index > 0));
-            }
-        }
-    }
-    let mut queue = queue.into_iter().peekable();
-
-    let mut lines = Vec::new();
-    let mut current: Vec<(char, Option<usize>)> = Vec::new();
-    let mut current_width = 0.0f32;
-    let mut y = min_y + padding;
-
-    while y + line_height <= max_y {
-        let Some((x0, x1)) = widest_span(target_points, y + line_height / 2.0, padding) else {
-            y += line_height;
-            continue;
-        };
-        let avail = x1 - x0;
-
-        while let Some((token, new_paragraph)) = queue.peek() {
-            if *new_paragraph && !current.is_empty() {
-                break;
-            }
-            let token_width = build_run_job(ctx, token, runs, base, style, zoom, layer_color).rect.width();
-            if current_width + token_width > avail && !current.is_empty() {
-                break;
-            }
-            current_width += token_width;
-            current.extend_from_slice(token);
-            queue.next();
-        }
-
-        if !current.is_empty() {
-            push_line(&mut lines, ctx, &current, runs, base, style, zoom, layer_color, x0, avail, y);
-            current.clear();
-            current_width = 0.0;
-        } else if let Some((token, _)) = queue.peek() {
-            // A single token wider than this line's whole span: place it
-            // anyway (it overflows) rather than looping forever on it.
-            let token = token.clone();
-            queue.next();
-            push_line(&mut lines, ctx, &token, runs, base, style, zoom, layer_color, x0, avail, y);
-        }
-
-        y += line_height;
-        if queue.peek().is_none() {
-            break;
-        }
-    }
-    lines
-}
-
-fn widest_span(points: &[Pos2], y: f32, padding: f32) -> Option<(f32, f32)> {
-    horizontal_spans_at_y(points, y)
+    wrap_in_area(content, runs, style.transform, &measure, line_height, style.align, target_points, padding)
         .into_iter()
-        .map(|(a, b)| (a + padding, b - padding))
-        .filter(|(a, b)| b > a)
-        .max_by(|a, b| (a.1 - a.0).partial_cmp(&(b.1 - b.0)).unwrap_or(std::cmp::Ordering::Equal))
-}
-
-/// Splits one paragraph's tagged chars into word tokens, each a word plus
-/// its immediately following whitespace run (so concatenating tokens back
-/// to back exactly reconstructs the paragraph) — the standard "break
-/// opportunities sit at whitespace, attached to the preceding word" tokenization.
-fn tokenize(paragraph: &[(char, Option<usize>)]) -> Vec<Vec<(char, Option<usize>)>> {
-    let mut tokens = Vec::new();
-    let mut i = 0;
-    while i < paragraph.len() {
-        let start = i;
-        while i < paragraph.len() && !paragraph[i].0.is_whitespace() {
-            i += 1;
-        }
-        while i < paragraph.len() && paragraph[i].0.is_whitespace() {
-            i += 1;
-        }
-        tokens.push(paragraph[start..i].to_vec());
-    }
-    tokens
-}
-
-#[allow(clippy::too_many_arguments)]
-fn push_line(
-    lines: &mut Vec<AreaLine>,
-    ctx: &egui::Context,
-    chars: &[(char, Option<usize>)],
-    runs: &[TextRun],
-    base: &RunStyle,
-    style: &TextStyleParams,
-    zoom: f32,
-    layer_color: Color32,
-    x0: f32,
-    avail: f32,
-    y: f32,
-) {
-    let galley = build_run_job(ctx, chars, runs, base, style, zoom, layer_color);
-    let leftover = (avail - galley.rect.width()).max(0.0);
-    let x = match style.align {
-        TextAlign::Center => x0 + leftover / 2.0,
-        TextAlign::Right => x0 + leftover,
-        TextAlign::Left | TextAlign::Justify => x0,
-    };
-    lines.push(AreaLine { galley, pos: Pos2::new(x, y) });
+        .map(|row| AreaLine { galley: build_run_job(ctx, &row.chars, runs, base, style, zoom, layer_color), pos: Pos2::new(row.x, row.y) })
+        .collect()
 }
 
 /// Builds one `Galley` for a contiguous stretch of tagged chars, splitting
@@ -208,7 +91,7 @@ fn build_run_job(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::model::{TextFont, TextTransform};
+    use crate::model::{ListType, TextAlign, TextFont, TextTransform};
 
     fn style() -> TextStyleParams {
         TextStyleParams {

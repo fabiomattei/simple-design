@@ -122,7 +122,7 @@ pub fn mask_covers_point(mask: &Layer, point: Pos2) -> bool {
     let height = bounds.height().round().max(1.0) as u32;
     let Some(mut pixmap) = Pixmap::new(width, height) else { return false };
     let render_offset = Vec2::new(-bounds.min.x, -bounds.min.y);
-    crate::export::draw_layer(&mut pixmap, mask, mask, render_offset, 1.0);
+    crate::export::draw_layer(&mut pixmap, mask, std::slice::from_ref(mask), render_offset, 1.0);
     let px = ((point.x - bounds.min.x).floor().max(0.0) as u32).min(width.saturating_sub(1));
     let py = ((point.y - bounds.min.y).floor().max(0.0) as u32).min(height.saturating_sub(1));
     pixmap.pixel(px, py).is_some_and(|p| p.alpha() > 0)
@@ -161,7 +161,7 @@ mod tests {
         let mask = oval_layer("Mask", Pos2::new(0.0, 0.0), Vec2::new(100.0, 100.0));
 
         let mut target = Pixmap::new(100, 100).unwrap();
-        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, &mask, off, op));
+        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op));
 
         // Center: inside both the square and the circle -> opaque red.
         let center = pixel(&target, 50, 50);
@@ -171,6 +171,64 @@ mod tests {
         // Corner: inside the square's bbox but outside the inscribed circle -> transparent.
         let corner = pixel(&target, 2, 2);
         assert_eq!(corner.alpha(), 0, "corner outside the circle should be fully transparent");
+    }
+
+    /// A masked `Text` layer's `path_attachment` can resolve against a
+    /// target that isn't part of the masked run's own `content` at all —
+    /// `composite_masked_run`'s `draw_layer` callback decides what "roots"
+    /// means, and `canvas.rs`'s `MaskedGroupTextureCache` passes the whole
+    /// page's layers, not just `mask`/`content` (see that cache's doc
+    /// comment). Proven here directly against `export::draw_layer`, without
+    /// needing an `egui::Context`/live texture cache.
+    #[test]
+    fn masked_path_attached_text_resolves_a_target_outside_its_own_content() {
+        let guide = Layer::new("Guide", Frame::from_two_points(Pos2::new(0.0, 20.0), Pos2::new(100.0, 20.0)), LayerKind::Line);
+        let target_id = guide.id;
+
+        let mut text = Layer::new(
+            "Label",
+            Frame { pos: Pos2::new(0.0, 0.0), size: Vec2::new(10.0, 10.0), rotation: 0.0 },
+            LayerKind::Text {
+                content: "HI".to_string(),
+                font_size: 20.0,
+                font: crate::model::TextFont::Proportional,
+                align: crate::model::TextAlign::Left,
+                vertical_align: crate::model::VerticalAlign::Top,
+                resize: crate::model::TextResize::Auto,
+                line_height: None,
+                letter_spacing: 0.0,
+                paragraph_spacing: 0.0,
+                bold: false,
+                italic: false,
+                underline: false,
+                strikethrough: false,
+                transform: crate::model::TextTransform::None,
+                list: crate::model::ListType::None,
+                list_start: 1,
+                style_id: None,
+                runs: Vec::new(),
+                path_attachment: Some(crate::model::TextPathAttachment {
+                    target: target_id,
+                    mode: crate::model::TextPathMode::OnPath,
+                    offset: 0.0,
+                    start: 0.0,
+                    flip: false,
+                }),
+            },
+        );
+        text.style.fill = Some(Paint::Solid(Color32::BLACK));
+        text.style.stroke = None;
+
+        let mask = rect_layer("Mask", Pos2::new(0.0, 0.0), Vec2::new(100.0, 40.0), Color32::WHITE);
+        // `content` deliberately does NOT include `guide` — only `roots`
+        // (standing in for `canvas.rs`'s page-wide layer list) does.
+        let roots = vec![guide, mask.clone(), text.clone()];
+
+        let mut target = Pixmap::new(100, 40).unwrap();
+        composite_masked_run(&mut target, &mask, &[&text], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, &roots, off, op));
+
+        let any_opaque = target.pixels().iter().any(|p| p.alpha() > 0);
+        assert!(any_opaque, "expected the masked text's on-path glyphs to render using a target outside its own masked content");
     }
 
     /// A mask with no content below it in the same parent has nothing to
@@ -210,7 +268,7 @@ mod tests {
         mask.style.fill = Some(Paint::Solid(Color32::from_rgb(0, 255, 0))); // distinct from both Square's red and transparent.
 
         let mut target = Pixmap::new(100, 100).unwrap();
-        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, &mask, off, op));
+        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op));
 
         let center = pixel(&target, 50, 50);
         assert!(center.green() < 50, "mask's own green fill should not appear in the output");

@@ -127,3 +127,23 @@ pub fn ab_glyph_bytes_bold(font: &TextFont) -> (Cow<'static, [u8]>, u32) {
         },
     }
 }
+
+/// One `(bytes, face_index)` per style source a rich-text render needs to
+/// build an `ab_glyph::FontRef` from — `[0]` = `base`, `[i + 1]` =
+/// `runs[i]` — picking each source's bold or regular bytes per its own
+/// `RunStyle::bold`. Factored out of `export.rs`'s `draw_text_rich` and
+/// `text_outline.rs`'s `convert_to_outlines_rich` (which used to duplicate
+/// this exact selection logic) since `export.rs`'s new `draw_text_in_area`
+/// needs the identical resolution a third time — callers still build their
+/// own `Vec<FontRef>` from the returned bytes locally (a `FontRef` borrows
+/// from its bytes, so it can't be returned from here without also returning
+/// the bytes it'd borrow from, at which point returning the bytes alone and
+/// letting each caller parse them is simpler).
+pub fn run_font_byte_bufs(base: &crate::model::text_runs::RunStyle, runs: &[crate::model::text_runs::TextRun]) -> Vec<(Cow<'static, [u8]>, u32)> {
+    let mut byte_bufs = Vec::with_capacity(runs.len() + 1);
+    byte_bufs.push(if base.bold { ab_glyph_bytes_bold(&base.font) } else { ab_glyph_bytes(&base.font) });
+    for run in runs {
+        byte_bufs.push(if run.style.bold { ab_glyph_bytes_bold(&run.style.font) } else { ab_glyph_bytes(&run.style.font) });
+    }
+    byte_bufs
+}

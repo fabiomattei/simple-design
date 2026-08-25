@@ -20,6 +20,7 @@ mod shapes;
 mod system_fonts;
 mod transform_ops;
 mod text_area_layout;
+mod text_area_wrap;
 mod text_layout;
 mod text_on_path_layout;
 mod text_outline;

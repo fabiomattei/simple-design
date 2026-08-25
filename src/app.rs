@@ -296,7 +296,8 @@ impl App {
         if !matches!(layer.kind, LayerKind::Text { .. }) {
             return;
         }
-        let Some(polygons) = crate::text_outline::convert_to_outlines(layer) else { return };
+        let roots = &self.history.get().active_page().layers;
+        let Some(polygons) = crate::text_outline::convert_to_outlines(layer, roots) else { return };
         self.history.snapshot();
         if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
             l.kind = LayerKind::CompoundPath { polygons };

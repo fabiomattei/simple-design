@@ -91,12 +91,20 @@ pub struct MaskedGroupTextureCache(HashMap<LayerId, CachedMaskTexture>);
 impl MaskedGroupTextureCache {
     /// Returns the cached (or freshly built) texture for this masked run,
     /// plus the parent-space bounds (`mask.frame.rotated_bounds()`) it
-    /// should be drawn into on screen.
-    fn get_or_build(&mut self, ctx: &egui::Context, mask: &Layer, content: &[&Layer]) -> Option<(egui::TextureHandle, Rect)> {
+    /// should be drawn into on screen. `page` lets a path-attached `Text`
+    /// layer inside `content` resolve its target anywhere on the page, not
+    /// just within this masked run's own `mask`/`content` — but since that
+    /// means this render can depend on a layer this cache's key (`mask`/
+    /// `content` clone-equality) doesn't track, any masked run containing
+    /// such a layer always rebuilds rather than risk a stale texture if its
+    /// attachment target moves elsewhere on the page.
+    fn get_or_build(&mut self, ctx: &egui::Context, mask: &Layer, content: &[&Layer], page: &Page) -> Option<(egui::TextureHandle, Rect)> {
         let bounds = mask.frame.rotated_bounds();
-        let up_to_date = self.0.get(&mask.id).is_some_and(|cached| {
-            cached.mask == *mask && cached.content.len() == content.len() && cached.content.iter().zip(content).all(|(a, b)| a == *b)
-        });
+        let has_path_attached_text = content.iter().any(|l| matches!(&l.kind, LayerKind::Text { path_attachment: Some(_), .. }));
+        let up_to_date = !has_path_attached_text
+            && self.0.get(&mask.id).is_some_and(|cached| {
+                cached.mask == *mask && cached.content.len() == content.len() && cached.content.iter().zip(content).all(|(a, b)| a == *b)
+            });
         if !up_to_date {
             let width = bounds.width().round().max(1.0) as u32;
             let height = bounds.height().round().max(1.0) as u32;
@@ -105,14 +113,8 @@ impl MaskedGroupTextureCache {
             // own top-left) lands at the scratch pixmap's `(0, 0)` — same
             // idea as `export::render_layer`'s `offset` computation.
             let render_offset = Vec2::new(-bounds.min.x, -bounds.min.y);
-            // `mask` is the best root available here for resolving a
-            // `path_attachment` (this cache has no page/document context) —
-            // covers attaching within the mask's own subtree, not to a
-            // target elsewhere on the page. See `export.rs`'s `root`
-            // threading for the fully page-aware path (used by PNG export
-            // and "Convert to Outlines").
             crate::masking::composite_masked_run(&mut pixmap, mask, content, render_offset, 1.0, |px, l, off, op| {
-                crate::export::draw_layer_with_shadows(px, l, mask, off, op)
+                crate::export::draw_layer_with_shadows(px, l, &page.layers, off, op)
             });
             let color_image = egui::ColorImage::from_rgba_premultiplied([width as usize, height as usize], pixmap.data());
             let texture = ctx.load_texture(format!("mask-group-{}", mask.id), color_image, egui::TextureOptions::LINEAR);
@@ -5030,7 +5032,7 @@ fn draw_children(
                 draw_layer(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, child, page, parent_offset, origin, pan, zoom, opacity, editing_text);
             }
             crate::masking::RenderUnit::Masked { mask, content } => {
-                draw_masked_run(painter, ctx, mask_cache, mask, &content, parent_offset, origin, pan, zoom, opacity);
+                draw_masked_run(painter, ctx, mask_cache, mask, &content, page, parent_offset, origin, pan, zoom, opacity);
             }
         }
     }
@@ -5049,13 +5051,14 @@ fn draw_masked_run(
     mask_cache: &mut MaskedGroupTextureCache,
     mask: &Layer,
     content: &[&Layer],
+    page: &Page,
     parent_offset: Vec2,
     origin: Pos2,
     pan: Vec2,
     zoom: f32,
     opacity: f32,
 ) {
-    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, content) else {
+    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, content, page) else {
         return;
     };
     let to_screen = |p: Pos2| origin + pan + (p.to_vec2() + parent_offset) * zoom;
