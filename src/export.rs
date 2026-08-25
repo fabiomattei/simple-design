@@ -31,19 +31,56 @@ pub fn render_layer(layer: &Layer) -> Option<Pixmap> {
     Some(pixmap)
 }
 
+/// `layer.frame.rotated_bounds()`, except for a `Text` layer whose
+/// `path_attachment` resolves against `roots` — there, the attached glyphs
+/// can sit anywhere along/inside the target, arbitrarily far from the
+/// layer's own (often tiny, e.g. click-to-place default size) frame, so
+/// sizing off `layer.frame` alone would silently clip them out of any
+/// silhouette/standalone render. Falls back to `layer.frame.rotated_bounds()`
+/// whenever there's no attachment, or it doesn't resolve — the plain,
+/// pre-attachment behavior for every other case.
+fn effective_rotated_bounds(layer: &Layer, roots: &[Layer]) -> egui::Rect {
+    let LayerKind::Text { path_attachment: Some(attachment), font_size, .. } = &layer.kind else {
+        return layer.frame.rotated_bounds();
+    };
+    let Some((outline, _closed)) = crate::text_path_geometry::resolve_target_outline(roots, attachment.target) else {
+        return layer.frame.rotated_bounds();
+    };
+    if outline.is_empty() {
+        return layer.frame.rotated_bounds();
+    }
+    // `resolve_target_outline` returns points relative to `roots` itself —
+    // converting to this layer's own parent-relative space (what
+    // `layer.frame.rotated_bounds()` is already in) needs this layer's own
+    // position in that same space, same `absolute_offset_of` trick
+    // `draw_layer`'s `Text` branch and `text_outline.rs` both use.
+    let self_root_offset = crate::text_path_geometry::absolute_offset_of(roots, layer.id).unwrap_or(egui::Vec2::ZERO);
+    let relative: Vec<egui::Pos2> = outline.iter().map(|&p| p - self_root_offset).collect();
+    // The outline is only the *path*, not the text drawn along/inside it —
+    // pad by the font size (a generous stand-in for glyph height/ascent/
+    // descender reach) plus the attachment's own perpendicular offset, so
+    // on-path text hugging the outside of a curve doesn't get clipped.
+    egui::Rect::from_points(&relative).expand(font_size.abs().max(1.0) + attachment.offset.abs())
+}
+
 /// Same as `render_layer`, but without shadow padding or drawing — a plain
 /// silhouette/appearance render used internally as the input to shadow
 /// rendering itself (`shadow::render_outer_shadow`/`render_inner_shadow`
 /// need the shape's own rasterized alpha, not a shadow of it) and by
 /// `canvas.rs`'s `ShadowTextureCache`, which needs the exact same silhouette
-/// the exported PNG's shadow would be built from.
-pub(crate) fn render_layer_plain(layer: &Layer) -> Option<(Pixmap, egui::Rect)> {
-    let bounds = layer.frame.rotated_bounds();
+/// the exported PNG's shadow would be built from. `roots` is forwarded to
+/// `draw_layer` for `path_attachment` resolution, same convention as
+/// `draw_layer`'s own doc comment — so a shadow cast by a path-attached
+/// `Text` layer is shaped like its actual attached glyphs, not the plain
+/// unattached layout `std::slice::from_ref(layer)` alone would fall back to
+/// (see `effective_rotated_bounds`, which sizes this render to fit them).
+pub(crate) fn render_layer_plain(layer: &Layer, roots: &[Layer]) -> Option<(Pixmap, egui::Rect)> {
+    let bounds = effective_rotated_bounds(layer, roots);
     let width = bounds.width().round().max(1.0) as u32;
     let height = bounds.height().round().max(1.0) as u32;
     let mut pixmap = Pixmap::new(width, height)?;
     let offset = egui::Vec2::new(-bounds.min.x, -bounds.min.y);
-    draw_layer(&mut pixmap, layer, std::slice::from_ref(layer), offset, 1.0);
+    draw_layer(&mut pixmap, layer, roots, offset, 1.0);
     Some((pixmap, bounds))
 }
 
@@ -502,7 +539,17 @@ fn draw_text_on_path(
             let style = style_of(idx);
             let color = with_opacity(style.color.unwrap_or(base.color.unwrap_or(egui::Color32::BLACK)), opacity);
             let normal = egui::Vec2::new(-angle.sin(), angle.cos());
-            draw_rotated_glyph(pixmap, &faces[face_idx], id, scale, point + normal * path_offset, angle, color, style.bold, style.italic);
+            let anchor = point + normal * path_offset;
+            draw_rotated_glyph(pixmap, &faces[face_idx], id, scale, anchor, angle, color, style.bold, style.italic);
+            if style.underline || style.strikethrough {
+                let thickness = (style.font_size * 0.06).max(1.0);
+                if style.underline {
+                    draw_rotated_decoration_segment(pixmap, anchor, angle, width - letter_spacing, style.font_size * 0.08, thickness, color);
+                }
+                if style.strikethrough {
+                    draw_rotated_decoration_segment(pixmap, anchor, angle, width - letter_spacing, -style.font_size * 0.3, thickness, color);
+                }
+            }
         }
         distance += width;
     }
@@ -554,6 +601,38 @@ fn draw_rotated_glyph(pixmap: &mut Pixmap, face: &FontRef, id: GlyphId, scale: a
             .post_rotate_at(angle.to_degrees(), anchor.x, anchor.y);
         pixmap.draw_pixmap(0, 0, sub.as_ref(), &paint, transform, None);
     }
+}
+
+/// Fills a `width`-long, `thickness`-tall bar in the glyph's own *local*
+/// (pre-rotation) space — starting at local `(0, local_y)`, spanning that
+/// one glyph's own advance width — then rotates its 4 corners about
+/// `anchor` by `angle` (radians, clockwise), same convention as
+/// `draw_rotated_glyph`. One short straight segment per glyph, chained
+/// along the path, approximates a continuous underline/strikethrough
+/// hugging the curve (each segment is too short for the curve's own bend to
+/// be visible within it at any font size this app supports).
+fn draw_rotated_decoration_segment(pixmap: &mut Pixmap, anchor: egui::Pos2, angle: f32, width: f32, local_y: f32, thickness: f32, color: egui::Color32) {
+    if width <= 0.0 {
+        return;
+    }
+    let (sin_a, cos_a) = angle.sin_cos();
+    let local_corners = [(0.0, local_y), (width, local_y), (width, local_y + thickness), (0.0, local_y + thickness)];
+    let mut pb = PathBuilder::new();
+    for (i, &(lx, ly)) in local_corners.iter().enumerate() {
+        let x = anchor.x + lx * cos_a - ly * sin_a;
+        let y = anchor.y + lx * sin_a + ly * cos_a;
+        if i == 0 {
+            pb.move_to(x, y);
+        } else {
+            pb.line_to(x, y);
+        }
+    }
+    pb.close();
+    let Some(path) = pb.finish() else { return };
+    let mut paint = Paint::default();
+    paint.set_color(to_color(color));
+    paint.anti_alias = true;
+    pixmap.fill_path(&path, &paint, FillRule::Winding, Transform::identity(), None);
 }
 
 /// Rasterizes `content` word-wrapped inside the closed outline `outline`
@@ -759,7 +838,7 @@ pub(crate) fn draw_layer_with_shadows(pixmap: &mut Pixmap, layer: &Layer, roots:
     }
     let has_outer = !layer.style.shadows.is_empty();
     let has_inner = !layer.style.inner_shadows.is_empty();
-    let silhouette = if has_outer || has_inner { render_layer_plain(layer) } else { None };
+    let silhouette = if has_outer || has_inner { render_layer_plain(layer, roots) } else { None };
 
     if let (true, Some((silhouette, bounds))) = (has_outer, &silhouette) {
         let silhouette_origin = egui::Vec2::new(bounds.min.x, bounds.min.y) + offset;
@@ -3024,6 +3103,49 @@ mod tests {
         assert!(any_opaque, "expected on-path text glyphs to render along the guide line, but the canvas is empty");
     }
 
+    /// A drop shadow on a path-attached `Text` layer must be shaped from the
+    /// *attached* glyphs (sitting along the guide, far from the layer's own
+    /// tiny unattached frame) — not from the plain unattached layout
+    /// `render_layer_plain`'s silhouette pass would fall back to if it
+    /// couldn't resolve the attachment (see `render_layer_plain`'s `roots`
+    /// param). Proven by a distinctly-colored shadow showing up near the
+    /// guide, not clustered at the unattached frame's own tiny position.
+    #[test]
+    fn drop_shadow_on_path_attached_text_follows_the_attached_glyphs_not_the_unattached_frame() {
+        let mut guide = Layer::new("Guide", Frame::from_two_points(Pos2::new(10.0, 100.0), Pos2::new(190.0, 100.0)), LayerKind::Line);
+        guide.style.fill = None;
+        guide.style.stroke = None;
+        let target_id = guide.id;
+
+        let mut text = text_path_attachment_layer(target_id, crate::model::TextPathMode::OnPath);
+        text.style.fill = Some(crate::model::Paint::Solid(Color32::from_rgb(255, 0, 0)));
+        text.style.shadows = vec![crate::model::Shadow {
+            color: Color32::from_rgb(0, 0, 255),
+            offset: Vec2::ZERO,
+            blur: 6.0,
+            spread: 0.0,
+        }];
+
+        let mut artboard = Layer::new_artboard("Board", Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(200.0, 150.0)));
+        if let LayerKind::Artboard { children, .. } = &mut artboard.kind {
+            children.push(guide);
+            children.push(text);
+        }
+
+        let pixmap = render_layer(&artboard).expect("should render");
+        let blueish_near_guide = (0..pixmap.width()).any(|x| {
+            (85u32..135).any(|y| pixmap.pixel(x, y.min(pixmap.height() - 1)).is_some_and(|p| p.blue() > 100 && p.blue() as i32 - p.red() as i32 > 40))
+        });
+        let blueish_near_unattached_frame = (0..pixmap.width()).any(|x| {
+            (0u32..10).any(|y| pixmap.pixel(x, y).is_some_and(|p| p.blue() > 100 && p.blue() as i32 - p.red() as i32 > 40))
+        });
+        assert!(blueish_near_guide, "expected the blue drop shadow to show up near the guide line (y~100), where the attached glyphs actually sit");
+        assert!(
+            !blueish_near_unattached_frame,
+            "the blue drop shadow should not appear near the layer's own tiny unattached frame (y=0..10) — that would mean the silhouette fell back to the unattached layout"
+        );
+    }
+
     #[test]
     fn on_path_text_reproduces_per_character_run_colors() {
         let mut guide = Layer::new(
@@ -3082,6 +3204,48 @@ mod tests {
             }
         }
         assert!(saw_black && saw_red, "expected both the black first run and the red second run to appear along the path (black={saw_black}, red={saw_red})");
+    }
+
+    fn render_on_path_opaque_count(underline: bool, strikethrough: bool) -> usize {
+        let mut guide = Layer::new(
+            "Guide",
+            Frame::from_two_points(Pos2::new(10.0, 30.0), Pos2::new(190.0, 30.0)),
+            LayerKind::Line,
+        );
+        guide.style.fill = None;
+        guide.style.stroke = None;
+        let target_id = guide.id;
+
+        let mut text = text_path_attachment_layer(target_id, crate::model::TextPathMode::OnPath);
+        if let LayerKind::Text { content, font_size, underline: u, strikethrough: s, .. } = &mut text.kind {
+            *content = "III".to_string();
+            *font_size = 32.0;
+            *u = underline;
+            *s = strikethrough;
+        }
+
+        let group = Layer::new(
+            "Group",
+            Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(200.0, 60.0)),
+            LayerKind::Group { children: vec![guide, text] },
+        );
+
+        let pixmap = render_layer(&group).expect("should render");
+        pixmap.pixels().iter().filter(|p| p.alpha() > 0).count()
+    }
+
+    #[test]
+    fn on_path_underline_adds_extra_opaque_pixels() {
+        let base = render_on_path_opaque_count(false, false);
+        let underlined = render_on_path_opaque_count(true, false);
+        assert!(underlined > base, "underlined on-path text (opaque={underlined}) should cover more pixels than plain (opaque={base})");
+    }
+
+    #[test]
+    fn on_path_strikethrough_adds_extra_opaque_pixels() {
+        let base = render_on_path_opaque_count(false, false);
+        let struck = render_on_path_opaque_count(false, true);
+        assert!(struck > base, "struck-through on-path text (opaque={struck}) should cover more pixels than plain (opaque={base})");
     }
 
     #[test]

@@ -85,6 +85,18 @@ struct CachedMaskTexture {
     texture: egui::TextureHandle,
 }
 
+/// Whether `layer` or any descendant is a `Text` layer with a
+/// `path_attachment` set — used by cache-by-equality render caches
+/// (`MaskedGroupTextureCache`, `ShadowTextureCache`) to force a rebuild
+/// instead of risking a stale render when the attachment's target (which
+/// the cache key itself doesn't track) moves elsewhere on the page.
+fn contains_path_attached_text(layer: &Layer) -> bool {
+    if matches!(&layer.kind, LayerKind::Text { path_attachment: Some(_), .. }) {
+        return true;
+    }
+    layer.kind.children().is_some_and(|children| children.iter().any(contains_path_attached_text))
+}
+
 #[derive(Default)]
 pub struct MaskedGroupTextureCache(HashMap<LayerId, CachedMaskTexture>);
 
@@ -100,8 +112,7 @@ impl MaskedGroupTextureCache {
     /// attachment target moves elsewhere on the page.
     fn get_or_build(&mut self, ctx: &egui::Context, mask: &Layer, content: &[&Layer], page: &Page) -> Option<(egui::TextureHandle, Rect)> {
         let bounds = mask.frame.rotated_bounds();
-        let has_path_attached_text = content.iter().any(|l| matches!(&l.kind, LayerKind::Text { path_attachment: Some(_), .. }));
-        let up_to_date = !has_path_attached_text
+        let up_to_date = !content.iter().any(|l| contains_path_attached_text(l))
             && self.0.get(&mask.id).is_some_and(|cached| {
                 cached.mask == *mask && cached.content.len() == content.len() && cached.content.iter().zip(content).all(|(a, b)| a == *b)
             });
@@ -317,17 +328,23 @@ pub struct ShadowTextureCache(HashMap<LayerId, CachedShadowTextures>);
 
 impl ShadowTextureCache {
     /// `None` if `layer` has no shadows at all (nothing to draw) or its
-    /// silhouette failed to rasterize (zero-size layer).
-    fn get_or_build(&mut self, ctx: &egui::Context, layer: &Layer) -> Option<&CachedShadowTextures> {
+    /// silhouette failed to rasterize (zero-size layer). `page` lets a
+    /// path-attached `Text` layer (`layer` itself, or nested inside it)
+    /// resolve its target anywhere on the page for the shadow's silhouette,
+    /// same as the live render — but since that means the silhouette can
+    /// depend on a layer this cache's key (`cached.layer` equality) doesn't
+    /// track, `layer` containing one always rebuilds rather than risk a
+    /// stale (unattached-shaped) shadow if the target moves elsewhere.
+    fn get_or_build(&mut self, ctx: &egui::Context, layer: &Layer, page: &Page) -> Option<&CachedShadowTextures> {
         let has_outer = !layer.style.shadows.is_empty();
         let has_inner = !layer.style.inner_shadows.is_empty();
         if !has_outer && !has_inner {
             self.0.remove(&layer.id);
             return None;
         }
-        let up_to_date = self.0.get(&layer.id).is_some_and(|cached| cached.layer == *layer);
+        let up_to_date = !contains_path_attached_text(layer) && self.0.get(&layer.id).is_some_and(|cached| cached.layer == *layer);
         if !up_to_date {
-            let (silhouette, bounds) = crate::export::render_layer_plain(layer)?;
+            let (silhouette, bounds) = crate::export::render_layer_plain(layer, &page.layers)?;
             let silhouette_origin = Vec2::new(bounds.min.x, bounds.min.y);
 
             let mut outer = Vec::new();
@@ -5107,7 +5124,7 @@ fn draw_layer(
     // `Artboard`/`Group` — which needs `shadow_cache` mutably for its own
     // descendants' shadows — rather than holding an immutable borrow of the
     // cache across that recursive call.
-    let (shadow_outer, shadow_inner) = match shadow_cache.get_or_build(ctx, layer) {
+    let (shadow_outer, shadow_inner) = match shadow_cache.get_or_build(ctx, layer, page) {
         Some(cached) => (cached.outer.clone(), cached.inner.clone()),
         None => (Vec::new(), Vec::new()),
     };
