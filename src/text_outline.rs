@@ -33,7 +33,11 @@ const ITALIC_SHEAR: f32 = 0.22;
 /// keeping id/frame/style (see `app.rs::convert_selection_to_outlines`).
 ///
 /// `underline`/`strikethrough` (decorations, not glyph shapes) are never
-/// reproduced. Uniform-style (`runs` empty) `bold` isn't either — it's a
+/// reproduced, in *any* of this function's branches — attached
+/// (`convert_to_outlines_on_path`/`convert_to_outlines_in_area`), rich
+/// (`convert_to_outlines_rich`), and plain/uniform alike. This is a
+/// deliberate, feature-wide gap, not a bug specific to path-attached text.
+/// Uniform-style (`runs` empty) `bold` isn't either — it's a
 /// raster-only faux-weight trick with no vector equivalent — but a rich
 /// (`runs` non-empty) layer's bold *runs* are, since those draw from a
 /// real bold-weight face's own outlines (see `convert_to_outlines_rich`).

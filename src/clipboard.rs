@@ -24,14 +24,22 @@ pub fn copy_layers(layers: &[Layer]) {
 /// `SENTINEL`), or fails to parse — any of which should leave Cmd+V a no-op
 /// rather than erroring. Every returned layer (and, recursively, its
 /// descendants) gets a fresh id via `regenerate_ids`, so pasting doesn't
-/// collide with the copied original if it's still on the page.
+/// collide with the copied original if it's still on the page. A pasted
+/// `Text` layer's `path_attachment.target` follows its own target if that
+/// target was copied in the same batch (e.g. copying a shape together with
+/// text attached to it), rather than staying attached to the original,
+/// unpasted shape — see `Layer::remap_path_attachment_targets`.
 pub fn paste_layers() -> Option<Vec<Layer>> {
     let mut clipboard = arboard::Clipboard::new().ok()?;
     let text = clipboard.get_text().ok()?;
     let json = text.strip_prefix(SENTINEL)?;
     let mut layers: Vec<Layer> = serde_json::from_str(json).ok()?;
+    let mut id_map = std::collections::HashMap::new();
     for layer in &mut layers {
-        layer.regenerate_ids();
+        layer.regenerate_ids(&mut id_map);
+    }
+    for layer in &mut layers {
+        layer.remap_path_attachment_targets(&id_map);
     }
     Some(layers)
 }
@@ -113,10 +121,13 @@ mod tests {
     }
 
     /// Exercises the real OS clipboard — skipped (rather than failed) in
-    /// environments without one (headless CI, sandboxed test runners). Both
-    /// cases live in one test (rather than two `#[test]`s) since they'd
-    /// otherwise race on the same process-wide OS clipboard under cargo
-    /// test's default parallel execution.
+    /// environments without one (headless CI, sandboxed test runners). Every
+    /// case that touches the clipboard lives in this one test (rather than
+    /// split across several `#[test]`s) since they'd otherwise race on the
+    /// same process-wide OS clipboard under cargo test's default parallel
+    /// execution — arboard's `Clipboard` is not safe to use concurrently
+    /// from two tests at once, which surfaced as a hard crash (SIGSEGV) the
+    /// first time this suite briefly had a second clipboard-touching test.
     #[test]
     fn copy_and_paste_round_trip_then_ignore_plain_os_text() {
         let Ok(mut probe) = arboard::Clipboard::new() else {
@@ -143,7 +154,65 @@ mod tests {
         assert_eq!(pasted[0].frame.pos, Pos2::new(1.0, 2.0));
         assert_ne!(pasted[0].id, original_id, "paste must regenerate ids");
 
+        // Pasting a copied "shape + text attached to it" pair should leave
+        // the pasted text attached to the pasted shape, not the original
+        // still on the page — same rewiring `grouping::duplicate_layers`
+        // does (see its own tests for the same check without needing a
+        // real clipboard).
+        let target = rect("Guide");
+        let target_id = target.id;
+        let text = text_attached_to(target_id);
+        copy_layers(&[target, text]);
+        if let Some(pasted_pair) = paste_layers() {
+            assert_eq!(pasted_pair.len(), 2);
+            let new_target_id = pasted_pair[0].id;
+            assert_eq!(
+                path_attachment_target(&pasted_pair[1]),
+                new_target_id,
+                "pasted text should attach to the pasted shape, not the original"
+            );
+        }
+
         let _ = probe.set_text("just some ordinary clipboard text".to_string());
         assert!(paste_layers().is_none());
+    }
+
+    fn text_attached_to(target: LayerId) -> Layer {
+        Layer::new(
+            "Label",
+            Frame { pos: Pos2::ZERO, size: Vec2::new(10.0, 10.0), rotation: 0.0 },
+            LayerKind::Text {
+                content: "Hi".to_string(),
+                font_size: 16.0,
+                font: crate::model::TextFont::Proportional,
+                align: crate::model::TextAlign::Left,
+                vertical_align: crate::model::VerticalAlign::Top,
+                resize: crate::model::TextResize::Auto,
+                line_height: None,
+                letter_spacing: 0.0,
+                paragraph_spacing: 0.0,
+                bold: false,
+                italic: false,
+                underline: false,
+                strikethrough: false,
+                transform: crate::model::TextTransform::None,
+                list: crate::model::ListType::None,
+                list_start: 1,
+                style_id: None,
+                runs: Vec::new(),
+                path_attachment: Some(crate::model::TextPathAttachment {
+                    target,
+                    mode: crate::model::TextPathMode::OnPath,
+                    offset: 0.0,
+                    start: 0.0,
+                    flip: false,
+                }),
+            },
+        )
+    }
+
+    fn path_attachment_target(layer: &Layer) -> LayerId {
+        let LayerKind::Text { path_attachment: Some(a), .. } = &layer.kind else { panic!("expected an attached Text layer") };
+        a.target
     }
 }

@@ -1015,12 +1015,37 @@ impl Layer {
     /// Assigns a fresh id to this layer and, recursively, to every
     /// descendant — used when duplicating a layer so the copy doesn't share
     /// ids with the original (which selection, history, and hit-testing all
-    /// key off of).
-    pub fn regenerate_ids(&mut self) {
+    /// key off of). Records every `old_id -> new_id` swap into `map`, so a
+    /// caller cloning a whole batch of layers together (`grouping::
+    /// duplicate_layers`, `clipboard::paste_layers`) can build one combined
+    /// map across the batch and use it to fix up any `path_attachment`
+    /// pointing at another layer *in that same batch* — see
+    /// `remap_path_attachment_targets`, which reads exactly this map.
+    pub fn regenerate_ids(&mut self, map: &mut std::collections::HashMap<LayerId, LayerId>) {
+        let old_id = self.id;
         self.id = Uuid::new_v4();
+        map.insert(old_id, self.id);
         if let Some(children) = self.kind.children_mut() {
             for child in children {
-                child.regenerate_ids();
+                child.regenerate_ids(map);
+            }
+        }
+    }
+
+    /// Rewrites every `Text` layer's `path_attachment.target` (in this layer
+    /// or any descendant) that appears as a key in `map` to its mapped
+    /// value. A target not in `map` is left untouched — see
+    /// `grouping::duplicate_layers`'s doc comment for why that's correct,
+    /// not a missed case.
+    pub fn remap_path_attachment_targets(&mut self, map: &std::collections::HashMap<LayerId, LayerId>) {
+        if let LayerKind::Text { path_attachment: Some(attachment), .. } = &mut self.kind {
+            if let Some(&new_target) = map.get(&attachment.target) {
+                attachment.target = new_target;
+            }
+        }
+        if let Some(children) = self.kind.children_mut() {
+            for child in children {
+                child.remap_path_attachment_targets(map);
             }
         }
     }

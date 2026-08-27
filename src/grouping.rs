@@ -20,38 +20,71 @@ pub const DEFAULT_DUPLICATE_OFFSET: Vec2 = Vec2::new(10.0, 10.0);
 /// (see `increment_trailing_number`). Each id is resolved independently, so
 /// a selection spanning multiple parents duplicates fine. Returns the new
 /// layers' ids, in the same order as `ids` (skipping any id not found).
+///
+/// If a duplicated `Text` layer's `path_attachment.target` points at
+/// another layer *also* being duplicated in this same call, the copy stays
+/// attached to *its own* copy of that target rather than the original
+/// (still on the page) one — see `Layer::remap_path_attachment_targets`.
+/// Attaching to something outside this batch is left untouched, still
+/// correctly pointing at that external, un-duplicated layer.
 pub fn duplicate_layers(page: &mut Page, ids: &[LayerId], offset: Vec2) -> Vec<LayerId> {
-    ids.iter()
-        .filter_map(|&id| duplicate_one(&mut page.layers, id, offset, false))
-        .collect()
+    duplicate_layers_impl(page, ids, offset, false)
 }
 
 /// `duplicate_layers`, but inserts each copy immediately *before* the
 /// original instead of after — the Shift+Cmd+D "Duplicate Below" shortcut.
 pub fn duplicate_layers_below(page: &mut Page, ids: &[LayerId], offset: Vec2) -> Vec<LayerId> {
-    ids.iter()
-        .filter_map(|&id| duplicate_one(&mut page.layers, id, offset, true))
-        .collect()
+    duplicate_layers_impl(page, ids, offset, true)
 }
 
-fn duplicate_one(layers: &mut Vec<Layer>, id: LayerId, offset: Vec2, below: bool) -> Option<LayerId> {
-    if let Some(pos) = layers.iter().position(|l| l.id == id) {
-        let mut clone = layers[pos].clone();
-        clone.regenerate_ids();
+fn duplicate_layers_impl(page: &mut Page, ids: &[LayerId], offset: Vec2, below: bool) -> Vec<LayerId> {
+    // Clone every original first (nothing inserted yet, so positions can't
+    // shift out from under a later lookup) so a batch-wide old-id -> new-id
+    // map can be built across *all* of them before any `path_attachment`
+    // gets fixed up — a target and its attached text can be resolved in
+    // either order within `ids`.
+    let mut clones: Vec<(LayerId, Layer)> = ids.iter().filter_map(|&id| find_layer(&page.layers, id).map(|l| (id, l.clone()))).collect();
+
+    let mut id_map = std::collections::HashMap::new();
+    for (_, clone) in &mut clones {
+        clone.regenerate_ids(&mut id_map);
+    }
+    for (_, clone) in &mut clones {
+        clone.remap_path_attachment_targets(&id_map);
+    }
+
+    let mut new_ids = Vec::with_capacity(clones.len());
+    for (original_id, mut clone) in clones {
         clone.frame.pos += offset;
         clone.name = increment_trailing_number(&clone.name);
-        let new_id = clone.id;
-        layers.insert(if below { pos } else { pos + 1 }, clone);
-        return Some(new_id);
+        new_ids.push(clone.id);
+        insert_next_to(&mut page.layers, original_id, clone, below);
     }
+    new_ids
+}
+
+fn find_layer(layers: &[Layer], id: LayerId) -> Option<&Layer> {
+    layers.iter().find_map(|l| l.find(id))
+}
+
+/// Inserts `clone` immediately before/after (per `below`) whichever layer in
+/// `layers` (searched recursively, same as `find_layer`) has id
+/// `original_id`. Returns `clone` back (unused) if no such layer was found
+/// at this level, so the caller can keep trying deeper — mirrors
+/// `duplicate_one`'s old single-pass search, just split so cloning and
+/// insertion can happen in separate phases (see `duplicate_layers_impl`).
+fn insert_next_to(layers: &mut Vec<Layer>, original_id: LayerId, clone: Layer, below: bool) -> Option<Layer> {
+    if let Some(pos) = layers.iter().position(|l| l.id == original_id) {
+        layers.insert(if below { pos } else { pos + 1 }, clone);
+        return None;
+    }
+    let mut clone = clone;
     for layer in layers.iter_mut() {
         if let Some(children) = layer.kind.children_mut() {
-            if let Some(new_id) = duplicate_one(children, id, offset, below) {
-                return Some(new_id);
-            }
+            clone = insert_next_to(children, original_id, clone, below)?;
         }
     }
-    None
+    Some(clone)
 }
 
 /// `"Frame 2"` -> `"Frame 3"`, but `"Icon"` (no trailing number) is returned
@@ -478,5 +511,88 @@ mod tests {
         move_layer(&mut page, a_id, Some(a_id), 0);
 
         assert_eq!(names(&page), vec!["A"]);
+    }
+
+    fn text_attached_to(target: LayerId) -> Layer {
+        Layer::new(
+            "Label",
+            Frame { pos: Pos2::ZERO, size: Vec2::new(10.0, 10.0), rotation: 0.0 },
+            LayerKind::Text {
+                content: "Hi".to_string(),
+                font_size: 16.0,
+                font: crate::model::TextFont::Proportional,
+                align: crate::model::TextAlign::Left,
+                vertical_align: crate::model::VerticalAlign::Top,
+                resize: crate::model::TextResize::Auto,
+                line_height: None,
+                letter_spacing: 0.0,
+                paragraph_spacing: 0.0,
+                bold: false,
+                italic: false,
+                underline: false,
+                strikethrough: false,
+                transform: crate::model::TextTransform::None,
+                list: crate::model::ListType::None,
+                list_start: 1,
+                style_id: None,
+                runs: Vec::new(),
+                path_attachment: Some(crate::model::TextPathAttachment {
+                    target,
+                    mode: crate::model::TextPathMode::OnPath,
+                    offset: 0.0,
+                    start: 0.0,
+                    flip: false,
+                }),
+            },
+        )
+    }
+
+    fn path_attachment_target(layer: &Layer) -> LayerId {
+        let LayerKind::Text { path_attachment: Some(a), .. } = &layer.kind else { panic!("expected an attached Text layer") };
+        a.target
+    }
+
+    /// Duplicating a shape together with text attached to it should leave
+    /// the *duplicate* text attached to the *duplicate* shape — not still
+    /// pointing at the original, now-separate shape.
+    #[test]
+    fn duplicating_a_shape_and_its_attached_text_together_rewires_the_attachment() {
+        let mut page = Page::new("Page 1");
+        let target = rect("Guide");
+        let target_id = target.id;
+        let text = text_attached_to(target_id);
+        let text_id = text.id;
+        page.layers.push(target);
+        page.layers.push(text);
+
+        let new_ids = duplicate_layers(&mut page, &[target_id, text_id], Vec2::ZERO);
+        assert_eq!(new_ids.len(), 2);
+        let new_target_id = new_ids[0];
+        let new_text_id = new_ids[1];
+
+        let new_text = page.find(new_text_id).unwrap();
+        assert_eq!(path_attachment_target(new_text), new_target_id, "duplicate text should attach to the duplicate shape, not the original");
+
+        // The original pair must stay attached to each other too.
+        let original_text = page.find(text_id).unwrap();
+        assert_eq!(path_attachment_target(original_text), target_id);
+    }
+
+    /// Duplicating *only* the text (its target shape left un-duplicated)
+    /// must keep the duplicate attached to that same original shape — there
+    /// is no duplicate of the target to rewire onto.
+    #[test]
+    fn duplicating_only_the_text_keeps_it_attached_to_the_original_target() {
+        let mut page = Page::new("Page 1");
+        let target = rect("Guide");
+        let target_id = target.id;
+        let text = text_attached_to(target_id);
+        let text_id = text.id;
+        page.layers.push(target);
+        page.layers.push(text);
+
+        let new_ids = duplicate_layers(&mut page, &[text_id], Vec2::ZERO);
+        let new_text = page.find(new_ids[0]).unwrap();
+        assert_eq!(path_attachment_target(new_text), target_id);
     }
 }
