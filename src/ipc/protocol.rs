@@ -5,7 +5,7 @@
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-use crate::model::{BoolOp, Frame};
+use crate::model::{BoolOp, Frame, TextAlign, TextFont};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Request {
@@ -56,6 +56,44 @@ pub struct AddShapeArgs {
     #[serde(default)]
     pub page: Option<Uuid>,
     pub frame: Frame,
+    pub name: Option<String>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct AddTextArgs {
+    #[serde(default)]
+    pub page: Option<Uuid>,
+    pub frame: Frame,
+    pub content: String,
+    /// Defaults to `24.0` (the same default `Tool::Text` seeds in the GUI) if omitted.
+    #[serde(default)]
+    pub font_size: Option<f32>,
+    /// Defaults to `TextFont::Proportional` if omitted.
+    #[serde(default)]
+    pub font: Option<TextFont>,
+    #[serde(default)]
+    pub bold: bool,
+    /// Defaults to `TextAlign::Left` if omitted.
+    #[serde(default)]
+    pub align: Option<TextAlign>,
+    pub name: Option<String>,
+}
+
+/// Reads `path` off disk and re-encodes it PNG (same convention
+/// `LayerKind::Image::encoded` always uses, see `image_ops::decode`) — `w`/`h`
+/// default to the source image's own natural pixel size if omitted, matching
+/// how dropping a file onto the canvas inserts it (`image_ops::build_image_grid`).
+#[derive(Serialize, Deserialize)]
+pub struct AddImageArgs {
+    #[serde(default)]
+    pub page: Option<Uuid>,
+    pub path: String,
+    pub x: f32,
+    pub y: f32,
+    #[serde(default)]
+    pub w: Option<f32>,
+    #[serde(default)]
+    pub h: Option<f32>,
     pub name: Option<String>,
 }
 

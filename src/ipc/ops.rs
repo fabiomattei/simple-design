@@ -8,18 +8,23 @@
 //! just a `Document`) aren't here — they're handled one level up, since
 //! neither fits "pure function of a `Document`".
 
+use egui::{Color32, Pos2, Vec2};
 use serde_json::json;
 use uuid::Uuid;
 
 use crate::alignment::{self, AlignEdge};
 use crate::boolean_ops;
 use crate::grouping;
-use crate::model::{CornerRadii, Document, Layer, LayerKind, Page};
+use crate::image_ops;
+use crate::model::{
+    CornerRadii, Document, Frame, Layer, LayerKind, ListType, Page, Paint, Style, TextAlign, TextFont, TextResize,
+    TextTransform, VerticalAlign,
+};
 use crate::transform_ops::{self, FlipAxis};
 
 use super::protocol::{
-    AddShapeArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FlipArgs, GetLayerArgs, GroupArgs, ListLayersArgs, NewPageArgs,
-    RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFrameArgs, UngroupArgs,
+    AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FlipArgs, GetLayerArgs, GroupArgs,
+    ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFrameArgs, UngroupArgs,
 };
 
 /// Ops that mutate `doc` — the CLI's headless mode only needs to re-save
@@ -30,6 +35,8 @@ pub fn mutates(op: &str) -> bool {
         op,
         "add_rect"
             | "add_ellipse"
+            | "add_text"
+            | "add_image"
             | "set_frame"
             | "delete_layer"
             | "boolean"
@@ -87,6 +94,71 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             let id = layer.id;
             resolve_page_mut(doc, args.page)?.layers.push(layer);
             Ok(json!({ "id": id }))
+        }
+
+        // Mirrors `Tool::Text`'s own defaults (`canvas.rs::new_layer_for_tool`)
+        // except `resize`, which is always `Fixed` here — a CLI-given frame is
+        // always the caller's explicit choice, unlike a plain click in the GUI
+        // (which has no drag to size a box from, so falls back to `Auto`).
+        "add_text" => {
+            let args: AddTextArgs = parse(args)?;
+            let name = args.name.unwrap_or_else(|| "Text".to_string());
+            let mut layer = Layer::new(
+                name,
+                args.frame,
+                LayerKind::Text {
+                    content: args.content,
+                    font_size: args.font_size.unwrap_or(24.0),
+                    font: args.font.unwrap_or(TextFont::Proportional),
+                    align: args.align.unwrap_or(TextAlign::Left),
+                    vertical_align: VerticalAlign::Top,
+                    resize: TextResize::Fixed,
+                    line_height: None,
+                    letter_spacing: 0.0,
+                    paragraph_spacing: 0.0,
+                    bold: args.bold,
+                    italic: false,
+                    underline: false,
+                    strikethrough: false,
+                    transform: TextTransform::None,
+                    list: ListType::None,
+                    list_start: 1,
+                    style_id: None,
+                    runs: Vec::new(),
+                    path_attachment: None,
+                },
+            );
+            layer.style = Style { fill: Some(Paint::Solid(Color32::BLACK)), stroke: None, ..Default::default() };
+            let id = layer.id;
+            resolve_page_mut(doc, args.page)?.layers.push(layer);
+            Ok(json!({ "id": id }))
+        }
+
+        // Reads and re-encodes the file (same PNG-always convention
+        // `LayerKind::Image::encoded` uses everywhere — see `image_ops::decode`),
+        // so the CLI needs local filesystem access to `args.path` — true both in
+        // headless mode and live (the CLI and the running GUI instance it's
+        // driving share one filesystem in the intended one-machine workflow —
+        // see `CLAUDE.md`'s "CLI / IPC" section).
+        "add_image" => {
+            let args: AddImageArgs = parse(args)?;
+            let path = std::path::Path::new(&args.path);
+            let bytes = std::fs::read(path).map_err(|err| format!("failed to read {}: {err}", args.path))?;
+            let decoded = image_ops::decode(&bytes).ok_or_else(|| format!("unrecognized image format: {}", args.path))?;
+            let (natural_w, natural_h) = (decoded.width() as f32, decoded.height() as f32);
+            let size = Vec2::new(args.w.unwrap_or(natural_w), args.h.unwrap_or(natural_h));
+            let encoded = image_ops::encode_png(&decoded);
+            let name = args.name.unwrap_or_else(|| image_ops::layer_name_for(path));
+            let layer = Layer::new_image(
+                name,
+                Frame { pos: Pos2::new(args.x, args.y), size, rotation: 0.0 },
+                encoded,
+                decoded.width(),
+                decoded.height(),
+            );
+            let id = layer.id;
+            resolve_page_mut(doc, args.page)?.layers.push(layer);
+            Ok(json!({ "id": id, "width": decoded.width(), "height": decoded.height() }))
         }
 
         "set_frame" => {
@@ -305,6 +377,99 @@ mod tests {
     }
 
     #[test]
+    fn add_text_stores_content_and_falls_back_to_defaults() {
+        let mut doc = Document::new();
+        let args = json!({ "page": null, "frame": frame(0.0, 0.0, 100.0, 20.0), "content": "Hello", "name": null });
+        let result = apply(&mut doc, "add_text", args).expect("add_text should succeed");
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let layer = doc.find(id).expect("layer should exist");
+        let LayerKind::Text { content, font_size, font, align, bold, resize, .. } = &layer.kind else {
+            panic!("expected a Text layer");
+        };
+        assert_eq!(content, "Hello");
+        assert_eq!(*font_size, 24.0);
+        assert_eq!(*font, TextFont::Proportional);
+        assert_eq!(*align, TextAlign::Left);
+        assert!(!bold);
+        assert_eq!(*resize, TextResize::Fixed, "a CLI-given frame is always explicit, so it shouldn't auto-resize");
+    }
+
+    #[test]
+    fn add_text_honors_explicit_font_size_font_align_and_bold() {
+        let mut doc = Document::new();
+        let args = json!({
+            "page": null,
+            "frame": frame(0.0, 0.0, 100.0, 20.0),
+            "content": "Hi",
+            "font_size": 46.0,
+            "bold": true,
+            "font": "Display",
+            "align": "Center",
+            "name": null,
+        });
+        let result = apply(&mut doc, "add_text", args).expect("add_text should succeed");
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let layer = doc.find(id).unwrap();
+        let LayerKind::Text { font_size, font, align, bold, .. } = &layer.kind else {
+            panic!("expected a Text layer");
+        };
+        assert_eq!(*font_size, 46.0);
+        assert_eq!(*font, TextFont::Display);
+        assert_eq!(*align, TextAlign::Center);
+        assert!(bold);
+    }
+
+    #[test]
+    fn add_image_reads_and_reencodes_a_file_at_its_natural_size_by_default() {
+        let mut doc = Document::new();
+        let img = image::RgbaImage::from_pixel(4, 3, image::Rgba([10, 20, 30, 255]));
+        let path = std::env::temp_dir().join(format!("simple-design-cli-test-{}.png", Uuid::new_v4()));
+        img.save(&path).expect("writing the fixture PNG should succeed");
+
+        let args = json!({ "page": null, "path": path.to_string_lossy(), "x": 5.0, "y": 6.0, "name": null });
+        let result = apply(&mut doc, "add_image", args).expect("add_image should succeed");
+        std::fs::remove_file(&path).ok();
+
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let layer = doc.find(id).expect("layer should exist");
+        assert_eq!(layer.frame.pos, Pos2::new(5.0, 6.0));
+        assert_eq!(layer.frame.size, Vec2::new(4.0, 3.0));
+        let LayerKind::Image { width, height, .. } = &layer.kind else {
+            panic!("expected an Image layer");
+        };
+        assert_eq!(*width, 4);
+        assert_eq!(*height, 3);
+    }
+
+    #[test]
+    fn add_image_with_explicit_w_h_overrides_the_natural_size() {
+        let mut doc = Document::new();
+        let img = image::RgbaImage::from_pixel(4, 3, image::Rgba([10, 20, 30, 255]));
+        let path = std::env::temp_dir().join(format!("simple-design-cli-test-{}.png", Uuid::new_v4()));
+        img.save(&path).expect("writing the fixture PNG should succeed");
+
+        let args = json!({ "page": null, "path": path.to_string_lossy(), "x": 0.0, "y": 0.0, "w": 40.0, "h": 30.0, "name": null });
+        let result = apply(&mut doc, "add_image", args).expect("add_image should succeed");
+        std::fs::remove_file(&path).ok();
+
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let layer = doc.find(id).unwrap();
+        assert_eq!(layer.frame.size, Vec2::new(40.0, 30.0), "the requested size should stretch the displayed frame");
+        let LayerKind::Image { width, height, .. } = &layer.kind else {
+            panic!("expected an Image layer");
+        };
+        assert_eq!((*width, *height), (4, 3), "the source pixel dimensions themselves are untouched");
+    }
+
+    #[test]
+    fn add_image_errors_naming_a_missing_file() {
+        let mut doc = Document::new();
+        let err = apply(&mut doc, "add_image", json!({ "page": null, "path": "/no/such/file.png", "x": 0.0, "y": 0.0, "name": null }))
+            .unwrap_err();
+        assert!(err.contains("/no/such/file.png"));
+    }
+
+    #[test]
     fn list_layers_with_an_unknown_page_id_is_an_error() {
         let mut doc = Document::new();
         let bogus_page = Uuid::new_v4();
@@ -445,6 +610,8 @@ mod tests {
     #[test]
     fn mutates_distinguishes_writes_from_queries() {
         assert!(mutates("add_rect"));
+        assert!(mutates("add_text"));
+        assert!(mutates("add_image"));
         assert!(mutates("delete_layer"));
         assert!(!mutates("list_layers"));
         assert!(!mutates("ping"));

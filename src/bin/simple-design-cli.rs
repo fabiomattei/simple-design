@@ -12,10 +12,11 @@ use uuid::Uuid;
 use simple_design::io;
 use simple_design::ipc::{self, ops};
 use simple_design::ipc::protocol::{
-    AddShapeArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FlipArgs, GetLayerArgs, GroupArgs, InitArgs, ListLayersArgs,
-    NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs, SetFrameArgs, UngroupArgs,
+    AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FlipArgs, GetLayerArgs, GroupArgs,
+    InitArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs, SetFrameArgs,
+    UngroupArgs,
 };
-use simple_design::model::{BoolOp, Document, Frame};
+use simple_design::model::{BoolOp, Document, Frame, TextAlign, TextFont};
 
 #[derive(Parser)]
 #[command(name = "simple-design-cli", about = "Drive a running Simple Design instance, or edit a .sdesign file directly when none is open")]
@@ -78,6 +79,53 @@ enum Command {
         h: f32,
         #[arg(long)]
         rotation: Option<f32>,
+        #[arg(long)]
+        page: Option<Uuid>,
+        #[arg(long)]
+        name: Option<String>,
+    },
+    /// Add a text layer.
+    AddText {
+        content: String,
+        #[arg(long)]
+        x: f32,
+        #[arg(long)]
+        y: f32,
+        #[arg(long)]
+        w: f32,
+        #[arg(long)]
+        h: f32,
+        #[arg(long)]
+        rotation: Option<f32>,
+        /// Defaults to 24.0.
+        #[arg(long)]
+        font_size: Option<f32>,
+        /// Defaults to proportional.
+        #[arg(long, value_enum)]
+        font: Option<TextFontArg>,
+        #[arg(long)]
+        bold: bool,
+        /// Defaults to left.
+        #[arg(long, value_enum)]
+        align: Option<TextAlignArg>,
+        #[arg(long)]
+        page: Option<Uuid>,
+        #[arg(long)]
+        name: Option<String>,
+    },
+    /// Add a bitmap image from a local file — PNG/JPEG/GIF/BMP/TIFF/WebP all
+    /// work (re-encoded to PNG on insert, same as the GUI). `--w`/`--h`
+    /// default to the source image's own pixel size if omitted.
+    AddImage {
+        path: PathBuf,
+        #[arg(long)]
+        x: f32,
+        #[arg(long)]
+        y: f32,
+        #[arg(long)]
+        w: Option<f32>,
+        #[arg(long)]
+        h: Option<f32>,
         #[arg(long)]
         page: Option<Uuid>,
         #[arg(long)]
@@ -208,6 +256,49 @@ impl From<BoolOpArg> for BoolOp {
     }
 }
 
+/// `clap::ValueEnum` for `TextFont`, minus `System` (a free-text family
+/// name a clap enum can't represent) — pass a font that isn't installed via
+/// `set-frame`/hand-edited JSON if that's ever needed from the CLI.
+#[derive(Clone, ValueEnum)]
+enum TextFontArg {
+    Proportional,
+    Monospace,
+    Serif,
+    Display,
+    Handwriting,
+}
+
+impl From<TextFontArg> for TextFont {
+    fn from(font: TextFontArg) -> Self {
+        match font {
+            TextFontArg::Proportional => TextFont::Proportional,
+            TextFontArg::Monospace => TextFont::Monospace,
+            TextFontArg::Serif => TextFont::Serif,
+            TextFontArg::Display => TextFont::Display,
+            TextFontArg::Handwriting => TextFont::Handwriting,
+        }
+    }
+}
+
+#[derive(Clone, ValueEnum)]
+enum TextAlignArg {
+    Left,
+    Center,
+    Right,
+    Justify,
+}
+
+impl From<TextAlignArg> for TextAlign {
+    fn from(align: TextAlignArg) -> Self {
+        match align {
+            TextAlignArg::Left => TextAlign::Left,
+            TextAlignArg::Center => TextAlign::Center,
+            TextAlignArg::Right => TextAlign::Right,
+            TextAlignArg::Justify => TextAlign::Justify,
+        }
+    }
+}
+
 #[derive(Clone, ValueEnum)]
 enum AlignEdgeArg {
     Left,
@@ -273,6 +364,23 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
                 frame: Frame { pos: Pos2::new(x, y), size: Vec2::new(w, h), rotation: rotation.unwrap_or(0.0) },
                 name,
             }),
+        ),
+        Command::AddText { content, x, y, w, h, rotation, font_size, font, bold, align, page, name } => (
+            "add_text",
+            to_value(AddTextArgs {
+                page,
+                frame: Frame { pos: Pos2::new(x, y), size: Vec2::new(w, h), rotation: rotation.unwrap_or(0.0) },
+                content,
+                font_size,
+                font: font.map(Into::into),
+                bold,
+                align: align.map(Into::into),
+                name,
+            }),
+        ),
+        Command::AddImage { path, x, y, w, h, page, name } => (
+            "add_image",
+            to_value(AddImageArgs { page, path: path.to_string_lossy().into_owned(), x, y, w, h, name }),
         ),
         Command::SetFrame { id, x, y, w, h, rotation } => {
             ("set_frame", to_value(SetFrameArgs { id, frame: Frame { pos: Pos2::new(x, y), size: Vec2::new(w, h), rotation } }))

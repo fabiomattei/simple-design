@@ -138,7 +138,7 @@ pub fn minimize_image_file_size(layer: &mut Layer) {
     }
 }
 
-fn layer_name_for(path: &Path) -> String {
+pub(crate) fn layer_name_for(path: &Path) -> String {
     path.file_stem()
         .map(|s| s.to_string_lossy().into_owned())
         .unwrap_or_else(|| "Image".to_string())
