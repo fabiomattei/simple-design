@@ -30,22 +30,34 @@ A <code>.sdesign</code> file is exactly a serde-serialized <code>model::Document
 (<code>serde_json::to_string_pretty</code>, written verbatim by <code>io::save_to</code>) —
 there's no separate schema, versioning header, or compression. Loading
 (<code>io::load_from</code>) just parses it back with <code>serde_json::from_str</code>.
-Every field added since the format's first version is annotated
-<code>#[serde(default)]</code> in the Rust structs, so older files always load — missing
+Almost every field added since the format's first version is annotated
+<code>#[serde(default)]</code> in the Rust structs, so older files still load — missing
 fields fall back to a value that reproduces the pre-existing behavior exactly (e.g. a missing
 <code>opacity</code> defaults to <code>1.0</code>, a missing <code>rotation</code> defaults to
-<code>0.0</code>).
+<code>0.0</code>). <code>Document::generator</code> (below) is a deliberate exception to that
+rule, same as <code>CornerRadii</code>'s hand-written <code>Deserialize</code> (see
+<a href="architecture.html">Architecture</a>) — see each for why.
 </p>
 
 <h2>Top-level shape</h2>
 <pre><code>{
   "name": "Untitled",
+  "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [ /* Page[] */ ],
   "active_page": 0,
   "text_styles": [ /* TextStyle[], shared/linked text styles */ ],
   "layer_styles": [ /* LayerStyle[], shared/linked fill+stroke+shadow styles */ ],
   "palette": { /* Palette — color-swatch library, see model/palette.rs */ }
 }</code></pre>
+<p>
+<code>generator</code> identifies the file as a Simple Design document — and points at the
+companion CLI — to anything reading the raw JSON with no other context (no source checkout, no
+<code>CLAUDE.md</code>, just an installed app and a <code>.sdesign</code> file). Unlike every
+other field here, it's <strong>required, not <code>#[serde(default)]</code></strong>: a file
+missing it fails to load, including every <code>.sdesign</code> file saved before this field
+existed — a deliberate break, not an oversight, since a document with no <code>generator</code>
+isn't an older Simple Design file, it's not a Simple Design file.
+</p>
 <p>
 <code>text_styles</code>, <code>layer_styles</code>, and <code>palette</code> were all added
 after the format's first version, so each is <code>#[serde(default)]</code> — files saved

@@ -89,9 +89,19 @@ impl Page {
     }
 }
 
+/// Written into every document's `generator` field — identifies the file as
+/// a Simple Design document, and points at the companion CLI, to anything
+/// reading the raw JSON with no other context (no source checkout, no
+/// `CLAUDE.md`, just an installed app and a `.sdesign` file).
+pub const GENERATOR: &str = "simple-design (companion CLI: simple-design-cli --help)";
+
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct Document {
     pub name: String,
+    /// See `GENERATOR`. Deliberately not `#[serde(default)]` like the rest
+    /// of this struct's additive fields — a document missing this isn't an
+    /// older Simple Design file, it's not a Simple Design file.
+    pub generator: String,
     pub pages: Vec<Page>,
     pub active_page: usize,
     /// Shared/linked Text Styles library, applied
@@ -117,6 +127,7 @@ impl Document {
     pub fn new() -> Self {
         Self {
             name: "Untitled".to_string(),
+            generator: GENERATOR.to_string(),
             pages: vec![Page::new("Page 1")],
             active_page: 0,
             text_styles: Vec::new(),
