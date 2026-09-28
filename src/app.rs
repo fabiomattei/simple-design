@@ -9,6 +9,7 @@ use crate::clipboard;
 use crate::grouping;
 use crate::history::History;
 use crate::io;
+use crate::ipc::{IpcHandle, PendingCommand};
 use crate::model::{BoolOp, Document, Frame, Layer, LayerId, LayerKind, Paint};
 use crate::palette_io;
 use crate::tools::Tool;
@@ -20,6 +21,12 @@ use crate::ui::palette_panel::PaletteAction;
 use crate::ui::rename_all::{self, RenameAllAction, RenameAllConfig, RenameAllState};
 use crate::ui::toolbar::ToolbarAction;
 use crate::ui::{inspector, minimap_panel, palette_panel, panel_rail, toolbar};
+
+/// The command handlers reachable over the IPC socket (see `crate::ipc`) —
+/// kept in its own file since it's a distinct concern from the UI code
+/// below, but declared as a submodule (not a sibling top-level module) so
+/// it can reach `App`'s private fields directly.
+mod ipc_dispatch;
 
 pub struct App {
     history: History,
@@ -63,11 +70,18 @@ pub struct App {
     layers_panel_height: f32,
     palette_panel_height: f32,
     inspector_panel_height: f32,
+    /// Bound to `current_path` whenever it's `Some` (see
+    /// `ipc_dispatch::sync_ipc`) — `None` while the document is untitled,
+    /// since there's nothing to key a socket on yet.
+    ipc: Option<IpcHandle>,
+    ipc_tx: std::sync::mpsc::Sender<PendingCommand>,
+    ipc_rx: std::sync::mpsc::Receiver<PendingCommand>,
 }
 
 impl App {
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
         crate::fonts::install_fonts(&cc.egui_ctx);
+        let (ipc_tx, ipc_rx) = std::sync::mpsc::channel();
         Self {
             history: History::new(Document::new()),
             canvas: CanvasWidget::default(),
@@ -91,6 +105,9 @@ impl App {
             layers_panel_height: 260.0,
             palette_panel_height: 220.0,
             inspector_panel_height: 300.0,
+            ipc: None,
+            ipc_tx,
+            ipc_rx,
         }
     }
 
@@ -457,12 +474,25 @@ impl App {
 
     fn open(&mut self) {
         if let Some(path) = io::open_dialog() {
-            if let Ok(doc) = io::load_from(&path) {
-                self.history.replace(doc);
-                self.pages_bar = PagesBar::default();
-                self.selection.clear();
-                self.current_path = Some(path);
-            }
+            self.load_document(path);
+        }
+    }
+
+    /// Loads and opens a `.sdesign` file given by path directly, bypassing
+    /// the file-picker dialog — used for the `simple-design <file>` CLI
+    /// argument (see `main.rs`) so the IPC socket (`ipc_dispatch::sync_ipc`)
+    /// has a path to bind to right away instead of needing a manual "Open"
+    /// first.
+    pub fn open_path(&mut self, path: PathBuf) {
+        self.load_document(path);
+    }
+
+    fn load_document(&mut self, path: PathBuf) {
+        if let Ok(doc) = io::load_from(&path) {
+            self.history.replace(doc);
+            self.pages_bar = PagesBar::default();
+            self.selection.clear();
+            self.current_path = Some(path);
         }
     }
 
@@ -757,6 +787,8 @@ fn minimize_image_file_size_recursive(layer: &mut Layer) {
 impl eframe::App for App {
     fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
         let ctx = ui.ctx().clone();
+        self.sync_ipc(&ctx);
+        self.drain_ipc(&ctx);
         self.handle_shortcuts(&ctx);
 
         egui::Panel::top("menu_bar").show(ui, |ui| {

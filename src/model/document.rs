@@ -141,6 +141,16 @@ impl Document {
         self.pages.iter().find_map(|p| p.find(id))
     }
 
+    /// Searches every page's layer tree for `id`, returning a mutable reference if found.
+    pub fn find_mut(&mut self, id: LayerId) -> Option<&mut Layer> {
+        self.pages.iter_mut().find_map(|p| p.find_mut(id))
+    }
+
+    /// Removes a layer by id from whichever page it's on, returning it if found.
+    pub fn remove(&mut self, id: LayerId) -> Option<Layer> {
+        self.pages.iter_mut().find_map(|p| p.remove(id))
+    }
+
     /// Visits every layer on every page, recursing into `Artboard`/`Group`
     /// children — used by `ui/inspector.rs`'s "Update Style" to propagate a
     /// shared `TextStyle` edit to every `Text` layer linked to it, across
