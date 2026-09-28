@@ -100,3 +100,53 @@ pub struct SaveArgs {
     #[serde(default)]
     pub path: Option<String>,
 }
+
+#[derive(Serialize, Deserialize)]
+pub struct NewPageArgs {
+    pub name: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct RenamePageArgs {
+    pub id: Uuid,
+    pub name: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct RenameLayerArgs {
+    pub id: Uuid,
+    pub name: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct GroupArgs {
+    #[serde(default)]
+    pub page: Option<Uuid>,
+    pub ids: Vec<Uuid>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct UngroupArgs {
+    #[serde(default)]
+    pub page: Option<Uuid>,
+    pub id: Uuid,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct FlipArgs {
+    #[serde(default)]
+    pub page: Option<Uuid>,
+    pub ids: Vec<Uuid>,
+    /// One of "horizontal" / "vertical" — same plain-string convention as
+    /// `AlignArgs::edge` (`transform_ops::FlipAxis` has no `serde` derive).
+    pub axis: String,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct RotateCopiesArgs {
+    #[serde(default)]
+    pub page: Option<Uuid>,
+    pub ids: Vec<Uuid>,
+    pub count: u32,
+    pub total_degrees: f32,
+}

@@ -12,7 +12,8 @@ use uuid::Uuid;
 use simple_design::io;
 use simple_design::ipc::{self, ops};
 use simple_design::ipc::protocol::{
-    AddShapeArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, GetLayerArgs, ListLayersArgs, SaveArgs, SetFrameArgs,
+    AddShapeArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FlipArgs, GetLayerArgs, GroupArgs, ListLayersArgs, NewPageArgs,
+    RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SetFrameArgs, UngroupArgs,
 };
 use simple_design::model::{BoolOp, Frame};
 
@@ -109,6 +110,43 @@ enum Command {
         id: Uuid,
         output: PathBuf,
     },
+    NewPage {
+        name: String,
+    },
+    RenamePage {
+        id: Uuid,
+        name: String,
+    },
+    RenameLayer {
+        id: Uuid,
+        name: String,
+    },
+    Group {
+        ids: Vec<Uuid>,
+        #[arg(long)]
+        page: Option<Uuid>,
+    },
+    Ungroup {
+        id: Uuid,
+        #[arg(long)]
+        page: Option<Uuid>,
+    },
+    Flip {
+        #[arg(value_enum)]
+        axis: FlipAxisArg,
+        ids: Vec<Uuid>,
+        #[arg(long)]
+        page: Option<Uuid>,
+    },
+    RotateCopies {
+        ids: Vec<Uuid>,
+        #[arg(long)]
+        count: u32,
+        #[arg(long)]
+        total_degrees: f32,
+        #[arg(long)]
+        page: Option<Uuid>,
+    },
 }
 
 #[derive(Clone, ValueEnum)]
@@ -155,6 +193,21 @@ impl AlignEdgeArg {
     }
 }
 
+#[derive(Clone, ValueEnum)]
+enum FlipAxisArg {
+    Horizontal,
+    Vertical,
+}
+
+impl FlipAxisArg {
+    fn as_str(&self) -> &'static str {
+        match self {
+            FlipAxisArg::Horizontal => "horizontal",
+            FlipAxisArg::Vertical => "vertical",
+        }
+    }
+}
+
 fn to_value(args: impl serde::Serialize) -> serde_json::Value {
     serde_json::to_value(args).expect("args always serialize")
 }
@@ -191,6 +244,15 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
         Command::Redo => ("redo", serde_json::Value::Null),
         Command::Save { path } => ("save", to_value(SaveArgs { path: path.map(|p| p.to_string_lossy().into_owned()) })),
         Command::ExportPng { id, output } => ("export_png", to_value(ExportPngArgs { id, path: output.to_string_lossy().into_owned() })),
+        Command::NewPage { name } => ("new_page", to_value(NewPageArgs { name })),
+        Command::RenamePage { id, name } => ("rename_page", to_value(RenamePageArgs { id, name })),
+        Command::RenameLayer { id, name } => ("rename_layer", to_value(RenameLayerArgs { id, name })),
+        Command::Group { ids, page } => ("group", to_value(GroupArgs { page, ids })),
+        Command::Ungroup { id, page } => ("ungroup", to_value(UngroupArgs { page, id })),
+        Command::Flip { axis, ids, page } => ("flip", to_value(FlipArgs { page, ids, axis: axis.as_str().to_string() })),
+        Command::RotateCopies { ids, count, total_degrees, page } => {
+            ("rotate_copies", to_value(RotateCopiesArgs { page, ids, count, total_degrees }))
+        }
     }
 }
 

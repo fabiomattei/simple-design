@@ -13,15 +13,35 @@ use uuid::Uuid;
 
 use crate::alignment::{self, AlignEdge};
 use crate::boolean_ops;
+use crate::grouping;
 use crate::model::{CornerRadii, Document, Layer, LayerKind, Page};
+use crate::transform_ops::{self, FlipAxis};
 
-use super::protocol::{AddShapeArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, GetLayerArgs, ListLayersArgs, SetFrameArgs};
+use super::protocol::{
+    AddShapeArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FlipArgs, GetLayerArgs, GroupArgs, ListLayersArgs, NewPageArgs,
+    RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFrameArgs, UngroupArgs,
+};
 
 /// Ops that mutate `doc` — the CLI's headless mode only needs to re-save
 /// the file after one of these; the rest are read-only queries or reach
 /// outside the document (`export_png`).
 pub fn mutates(op: &str) -> bool {
-    matches!(op, "add_rect" | "add_ellipse" | "set_frame" | "delete_layer" | "boolean" | "align")
+    matches!(
+        op,
+        "add_rect"
+            | "add_ellipse"
+            | "set_frame"
+            | "delete_layer"
+            | "boolean"
+            | "align"
+            | "new_page"
+            | "rename_page"
+            | "rename_layer"
+            | "group"
+            | "ungroup"
+            | "flip"
+            | "rotate_copies"
+    )
 }
 
 pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<serde_json::Value, String> {
@@ -102,6 +122,55 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             Ok(json!({ "path": args.path }))
         }
 
+        "new_page" => {
+            let args: NewPageArgs = parse(args)?;
+            let index = doc.add_page(args.name);
+            Ok(json!({ "id": doc.pages[index].id }))
+        }
+
+        "rename_page" => {
+            let args: RenamePageArgs = parse(args)?;
+            let page = doc.pages.iter_mut().find(|p| p.id == args.id).ok_or_else(|| format!("page not found: {}", args.id))?;
+            page.name = args.name;
+            Ok(json!({ "id": args.id }))
+        }
+
+        "rename_layer" => {
+            let args: RenameLayerArgs = parse(args)?;
+            let layer = doc.find_mut(args.id).ok_or_else(|| format!("layer not found: {}", args.id))?;
+            layer.name = args.name;
+            Ok(json!({ "id": args.id }))
+        }
+
+        "group" => {
+            let args: GroupArgs = parse(args)?;
+            let page = resolve_page_mut(doc, args.page)?;
+            let id = grouping::group_layers(page, &args.ids).ok_or("group needs at least one layer")?;
+            Ok(json!({ "id": id }))
+        }
+
+        "ungroup" => {
+            let args: UngroupArgs = parse(args)?;
+            let page = resolve_page_mut(doc, args.page)?;
+            let ids = grouping::ungroup(page, args.id);
+            Ok(json!({ "ids": ids }))
+        }
+
+        "flip" => {
+            let args: FlipArgs = parse(args)?;
+            let axis = parse_flip_axis(&args.axis)?;
+            let page = resolve_page_mut(doc, args.page)?;
+            transform_ops::flip_selection(page, &args.ids, axis);
+            Ok(json!({ "ids": args.ids }))
+        }
+
+        "rotate_copies" => {
+            let args: RotateCopiesArgs = parse(args)?;
+            let page = resolve_page_mut(doc, args.page)?;
+            let ids = transform_ops::rotate_copies(page, &args.ids, args.count, args.total_degrees);
+            Ok(json!({ "ids": ids }))
+        }
+
         other => Err(format!("unknown op: {other}")),
     }
 }
@@ -115,6 +184,14 @@ fn parse_align_edge(edge: &str) -> Result<AlignEdge, String> {
         "vcenter" => Ok(AlignEdge::VCenter),
         "bottom" => Ok(AlignEdge::Bottom),
         other => Err(format!("invalid edge: {other} (expected left/hcenter/right/top/vcenter/bottom)")),
+    }
+}
+
+fn parse_flip_axis(axis: &str) -> Result<FlipAxis, String> {
+    match axis {
+        "horizontal" => Ok(FlipAxis::Horizontal),
+        "vertical" => Ok(FlipAxis::Vertical),
+        other => Err(format!("invalid axis: {other} (expected horizontal/vertical)")),
     }
 }
 
