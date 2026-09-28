@@ -12,10 +12,10 @@ use uuid::Uuid;
 use simple_design::io;
 use simple_design::ipc::{self, ops};
 use simple_design::ipc::protocol::{
-    AddShapeArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FlipArgs, GetLayerArgs, GroupArgs, ListLayersArgs, NewPageArgs,
-    RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SetFrameArgs, UngroupArgs,
+    AddShapeArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FlipArgs, GetLayerArgs, GroupArgs, InitArgs, ListLayersArgs,
+    NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SetFrameArgs, UngroupArgs,
 };
-use simple_design::model::{BoolOp, Frame};
+use simple_design::model::{BoolOp, Document, Frame};
 
 #[derive(Parser)]
 #[command(name = "simple-design-cli", about = "Drive a running Simple Design instance, or edit a .sdesign file directly when none is open")]
@@ -28,6 +28,11 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
+    /// Create a brand-new, empty document at `<file>` — errors if it already exists.
+    Init {
+        #[arg(long)]
+        name: Option<String>,
+    },
     /// Check whether a running instance has this file open.
     Ping,
     /// Dump the whole document as JSON — same shape as the `.sdesign` file itself.
@@ -238,6 +243,7 @@ fn to_value(args: impl serde::Serialize) -> serde_json::Value {
 
 fn build_request(command: Command) -> (&'static str, serde_json::Value) {
     match command {
+        Command::Init { name } => ("init", to_value(InitArgs { name })),
         Command::Ping => ("ping", serde_json::Value::Null),
         Command::GetDocument => ("get_document", serde_json::Value::Null),
         Command::ListPages => ("list_pages", serde_json::Value::Null),
@@ -282,10 +288,24 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
 }
 
 /// Runs `op` directly against the file on disk — used when no running
-/// instance has it open. `undo`/`redo` have no meaning here (there's no
-/// history outside a live `App`); `save` and every op in `ops::mutates`
-/// need the result written back, everything else is a read-only query.
+/// instance has it open. `init` is the one op that must run *before* a file
+/// exists to load; `undo`/`redo` have no meaning here (there's no history
+/// outside a live `App`); `save` and every op in `ops::mutates` need the
+/// result written back, everything else is a read-only query.
 fn run_headless(file: &PathBuf, op: &str, args: serde_json::Value) -> anyhow::Result<ipc::Response> {
+    if op == "init" {
+        if file.exists() {
+            return Ok(ipc::Response::err(1, format!("{} already exists", file.display())));
+        }
+        let args: InitArgs = serde_json::from_value(args)?;
+        let mut document = Document::new();
+        if let Some(name) = args.name {
+            document.name = name;
+        }
+        io::save_to(file, &document)?;
+        return Ok(ipc::Response::ok(1, serde_json::json!({ "path": file })));
+    }
+
     if matches!(op, "undo" | "redo") {
         return Ok(ipc::Response::err(1, "undo/redo need a running simple-design instance with this file open"));
     }

@@ -13,6 +13,13 @@ simple-design-cli <file.sdesign> <command> [args...]
 simple-design-cli --help
 ```
 
+Nothing to open yet? `init` creates a brand-new document (errors instead of
+overwriting one that already exists):
+
+```
+simple-design-cli new-project.sdesign init --name "My Project"
+```
+
 Open a specific file at startup so the CLI has something to talk to:
 
 ```

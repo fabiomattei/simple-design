@@ -102,6 +102,12 @@ pub struct SaveArgs {
 }
 
 #[derive(Serialize, Deserialize)]
+pub struct InitArgs {
+    #[serde(default)]
+    pub name: Option<String>,
+}
+
+#[derive(Serialize, Deserialize)]
 pub struct NewPageArgs {
     pub name: String,
 }

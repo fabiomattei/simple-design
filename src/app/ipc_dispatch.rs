@@ -51,6 +51,7 @@ impl App {
 
     fn dispatch_op(&mut self, op: &str, args: serde_json::Value) -> Result<serde_json::Value, String> {
         match op {
+            "init" => Err("this document is already open — nothing to initialize".to_string()),
             "undo" => {
                 self.history.undo();
                 Ok(json!({}))
