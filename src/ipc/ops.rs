@@ -235,3 +235,168 @@ fn layer_kind_name(kind: &LayerKind) -> &'static str {
         LayerKind::Image { .. } => "image",
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use egui::{Pos2, Vec2};
+    use serde_json::json;
+
+    use super::*;
+    use crate::model::Frame;
+
+    fn frame(x: f32, y: f32, w: f32, h: f32) -> Frame {
+        Frame { pos: Pos2::new(x, y), size: Vec2::new(w, h), rotation: 0.0 }
+    }
+
+    fn add_rect(doc: &mut Document, x: f32, y: f32, w: f32, h: f32) -> Uuid {
+        let args = json!({ "page": null, "frame": frame(x, y, w, h), "name": null });
+        let result = apply(doc, "add_rect", args).expect("add_rect should succeed");
+        serde_json::from_value(result["id"].clone()).unwrap()
+    }
+
+    #[test]
+    fn ping_reports_pong() {
+        let mut doc = Document::new();
+        assert_eq!(apply(&mut doc, "ping", json!({})).unwrap(), json!({ "pong": true }));
+    }
+
+    #[test]
+    fn unknown_op_is_an_error_naming_it() {
+        let mut doc = Document::new();
+        let err = apply(&mut doc, "frobnicate", json!({})).unwrap_err();
+        assert!(err.contains("frobnicate"), "error should name the unknown op: {err}");
+    }
+
+    #[test]
+    fn add_rect_with_no_page_lands_on_the_active_page() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 10.0, 20.0, 30.0, 40.0);
+        let layer = doc.active_page().find(id).expect("layer should be on the active page");
+        assert_eq!(layer.frame, frame(10.0, 20.0, 30.0, 40.0));
+    }
+
+    #[test]
+    fn list_layers_with_an_unknown_page_id_is_an_error() {
+        let mut doc = Document::new();
+        let bogus_page = Uuid::new_v4();
+        let err = apply(&mut doc, "list_layers", json!({ "page": bogus_page })).unwrap_err();
+        assert!(err.contains(&bogus_page.to_string()));
+    }
+
+    #[test]
+    fn set_frame_updates_an_existing_layer_and_errors_on_an_unknown_id() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        apply(&mut doc, "set_frame", json!({ "id": id, "frame": frame(5.0, 5.0, 20.0, 20.0) })).expect("set_frame should succeed");
+        assert_eq!(doc.find(id).unwrap().frame, frame(5.0, 5.0, 20.0, 20.0));
+
+        let err = apply(&mut doc, "set_frame", json!({ "id": Uuid::new_v4(), "frame": frame(0.0, 0.0, 1.0, 1.0) })).unwrap_err();
+        assert!(err.contains("not found"));
+    }
+
+    #[test]
+    fn delete_layer_removes_it_and_a_second_delete_errors() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        apply(&mut doc, "delete_layer", json!({ "id": id })).expect("first delete should succeed");
+        assert!(doc.find(id).is_none());
+        assert!(apply(&mut doc, "delete_layer", json!({ "id": id })).is_err());
+    }
+
+    #[test]
+    fn boolean_op_needs_at_least_two_layers() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        let err = apply(&mut doc, "boolean", json!({ "ids": [id], "op": "Union" })).unwrap_err();
+        assert!(err.contains("at least 2"));
+    }
+
+    #[test]
+    fn boolean_union_of_two_rects_consumes_the_operands_into_one_new_layer() {
+        let mut doc = Document::new();
+        let a = add_rect(&mut doc, 0.0, 0.0, 20.0, 20.0);
+        let b = add_rect(&mut doc, 10.0, 10.0, 20.0, 20.0);
+        let result = apply(&mut doc, "boolean", json!({ "ids": [a, b], "op": "Union" })).expect("union should succeed");
+        let new_id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        assert!(doc.find(new_id).is_some());
+        assert!(doc.find(a).is_none(), "operands should be consumed");
+        assert!(doc.find(b).is_none());
+    }
+
+    #[test]
+    fn align_rejects_an_unrecognized_edge_string() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        let err = apply(&mut doc, "align", json!({ "ids": [id], "edge": "diagonal" })).unwrap_err();
+        assert!(err.contains("diagonal"));
+    }
+
+    #[test]
+    fn flip_rejects_an_unrecognized_axis_string() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        let err = apply(&mut doc, "flip", json!({ "ids": [id], "axis": "diagonal" })).unwrap_err();
+        assert!(err.contains("diagonal"));
+    }
+
+    #[test]
+    fn flip_horizontal_negates_the_frames_width() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 20.0);
+        apply(&mut doc, "flip", json!({ "ids": [id], "axis": "horizontal" })).expect("flip should succeed");
+        assert_eq!(doc.find(id).unwrap().frame.size.x, -10.0);
+    }
+
+    #[test]
+    fn group_with_no_ids_is_an_error() {
+        let mut doc = Document::new();
+        let err = apply(&mut doc, "group", json!({ "ids": [] })).unwrap_err();
+        assert!(err.contains("at least one layer"));
+    }
+
+    #[test]
+    fn group_then_ungroup_round_trips_back_to_the_original_layers() {
+        let mut doc = Document::new();
+        let a = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        let b = add_rect(&mut doc, 20.0, 0.0, 10.0, 10.0);
+        let result = apply(&mut doc, "group", json!({ "ids": [a, b] })).expect("group should succeed");
+        let group_id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+
+        let result = apply(&mut doc, "ungroup", json!({ "id": group_id })).expect("ungroup should succeed");
+        let freed_ids: Vec<Uuid> = serde_json::from_value(result["ids"].clone()).unwrap();
+        assert_eq!(freed_ids.len(), 2);
+        assert!(doc.find(a).is_some());
+        assert!(doc.find(b).is_some());
+        assert!(doc.find(group_id).is_none());
+    }
+
+    #[test]
+    fn new_page_appends_a_page_and_switches_the_active_page_to_it() {
+        let mut doc = Document::new();
+        let pages_before = doc.pages.len();
+        let result = apply(&mut doc, "new_page", json!({ "name": "Page 2" })).expect("new_page should succeed");
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        assert_eq!(doc.pages.len(), pages_before + 1);
+        assert_eq!(doc.active_page().id, id);
+        assert_eq!(doc.active_page().name, "Page 2");
+    }
+
+    #[test]
+    fn rotate_copies_produces_the_requested_number_of_new_layers() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        let result = apply(&mut doc, "rotate_copies", json!({ "ids": [id], "count": 3, "total_degrees": 90.0 }))
+            .expect("rotate_copies should succeed");
+        let new_ids: Vec<Uuid> = serde_json::from_value(result["ids"].clone()).unwrap();
+        assert_eq!(new_ids.len(), 3);
+    }
+
+    #[test]
+    fn mutates_distinguishes_writes_from_queries() {
+        assert!(mutates("add_rect"));
+        assert!(mutates("delete_layer"));
+        assert!(!mutates("list_layers"));
+        assert!(!mutates("ping"));
+        assert!(!mutates("export_png"));
+    }
+}
