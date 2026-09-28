@@ -113,7 +113,25 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             let args: AlignArgs = parse(args)?;
             let edge = parse_align_edge(&args.edge)?;
             let page = resolve_page_mut(doc, args.page)?;
-            alignment::align(page, &args.ids, edge, None);
+
+            // With `to`, the anchor's own bounds become the alignment target
+            // and it's folded into the id list passed to `alignment::align`
+            // (which needs >= 2 siblings even with an explicit target) — its
+            // own delta then computes to zero, so it doesn't move.
+            let align_to = match args.to {
+                Some(anchor) => {
+                    Some(page.find(anchor).ok_or_else(|| format!("layer not found: {anchor}"))?.frame.rotated_bounds())
+                }
+                None => None,
+            };
+            let mut ids = args.ids.clone();
+            if let Some(anchor) = args.to {
+                if !ids.contains(&anchor) {
+                    ids.push(anchor);
+                }
+            }
+
+            alignment::align(page, &ids, edge, align_to);
             Ok(json!({ "ids": args.ids }))
         }
 
@@ -340,6 +358,28 @@ mod tests {
         let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
         let err = apply(&mut doc, "align", json!({ "ids": [id], "edge": "diagonal" })).unwrap_err();
         assert!(err.contains("diagonal"));
+    }
+
+    #[test]
+    fn align_with_a_reference_layer_moves_only_the_other_layer() {
+        let mut doc = Document::new();
+        let card = add_rect(&mut doc, 0.0, 0.0, 100.0, 100.0);
+        let badge = add_rect(&mut doc, 200.0, 5.0, 20.0, 20.0);
+        apply(&mut doc, "align", json!({ "ids": [badge], "edge": "hcenter", "to": card })).expect("align should succeed");
+
+        assert_eq!(doc.find(card).unwrap().frame, frame(0.0, 0.0, 100.0, 100.0), "the reference layer should not move");
+        let card_center = doc.find(card).unwrap().frame.rotated_bounds().center().x;
+        let badge_center = doc.find(badge).unwrap().frame.rotated_bounds().center().x;
+        assert_eq!(badge_center, card_center);
+    }
+
+    #[test]
+    fn align_with_an_unknown_reference_layer_is_an_error() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        let bogus = Uuid::new_v4();
+        let err = apply(&mut doc, "align", json!({ "ids": [id], "edge": "hcenter", "to": bogus })).unwrap_err();
+        assert!(err.contains(&bogus.to_string()));
     }
 
     #[test]

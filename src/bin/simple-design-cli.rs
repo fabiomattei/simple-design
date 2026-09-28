@@ -115,6 +115,10 @@ enum Command {
         #[arg(value_enum)]
         edge: AlignEdgeArg,
         ids: Vec<Uuid>,
+        /// An anchor layer that stays put; the others align to *its* bounds
+        /// instead of the group's shared bounding box.
+        #[arg(long)]
+        to: Option<Uuid>,
         #[arg(long)]
         page: Option<Uuid>,
     },
@@ -275,7 +279,7 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
         }
         Command::DeleteLayer { id } => ("delete_layer", to_value(DeleteLayerArgs { id })),
         Command::Boolean { op, ids, page } => ("boolean", to_value(BooleanArgs { page, ids, op: op.into() })),
-        Command::Align { edge, ids, page } => ("align", to_value(AlignArgs { page, ids, edge: edge.as_str().to_string() })),
+        Command::Align { edge, ids, to, page } => ("align", to_value(AlignArgs { page, ids, edge: edge.as_str().to_string(), to })),
         Command::Select { ids } => ("select", to_value(SelectArgs { ids })),
         Command::Undo => ("undo", serde_json::Value::Null),
         Command::Redo => ("redo", serde_json::Value::Null),

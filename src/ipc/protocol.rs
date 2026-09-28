@@ -87,6 +87,11 @@ pub struct AlignArgs {
     /// kept as a plain string here rather than pulling `alignment::AlignEdge`
     /// (which has no `serde` derive of its own) into the wire protocol.
     pub edge: String,
+    /// An anchor layer that stays put — the others in `ids` align to *its*
+    /// bounds instead of the whole group's shared bounding box. Mirrors the
+    /// GUI's `canvas.reference_layer` (see `app.rs::align_selection`).
+    #[serde(default)]
+    pub to: Option<Uuid>,
 }
 
 #[derive(Serialize, Deserialize)]
