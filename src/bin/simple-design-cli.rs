@@ -13,7 +13,7 @@ use simple_design::io;
 use simple_design::ipc::{self, ops};
 use simple_design::ipc::protocol::{
     AddShapeArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FlipArgs, GetLayerArgs, GroupArgs, InitArgs, ListLayersArgs,
-    NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SetFrameArgs, UngroupArgs,
+    NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs, SetFrameArgs, UngroupArgs,
 };
 use simple_design::model::{BoolOp, Document, Frame};
 
@@ -117,6 +117,11 @@ enum Command {
         ids: Vec<Uuid>,
         #[arg(long)]
         page: Option<Uuid>,
+    },
+    /// Highlight layers in the running GUI (pass none to clear) — needs a running instance.
+    Select {
+        #[arg(num_args = 0..)]
+        ids: Vec<Uuid>,
     },
     /// Undo the last change — needs a running instance (no history exists headless).
     Undo,
@@ -271,6 +276,7 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
         Command::DeleteLayer { id } => ("delete_layer", to_value(DeleteLayerArgs { id })),
         Command::Boolean { op, ids, page } => ("boolean", to_value(BooleanArgs { page, ids, op: op.into() })),
         Command::Align { edge, ids, page } => ("align", to_value(AlignArgs { page, ids, edge: edge.as_str().to_string() })),
+        Command::Select { ids } => ("select", to_value(SelectArgs { ids })),
         Command::Undo => ("undo", serde_json::Value::Null),
         Command::Redo => ("redo", serde_json::Value::Null),
         Command::Save { path } => ("save", to_value(SaveArgs { path: path.map(|p| p.to_string_lossy().into_owned()) })),
@@ -306,8 +312,12 @@ fn run_headless(file: &PathBuf, op: &str, args: serde_json::Value) -> anyhow::Re
         return Ok(ipc::Response::ok(1, serde_json::json!({ "path": file })));
     }
 
-    if matches!(op, "undo" | "redo") {
-        return Ok(ipc::Response::err(1, "undo/redo need a running simple-design instance with this file open"));
+    if matches!(op, "undo" | "redo" | "select") {
+        return Ok(ipc::Response::err(1, format!("{op} needs a running simple-design instance with this file open")));
+    }
+
+    if !file.exists() {
+        return Ok(ipc::Response::err(1, format!("{} does not exist — use `init` to create it", file.display())));
     }
 
     let mut document = io::load_from(file)?;

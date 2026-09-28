@@ -6,7 +6,7 @@
 
 use serde_json::json;
 
-use crate::ipc::protocol::SaveArgs;
+use crate::ipc::protocol::{SaveArgs, SelectArgs};
 use crate::ipc::{self, ops, PendingCommand, Response};
 use crate::io;
 
@@ -52,6 +52,11 @@ impl App {
     fn dispatch_op(&mut self, op: &str, args: serde_json::Value) -> Result<serde_json::Value, String> {
         match op {
             "init" => Err("this document is already open — nothing to initialize".to_string()),
+            "select" => {
+                let args: SelectArgs = serde_json::from_value(args).map_err(|err| format!("invalid args: {err}"))?;
+                self.selection = args.ids;
+                Ok(json!({ "ids": self.selection }))
+            }
             "undo" => {
                 self.history.undo();
                 Ok(json!({}))

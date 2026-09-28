@@ -107,6 +107,15 @@ pub struct InitArgs {
     pub name: Option<String>,
 }
 
+/// Sets which layers are highlighted in the GUI — purely a courtesy so you
+/// can see what the agent just touched, no effect on the document itself.
+/// Only meaningful live (there's no selection state outside a running
+/// `App`); `ids: []` clears the selection.
+#[derive(Serialize, Deserialize)]
+pub struct SelectArgs {
+    pub ids: Vec<Uuid>,
+}
+
 #[derive(Serialize, Deserialize)]
 pub struct NewPageArgs {
     pub name: String,
