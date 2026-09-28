@@ -30,14 +30,20 @@ struct Cli {
 enum Command {
     /// Check whether a running instance has this file open.
     Ping,
+    /// Dump the whole document as JSON — same shape as the `.sdesign` file itself.
+    GetDocument,
+    /// List every page's id and name.
     ListPages,
+    /// List the top-level layers of a page (default: the active page).
     ListLayers {
         #[arg(long)]
         page: Option<Uuid>,
     },
+    /// Dump one layer's full JSON, wherever it is in the layer tree.
     GetLayer {
         id: Uuid,
     },
+    /// Add a filled rectangle.
     AddRect {
         #[arg(long)]
         x: f32,
@@ -49,11 +55,13 @@ enum Command {
         h: f32,
         #[arg(long)]
         rotation: Option<f32>,
+        /// Page to add to (default: the active page).
         #[arg(long)]
         page: Option<Uuid>,
         #[arg(long)]
         name: Option<String>,
     },
+    /// Add a filled ellipse, inscribed in the given x/y/w/h box.
     AddEllipse {
         #[arg(long)]
         x: f32,
@@ -70,6 +78,7 @@ enum Command {
         #[arg(long)]
         name: Option<String>,
     },
+    /// Replace a layer's position/size/rotation outright.
     SetFrame {
         id: Uuid,
         #[arg(long)]
@@ -83,16 +92,20 @@ enum Command {
         #[arg(long, default_value_t = 0.0)]
         rotation: f32,
     },
+    /// Delete a layer.
     DeleteLayer {
         id: Uuid,
     },
+    /// Combine layers with a boolean shape operation, replacing them with one new layer.
     Boolean {
         #[arg(value_enum)]
         op: BoolOpArg,
+        /// The layers to combine, bottom to top.
         ids: Vec<Uuid>,
         #[arg(long)]
         page: Option<Uuid>,
     },
+    /// Align layers to a shared edge/center.
     Align {
         #[arg(value_enum)]
         edge: AlignEdgeArg,
@@ -100,37 +113,47 @@ enum Command {
         #[arg(long)]
         page: Option<Uuid>,
     },
+    /// Undo the last change — needs a running instance (no history exists headless).
     Undo,
+    /// Redo the last undone change — same requirement as `undo`.
     Redo,
+    /// Save the document — to its current path, or elsewhere with --path.
     Save {
         #[arg(long)]
         path: Option<PathBuf>,
     },
+    /// Render one layer to a standalone PNG file.
     ExportPng {
         id: Uuid,
         output: PathBuf,
     },
+    /// Add a new page, which also becomes the active page.
     NewPage {
         name: String,
     },
+    /// Rename a page.
     RenamePage {
         id: Uuid,
         name: String,
     },
+    /// Rename a layer.
     RenameLayer {
         id: Uuid,
         name: String,
     },
+    /// Group layers into a new Group layer.
     Group {
         ids: Vec<Uuid>,
         #[arg(long)]
         page: Option<Uuid>,
     },
+    /// Splice a group's children back into its parent, dissolving the group.
     Ungroup {
         id: Uuid,
         #[arg(long)]
         page: Option<Uuid>,
     },
+    /// Mirror layers about their own frame center.
     Flip {
         #[arg(value_enum)]
         axis: FlipAxisArg,
@@ -138,6 +161,7 @@ enum Command {
         #[arg(long)]
         page: Option<Uuid>,
     },
+    /// Replace layers with `count` copies evenly rotated across `total_degrees`.
     RotateCopies {
         ids: Vec<Uuid>,
         #[arg(long)]
@@ -215,6 +239,7 @@ fn to_value(args: impl serde::Serialize) -> serde_json::Value {
 fn build_request(command: Command) -> (&'static str, serde_json::Value) {
     match command {
         Command::Ping => ("ping", serde_json::Value::Null),
+        Command::GetDocument => ("get_document", serde_json::Value::Null),
         Command::ListPages => ("list_pages", serde_json::Value::Null),
         Command::ListLayers { page } => ("list_layers", to_value(ListLayersArgs { page })),
         Command::GetLayer { id } => ("get_layer", to_value(GetLayerArgs { id })),

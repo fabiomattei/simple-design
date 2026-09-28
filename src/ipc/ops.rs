@@ -52,6 +52,8 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
     match op {
         "ping" => Ok(json!({ "pong": true })),
 
+        "get_document" => serde_json::to_value(&*doc).map_err(|err| err.to_string()),
+
         "list_pages" => {
             let pages: Vec<_> = doc.pages.iter().map(|p| json!({ "id": p.id, "name": p.name })).collect();
             Ok(json!(pages))
@@ -258,6 +260,15 @@ mod tests {
     fn ping_reports_pong() {
         let mut doc = Document::new();
         assert_eq!(apply(&mut doc, "ping", json!({})).unwrap(), json!({ "pong": true }));
+    }
+
+    #[test]
+    fn get_document_round_trips_through_the_same_json_shape_as_save_to() {
+        let mut doc = Document::new();
+        add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        let via_op = apply(&mut doc, "get_document", json!({})).unwrap();
+        let via_serde = serde_json::to_value(&doc).unwrap();
+        assert_eq!(via_op, via_serde);
     }
 
     #[test]
