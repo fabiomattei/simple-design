@@ -16,6 +16,7 @@ use crate::alignment::{self, AlignEdge};
 use crate::boolean_ops;
 use crate::grouping;
 use crate::image_ops;
+use crate::model::text_runs::{RunStyle, TextRun};
 use crate::model::{
     CornerRadii, Document, Frame, Layer, LayerKind, ListType, Page, Paint, Stroke, Style, TextAlign, TextFont, TextResize,
     TextTransform, VerticalAlign,
@@ -106,20 +107,36 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
         "add_text" => {
             let args: AddTextArgs = parse(args)?;
             let name = args.name.unwrap_or_else(|| "Text".to_string());
+            let font = args.font.unwrap_or(TextFont::Proportional);
+            let font_size = args.font_size.unwrap_or(24.0);
+            let fill = args.fill.unwrap_or(Color32::BLACK);
+            let bold = args.bold || args.true_bold;
+            // See `AddTextArgs::true_bold`'s doc comment: one run spanning
+            // the whole content, mirroring every other scalar field here, is
+            // what actually gets a real bold typeface instead of the faux
+            // one a plain scalar `bold` falls back to.
+            let runs = if args.true_bold {
+                vec![TextRun {
+                    len: args.content.chars().count(),
+                    style: RunStyle { font: font.clone(), font_size, color: Some(fill), bold: true, italic: false, underline: false, strikethrough: false },
+                }]
+            } else {
+                Vec::new()
+            };
             let mut layer = Layer::new(
                 name,
                 args.frame,
                 LayerKind::Text {
                     content: args.content,
-                    font_size: args.font_size.unwrap_or(24.0),
-                    font: args.font.unwrap_or(TextFont::Proportional),
+                    font_size,
+                    font,
                     align: args.align.unwrap_or(TextAlign::Left),
                     vertical_align: args.vertical_align.unwrap_or(VerticalAlign::Top),
                     resize: TextResize::Fixed,
                     line_height: None,
                     letter_spacing: 0.0,
                     paragraph_spacing: 0.0,
-                    bold: args.bold,
+                    bold,
                     italic: false,
                     underline: false,
                     strikethrough: false,
@@ -127,11 +144,11 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
                     list: ListType::None,
                     list_start: 1,
                     style_id: None,
-                    runs: Vec::new(),
+                    runs,
                     path_attachment: None,
                 },
             );
-            layer.style = Style { fill: Some(Paint::Solid(args.fill.unwrap_or(Color32::BLACK))), stroke: None, ..Default::default() };
+            layer.style = Style { fill: Some(Paint::Solid(fill)), stroke: None, ..Default::default() };
             let id = layer.id;
             resolve_page_mut(doc, args.page)?.layers.push(layer);
             Ok(json!({ "id": id }))
@@ -544,6 +561,47 @@ mod tests {
         let args = json!({ "page": null, "frame": frame(0.0, 0.0, 100.0, 20.0), "content": content, "fill": fill, "name": null });
         let result = apply(doc, "add_text", args).expect("add_text should succeed");
         serde_json::from_value(result["id"].clone()).unwrap()
+    }
+
+    #[test]
+    fn add_text_with_plain_bold_leaves_runs_empty() {
+        let mut doc = Document::new();
+        let args = json!({ "page": null, "frame": frame(0.0, 0.0, 100.0, 20.0), "content": "Hi", "bold": true, "name": null });
+        let result = apply(&mut doc, "add_text", args).expect("add_text should succeed");
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let LayerKind::Text { bold, runs, .. } = &doc.find(id).unwrap().kind else {
+            panic!("expected a Text layer");
+        };
+        assert!(bold);
+        assert!(runs.is_empty(), "plain bold should stay the faux-bold (no runs) path");
+    }
+
+    #[test]
+    fn add_text_with_true_bold_populates_a_matching_run_and_implies_bold() {
+        let mut doc = Document::new();
+        let args = json!({
+            "page": null,
+            "frame": frame(0.0, 0.0, 100.0, 20.0),
+            "content": "Hi!",
+            "true_bold": true,
+            "font_size": 46.0,
+            "font": "Display",
+            "fill": [239, 85, 43, 255],
+            "name": null,
+        });
+        let result = apply(&mut doc, "add_text", args).expect("add_text should succeed");
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let LayerKind::Text { bold, runs, .. } = &doc.find(id).unwrap().kind else {
+            panic!("expected a Text layer");
+        };
+        assert!(bold, "true_bold should imply the scalar bold field too");
+        assert_eq!(runs.len(), 1);
+        let run = &runs[0];
+        assert_eq!(run.len, "Hi!".chars().count());
+        assert!(run.style.bold);
+        assert_eq!(run.style.font, TextFont::Display);
+        assert_eq!(run.style.font_size, 46.0);
+        assert_eq!(run.style.color, Some(Color32::from_rgb(239, 85, 43)));
     }
 
     #[test]

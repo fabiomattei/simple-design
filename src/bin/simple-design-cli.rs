@@ -135,8 +135,14 @@ enum Command {
         /// Defaults to proportional.
         #[arg(long, value_enum)]
         font: Option<TextFontArg>,
+        /// Only the weak "faux bold" (offset double-draw) both canvas.rs and
+        /// export.rs fall back to — see `--true-bold` for real bold glyphs.
         #[arg(long)]
         bold: bool,
+        /// Real bold-weight glyphs (via a `runs` entry), not just the faux
+        /// double-draw `--bold` alone gets. Implies `--bold`.
+        #[arg(long)]
+        true_bold: bool,
         /// Defaults to left.
         #[arg(long, value_enum)]
         align: Option<TextAlignArg>,
@@ -457,7 +463,7 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
                 corner_radius: None,
             }),
         ),
-        Command::AddText { content, x, y, w, h, rotation, font_size, font, bold, align, vertical_align, fill, page, name } => (
+        Command::AddText { content, x, y, w, h, rotation, font_size, font, bold, true_bold, align, vertical_align, fill, page, name } => (
             "add_text",
             to_value(AddTextArgs {
                 page,
@@ -466,6 +472,7 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
                 font_size,
                 font: font.map(Into::into),
                 bold,
+                true_bold,
                 align: align.map(Into::into),
                 vertical_align: vertical_align.map(Into::into),
                 fill: fill.map(|c| c.0),

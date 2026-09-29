@@ -97,6 +97,17 @@ pub struct AddTextArgs {
     pub font: Option<TextFont>,
     #[serde(default)]
     pub bold: bool,
+    /// A plain `bold` only gets the weak "faux bold" (offset double-draw)
+    /// both `canvas.rs` and `export.rs` fall back to when nothing better is
+    /// available — a real bold typeface is only baked in via the rich-text
+    /// `runs` path (see `fonts::ab_glyph_bytes_bold`). `true_bold` opts a
+    /// freshly-created layer into that: one `runs` entry spanning the whole
+    /// content, styled to match every other field here, so it renders with
+    /// actual bold-weight glyphs while still behaving like plain uniform
+    /// text everywhere else (selection, alignment, editing the content).
+    /// Implies `bold` regardless of what that field was set to.
+    #[serde(default)]
+    pub true_bold: bool,
     /// Defaults to `TextAlign::Left` if omitted.
     #[serde(default)]
     pub align: Option<TextAlign>,
