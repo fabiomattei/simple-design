@@ -16,7 +16,7 @@ use simple_design::ipc::protocol::{
     InitArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs, SetFrameArgs,
     UngroupArgs,
 };
-use simple_design::model::{BoolOp, Document, Frame, TextAlign, TextFont};
+use simple_design::model::{BoolOp, Document, Frame, TextAlign, TextFont, VerticalAlign};
 
 #[derive(Parser)]
 #[command(name = "simple-design-cli", about = "Drive a running Simple Design instance, or edit a .sdesign file directly when none is open")]
@@ -66,6 +66,23 @@ enum Command {
         page: Option<Uuid>,
         #[arg(long)]
         name: Option<String>,
+        /// Hex fill color, RRGGBB or RRGGBBAA (defaults to `Style::default()`'s flat gray).
+        #[arg(long)]
+        fill: Option<HexColor>,
+        /// Drop any fill (a transparent/outline-only shape). Takes priority over `--fill`.
+        #[arg(long)]
+        no_fill: bool,
+        /// Drop the default 1px dark stroke. Takes priority over `--stroke`/`--stroke-width`.
+        #[arg(long)]
+        no_stroke: bool,
+        /// Recolor the stroke (defaults to `Style::default()`'s dark gray).
+        #[arg(long)]
+        stroke: Option<HexColor>,
+        /// Defaults to 1.0.
+        #[arg(long)]
+        stroke_width: Option<f32>,
+        #[arg(long)]
+        corner_radius: Option<f32>,
     },
     /// Add a filled ellipse, inscribed in the given x/y/w/h box.
     AddEllipse {
@@ -83,6 +100,21 @@ enum Command {
         page: Option<Uuid>,
         #[arg(long)]
         name: Option<String>,
+        /// Hex fill color, RRGGBB or RRGGBBAA (defaults to `Style::default()`'s flat gray).
+        #[arg(long)]
+        fill: Option<HexColor>,
+        /// Drop any fill (a transparent/outline-only shape). Takes priority over `--fill`.
+        #[arg(long)]
+        no_fill: bool,
+        /// Drop the default 1px dark stroke. Takes priority over `--stroke`/`--stroke-width`.
+        #[arg(long)]
+        no_stroke: bool,
+        /// Recolor the stroke (defaults to `Style::default()`'s dark gray).
+        #[arg(long)]
+        stroke: Option<HexColor>,
+        /// Defaults to 1.0.
+        #[arg(long)]
+        stroke_width: Option<f32>,
     },
     /// Add a text layer.
     AddText {
@@ -108,6 +140,12 @@ enum Command {
         /// Defaults to left.
         #[arg(long, value_enum)]
         align: Option<TextAlignArg>,
+        /// Defaults to top.
+        #[arg(long, value_enum)]
+        vertical_align: Option<VerticalAlignArg>,
+        /// Hex text color, RRGGBB or RRGGBBAA (defaults to black).
+        #[arg(long)]
+        fill: Option<HexColor>,
         #[arg(long)]
         page: Option<Uuid>,
         #[arg(long)]
@@ -256,6 +294,31 @@ impl From<BoolOpArg> for BoolOp {
     }
 }
 
+/// `--fill`'s CLI type: parses a bare `RRGGBB`/`RRGGBBAA` hex string (an
+/// optional leading `#` is stripped) into a `Color32`, the way `--fill
+/// ff8800` or `--fill #ff8800cc` reads on the command line. Wraps `Color32`
+/// (rather than implementing `FromStr` on it directly) since it's a foreign
+/// type this crate doesn't own.
+#[derive(Clone, Copy)]
+struct HexColor(egui::Color32);
+
+impl std::str::FromStr for HexColor {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let hex = s.strip_prefix('#').unwrap_or(s);
+        let byte = |range: std::ops::Range<usize>| -> Result<u8, String> {
+            let chunk = hex.get(range).ok_or_else(|| format!("invalid hex color: {s:?} (expected RRGGBB or RRGGBBAA)"))?;
+            u8::from_str_radix(chunk, 16).map_err(|_| format!("invalid hex color: {s:?} (expected RRGGBB or RRGGBBAA)"))
+        };
+        match hex.len() {
+            6 => Ok(HexColor(egui::Color32::from_rgb(byte(0..2)?, byte(2..4)?, byte(4..6)?))),
+            8 => Ok(HexColor(egui::Color32::from_rgba_unmultiplied(byte(0..2)?, byte(2..4)?, byte(4..6)?, byte(6..8)?))),
+            _ => Err(format!("invalid hex color: {s:?} (expected RRGGBB or RRGGBBAA)")),
+        }
+    }
+}
+
 /// `clap::ValueEnum` for `TextFont`, minus `System` (a free-text family
 /// name a clap enum can't represent) — pass a font that isn't installed via
 /// `set-frame`/hand-edited JSON if that's ever needed from the CLI.
@@ -295,6 +358,23 @@ impl From<TextAlignArg> for TextAlign {
             TextAlignArg::Center => TextAlign::Center,
             TextAlignArg::Right => TextAlign::Right,
             TextAlignArg::Justify => TextAlign::Justify,
+        }
+    }
+}
+
+#[derive(Clone, ValueEnum)]
+enum VerticalAlignArg {
+    Top,
+    Middle,
+    Bottom,
+}
+
+impl From<VerticalAlignArg> for VerticalAlign {
+    fn from(align: VerticalAlignArg) -> Self {
+        match align {
+            VerticalAlignArg::Top => VerticalAlign::Top,
+            VerticalAlignArg::Middle => VerticalAlign::Middle,
+            VerticalAlignArg::Bottom => VerticalAlign::Bottom,
         }
     }
 }
@@ -349,23 +429,35 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
         Command::ListPages => ("list_pages", serde_json::Value::Null),
         Command::ListLayers { page } => ("list_layers", to_value(ListLayersArgs { page })),
         Command::GetLayer { id } => ("get_layer", to_value(GetLayerArgs { id })),
-        Command::AddRect { x, y, w, h, rotation, page, name } => (
+        Command::AddRect { x, y, w, h, rotation, page, name, fill, no_fill, no_stroke, stroke, stroke_width, corner_radius } => (
             "add_rect",
             to_value(AddShapeArgs {
                 page,
                 frame: Frame { pos: Pos2::new(x, y), size: Vec2::new(w, h), rotation: rotation.unwrap_or(0.0) },
                 name,
+                fill: fill.map(|c| c.0),
+                no_fill,
+                no_stroke,
+                stroke: stroke.map(|c| c.0),
+                stroke_width,
+                corner_radius,
             }),
         ),
-        Command::AddEllipse { x, y, w, h, rotation, page, name } => (
+        Command::AddEllipse { x, y, w, h, rotation, page, name, fill, no_fill, no_stroke, stroke, stroke_width } => (
             "add_ellipse",
             to_value(AddShapeArgs {
                 page,
                 frame: Frame { pos: Pos2::new(x, y), size: Vec2::new(w, h), rotation: rotation.unwrap_or(0.0) },
                 name,
+                fill: fill.map(|c| c.0),
+                no_fill,
+                no_stroke,
+                stroke: stroke.map(|c| c.0),
+                stroke_width,
+                corner_radius: None,
             }),
         ),
-        Command::AddText { content, x, y, w, h, rotation, font_size, font, bold, align, page, name } => (
+        Command::AddText { content, x, y, w, h, rotation, font_size, font, bold, align, vertical_align, fill, page, name } => (
             "add_text",
             to_value(AddTextArgs {
                 page,
@@ -375,6 +467,8 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
                 font: font.map(Into::into),
                 bold,
                 align: align.map(Into::into),
+                vertical_align: vertical_align.map(Into::into),
+                fill: fill.map(|c| c.0),
                 name,
             }),
         ),

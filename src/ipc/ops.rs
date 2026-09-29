@@ -17,7 +17,7 @@ use crate::boolean_ops;
 use crate::grouping;
 use crate::image_ops;
 use crate::model::{
-    CornerRadii, Document, Frame, Layer, LayerKind, ListType, Page, Paint, Style, TextAlign, TextFont, TextResize,
+    CornerRadii, Document, Frame, Layer, LayerKind, ListType, Page, Paint, Stroke, Style, TextAlign, TextFont, TextResize,
     TextTransform, VerticalAlign,
 };
 use crate::transform_ops::{self, FlipAxis};
@@ -80,8 +80,10 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
 
         "add_rect" => {
             let args: AddShapeArgs = parse(args)?;
-            let name = args.name.unwrap_or_else(|| "Rectangle".to_string());
-            let layer = Layer::new(name, args.frame, LayerKind::Rectangle { corner_radius: CornerRadii::ZERO });
+            let name = args.name.clone().unwrap_or_else(|| "Rectangle".to_string());
+            let radius = args.corner_radius.map(CornerRadii::uniform).unwrap_or(CornerRadii::ZERO);
+            let mut layer = Layer::new(name, args.frame, LayerKind::Rectangle { corner_radius: radius });
+            apply_shape_style(&mut layer, &args);
             let id = layer.id;
             resolve_page_mut(doc, args.page)?.layers.push(layer);
             Ok(json!({ "id": id }))
@@ -89,8 +91,9 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
 
         "add_ellipse" => {
             let args: AddShapeArgs = parse(args)?;
-            let name = args.name.unwrap_or_else(|| "Ellipse".to_string());
-            let layer = Layer::new(name, args.frame, LayerKind::Oval);
+            let name = args.name.clone().unwrap_or_else(|| "Ellipse".to_string());
+            let mut layer = Layer::new(name, args.frame, LayerKind::Oval);
+            apply_shape_style(&mut layer, &args);
             let id = layer.id;
             resolve_page_mut(doc, args.page)?.layers.push(layer);
             Ok(json!({ "id": id }))
@@ -111,7 +114,7 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
                     font_size: args.font_size.unwrap_or(24.0),
                     font: args.font.unwrap_or(TextFont::Proportional),
                     align: args.align.unwrap_or(TextAlign::Left),
-                    vertical_align: VerticalAlign::Top,
+                    vertical_align: args.vertical_align.unwrap_or(VerticalAlign::Top),
                     resize: TextResize::Fixed,
                     line_height: None,
                     letter_spacing: 0.0,
@@ -128,7 +131,7 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
                     path_attachment: None,
                 },
             );
-            layer.style = Style { fill: Some(Paint::Solid(Color32::BLACK)), stroke: None, ..Default::default() };
+            layer.style = Style { fill: Some(Paint::Solid(args.fill.unwrap_or(Color32::BLACK))), stroke: None, ..Default::default() };
             let id = layer.id;
             resolve_page_mut(doc, args.page)?.layers.push(layer);
             Ok(json!({ "id": id }))
@@ -287,6 +290,33 @@ fn parse_flip_axis(axis: &str) -> Result<FlipAxis, String> {
     }
 }
 
+/// Applies `AddShapeArgs`'s optional style overrides on top of whatever
+/// `Layer::new` seeded (`Style::default()` — flat mid-gray fill, 1px dark
+/// stroke), leaving either alone when the caller didn't ask for a change.
+fn apply_shape_style(layer: &mut Layer, args: &AddShapeArgs) {
+    if let Some(fill) = args.fill {
+        layer.style.fill = Some(Paint::Solid(fill));
+    }
+    if args.no_fill {
+        layer.style.fill = None;
+    }
+    match (args.stroke, args.stroke_width) {
+        (Some(color), width) => {
+            let width = width.unwrap_or_else(|| layer.style.stroke.as_ref().map_or(1.0, |s| s.width));
+            layer.style.stroke = Some(Stroke { paint: Paint::Solid(color), width });
+        }
+        (None, Some(width)) => {
+            if let Some(stroke) = layer.style.stroke.as_mut() {
+                stroke.width = width;
+            }
+        }
+        (None, None) => {}
+    }
+    if args.no_stroke {
+        layer.style.stroke = None;
+    }
+}
+
 fn resolve_page(doc: &Document, page: Option<Uuid>) -> Result<&Page, String> {
     match page {
         Some(id) => doc.pages.iter().find(|p| p.id == id).ok_or_else(|| format!("page not found: {id}")),
@@ -344,6 +374,87 @@ mod tests {
         let args = json!({ "page": null, "frame": frame(x, y, w, h), "name": null });
         let result = apply(doc, "add_rect", args).expect("add_rect should succeed");
         serde_json::from_value(result["id"].clone()).unwrap()
+    }
+
+    #[test]
+    fn add_rect_with_no_fill_args_keeps_the_default_gray_fill_and_stroke() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        let layer = doc.find(id).unwrap();
+        assert_eq!(layer.style.fill, Some(Paint::Solid(Color32::from_rgb(216, 216, 216))));
+        assert!(layer.style.stroke.is_some());
+    }
+
+    #[test]
+    fn add_rect_honors_fill_no_stroke_and_corner_radius() {
+        let mut doc = Document::new();
+        let args = json!({
+            "page": null,
+            "frame": frame(0.0, 0.0, 10.0, 10.0),
+            "name": null,
+            "fill": [239, 85, 43, 255],
+            "no_stroke": true,
+            "corner_radius": 8.0,
+        });
+        let result = apply(&mut doc, "add_rect", args).expect("add_rect should succeed");
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let layer = doc.find(id).unwrap();
+        assert_eq!(layer.style.fill, Some(Paint::Solid(Color32::from_rgb(239, 85, 43))));
+        assert!(layer.style.stroke.is_none());
+        assert_eq!(layer.kind, LayerKind::Rectangle { corner_radius: CornerRadii::uniform(8.0) });
+    }
+
+    #[test]
+    fn add_rect_no_fill_drops_the_default_gray_fill_for_an_outline_only_shape() {
+        let mut doc = Document::new();
+        let args = json!({
+            "page": null,
+            "frame": frame(0.0, 0.0, 10.0, 10.0),
+            "name": null,
+            "no_fill": true,
+            "stroke": [255, 255, 255, 255],
+        });
+        let result = apply(&mut doc, "add_rect", args).expect("add_rect should succeed");
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let layer = doc.find(id).unwrap();
+        assert_eq!(layer.style.fill, None);
+        assert_eq!(layer.style.stroke.as_ref().unwrap().paint, Paint::Solid(Color32::WHITE));
+    }
+
+    #[test]
+    fn add_rect_stroke_recolors_without_a_fill() {
+        let mut doc = Document::new();
+        let args = json!({
+            "page": null,
+            "frame": frame(0.0, 0.0, 10.0, 10.0),
+            "name": null,
+            "stroke": [255, 255, 255, 255],
+            "stroke_width": 2.0,
+        });
+        let result = apply(&mut doc, "add_rect", args).expect("add_rect should succeed");
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let layer = doc.find(id).unwrap();
+        assert_eq!(layer.style.fill, Some(Paint::Solid(Color32::from_rgb(216, 216, 216))), "fill untouched when only stroke is given");
+        let stroke = layer.style.stroke.as_ref().expect("stroke should be set");
+        assert_eq!(stroke.paint, Paint::Solid(Color32::WHITE));
+        assert_eq!(stroke.width, 2.0);
+    }
+
+    #[test]
+    fn add_ellipse_honors_fill_and_no_stroke() {
+        let mut doc = Document::new();
+        let args = json!({
+            "page": null,
+            "frame": frame(0.0, 0.0, 10.0, 10.0),
+            "name": null,
+            "fill": [0, 0, 0, 255],
+            "no_stroke": true,
+        });
+        let result = apply(&mut doc, "add_ellipse", args).expect("add_ellipse should succeed");
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let layer = doc.find(id).unwrap();
+        assert_eq!(layer.style.fill, Some(Paint::Solid(Color32::BLACK)));
+        assert!(layer.style.stroke.is_none());
     }
 
     #[test]
@@ -417,6 +528,22 @@ mod tests {
         assert_eq!(*font, TextFont::Display);
         assert_eq!(*align, TextAlign::Center);
         assert!(bold);
+    }
+
+    #[test]
+    fn add_text_defaults_to_black_fill_and_honors_an_explicit_one() {
+        let mut doc = Document::new();
+        let default_id = add_text_helper(&mut doc, "Hi", None);
+        assert_eq!(doc.find(default_id).unwrap().style.fill, Some(Paint::Solid(Color32::BLACK)));
+
+        let orange_id = add_text_helper(&mut doc, "Hi", Some([239, 85, 43, 255]));
+        assert_eq!(doc.find(orange_id).unwrap().style.fill, Some(Paint::Solid(Color32::from_rgb(239, 85, 43))));
+    }
+
+    fn add_text_helper(doc: &mut Document, content: &str, fill: Option<[u8; 4]>) -> Uuid {
+        let args = json!({ "page": null, "frame": frame(0.0, 0.0, 100.0, 20.0), "content": content, "fill": fill, "name": null });
+        let result = apply(doc, "add_text", args).expect("add_text should succeed");
+        serde_json::from_value(result["id"].clone()).unwrap()
     }
 
     #[test]

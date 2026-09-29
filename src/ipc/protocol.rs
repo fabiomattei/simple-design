@@ -2,10 +2,11 @@
 //! `simple-design-cli`. Newline-delimited JSON, one `Request` per line in,
 //! one `Response` per line back.
 
+use egui::Color32;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-use crate::model::{BoolOp, Frame, TextAlign, TextFont};
+use crate::model::{BoolOp, Frame, TextAlign, TextFont, VerticalAlign};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Request {
@@ -57,6 +58,29 @@ pub struct AddShapeArgs {
     pub page: Option<Uuid>,
     pub frame: Frame,
     pub name: Option<String>,
+    /// Omitted keeps `Style::default()`'s fill (a flat mid-gray).
+    #[serde(default)]
+    pub fill: Option<Color32>,
+    /// Drops any fill (a transparent/outline-only shape). Takes priority
+    /// over `fill` if both are given.
+    #[serde(default)]
+    pub no_fill: bool,
+    /// Drops `Style::default()`'s 1px dark stroke — most CLI-authored shapes
+    /// (flat design blocks, photo-backed buttons) don't want one. Takes
+    /// priority over `stroke`/`stroke_width` if both are given.
+    #[serde(default)]
+    pub no_stroke: bool,
+    /// Recolors the stroke, keeping its current width unless `stroke_width`
+    /// is also given. Omitted keeps `Style::default()`'s dark stroke color.
+    #[serde(default)]
+    pub stroke: Option<Color32>,
+    /// Omitted keeps the current stroke width (`Style::default()`'s `1.0` if
+    /// this is a fresh shape).
+    #[serde(default)]
+    pub stroke_width: Option<f32>,
+    /// `add_rect` only — ignored for `add_ellipse` (an `Oval` has no corners).
+    #[serde(default)]
+    pub corner_radius: Option<f32>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -76,6 +100,12 @@ pub struct AddTextArgs {
     /// Defaults to `TextAlign::Left` if omitted.
     #[serde(default)]
     pub align: Option<TextAlign>,
+    /// Defaults to `VerticalAlign::Top` if omitted.
+    #[serde(default)]
+    pub vertical_align: Option<VerticalAlign>,
+    /// Defaults to black (the same default `Tool::Text` seeds in the GUI) if omitted.
+    #[serde(default)]
+    pub fill: Option<Color32>,
     pub name: Option<String>,
 }
 
