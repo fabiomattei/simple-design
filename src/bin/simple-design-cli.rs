@@ -12,9 +12,9 @@ use uuid::Uuid;
 use simple_design::io;
 use simple_design::ipc::{self, ops};
 use simple_design::ipc::protocol::{
-    AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FlipArgs, GetLayerArgs, GroupArgs,
-    InitArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs, SetFrameArgs,
-    UngroupArgs,
+    AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
+    GroupArgs, InitArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs,
+    SetFrameArgs, UngroupArgs,
 };
 use simple_design::model::{BoolOp, Document, Frame, TextAlign, TextFont, VerticalAlign};
 
@@ -44,10 +44,23 @@ enum Command {
     ListLayers {
         #[arg(long)]
         page: Option<Uuid>,
+        /// Walk into groups/artboards too, flattening the whole tree instead
+        /// of stopping at the top level (each entry's `depth` says how nested it was).
+        #[arg(long)]
+        recursive: bool,
     },
     /// Dump one layer's full JSON, wherever it is in the layer tree.
     GetLayer {
         id: Uuid,
+    },
+    /// Find layers by name (case-insensitive substring match), anywhere in
+    /// the layer tree — a cheaper alternative to `get-document`/`get-layer`
+    /// when you know a layer's name but not its id. Returns the same light
+    /// summary as `list-layers`, not each match's full JSON.
+    FindLayer {
+        query: String,
+        #[arg(long)]
+        page: Option<Uuid>,
     },
     /// Add a filled rectangle.
     AddRect {
@@ -433,8 +446,9 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
         Command::Ping => ("ping", serde_json::Value::Null),
         Command::GetDocument => ("get_document", serde_json::Value::Null),
         Command::ListPages => ("list_pages", serde_json::Value::Null),
-        Command::ListLayers { page } => ("list_layers", to_value(ListLayersArgs { page })),
+        Command::ListLayers { page, recursive } => ("list_layers", to_value(ListLayersArgs { page, recursive })),
         Command::GetLayer { id } => ("get_layer", to_value(GetLayerArgs { id })),
+        Command::FindLayer { query, page } => ("find_layer", to_value(FindLayerArgs { page, query })),
         Command::AddRect { x, y, w, h, rotation, page, name, fill, no_fill, no_stroke, stroke, stroke_width, corner_radius } => (
             "add_rect",
             to_value(AddShapeArgs {

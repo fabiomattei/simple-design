@@ -24,8 +24,8 @@ use crate::model::{
 use crate::transform_ops::{self, FlipAxis};
 
 use super::protocol::{
-    AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FlipArgs, GetLayerArgs, GroupArgs,
-    ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFrameArgs, UngroupArgs,
+    AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
+    GroupArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFrameArgs, UngroupArgs,
 };
 
 /// Ops that mutate `doc` — the CLI's headless mode only needs to re-save
@@ -70,13 +70,33 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
         "list_layers" => {
             let args: ListLayersArgs = parse(args)?;
             let page = resolve_page(doc, args.page)?;
-            Ok(json!(page.layers.iter().map(layer_summary).collect::<Vec<_>>()))
+            let mut out = Vec::new();
+            if args.recursive {
+                collect_layers(&page.layers, 0, &mut out);
+            } else {
+                out.extend(page.layers.iter().map(|l| layer_summary(l, 0)));
+            }
+            Ok(json!(out))
         }
 
         "get_layer" => {
             let args: GetLayerArgs = parse(args)?;
             let layer = doc.find(args.id).ok_or_else(|| format!("layer not found: {}", args.id))?;
             serde_json::to_value(layer).map_err(|err| err.to_string())
+        }
+
+        // See `FindLayerArgs`'s doc comment: a `get_document`/`get_layer`
+        // alternative for the common case of knowing a layer's name, not its
+        // id — searches the whole tree, not just the page's top level, and
+        // returns the same lightweight summary `list_layers` does instead of
+        // each match's full JSON.
+        "find_layer" => {
+            let args: FindLayerArgs = parse(args)?;
+            let page = resolve_page(doc, args.page)?;
+            let query = args.query.to_lowercase();
+            let mut out = Vec::new();
+            find_layers(&page.layers, &query, 0, &mut out);
+            Ok(json!(out))
         }
 
         "add_rect" => {
@@ -348,13 +368,39 @@ fn resolve_page_mut(doc: &mut Document, page: Option<Uuid>) -> Result<&mut Page,
     }
 }
 
-fn layer_summary(layer: &Layer) -> serde_json::Value {
+fn layer_summary(layer: &Layer, depth: usize) -> serde_json::Value {
     json!({
         "id": layer.id,
         "name": layer.name,
         "kind": layer_kind_name(&layer.kind),
         "frame": layer.frame,
+        "depth": depth,
     })
+}
+
+/// Flattens `layers` and every descendant (via `LayerKind::children`) into
+/// `out`, depth-first, each as a `layer_summary` — the recursive backbone of
+/// both `list_layers { recursive: true }` and `find_layer`.
+fn collect_layers(layers: &[Layer], depth: usize, out: &mut Vec<serde_json::Value>) {
+    for layer in layers {
+        out.push(layer_summary(layer, depth));
+        if let Some(children) = layer.kind.children() {
+            collect_layers(children, depth + 1, out);
+        }
+    }
+}
+
+/// Same walk as `collect_layers`, but only keeps layers whose name
+/// case-insensitively contains `query` (already lowercased by the caller).
+fn find_layers(layers: &[Layer], query: &str, depth: usize, out: &mut Vec<serde_json::Value>) {
+    for layer in layers {
+        if layer.name.to_lowercase().contains(query) {
+            out.push(layer_summary(layer, depth));
+        }
+        if let Some(children) = layer.kind.children() {
+            find_layers(children, query, depth + 1, out);
+        }
+    }
 }
 
 fn layer_kind_name(kind: &LayerKind) -> &'static str {
@@ -660,6 +706,50 @@ mod tests {
         let bogus_page = Uuid::new_v4();
         let err = apply(&mut doc, "list_layers", json!({ "page": bogus_page })).unwrap_err();
         assert!(err.contains(&bogus_page.to_string()));
+    }
+
+    #[test]
+    fn list_layers_recursive_flattens_a_group_and_marks_depth() {
+        let mut doc = Document::new();
+        let a = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        let b = add_rect(&mut doc, 20.0, 0.0, 10.0, 10.0);
+        let group_result = apply(&mut doc, "group", json!({ "ids": [a, b] })).expect("group should succeed");
+        let group_id: Uuid = serde_json::from_value(group_result["id"].clone()).unwrap();
+
+        let shallow = apply(&mut doc, "list_layers", json!({ "recursive": false })).unwrap();
+        assert_eq!(shallow.as_array().unwrap().len(), 1, "shallow listing should only see the group, not its children");
+
+        let deep = apply(&mut doc, "list_layers", json!({ "recursive": true })).unwrap();
+        let deep = deep.as_array().unwrap();
+        assert_eq!(deep.len(), 3, "recursive listing should include the group and both children");
+        assert_eq!(deep[0]["id"], json!(group_id));
+        assert_eq!(deep[0]["depth"], json!(0));
+        assert_eq!(deep[1]["depth"], json!(1));
+        assert_eq!(deep[2]["depth"], json!(1));
+    }
+
+    #[test]
+    fn find_layer_matches_by_case_insensitive_substring_anywhere_in_the_tree() {
+        let mut doc = Document::new();
+        let args = json!({ "page": null, "frame": frame(0.0, 0.0, 10.0, 10.0), "name": "Hero Caption" });
+        let id = apply(&mut doc, "add_rect", args).unwrap()["id"].clone();
+        let id: Uuid = serde_json::from_value(id).unwrap();
+        let sibling = add_rect(&mut doc, 20.0, 0.0, 10.0, 10.0);
+        apply(&mut doc, "group", json!({ "ids": [id, sibling] })).expect("group should succeed");
+
+        let result = apply(&mut doc, "find_layer", json!({ "query": "hero" })).unwrap();
+        let matches = result.as_array().unwrap();
+        assert_eq!(matches.len(), 1, "should find the nested layer by a lowercase substring of its name");
+        assert_eq!(matches[0]["id"], json!(id));
+        assert_eq!(matches[0]["depth"], json!(1), "the match is one level inside the new group");
+    }
+
+    #[test]
+    fn find_layer_with_no_matches_is_an_empty_list_not_an_error() {
+        let mut doc = Document::new();
+        add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        let result = apply(&mut doc, "find_layer", json!({ "query": "nonexistent" })).unwrap();
+        assert_eq!(result.as_array().unwrap().len(), 0);
     }
 
     #[test]

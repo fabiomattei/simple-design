@@ -45,11 +45,32 @@ impl Response {
 #[derive(Serialize, Deserialize)]
 pub struct ListLayersArgs {
     pub page: Option<Uuid>,
+    /// Walk into every `Artboard`/`Group`/`BooleanGroup` child instead of
+    /// stopping at the page's top-level layers, flattening the whole tree
+    /// into one list (each entry's `depth` says how nested it was). Default
+    /// `false` keeps the original shallow behavior.
+    #[serde(default)]
+    pub recursive: bool,
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct GetLayerArgs {
     pub id: Uuid,
+}
+
+/// A lighter-weight alternative to `get_document`/`get_layer` for locating a
+/// layer by name instead of id: walks the whole layer tree (like
+/// `list_layers` with `recursive: true`) but only returns entries whose name
+/// case-insensitively contains `query`, as the same lightweight summary
+/// `list_layers` uses (`id`/`name`/`kind`/`frame`/`depth`) rather than each
+/// match's full JSON. Built after a session spent repeatedly calling
+/// `get_document` (which dumps every field — `style`, `runs`, etc. — for
+/// every layer) just to recover one layer's id by name.
+#[derive(Serialize, Deserialize)]
+pub struct FindLayerArgs {
+    #[serde(default)]
+    pub page: Option<Uuid>,
+    pub query: String,
 }
 
 #[derive(Serialize, Deserialize)]
