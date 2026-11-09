@@ -12,6 +12,7 @@ use crate::io;
 use crate::ipc::{IpcHandle, PendingCommand};
 use crate::model::{BoolOp, Document, Frame, Layer, LayerId, LayerKind, Paint};
 use crate::palette_io;
+use crate::recent_files::RecentFiles;
 use crate::tools::Tool;
 use crate::transform_ops::{self, FlipAxis};
 use crate::ui::inspector::InspectorAction;
@@ -36,6 +37,8 @@ pub struct App {
     tool: Tool,
     selection: Vec<LayerId>,
     current_path: Option<PathBuf>,
+    /// File > Open Recent — persisted across sessions, see `recent_files.rs`.
+    recent_files: RecentFiles,
     /// "Rotate Copies" popup state (Edit menu) — persisted across menu
     /// opens/closes so re-opening the menu remembers the last-used values.
     rotate_copies_count: u32,
@@ -81,6 +84,7 @@ pub struct App {
 impl App {
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
         crate::fonts::install_fonts(&cc.egui_ctx);
+        crate::ui::theme::install(&cc.egui_ctx);
         let (ipc_tx, ipc_rx) = std::sync::mpsc::channel();
         Self {
             history: History::new(Document::new()),
@@ -90,6 +94,7 @@ impl App {
             tool: Tool::Select,
             selection: Vec::new(),
             current_path: None,
+            recent_files: RecentFiles::load(),
             rotate_copies_count: 5,
             rotate_copies_degrees: 360.0,
             make_grid_cols: 3,
@@ -467,6 +472,7 @@ impl App {
         };
         if let Some(path) = path {
             if io::save_to(&path, self.history.get()).is_ok() {
+                self.recent_files.push(&path);
                 self.current_path = Some(path);
             }
         }
@@ -487,12 +493,21 @@ impl App {
         self.load_document(path);
     }
 
-    fn load_document(&mut self, path: PathBuf) {
-        if let Ok(doc) = io::load_from(&path) {
-            self.history.replace(doc);
-            self.pages_bar = PagesBar::default();
-            self.selection.clear();
-            self.current_path = Some(path);
+    fn load_document(&mut self, path: PathBuf) -> bool {
+        let Ok(doc) = io::load_from(&path) else { return false };
+        self.history.replace(doc);
+        self.pages_bar = PagesBar::default();
+        self.selection.clear();
+        self.recent_files.push(&path);
+        self.current_path = Some(path);
+        true
+    }
+
+    /// File > Open Recent entry: a path that no longer loads (moved, deleted,
+    /// corrupt) is dropped from the list instead of lingering there.
+    fn open_recent(&mut self, path: PathBuf) {
+        if !self.load_document(path.clone()) {
+            self.recent_files.remove(&path);
         }
     }
 
@@ -802,6 +817,29 @@ impl eframe::App for App {
                         self.open();
                         ui.close();
                     }
+                    ui.add_enabled_ui(!self.recent_files.paths().is_empty(), |ui| {
+                        ui.menu_button("Open Recent", |ui| {
+                            let mut chosen = None;
+                            for path in self.recent_files.paths() {
+                                let label = path.file_name().map_or_else(
+                                    || path.display().to_string(),
+                                    |n| n.to_string_lossy().into_owned(),
+                                );
+                                if ui.button(label).on_hover_text(path.display().to_string()).clicked() {
+                                    chosen = Some(path.clone());
+                                }
+                            }
+                            ui.separator();
+                            if ui.button("Clear Recent").clicked() {
+                                self.recent_files.clear();
+                                ui.close();
+                            }
+                            if let Some(path) = chosen {
+                                self.open_recent(path);
+                                ui.close();
+                            }
+                        });
+                    });
                     if ui.button("Save").clicked() {
                         self.save(false);
                         ui.close();
@@ -1049,14 +1087,28 @@ impl eframe::App for App {
                         self.history.mutate().active_page_mut().guides.clear();
                         ui.close();
                     }
+                    ui.separator();
+                    ui.menu_button("Theme", |ui| {
+                        let mut pref = ui.ctx().options(|o| o.theme_preference);
+                        for (value, label) in [
+                            (egui::ThemePreference::System, "System"),
+                            (egui::ThemePreference::Dark, "Dark"),
+                            (egui::ThemePreference::Light, "Light"),
+                        ] {
+                            if ui.radio_value(&mut pref, value, label).clicked() {
+                                ui.ctx().set_theme(pref);
+                                ui.close();
+                            }
+                        }
+                    });
                 });
             });
         });
 
         egui::Panel::top("toolbar").show(ui, |ui| {
-            ui.add_space(4.0);
+            ui.add_space(3.0);
             let action = toolbar::ui(ui, &mut self.tool);
-            ui.add_space(4.0);
+            ui.add_space(3.0);
             if let Some(ToolbarAction::InsertImage) = action {
                 self.insert_images_via_dialog();
             }
@@ -1286,7 +1338,9 @@ impl eframe::App for App {
             });
         }
 
-        egui::CentralPanel::default().show(ui, |ui| {
+        // No inner margin: the canvas (and its rulers) run edge-to-edge between the panels.
+        let backdrop = crate::ui::theme::canvas_colors(ui.visuals().dark_mode).backdrop;
+        egui::CentralPanel::default().frame(egui::Frame::NONE.fill(backdrop)).show(ui, |ui| {
             self.canvas
                 .ui(ui, &mut self.history, &mut self.tool, &mut self.selection);
         });

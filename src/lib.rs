@@ -16,6 +16,7 @@ pub mod model;
 pub mod noise_fill;
 pub mod numeric_input;
 pub mod palette_io;
+pub mod recent_files;
 pub mod shadow;
 pub mod shapes;
 pub mod system_fonts;

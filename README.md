@@ -26,6 +26,13 @@ Open a specific file at startup so the CLI has something to talk to:
 simple-design <file.sdesign>
 ```
 
+## Update Linux installation
+
+> cargo build --release
+> install -m755 target/release/simple-design ~/.local/bin/simple-design
+
+
+
 ## License
 
 GNU GENERAL PUBLIC LICENSE Version 3

@@ -505,9 +505,6 @@ const SELECTION_COLOR: Color32 = Color32::from_rgb(0, 122, 255);
 
 /// Width, in screen pixels, of the top/left ruler strips.
 const RULER_SIZE: f32 = 20.0;
-const RULER_BG: Color32 = Color32::from_gray(246);
-const RULER_LINE: Color32 = Color32::from_gray(170);
-const RULER_TEXT: Color32 = Color32::from_gray(100);
 /// Color of a placed, static ruler guide.
 const GUIDE_COLOR: Color32 = Color32::from_rgb(0, 170, 255);
 /// How close (in screen pixels) the pointer must be to an existing guide
@@ -2229,7 +2226,7 @@ impl CanvasWidget {
             }
         }
 
-        canvas_painter.rect_filled(canvas_rect, 0.0, Color32::from_gray(235));
+        canvas_painter.rect_filled(canvas_rect, 0.0, crate::ui::theme::canvas_colors(ui.visuals().dark_mode).backdrop);
         if self.show_grid {
             draw_pixel_grid(&canvas_painter, canvas_rect, origin, self.pan, self.zoom);
         }
@@ -4384,6 +4381,7 @@ fn draw_rulers(
     zoom: f32,
     hover_pos: Option<Pos2>,
 ) {
+    let colors = crate::ui::theme::canvas_colors(painter.ctx().global_style().visuals.dark_mode);
     let to_screen = |p: Pos2| origin + pan + p.to_vec2() * zoom;
     let to_doc = |p: Pos2| ((p - origin - pan) / zoom).to_pos2();
 
@@ -4391,11 +4389,11 @@ fn draw_rulers(
     let left_rect = Rect::from_min_max(Pos2::new(full_rect.min.x, canvas_rect.min.y), Pos2::new(canvas_rect.min.x, full_rect.max.y));
     let corner_rect = Rect::from_min_max(full_rect.min, canvas_rect.min);
 
-    painter.rect_filled(top_rect, 0.0, RULER_BG);
-    painter.rect_filled(left_rect, 0.0, RULER_BG);
-    painter.rect_filled(corner_rect, 0.0, RULER_BG);
-    painter.line_segment([top_rect.left_bottom(), top_rect.right_bottom()], EguiStroke::new(1.0, RULER_LINE));
-    painter.line_segment([left_rect.right_top(), left_rect.right_bottom()], EguiStroke::new(1.0, RULER_LINE));
+    painter.rect_filled(top_rect, 0.0, colors.ruler_bg);
+    painter.rect_filled(left_rect, 0.0, colors.ruler_bg);
+    painter.rect_filled(corner_rect, 0.0, colors.ruler_bg);
+    painter.line_segment([top_rect.left_bottom(), top_rect.right_bottom()], EguiStroke::new(1.0, colors.ruler_line));
+    painter.line_segment([left_rect.right_top(), left_rect.right_bottom()], EguiStroke::new(1.0, colors.ruler_line));
 
     let step = nice_ruler_step(zoom, 70.0);
     let minor_step = step / 5.0;
@@ -4419,11 +4417,11 @@ fn draw_rulers(
             let tick_top = if major { top_rect.max.y - 9.0 } else { top_rect.max.y - 5.0 };
             painter.line_segment(
                 [Pos2::new(sx, tick_top), Pos2::new(sx, top_rect.max.y)],
-                EguiStroke::new(1.0, RULER_LINE),
+                EguiStroke::new(1.0, colors.ruler_line),
             );
             if major {
-                let galley = painter.layout_no_wrap(format!("{x:.0}"), font.clone(), RULER_TEXT);
-                painter.galley(Pos2::new(sx + 2.0, top_rect.min.y + 1.0), galley, RULER_TEXT);
+                let galley = painter.layout_no_wrap(format!("{x:.0}"), font.clone(), colors.ruler_text);
+                painter.galley(Pos2::new(sx + 2.0, top_rect.min.y + 1.0), galley, colors.ruler_text);
             }
         }
     }
@@ -4443,13 +4441,13 @@ fn draw_rulers(
             let tick_left = if major { left_rect.max.x - 9.0 } else { left_rect.max.x - 5.0 };
             painter.line_segment(
                 [Pos2::new(tick_left, sy), Pos2::new(left_rect.max.x, sy)],
-                EguiStroke::new(1.0, RULER_LINE),
+                EguiStroke::new(1.0, colors.ruler_line),
             );
             if major {
-                let galley = painter.layout_no_wrap(format!("{y:.0}"), font.clone(), RULER_TEXT);
+                let galley = painter.layout_no_wrap(format!("{y:.0}"), font.clone(), colors.ruler_text);
                 painter.add(egui::Shape::Text(egui::epaint::TextShape {
                     angle: -std::f32::consts::FRAC_PI_2,
-                    ..egui::epaint::TextShape::new(Pos2::new(left_rect.min.x + 1.0, sy + 2.0), galley, RULER_TEXT)
+                    ..egui::epaint::TextShape::new(Pos2::new(left_rect.min.x + 1.0, sy + 2.0), galley, colors.ruler_text)
                 }));
             }
         }

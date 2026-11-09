@@ -23,8 +23,7 @@ pub enum PaletteAction {
 pub fn ui(ui: &mut Ui, palette: &Palette, has_selection: bool) -> Option<PaletteAction> {
     let mut action = None;
 
-    ui.heading("Palette");
-    ui.separator();
+    crate::ui::theme::panel_header(ui, "Palette", false);
 
     egui::ScrollArea::vertical().show(ui, |ui| {
         ui.horizontal_wrapped(|ui| {

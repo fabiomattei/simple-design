@@ -65,18 +65,15 @@ impl LayersPanel {
         selection: &mut Vec<LayerId>,
     ) -> Vec<LayerAction> {
         let mut actions = Vec::new();
-        ui.horizontal(|ui| {
-            ui.heading("Layers");
-            ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                if icons::close_button(ui).clicked() {
-                    actions.push(LayerAction::Close);
-                }
-            });
-        });
-        ui.separator();
+        if crate::ui::theme::panel_header(ui, "Layers", true) {
+            actions.push(LayerAction::Close);
+        }
         let mut order = Vec::new();
         visual_order(&page.layers, &mut order);
         egui::ScrollArea::vertical().show(ui, |ui| {
+            // Rows are separated only by the 4px drop gaps, so adjacent selected rows'
+            // highlights (expanded 2px each way) meet without seams.
+            ui.spacing_mut().item_spacing.y = 0.0;
             self.show_children(ui, &page.layers, None, 0, false, selection, &order, &mut actions);
         });
         actions
@@ -135,7 +132,10 @@ impl LayersPanel {
     ) {
         let is_selected = selection.contains(&layer.id);
         let drag_id = egui::Id::new(("layer-row", layer.id));
-        ui.horizontal(|ui| {
+        // Reserved before the row's widgets so the full-width selection highlight, filled in
+        // once the row's rect is known, paints underneath them.
+        let row_bg = ui.painter().add(egui::Shape::Noop);
+        let row = ui.horizontal(|ui| {
             ui.add_space(depth as f32 * 14.0);
             // Only this handle senses drag — the rest of the row (label,
             // buttons, combo box) stays plain-click-only. Wrapping the whole
@@ -160,7 +160,7 @@ impl LayersPanel {
             {
                 actions.push(LayerAction::ToggleLocked(layer.id));
             }
-            ui.label(egui::RichText::new(icon_for(&layer.kind)).weak());
+            icon_for(ui, &layer.kind);
             if layer.is_mask {
                 ui.label(egui::RichText::new("[Mask]").weak().color(egui::Color32::from_rgb(100, 140, 220)))
                     .on_hover_text("Masks the layers below it in this group");
@@ -199,7 +199,12 @@ impl LayersPanel {
                     actions.push(LayerAction::Rename(id, buf));
                 }
             } else {
-                let label_resp = ui.selectable_label(is_selected, &layer.name);
+                let name = if is_selected {
+                    egui::RichText::new(&layer.name).strong()
+                } else {
+                    egui::RichText::new(&layer.name)
+                };
+                let label_resp = ui.add(egui::Button::selectable(false, name).frame_when_inactive(false));
                 if label_resp.clicked() {
                     let (shift, cmd) = ui.input(|i| (i.modifiers.shift, i.modifiers.command));
                     if shift {
@@ -278,6 +283,10 @@ impl LayersPanel {
                 });
             }
         });
+        if is_selected {
+            let rect = egui::Rect::from_x_y_ranges(ui.max_rect().x_range(), row.response.rect.y_range()).expand2(egui::vec2(0.0, 2.0));
+            ui.painter().set(row_bg, egui::Shape::rect_filled(rect, 4.0, ui.visuals().selection.bg_fill));
+        }
         if let Some(children) = layer.kind.children() {
             let child_in_boolean_group = matches!(layer.kind, LayerKind::BooleanGroup { .. });
             self.show_children(ui, children, Some(layer.id), depth + 1, child_in_boolean_group, selection, order, actions);
@@ -290,17 +299,22 @@ impl LayersPanel {
 /// visibly highlights while something is actually being dragged, via
 /// `dnd_drop_zone`'s own active/inactive widget styling.
 fn drop_gap(ui: &mut Ui, parent: Option<LayerId>, index: usize, depth: usize, actions: &mut Vec<LayerAction>) {
-    ui.push_id(("layer-drop-gap", parent, index), |ui| {
-        ui.horizontal(|ui| {
-            ui.add_space(depth as f32 * 14.0 + 4.0);
-            let (_, dropped) = ui.dnd_drop_zone::<LayerId, _>(egui::Frame::default(), |ui| {
-                ui.set_min_size(egui::vec2(ui.available_width().max(20.0), 5.0));
-            });
-            if let Some(dragged_id) = dropped {
-                actions.push(LayerAction::Move { id: *dragged_id, new_parent: parent, index });
-            }
-        });
-    });
+    // A bare hover-sensing strip rather than `dnd_drop_zone`, whose frame paints a visible bar
+    // between every row even when nothing is being dragged. Allocated straight into the
+    // vertical list (not inside `ui.horizontal`, which would pad it to a full row height).
+    let id = ui.id().with(("layer-drop-gap", parent, index));
+    let (rect, _) = ui.allocate_exact_size(egui::vec2(ui.available_width(), 4.0), egui::Sense::hover());
+    let response = ui.interact(rect, id, egui::Sense::hover());
+    if response.dnd_hover_payload::<LayerId>().is_some() {
+        let left = rect.left() + depth as f32 * 14.0 + 4.0;
+        ui.painter().line_segment(
+            [egui::pos2(left, rect.center().y), rect.right_center()],
+            egui::Stroke::new(2.0, crate::ui::theme::ACCENT),
+        );
+    }
+    if let Some(dragged_id) = response.dnd_release_payload::<LayerId>() {
+        actions.push(LayerAction::Move { id: *dragged_id, new_parent: parent, index });
+    }
 }
 
 /// Flattens `children` into the same front-to-back, depth-first order the
@@ -316,20 +330,26 @@ fn visual_order(children: &[Layer], out: &mut Vec<LayerId>) {
     }
 }
 
-fn icon_for(kind: &LayerKind) -> &'static str {
-    match kind {
-        LayerKind::Artboard { .. } => "[Artboard]",
-        LayerKind::Group { .. } => "[Group]",
-        LayerKind::Rectangle { .. } => "[Rect]",
-        LayerKind::Oval => "[Oval]",
-        LayerKind::Line => "[Line]",
-        LayerKind::Star { .. } => "[Star]",
-        LayerKind::Polygon { .. } => "[Polygon]",
-        LayerKind::Arrow { .. } => "[Arrow]",
-        LayerKind::Path { .. } => "[Path]",
-        LayerKind::CompoundPath { .. } => "[Compound]",
-        LayerKind::BooleanGroup { .. } => "[Boolean]",
-        LayerKind::Text { .. } => "[Text]",
-        LayerKind::Image { .. } => "[Image]",
-    }
+/// Paints a row's layer-kind glyph (see `icons::draw_layer_kind_icon`), with the kind's name
+/// as its hover text.
+fn icon_for(ui: &mut Ui, kind: &LayerKind) {
+    let label = match kind {
+        LayerKind::Artboard { .. } => "Artboard",
+        LayerKind::Group { .. } => "Group",
+        LayerKind::Rectangle { .. } => "Rectangle",
+        LayerKind::Oval => "Oval",
+        LayerKind::Line => "Line",
+        LayerKind::Star { .. } => "Star",
+        LayerKind::Polygon { .. } => "Polygon",
+        LayerKind::Arrow { .. } => "Arrow",
+        LayerKind::Path { .. } => "Path",
+        LayerKind::CompoundPath { .. } => "Compound Path",
+        LayerKind::BooleanGroup { .. } => "Boolean Group",
+        LayerKind::Text { .. } => "Text",
+        LayerKind::Image { .. } => "Image",
+    };
+    let (rect, response) = ui.allocate_exact_size(egui::Vec2::splat(16.0), egui::Sense::hover());
+    let color = ui.visuals().weak_text_color();
+    icons::draw_layer_kind_icon(ui.painter(), kind, rect.shrink(1.0), color);
+    response.on_hover_text(label);
 }

@@ -25,12 +25,11 @@ const VIEWPORT_COLOR: Color32 = Color32::from_rgb(64, 148, 255);
 /// `viewport_size` (`CanvasWidget::last_canvas_size`) describe the on-screen
 /// canvas's current doc-space footprint (`viewport_size / zoom`).
 pub fn ui(ui: &mut egui::Ui, page: &Page, pan: &mut Vec2, zoom: f32, viewport_size: Vec2) {
-    ui.heading("Minimap");
-    ui.separator();
+    crate::ui::theme::panel_header(ui, "Minimap", false);
 
     let (response, painter) = ui.allocate_painter(Vec2::new(ui.available_width(), THUMB_HEIGHT), Sense::click_and_drag());
     let panel_rect = response.rect;
-    painter.rect_filled(panel_rect, 4.0, Color32::from_gray(230));
+    painter.rect_filled(panel_rect, 4.0, crate::ui::theme::canvas_colors(ui.visuals().dark_mode).backdrop);
 
     let Some(mut bounds) = content_bounds(&page.layers) else {
         painter.text(

@@ -1111,17 +1111,9 @@ pub fn ui(
     canvas: &mut CanvasWidget,
     tool: Tool,
 ) -> Option<InspectorAction> {
-    let mut close_clicked = false;
-    ui.horizontal(|ui| {
-        ui.heading("Inspector");
-        ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-            close_clicked = icons::close_button(ui).clicked();
-        });
-    });
-    if close_clicked {
+    if crate::ui::theme::panel_header(ui, "Inspector", true) {
         return Some(InspectorAction::Close);
     }
-    ui.separator();
 
     // Sketch's "Scale Layers" mode (`K`) — shown regardless of single/multi
     // selection, since it's a drag-handle mode on the canvas, not a

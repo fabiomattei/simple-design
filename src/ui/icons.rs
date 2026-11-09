@@ -764,3 +764,37 @@ pub fn draw_image(painter: &Painter, rect: Rect, color: Color32) {
         s,
     ));
 }
+
+/// Draws the Layers panel's per-row glyph for a layer kind — reuses the matching tool icon
+/// wherever one exists, so a layer reads the same as the tool that created it.
+pub fn draw_layer_kind_icon(painter: &Painter, kind: &crate::model::LayerKind, rect: Rect, color: Color32) {
+    use crate::model::LayerKind;
+    match kind {
+        LayerKind::Artboard { .. } => draw_artboard(painter, rect, color),
+        LayerKind::Group { .. } => draw_folder(painter, rect, color),
+        LayerKind::Rectangle { .. } => draw_rectangle(painter, rect, color),
+        LayerKind::Oval => draw_oval(painter, rect, color),
+        LayerKind::Line => draw_line(painter, rect, color),
+        LayerKind::Star { .. } => draw_star(painter, rect, color),
+        LayerKind::Polygon { .. } => draw_polygon(painter, rect, color),
+        LayerKind::Arrow { .. } => draw_arrow(painter, rect, color),
+        LayerKind::Path { .. } | LayerKind::CompoundPath { .. } => draw_pen(painter, rect, color),
+        LayerKind::BooleanGroup { .. } => draw_combine_icon(painter, BoolOp::Union, rect, color),
+        LayerKind::Text { .. } => draw_text(painter, rect, color),
+        LayerKind::Image { .. } => draw_image(painter, rect, color),
+    }
+}
+
+fn draw_folder(painter: &Painter, rect: Rect, color: Color32) {
+    painter.add(Shape::closed_line(
+        vec![
+            p(rect, 0.08, 0.22),
+            p(rect, 0.40, 0.22),
+            p(rect, 0.50, 0.34),
+            p(rect, 0.92, 0.34),
+            p(rect, 0.92, 0.82),
+            p(rect, 0.08, 0.82),
+        ],
+        stroke(color),
+    ));
+}
