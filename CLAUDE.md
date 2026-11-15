@@ -70,7 +70,7 @@ training data, check `~/.cargo/registry/src/*/egui-0.36.0/src/` directly.
   matching case in both, or exports will silently not match what's on screen.
 - **Adding a new shape/tool** touches, in order: `tools.rs` → `model/layer.rs`
   → `canvas/` (`layer_creation.rs::new_layer_for_tool`, `draw_layer.rs::draw_layer`) → `export/` (`draw_layer`)
-  → `ui/inspector.rs` → `ui/layers_panel.rs`'s `icon_for`.
+  → `ui/inspector/` → `ui/layers_panel.rs`'s `icon_for`.
 
 ## CLI / IPC (`src/ipc/`, `src/app/ipc_dispatch.rs`)
 

@@ -1300,7 +1300,7 @@ impl eframe::App for App {
                 if self.show_inspector_panel {
                     panel_rail::stacked_panel(ui, "inspector_panel", &mut self.inspector_panel_height, last_visible_panel == Some(2), |ui| {
                         // Unlike Layers/Palette, `inspector::ui`'s body doesn't scroll itself —
-                        // wrapped here (rather than inside `inspector.rs`) so a tall property
+                        // wrapped here (rather than inside `inspector::ui`) so a tall property
                         // list can't get silently clipped by the panel's fixed stacked height.
                         egui::ScrollArea::vertical().show(ui, |ui| {
                             inspector_action = inspector::ui(ui, &mut self.history, &self.selection, &mut self.canvas, self.tool);

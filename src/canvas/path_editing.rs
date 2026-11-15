@@ -344,7 +344,7 @@ impl CanvasWidget {
     /// the inspector's radius `DragValue`. Unlike `apply_point_type`/
     /// `apply_max_corner_radius` (each a discrete one-shot action), this is
     /// driven by a continuously-dragged `DragValue` — so, matching
-    /// `ui/inspector.rs`'s `should_snapshot` convention used everywhere else
+    /// `ui/inspector/mod.rs`'s `should_snapshot` convention used everywhere else
     /// a `DragValue` writes through, snapshotting is the *caller's*
     /// responsibility (once per gesture), not done here on every call.
     pub fn apply_corner_radius(&mut self, history: &mut History, layer_id: LayerId, radius: f32) {

@@ -433,7 +433,7 @@ pub struct CanvasWidget {
     /// the edited layer's `content` — `None` while not editing, or while
     /// editing with the cursor collapsed (nothing selected). Populated
     /// each frame from the `TextEdit`'s own `CCursorRange` after `.show()`
-    /// (see `apply_text_edit_output`); `ui/inspector.rs` reads
+    /// (see `apply_text_edit_output`); `ui/inspector/` reads
     /// this to decide whether a format button should apply to just the
     /// selection (rich range edit) or the whole layer (today's behavior).
     pub text_edit_selection: Option<std::ops::Range<usize>>,
@@ -468,7 +468,7 @@ pub struct CanvasWidget {
     pub last_distributed: Option<(Vec<LayerId>, DistributeAxis)>,
     /// The Option+Cmd+L "proportional lock" toggle for the inspector's
     /// Size fields — session UI state, not persisted with the document. See
-    /// `ui/inspector.rs`'s Position/Size fields for where this is read.
+    /// `ui/inspector/`'s Position/Size fields for where this is read.
     pub aspect_locked: bool,
     /// Scale mode (`K`, with a non-empty selection): while `Some`,
     /// dragging a resize handle scales stroke width/corner radius along
@@ -556,7 +556,7 @@ impl CanvasWidget {
         self.image_edit.as_ref().map(|s| s.layer_id) == Some(id)
     }
 
-    /// Called by `ui/inspector.rs` right after picking a `TextFont::System`
+    /// Called by `ui/inspector/` right after picking a `TextFont::System`
     /// whose family egui hadn't bound yet at that moment, so `id`'s
     /// auto-resize just ran against the `Proportional` fallback instead of
     /// the real font's metrics. `ui()` retries the measurement once the
@@ -570,7 +570,7 @@ impl CanvasWidget {
     /// double-clicking a `Text` layer, or by `app.rs`'s Enter/Return
     /// shortcut on a single selected `Text` layer. Snapshots history once on
     /// entry, matching the app's "snapshot at gesture start" convention
-    /// (`ui/inspector.rs`'s `should_snapshot`) — the keystrokes that follow
+    /// (`ui/inspector/mod.rs`'s `should_snapshot`) — the keystrokes that follow
     /// don't add further snapshots. Re-targeting to a different layer while
     /// already editing (double-clicking another text layer) is just another
     /// call to this method.

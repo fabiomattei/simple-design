@@ -181,7 +181,7 @@ pub struct PatternFill {
 }
 
 /// A fill or stroke color source: a flat color, a gradient, or (fill only —
-/// see `ui/inspector.rs::paint_editor`'s `allow_texture_fills`) one of the
+/// see `ui/inspector/paint_editor.rs::paint_editor`'s `allow_texture_fills`) one of the
 /// three procedural/texture fills: noise, halftone dots, or a tiled image
 /// pattern. `#[serde(untagged)]` so `Paint::Solid` serializes/deserializes
 /// as a bare `Color32` — the exact shape `Style::fill`/`Stroke::color` used
@@ -275,7 +275,7 @@ pub struct Style {
     pub stroke: Option<Stroke>,
     /// Independent opacity for the fill only (0.0-1.0), multiplied together
     /// with `Layer::opacity`/ancestor opacity at draw time — a
-    /// per-attribute opacity (see `ui/inspector.rs`'s Fill/Border sliders).
+    /// per-attribute opacity (see `ui/inspector/`'s Fill/Border sliders).
     /// A `Text` layer's glyph color is `fill`, so this also covers "text
     /// color opacity" per CLAUDE.md's Fonts section. `#[serde(default)]`
     /// (via the same helper `Layer::opacity` uses) so documents saved
@@ -312,7 +312,7 @@ impl Default for Style {
 /// `Layer::style_id` (see `Document::layer_styles`) — a "Layer
 /// Styles" library, the shape-side sibling of `TextStyle`. Holds every field of
 /// `Style` plus `id`/`name`, so applying one to a layer is a straight field
-/// copy (see `ui/inspector.rs`).
+/// copy (see `ui/inspector/layer_styles.rs`).
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct LayerStyle {
     pub id: Uuid,
@@ -599,7 +599,7 @@ pub enum LayerKind {
         /// Links this layer to a `Document::text_styles` entry it was last
         /// applied from; `None` means unlinked (either never applied, or
         /// explicitly detached). Editing a linked layer's fields directly
-        /// does not clear this — only "Detach" does (see `ui/inspector.rs`).
+        /// does not clear this — only "Detach" does (see `ui/inspector/text_styles.rs`).
         #[serde(default)]
         style_id: Option<Uuid>,
         /// Per-character style overrides ("rich text") — empty (the
@@ -839,7 +839,7 @@ fn default_list_start() -> i32 {
 /// A named, reusable text style a `Text` layer can link to via `style_id`
 /// (see `Document::text_styles`). Holds every per-layer style field except
 /// `content` and geometry, so applying one to a layer is a straight field
-/// copy (see `ui/inspector.rs`).
+/// copy (see `ui/inspector/text_styles.rs`).
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct TextStyle {
     pub id: Uuid,
@@ -986,7 +986,7 @@ pub struct Layer {
     /// applied from; `None` means unlinked (either never applied, or
     /// explicitly detached). Editing a linked layer's `style` fields
     /// directly does not clear this — only "Detach" does (see
-    /// `ui/inspector.rs::layer_style_ui`). Same convention as
+    /// `ui/inspector/layer_styles.rs::layer_style_ui`). Same convention as
     /// `LayerKind::Text::style_id`.
     #[serde(default)]
     pub style_id: Option<Uuid>,

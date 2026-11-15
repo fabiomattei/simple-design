@@ -1,7 +1,7 @@
 use egui::Vec2;
 
 /// A named fixed size offered when creating an Artboard, e.g. "A4" or
-/// "Desktop" — see `SCREEN_PRESETS`/`PAPER_PRESETS` and `ui/inspector.rs`'s
+/// "Desktop" — see `SCREEN_PRESETS`/`PAPER_PRESETS` and `ui/inspector/`'s
 /// empty-selection-plus-`Tool::Artboard` branch, which renders these as
 /// buttons.
 pub struct ArtboardPreset {

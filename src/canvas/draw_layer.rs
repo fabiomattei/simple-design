@@ -284,7 +284,7 @@ pub(super) fn draw_layer(
                     .map(|s| match &s.paint {
                         Paint::Gradient(g) => with_opacity(g.color_at(1.0), opacity * layer.style.stroke_opacity),
                         // Stroke paint can never be `Noise`/`Halftone`/
-                        // `Pattern` (see `ui/inspector.rs::paint_editor`'s
+                        // `Pattern` (see `ui/inspector/paint_editor.rs::paint_editor`'s
                         // `allow_texture_fills`, fill-only) — kept
                         // exhaustive rather than a wildcard so a future
                         // stroke-texture-fill feature can't silently fall

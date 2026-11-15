@@ -163,7 +163,7 @@ impl Document {
     }
 
     /// Visits every layer on every page, recursing into `Artboard`/`Group`
-    /// children — used by `ui/inspector.rs`'s "Update Style" to propagate a
+    /// children — used by `ui/inspector/text_styles.rs`'s "Update Style" to propagate a
     /// shared `TextStyle` edit to every `Text` layer linked to it, across
     /// the whole document rather than just the active page.
     pub fn for_each_layer_mut(&mut self, f: &mut impl FnMut(&mut Layer)) {

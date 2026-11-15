@@ -157,7 +157,7 @@ pub(super) struct ImageEditState {
     pub(super) width: u32,
     pub(super) height: u32,
     /// The color the inspector's "Fill" button last used/will use next —
-    /// kept here (rather than in the stateless `ui/inspector.rs`) so it
+    /// kept here (rather than in the stateless `ui/inspector/`) so it
     /// persists across frames alongside the rest of the edit session.
     pub(super) fill_color: Color32,
     /// Cached translucent overlay texture visualizing `mask`; only rebuilt
