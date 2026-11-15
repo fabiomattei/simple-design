@@ -229,8 +229,8 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
 
             // With `to`, the anchor's own bounds become the alignment target
             // and it's folded into the id list passed to `alignment::align`
-            // (which needs >= 2 siblings even with an explicit target) — its
-            // own delta then computes to zero, so it doesn't move.
+            // (so the ids still have to be its siblings) — its own delta
+            // then computes to zero, so it doesn't move.
             let align_to = match args.to {
                 Some(anchor) => {
                     Some(page.find(anchor).ok_or_else(|| format!("layer not found: {anchor}"))?.frame.rotated_bounds())

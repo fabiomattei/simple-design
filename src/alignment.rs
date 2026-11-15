@@ -1,6 +1,6 @@
 use egui::{Pos2, Rect, Vec2};
 
-use crate::grouping::find_common_parent_list;
+use crate::grouping::{find_common_parent_list, parent_and_index};
 use crate::model::{Layer, LayerId, LayerKind, Page};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -28,9 +28,11 @@ pub enum DistributeAxis {
 /// that space, and `reference layer` — the second override this backs, both
 /// wired from `app.rs::align_selection`). Only translates `frame.pos`, so
 /// each layer's size (and, for a `Line`, its drag direction) is preserved.
-/// No-op if the ids don't share a common parent or fewer than two are found.
+/// No-op if the ids don't share a common parent, or if fewer than two are
+/// given without an explicit `align_to` (a single layer has nothing to align
+/// to but an explicit target — see `parent_bounds_in_parent_space`).
 pub fn align(page: &mut Page, ids: &[LayerId], edge: AlignEdge, align_to: Option<Rect>) {
-    if ids.len() < 2 {
+    if ids.is_empty() || (ids.len() < 2 && align_to.is_none()) {
         return;
     }
     let Some(siblings) = find_common_parent_list(&mut page.layers, ids) else {
@@ -83,6 +85,20 @@ pub fn artboard_bounds_in_parent_space(page: &Page, id: LayerId) -> Option<Rect>
     // relative to.
     let parent_offset = page.absolute_offset(id)?;
     Some(artboard_abs.translate(-parent_offset))
+}
+
+/// The bounds of `id`'s immediate parent container (Group, Artboard or
+/// BooleanGroup), in `id`'s own parent-relative coordinate space — the
+/// single-layer counterpart of `align`'s default "combined bounding box"
+/// target, same conversion as `artboard_bounds_in_parent_space`. `None` for
+/// a top-level layer (no parent) or an unknown id.
+pub fn parent_bounds_in_parent_space(page: &Page, id: LayerId) -> Option<Rect> {
+    let (Some(parent_id), _) = parent_and_index(&page.layers, id)? else {
+        return None;
+    };
+    let parent = page.find(parent_id)?;
+    let parent_abs = parent.frame.bounds().translate(page.absolute_offset(parent_id)?);
+    Some(parent_abs.translate(-page.absolute_offset(id)?))
 }
 
 /// `Some(Some(artboard_id))` once `id` is located anywhere in the tree
@@ -329,6 +345,14 @@ mod tests {
     }
 
     #[test]
+    fn align_single_layer_to_explicit_target_moves_it() {
+        let (mut page, ids) = page_with(vec![rect_layer("A", 5.0, 5.0, 10.0, 10.0)]);
+        let target = Rect::from_min_size(Pos2::ZERO, Vec2::new(100.0, 100.0));
+        align(&mut page, &ids, AlignEdge::Right, Some(target));
+        assert_eq!(page.layers[0].frame.pos, Pos2::new(90.0, 5.0));
+    }
+
+    #[test]
     fn distribute_horizontal_equalizes_gaps_and_fixes_endpoints() {
         let (mut page, ids) = page_with(vec![
             rect_layer("A", 0.0, 0.0, 10.0, 10.0),
@@ -393,6 +417,29 @@ mod tests {
         // it's top-level.
         let bounds = artboard_bounds_in_parent_space(&page, child_id).expect("child is inside an artboard");
         assert_eq!(bounds, Rect::from_min_size(Pos2::ZERO, Vec2::new(300.0, 300.0)));
+    }
+
+    #[test]
+    fn parent_bounds_in_parent_space_is_the_parents_box_in_child_coordinates() {
+        let child = rect_layer("Child", 1.0, 1.0, 2.0, 2.0);
+        let child_id = child.id;
+        let mut artboard = Layer::new_artboard(
+            "Board",
+            Frame { pos: Pos2::new(100.0, 200.0), size: Vec2::new(300.0, 150.0), rotation: 0.0 },
+        );
+        let LayerKind::Artboard { children, .. } = &mut artboard.kind else { unreachable!() };
+        children.push(child);
+        let mut page = Page::new("Page 1");
+        page.layers.push(artboard);
+
+        let bounds = parent_bounds_in_parent_space(&page, child_id).expect("child has a parent");
+        assert_eq!(bounds, Rect::from_min_size(Pos2::ZERO, Vec2::new(300.0, 150.0)));
+    }
+
+    #[test]
+    fn parent_bounds_in_parent_space_is_none_for_a_top_level_layer() {
+        let (page, ids) = page_with(vec![rect_layer("A", 0.0, 0.0, 10.0, 10.0)]);
+        assert_eq!(parent_bounds_in_parent_space(&page, ids[0]), None);
     }
 
     #[test]

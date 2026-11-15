@@ -9,9 +9,11 @@ use crate::tools::Tool;
 use crate::transform_ops::FlipAxis;
 use crate::ui::icons;
 
+mod align_strip;
 mod appearance_section;
 mod geometry_section;
 mod geometry_widgets;
+mod frame_section;
 mod image_section;
 mod inspector_layout;
 mod layer_styles;
@@ -27,7 +29,8 @@ mod tests;
 
 use geometry_widgets::artboard_preset_picker;
 use appearance_section::appearance_section;
-use geometry_section::{shape_fields, transform_section};
+use frame_section::frame_section;
+use geometry_section::shape_fields;
 use image_section::image_section;
 use multi_selection::{multi_selection_panel, scale_layers_panel};
 use text_section::text_section;
@@ -118,7 +121,7 @@ pub fn ui(
     ui.weak(layer.kind.type_name());
     ui.add_space(6.0);
 
-    if let Some(action) = transform_section(ui, history, canvas, &layer) {
+    if let Some(action) = frame_section(ui, history, canvas, &layer) {
         return Some(action);
     }
     shape_fields(ui, history, canvas, &layer);

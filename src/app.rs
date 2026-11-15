@@ -350,10 +350,24 @@ impl App {
     /// via `canvas/click_handling.rs`'s "click an already-fully-selected layer again" takes
     /// priority over both when present and still part of the selection.
     fn align_selection(&mut self, edge: AlignEdge, to_artboard: bool) {
-        if self.selection.len() < 2 {
+        if self.selection.is_empty() {
             return;
         }
         let page = self.history.get().active_page();
+        // A single layer aligns to its parent container (or, with Option/Alt,
+        // its enclosing Artboard) — it has no siblings' bounding box to use.
+        if let [id] = self.selection[..] {
+            let align_to = if to_artboard {
+                alignment::artboard_bounds_in_parent_space(page, id)
+            } else {
+                alignment::parent_bounds_in_parent_space(page, id)
+            };
+            if align_to.is_some() {
+                self.history.snapshot();
+                alignment::align(self.history.mutate().active_page_mut(), &self.selection, edge, align_to);
+            }
+            return;
+        }
         let align_to = self
             .canvas
             .reference_layer

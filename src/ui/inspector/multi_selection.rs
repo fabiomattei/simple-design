@@ -3,11 +3,12 @@
 
 use egui::Ui;
 
-use crate::alignment::{AlignEdge, DistributeAxis};
+use crate::alignment::DistributeAxis;
 use crate::canvas::CanvasWidget;
 use crate::model::{BoolOp, LayerId};
 use crate::ui::icons;
 
+use super::align_strip::align_strip;
 use super::geometry_widgets::flip_buttons;
 use super::InspectorAction;
 
@@ -83,28 +84,13 @@ pub(super) fn multi_selection_panel(
     None
 }
 
-/// Sketch's unlabeled strip of the six Align icons followed by the two
-/// Distribute icons, then the Tidy row; returns the clicked action.
+/// The shared Align strip followed by the two Distribute icons, then the
+/// Tidy row; returns the clicked action.
 fn arrange_controls(ui: &mut Ui, selection: &[LayerId], canvas: &mut CanvasWidget) -> Option<InspectorAction> {
     let mut return_action = None;
     ui.horizontal_wrapped(|ui| {
         ui.spacing_mut().item_spacing.x = 2.0;
-        for edge in [AlignEdge::Left, AlignEdge::HCenter, AlignEdge::Right] {
-            if icons::align_button(ui, edge)
-                .on_hover_text(align_label(edge))
-                .clicked()
-            {
-                return_action = Some(InspectorAction::Align(edge, ui.input(|i| i.modifiers.alt)));
-            }
-        }
-        for edge in [AlignEdge::Top, AlignEdge::VCenter, AlignEdge::Bottom] {
-            if icons::align_button(ui, edge)
-                .on_hover_text(align_label(edge))
-                .clicked()
-            {
-                return_action = Some(InspectorAction::Align(edge, ui.input(|i| i.modifiers.alt)));
-            }
-        }
+        return_action = align_strip(ui, true);
         ui.separator();
         let enabled = selection.len() >= 3;
         if icons::distribute_button(ui, DistributeAxis::Horizontal, enabled)
@@ -129,15 +115,4 @@ fn arrange_controls(ui: &mut Ui, selection: &[LayerId], canvas: &mut CanvasWidge
         }
     });
     return_action
-}
-
-fn align_label(edge: AlignEdge) -> &'static str {
-    match edge {
-        AlignEdge::Left => "Align left",
-        AlignEdge::HCenter => "Align center horizontally",
-        AlignEdge::Right => "Align right",
-        AlignEdge::Top => "Align top",
-        AlignEdge::VCenter => "Align center vertically",
-        AlignEdge::Bottom => "Align bottom",
-    }
 }
