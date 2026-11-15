@@ -5,7 +5,7 @@ use std::cell::Cell;
 
 use egui::Ui;
 
-use crate::canvas::CanvasWidget;
+use crate::canvas::{CanvasWidget, resize_layer};
 use crate::grouping;
 use crate::history::History;
 use crate::model::{Layer, LayerId, LayerKind};
@@ -119,8 +119,9 @@ fn size_fields(
         if should_snapshot(&rw) || should_snapshot(&rh) {
             history.snapshot();
         }
+        let page = history.mutate().active_page_mut();
         if (rw.changed() || rh.changed())
-            && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            && let Some(l) = page.find_mut(id) {
                 let (old_w, old_h) = (l.frame.size.x, l.frame.size.y);
                 let mut new_w = w;
                 let mut new_h = h;
@@ -149,6 +150,14 @@ fn size_fields(
                 }
                 l.frame.size.x = new_w;
                 l.frame.size.y = new_h;
+                // A container's frame isn't its content: put the frame back
+                // and resize through `resize_layer`, so its children follow
+                // their resizing constraints instead of being left behind.
+                if l.kind.children().is_some() {
+                    let new_bounds = l.frame.bounds();
+                    l.frame = layer.frame;
+                    resize_layer(page, id, new_bounds);
+                }
             }
     });
 }

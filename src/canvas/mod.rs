@@ -22,6 +22,7 @@ mod snapping;
 mod texture_caches;
 mod transform_geometry;
 mod click_handling;
+mod constraint_resize;
 mod context_menus;
 mod drag_begin;
 mod drag_end;
@@ -39,15 +40,13 @@ use texture_caches::{
     HalftoneTextureCache, ImageTextureCache, GradientTextureCache, MaskedGroupTextureCache, NoiseTextureCache, PatternTextureCache,
     ShadowTextureCache,
 };
-use transform_geometry::RotateLayerInfo;
+use transform_geometry::{ResizeContainerInfo, ResizeLayerInfo, RotateLayerInfo};
 
 pub(crate) use path_flatten::flatten_path;
 pub(crate) use layer_creation::apply_text_auto_resize;
 pub use transform_geometry::ScaleAnchor;
-pub(crate) use transform_geometry::{
-    ResizeLayerInfo, apply_resize_delta, apply_rotation_delta, collect_resizable_leaves, collect_rotatable_leaves,
-    refit_container_to_children,
-};
+pub(crate) use constraint_resize::resize_layer;
+pub(crate) use transform_geometry::{apply_rotation_delta, collect_rotatable_leaves, refit_container_to_children};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum Handle {
@@ -280,10 +279,16 @@ enum DragState {
     /// handle's opposite corner/edge (`Corners`, identical to a plain
     /// resize) or at the selection's own center (`Center`) regardless of
     /// which handle was dragged.
+    /// `containers`: selected Groups/Artboards/BooleanGroups, resized by
+    /// their children's resizing constraints (`constraint_resize`) instead
+    /// of having every leaf scaled — except in Scale mode, where only
+    /// Artboards go here and other containers' leaves are scaled (with
+    /// their stroke widths) into `layers` as before.
     ResizingGroup {
         handle: Handle,
         start_overall_bounds: Rect,
         layers: Vec<ResizeLayerInfo>,
+        containers: Vec<ResizeContainerInfo>,
         scale_style: bool,
         scale_anchor: ScaleAnchor,
     },

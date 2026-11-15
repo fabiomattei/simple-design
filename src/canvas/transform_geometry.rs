@@ -212,7 +212,14 @@ pub(super) fn children_local_bbox(layer: &Layer) -> Option<Rect> {
 /// live during a rotate/resize gesture and is never one repaint behind the
 /// `drag_stopped` refit, regardless of exactly when that mutation lands
 /// relative to this frame's painting.
+///
+/// An Artboard is the exception among containers: its frame is its own
+/// size (content may not fill it, or may overflow it), so it reports
+/// `frame.bounds()` — otherwise its handles would hug its content.
 pub(super) fn display_bounds(layer: &Layer) -> Rect {
+    if matches!(layer.kind, LayerKind::Artboard { .. }) {
+        return layer.frame.bounds();
+    }
     match children_local_bbox(layer) {
         Some(bbox) => bbox.translate(layer.frame.pos.to_vec2()),
         None => layer.frame.bounds(),
@@ -234,10 +241,10 @@ pub enum ScaleAnchor {
     Center,
 }
 
-pub(crate) struct ResizeLayerInfo {
+pub(super) struct ResizeLayerInfo {
     pub(super) id: LayerId,
     pub(super) parent_offset: Vec2,
-    pub(crate) abs_bounds: Rect,
+    pub(super) abs_bounds: Rect,
     /// A clone of the layer's `kind` as it was *before* the drag touched it.
     /// `Path`/`CompoundPath` need this: unlike Rectangle/Oval (whose geometry
     /// IS `frame.bounds()`, always rederived fresh from `abs_bounds` below),
@@ -265,6 +272,16 @@ pub(crate) struct ResizeLayerInfo {
     pub(super) original_stroke_width: Option<f32>,
 }
 
+/// A selected container's state at resize-drag start, for the
+/// constraint-aware resize (`constraint_resize::resize_layer`). The whole
+/// subtree is kept and restored every frame before being re-laid out, so the
+/// drag never compounds — the same "derive from the untouched original" rule
+/// as `ResizeLayerInfo::original_kind`.
+pub(super) struct ResizeContainerInfo {
+    pub(super) original: Layer,
+    pub(super) parent_offset: Vec2,
+}
+
 /// Recursively collects every resizable leaf under `layer` — mirrors
 /// `collect_rotatable_leaves`'s "expand a `Group`/`Artboard`/`BooleanGroup`
 /// into its descendant leaves instead of adding the container itself"
@@ -275,7 +292,7 @@ pub(crate) struct ResizeLayerInfo {
 /// `refit_container_to_children` on each affected top-level container once
 /// the drag has applied its transform, keeps the container's own frame (and
 /// a `BooleanGroup`'s render offset) in sync with what's actually drawn.
-pub(crate) fn collect_resizable_leaves(layer: &Layer, parent_offset: Vec2, out: &mut Vec<ResizeLayerInfo>) {
+pub(super) fn collect_resizable_leaves(layer: &Layer, parent_offset: Vec2, out: &mut Vec<ResizeLayerInfo>) {
     if let Some(children) = layer.kind.children() {
         let child_offset = parent_offset + layer.frame.pos.to_vec2();
         for child in children {
@@ -304,7 +321,7 @@ pub(crate) fn collect_resizable_leaves(layer: &Layer, parent_offset: Vec2, out: 
 /// container's own `frame`: `layers` only ever holds real leaves (see
 /// `collect_resizable_leaves`), so the caller must follow up with
 /// `refit_container_to_children` for every affected top-level container.
-pub(crate) fn apply_resize_delta(
+pub(super) fn apply_resize_delta(
     page: &mut Page,
     layers: &[ResizeLayerInfo],
     transform: impl Fn(Pos2) -> Pos2,

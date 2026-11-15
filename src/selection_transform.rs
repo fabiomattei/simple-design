@@ -1,7 +1,8 @@
 //! Numeric move/resize of a whole multi-selection as one bounding box — the
-//! inspector's multi-selection X/Y/W/H fields. Reuses the canvas's resize
-//! drag machinery (`collect_resizable_leaves`/`apply_resize_delta`), so a
-//! typed value moves and scales layers exactly as dragging a handle would.
+//! inspector's multi-selection X/Y/W/H fields. Each selected layer is mapped
+//! from the old box into the new one and resized with
+//! `canvas::resize_layer`, so containers follow their children's resizing
+//! constraints exactly as a canvas handle drag does.
 //!
 //! Coordinates are in the space of the *first* selected layer's parent (the
 //! same parent-relative convention as a single layer's X/Y fields). For the
@@ -10,26 +11,24 @@
 
 use egui::{Pos2, Rect, Vec2};
 
-use crate::canvas::{ResizeLayerInfo, apply_resize_delta, collect_resizable_leaves, refit_container_to_children};
+use crate::canvas::resize_layer;
 use crate::model::{LayerId, Page};
 
-/// The combined bounding box of `ids` (unrotated leaf bounds, as the canvas's
-/// resize handles use), relative to the first id's parent. `None` if none of
-/// `ids` exist.
+/// The combined bounding box of `ids` (each layer's own unrotated frame
+/// bounds, as the canvas's resize handles use), relative to the first id's
+/// parent. `None` if none of `ids` exist.
 pub fn selection_bounds(page: &Page, ids: &[LayerId]) -> Option<Rect> {
-    let leaves = collect_leaves(page, ids);
-    let abs = leaves.iter().map(|l| l.abs_bounds).reduce(|a, b| a.union(b))?;
+    let abs = absolute_bounds(page, ids).into_iter().map(|(_, b, _)| b).reduce(|a, b| a.union(b))?;
     Some(abs.translate(-reference_offset(page, ids)))
 }
 
-/// Moves and scales every layer in `ids` so their combined bounding box
+/// Moves and resizes every layer in `ids` so their combined bounding box
 /// becomes `new_bounds` (same coordinate space as `selection_bounds`).
 /// Stroke widths and corner radii are left unchanged, as with a plain
-/// (non-Scale-mode) canvas resize. Each selected container is refit to its
-/// children afterwards. No-op if none of `ids` exist.
+/// (non-Scale-mode) canvas resize. No-op if none of `ids` exist.
 pub fn set_selection_bounds(page: &mut Page, ids: &[LayerId], new_bounds: Rect) {
-    let leaves = collect_leaves(page, ids);
-    let Some(old) = leaves.iter().map(|l| l.abs_bounds).reduce(|a, b| a.union(b)) else {
+    let layers = absolute_bounds(page, ids);
+    let Some(old) = layers.iter().map(|(_, b, _)| *b).reduce(|a, b| a.union(b)) else {
         return;
     };
     let new_abs = new_bounds.translate(reference_offset(page, ids));
@@ -43,20 +42,21 @@ pub fn set_selection_bounds(page: &mut Page, ids: &[LayerId], new_bounds: Rect) 
             new_abs.min.y + (p.y - old.min.y) * scale.y,
         )
     };
-    apply_resize_delta(page, &leaves, transform, scale, false, 1.0);
-    for &id in ids {
-        refit_container_to_children(page, id);
+    for (id, abs, offset) in layers {
+        let new_layer_abs = Rect::from_two_pos(transform(abs.min), transform(abs.max));
+        resize_layer(page, id, new_layer_abs.translate(-offset));
     }
 }
 
-fn collect_leaves(page: &Page, ids: &[LayerId]) -> Vec<ResizeLayerInfo> {
-    let mut leaves = Vec::new();
-    for &id in ids {
-        if let (Some(layer), Some(offset)) = (page.find(id), page.absolute_offset(id)) {
-            collect_resizable_leaves(layer, offset, &mut leaves);
-        }
-    }
-    leaves
+/// `(id, page-space frame bounds, parent offset)` for each of `ids` that
+/// exists.
+fn absolute_bounds(page: &Page, ids: &[LayerId]) -> Vec<(LayerId, Rect, Vec2)> {
+    ids.iter()
+        .filter_map(|&id| {
+            let offset = page.absolute_offset(id)?;
+            Some((id, page.find(id)?.frame.bounds().translate(offset), offset))
+        })
+        .collect()
 }
 
 fn reference_offset(page: &Page, ids: &[LayerId]) -> Vec2 {
@@ -105,6 +105,24 @@ mod tests {
         assert_eq!(page.layers[0].frame.size, Vec2::new(20.0, 20.0));
         assert_eq!(page.layers[1].frame.pos, Pos2::new(40.0, 0.0));
         assert_eq!(page.layers[1].frame.size, Vec2::new(20.0, 20.0));
+    }
+
+    #[test]
+    fn an_artboard_is_measured_and_resized_by_its_own_frame_not_its_content() {
+        let child = rect_layer(10.0, 10.0, 10.0, 10.0);
+        let child_id = child.id;
+        let mut artboard = Layer::new_artboard(
+            "Board",
+            Frame { pos: Pos2::ZERO, size: Vec2::new(100.0, 100.0), rotation: 0.0 },
+        );
+        let LayerKind::Artboard { children, .. } = &mut artboard.kind else { unreachable!() };
+        children.push(child);
+        let (mut page, ids) = page_with(vec![artboard, rect_layer(200.0, 0.0, 10.0, 10.0)]);
+
+        assert_eq!(selection_bounds(&page, &ids), Some(Rect::from_min_max(Pos2::ZERO, Pos2::new(210.0, 100.0))));
+        set_selection_bounds(&mut page, &ids, Rect::from_min_max(Pos2::ZERO, Pos2::new(420.0, 100.0)));
+        assert_eq!(page.layers[0].frame.size, Vec2::new(200.0, 100.0), "artboard keeps its own frame, scaled");
+        assert_eq!(page.find(child_id).unwrap().frame.pos, Pos2::new(10.0, 10.0), "content stays put");
     }
 
     #[test]

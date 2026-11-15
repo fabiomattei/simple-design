@@ -97,7 +97,19 @@ impl CanvasWidget {
             } => {
                 drop_tiny_path_handle(history.mutate().active_page_mut(), layer_id, point_index, side, self.zoom);
             }
-            DragState::ResizingGroup { .. } | DragState::Rotating { .. } => {
+            DragState::ResizingGroup { .. } => {
+                // Same one-time refit as `Rotating` below, except for an
+                // Artboard: its frame is its own size, already set by
+                // `constraint_resize::resize_layer`, and refitting it would
+                // shrink it to its content.
+                let page = history.mutate().active_page_mut();
+                for &id in selection.iter() {
+                    if !matches!(page.find(id).map(|l| &l.kind), Some(LayerKind::Artboard { .. })) {
+                        refit_container_to_children(page, id);
+                    }
+                }
+            }
+            DragState::Rotating { .. } => {
                 // The one-time counterpart to the comments in `dragged`'s
                 // `ResizingGroup`/`Rotating` arms: now that the gesture
                 // is over and no further frame will re-derive a leaf's

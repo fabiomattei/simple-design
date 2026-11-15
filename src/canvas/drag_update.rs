@@ -17,8 +17,9 @@ use super::snapping::{
     SnapCandidates, build_snap_candidates, drag_exclude_ids, draw_snap_lines,
     snap_bounds_delta, snap_guide_axis, snap_point,
 };
+use super::constraint_resize::resize_layer;
 use super::transform_geometry::{
-    ResizeLayerInfo, apply_resize_delta, apply_rotation_delta,
+    ResizeContainerInfo, ResizeLayerInfo, apply_resize_delta, apply_rotation_delta,
 };
 use super::{
     CanvasLayout, CanvasWidget, DragState, Handle, HandleSide, SELECTION_COLOR, ScaleAnchor,
@@ -95,6 +96,7 @@ impl CanvasWidget {
                 handle,
                 start_overall_bounds,
                 layers,
+                containers,
                 scale_style,
                 scale_anchor,
             } => {
@@ -107,6 +109,7 @@ impl CanvasWidget {
                     handle,
                     start_overall_bounds,
                     layers,
+                    containers,
                     scale_style,
                     scale_anchor,
                 );
@@ -337,6 +340,7 @@ fn resize_group(
     handle: &Handle,
     start_overall_bounds: &Rect,
     layers: &[ResizeLayerInfo],
+    containers: &[ResizeContainerInfo],
     scale_style: &bool,
     scale_anchor: &ScaleAnchor,
 ) {
@@ -400,11 +404,23 @@ fn resize_group(
     apply_resize_delta(
         page,
         layers,
-        transform,
+        &transform,
         scale,
         *scale_style,
         uniform_scale,
     );
+    for container in containers {
+        // Restore the drag-start subtree first: `resize_layer` reads the
+        // container's live frame and children, so resizing an already-resized
+        // state would compound frame over frame.
+        let id = container.original.id;
+        if let Some(layer) = page.find_mut(id) {
+            *layer = container.original.clone();
+        }
+        let old_abs = container.original.frame.bounds().translate(container.parent_offset);
+        let new_abs = Rect::from_two_pos(transform(old_abs.min), transform(old_abs.max));
+        resize_layer(page, id, new_abs.translate(-container.parent_offset));
+    }
 }
 
 fn move_path_anchors(

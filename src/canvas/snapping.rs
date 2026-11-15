@@ -31,7 +31,9 @@ pub(super) fn drag_exclude_ids(drag: &DragState) -> Vec<LayerId> {
     match drag {
         DragState::MovingSelection { starts, .. } => starts.iter().map(|(id, _)| *id).collect(),
         DragState::ResizingLine { id, .. } => vec![*id],
-        DragState::ResizingGroup { layers, .. } => layers.iter().map(|l| l.id).collect(),
+        DragState::ResizingGroup { layers, containers, .. } => {
+            layers.iter().map(|l| l.id).chain(containers.iter().map(|c| c.original.id)).collect()
+        }
         DragState::Rotating { layers, .. } => layers.iter().map(|l| l.id).collect(),
         _ => Vec::new(),
     }

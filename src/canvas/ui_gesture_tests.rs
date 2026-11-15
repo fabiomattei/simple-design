@@ -194,6 +194,24 @@ fn dragging_the_bottom_right_handle_resizes_the_selected_layer() {
 }
 
 #[test]
+fn dragging_an_artboards_corner_resizes_its_frame_and_leaves_content_in_place() {
+    let mut artboard = Layer::new_artboard("Board", Frame { pos: Pos2::new(100.0, 100.0), size: Vec2::new(200.0, 200.0), rotation: 0.0 });
+    let child = rect_layer("Child", 10.0, 10.0, 20.0, 20.0);
+    let (artboard_id, child_id) = (artboard.id, child.id);
+    let LayerKind::Artboard { children, .. } = &mut artboard.kind else { unreachable!() };
+    children.push(child);
+    let mut h = Harness::new(vec![artboard]);
+    h.selection = vec![artboard_id];
+    h.frame(Vec::new());
+    // The handle sits at the artboard's own corner, not its content's.
+    h.drag(Pos2::new(300.0, 300.0), Pos2::new(400.0, 350.0));
+    let frame = h.layer(artboard_id).frame;
+    assert_eq!((frame.pos, frame.size), (Pos2::new(100.0, 100.0), Vec2::new(300.0, 250.0)));
+    let child = h.layer(child_id).frame;
+    assert_eq!((child.pos, child.size), (Pos2::new(10.0, 10.0), Vec2::new(20.0, 20.0)));
+}
+
+#[test]
 fn rectangle_tool_drag_creates_a_rectangle_and_switches_back_to_select() {
     let mut h = Harness::new(Vec::new());
     h.tool = Tool::Rectangle;

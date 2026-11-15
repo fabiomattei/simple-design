@@ -13,7 +13,7 @@ use crate::tools::Tool;
 
 use super::hit_test::hit_test;
 use super::transform_geometry::{
-    ResizeLayerInfo, collect_resizable_leaves, collect_rotatable_leaves,
+    ResizeContainerInfo, ResizeLayerInfo, collect_resizable_leaves, collect_rotatable_leaves,
     display_bounds,
 };
 use super::{
@@ -250,16 +250,28 @@ impl CanvasWidget {
             let offset = page.absolute_offset(id).unwrap_or(Vec2::ZERO);
             Some(DragState::ResizingLine { id, handle, parent_offset: offset })
         } else {
+            let scale_style = self.scaling.is_some();
             let mut layers: Vec<ResizeLayerInfo> = Vec::new();
+            let mut containers: Vec<ResizeContainerInfo> = Vec::new();
             for (l, o) in &view.layers {
-                collect_resizable_leaves(l, *o, &mut layers);
+                let is_artboard = matches!(l.kind, LayerKind::Artboard { .. });
+                if is_artboard || (l.kind.children().is_some() && !scale_style) {
+                    containers.push(ResizeContainerInfo { original: (*l).clone(), parent_offset: *o });
+                } else {
+                    collect_resizable_leaves(l, *o, &mut layers);
+                }
             }
-            let overall = layers.iter().map(|l| l.abs_bounds).reduce(|a, b| a.union(b))?;
+            let overall = layers
+                .iter()
+                .map(|l| l.abs_bounds)
+                .chain(containers.iter().map(|c| c.original.frame.bounds().translate(c.parent_offset)))
+                .reduce(|a, b| a.union(b))?;
             Some(DragState::ResizingGroup {
                 handle,
                 start_overall_bounds: overall,
                 layers,
-                scale_style: self.scaling.is_some(),
+                containers,
+                scale_style,
                 scale_anchor: self.scale_anchor,
             })
         }
