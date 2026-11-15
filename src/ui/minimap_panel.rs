@@ -82,7 +82,7 @@ fn draw_layer(painter: &egui::Painter, layer: &Layer, offset: Vec2, to_thumb: &i
     let child_offset = offset + layer.frame.pos.to_vec2();
 
     match &layer.kind {
-        LayerKind::Artboard { children, background } => {
+        LayerKind::Artboard { children, background, .. } => {
             let r = Rect::from_min_max(to_thumb(bounds.min), to_thumb(bounds.max));
             painter.rect_filled(r, 0.0, *background);
             // Children are cut at the artboard's edge, same as the canvas.

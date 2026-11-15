@@ -528,7 +528,17 @@ impl<'de> Deserialize<'de> for CornerRadii {
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub enum LayerKind {
-    Artboard { children: Vec<Layer>, background: Color32 },
+    /// `adjust_content_on_resize` (Sketch's "Adjust Content on Resize"):
+    /// when `false` (the default, and always for documents saved before it
+    /// existed) resizing the artboard leaves its children where they are on
+    /// the page; when `true` they follow their `Layer::resizing` constraints
+    /// — see `resizing_constraints::resize_layer`.
+    Artboard {
+        children: Vec<Layer>,
+        background: Color32,
+        #[serde(default)]
+        adjust_content_on_resize: bool,
+    },
     Group { children: Vec<Layer> },
     Rectangle { corner_radius: CornerRadii },
     Oval,
@@ -997,6 +1007,28 @@ impl LayerKind {
     }
 }
 
+/// How a layer follows its parent Group/Artboard when that parent is
+/// resized (Sketch's "Resizing" constraints), applied per axis by
+/// `resizing_constraints::resize_layer`. All `false` (the default, and
+/// always for documents saved before it existed) means "scale with the
+/// parent". Pinning both edges of an axis stretches the layer and ignores
+/// that axis's `fixed_*` flag.
+#[derive(Clone, Copy, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
+pub struct ResizingConstraints {
+    #[serde(default)]
+    pub pin_left: bool,
+    #[serde(default)]
+    pub pin_right: bool,
+    #[serde(default)]
+    pub pin_top: bool,
+    #[serde(default)]
+    pub pin_bottom: bool,
+    #[serde(default)]
+    pub fixed_width: bool,
+    #[serde(default)]
+    pub fixed_height: bool,
+}
+
 fn default_opacity() -> f32 {
     1.0
 }
@@ -1036,6 +1068,11 @@ pub struct Layer {
     /// `LayerKind::Text::style_id`.
     #[serde(default)]
     pub style_id: Option<Uuid>,
+    /// Resizing constraints relative to the parent container — ignored for
+    /// a top-level layer, same "one field, many places ignore it"
+    /// convention as `mask`/`bool_op` above.
+    #[serde(default)]
+    pub resizing: ResizingConstraints,
     pub kind: LayerKind,
 }
 
@@ -1053,6 +1090,7 @@ impl Layer {
             mask: MaskSettings::default(),
             bool_op: BoolOp::default(),
             style_id: None,
+            resizing: ResizingConstraints::default(),
             kind,
         }
     }
@@ -1102,6 +1140,7 @@ impl Layer {
             LayerKind::Artboard {
                 children: Vec::new(),
                 background: Color32::WHITE,
+                adjust_content_on_resize: false,
             },
         );
         layer.style = Style { fill: None, stroke: None, ..Default::default() };
@@ -1200,6 +1239,27 @@ mod tests {
         }
         let loaded: Layer = serde_json::from_value(old).unwrap();
         assert_eq!(loaded.mask, MaskSettings::default());
+    }
+
+    /// A layer and an artboard saved before resizing constraints existed
+    /// still load, with constraints off and content adjustment off; a set
+    /// value round-trips.
+    #[test]
+    fn resizing_constraints_default_on_old_json_and_round_trip() {
+        let mut layer = Layer::new_artboard("Board", Frame { pos: Pos2::ZERO, size: Vec2::splat(10.0), rotation: 0.0 });
+        layer.resizing = ResizingConstraints { pin_left: true, fixed_height: true, ..Default::default() };
+        let LayerKind::Artboard { adjust_content_on_resize, .. } = &mut layer.kind else { unreachable!() };
+        *adjust_content_on_resize = true;
+
+        let json = serde_json::to_value(&layer).unwrap();
+        assert_eq!(serde_json::from_value::<Layer>(json.clone()).unwrap(), layer, "round-trips unchanged");
+
+        let mut old = json;
+        old.as_object_mut().unwrap().remove("resizing");
+        old["kind"]["Artboard"].as_object_mut().unwrap().remove("adjust_content_on_resize");
+        let loaded: Layer = serde_json::from_value(old).unwrap();
+        assert_eq!(loaded.resizing, ResizingConstraints::default());
+        assert!(matches!(loaded.kind, LayerKind::Artboard { adjust_content_on_resize: false, .. }));
     }
 
     /// `t_in_rect` measures in the painted rect's own space: on a 200x100

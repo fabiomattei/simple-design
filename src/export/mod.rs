@@ -146,7 +146,7 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], of
     let opacity = parent_opacity * layer.opacity;
     let bounds = layer.frame.bounds().translate(offset);
     match &layer.kind {
-        LayerKind::Artboard { children, background } => {
+        LayerKind::Artboard { children, background, .. } => {
             let child_offset = offset + layer.frame.pos.to_vec2();
             draw_artboard(pixmap, bounds, *background, opacity, child_offset, render_scale, |px, off| {
                 draw_children(px, children, roots, off, opacity, render_scale)
@@ -303,7 +303,7 @@ pub(crate) fn draw_layer_with_shadows(pixmap: &mut Pixmap, layer: &Layer, roots:
 
     let opacity = parent_opacity * layer.opacity;
     match &layer.kind {
-        LayerKind::Artboard { children, background } => {
+        LayerKind::Artboard { children, background, .. } => {
             let bounds = layer.frame.bounds().translate(offset);
             let child_offset = offset + layer.frame.pos.to_vec2();
             draw_artboard(pixmap, bounds, *background, opacity, child_offset, render_scale, |px, off| {
@@ -662,7 +662,7 @@ mod tests {
             "Board",
             Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(30.0, 30.0)),
         );
-        if let LayerKind::Artboard { children, background } = &mut artboard.kind {
+        if let LayerKind::Artboard { children, background, .. } = &mut artboard.kind {
             *background = Color32::WHITE;
             children.push(child);
         }
@@ -691,7 +691,7 @@ mod tests {
 
         let mut artboard = Layer::new_artboard("Board", Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(30.0, 30.0)));
         artboard.style.shadows = vec![crate::model::Shadow { color: Color32::BLACK, offset: Vec2::ZERO, blur: 20.0, spread: 0.0 }];
-        if let LayerKind::Artboard { children, background } = &mut artboard.kind {
+        if let LayerKind::Artboard { children, background, .. } = &mut artboard.kind {
             *background = Color32::WHITE;
             children.push(child);
         }

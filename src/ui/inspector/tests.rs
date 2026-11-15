@@ -185,7 +185,7 @@ fn group_adds_an_ungroup_button_after_appearance() {
 
 #[test]
 fn artboard_has_no_rotation_field() {
-    let artboard = layer(LayerKind::Artboard { children: Vec::new(), background: Color32::WHITE });
+    let artboard = layer(LayerKind::Artboard { children: Vec::new(), background: Color32::WHITE, adjust_content_on_resize: false });
     assert_eq!(headings_for_single(artboard), concat(&[&["X", "Y", "W", "H"], APPEARANCE]));
 }
 

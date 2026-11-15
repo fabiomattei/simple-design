@@ -159,7 +159,7 @@ pub(super) fn draw_layer(
     }
 
     match &layer.kind {
-        LayerKind::Artboard { children, background } => {
+        LayerKind::Artboard { children, background, .. } => {
             let bounds = layer.frame.bounds();
             let screen_rect = Rect::from_two_pos(to_screen(bounds.min), to_screen(bounds.max));
             painter.rect_filled(screen_rect, 0.0, with_opacity(*background, opacity));
