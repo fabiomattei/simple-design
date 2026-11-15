@@ -100,6 +100,10 @@ depends on the specific <code>LayerKind</code> variant).
   "mask_mode": "Alpha",
   "mask_inverted": false,
   "bool_op": "Union",
+  "resizing": {
+    "pin_left": false, "pin_right": false, "pin_top": false, "pin_bottom": false,
+    "fixed_width": false, "fixed_height": false
+  },
   "kind": {
     "Rectangle": {
       "corner_radius": { "top_left": 0.0, "top_right": 0.0, "bottom_right": 0.0, "bottom_left": 0.0 }
@@ -121,10 +125,31 @@ of them existed load with masking off. In Rust they're grouped as <code>Layer::m
   <tr><td><code>mask_inverted</code></td><td>Reveals content <em>outside</em> the mask's shape instead of inside it. Only meaningful with <code>is_mask</code></td></tr>
 </table>
 
+<h3>Resizing constraints</h3>
+<p>
+<code>resizing</code> says how a layer follows its parent Group or Artboard when that parent is
+resized (Sketch's "Resizing" constraints). It's <code>#[serde(default)]</code>, as is each of
+its fields, so files saved before it existed load with every flag off — "scale with the
+parent", which is how every child behaved before. It's ignored on a top-level layer. Each axis
+is resolved on its own (applied by <code>canvas::constraint_resize::resize_layer</code>, the math
+in <code>resizing_constraints.rs</code>):
+</p>
+<table>
+  <tr><th>Field</th><th>Meaning</th></tr>
+  <tr><td><code>pin_left</code>, <code>pin_right</code></td><td>Keep the distance to the parent's left/right edge. Both pinned: the layer stretches, and <code>fixed_width</code> is ignored</td></tr>
+  <tr><td><code>pin_top</code>, <code>pin_bottom</code></td><td>Same, vertically</td></tr>
+  <tr><td><code>fixed_width</code>, <code>fixed_height</code></td><td>Keep the size instead of scaling it. With neither edge of that axis pinned, only the layer's center moves with the parent</td></tr>
+</table>
+<p>
+An Artboard's own <code>adjust_content_on_resize</code> (see below) decides whether its
+children follow these at all; a Group's children always do, and a BooleanGroup's operands
+always scale with it, ignoring them.
+</p>
+
 <h3>Layer kinds</h3>
 <table>
   <tr><th>Kind</th><th>Notable fields</th></tr>
-  <tr><td><code>Artboard</code></td><td><code>children: Layer[]</code>, <code>background: Color32</code></td></tr>
+  <tr><td><code>Artboard</code></td><td><code>children: Layer[]</code>, <code>background: Color32</code>, <code>adjust_content_on_resize: bool</code> — when <code>false</code> (the default, and for files saved before it existed) resizing the artboard leaves its children where they are on the page; when <code>true</code> they follow their <code>resizing</code> constraints</td></tr>
   <tr><td><code>Group</code></td><td><code>children: Layer[]</code></td></tr>
   <tr><td><code>Rectangle</code></td><td><code>corner_radius</code> — independent per-corner</td></tr>
   <tr><td><code>Oval</code>, <code>Line</code></td><td>Geometry comes entirely from <code>frame</code></td></tr>

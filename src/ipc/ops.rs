@@ -25,7 +25,8 @@ use crate::transform_ops::{self, FlipAxis};
 
 use super::protocol::{
     AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
-    GroupArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFrameArgs, SetMaskArgs, UngroupArgs,
+    GroupArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFrameArgs, SetMaskArgs, SetResizingArgs,
+    UngroupArgs,
 };
 
 /// Ops that mutate `doc` — the CLI's headless mode only needs to re-save
@@ -46,6 +47,7 @@ pub fn mutates(op: &str) -> bool {
             | "rename_page"
             | "rename_layer"
             | "set_mask"
+            | "set_resizing"
             | "group"
             | "ungroup"
             | "flip"
@@ -301,6 +303,49 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             }))
         }
 
+        "set_resizing" => {
+            let args: SetResizingArgs = parse(args)?;
+            let flags = [
+                args.pin_left,
+                args.pin_right,
+                args.pin_top,
+                args.pin_bottom,
+                args.fixed_width,
+                args.fixed_height,
+                args.adjust_content,
+            ];
+            if flags.iter().all(Option::is_none) {
+                return Err("set_resizing needs at least one of `pin_left`, `pin_right`, `pin_top`, `pin_bottom`, \
+                            `fixed_width`, `fixed_height`, `adjust_content`"
+                    .to_string());
+            }
+            let layer = doc.find_mut(args.id).ok_or_else(|| format!("layer not found: {}", args.id))?;
+            if let Some(adjust) = args.adjust_content {
+                let LayerKind::Artboard { adjust_content_on_resize, .. } = &mut layer.kind else {
+                    return Err("adjust_content only applies to an Artboard".to_string());
+                };
+                *adjust_content_on_resize = adjust;
+            }
+            let resizing = &mut layer.resizing;
+            for (value, field) in [
+                (args.pin_left, &mut resizing.pin_left),
+                (args.pin_right, &mut resizing.pin_right),
+                (args.pin_top, &mut resizing.pin_top),
+                (args.pin_bottom, &mut resizing.pin_bottom),
+                (args.fixed_width, &mut resizing.fixed_width),
+                (args.fixed_height, &mut resizing.fixed_height),
+            ] {
+                if let Some(value) = value {
+                    *field = value;
+                }
+            }
+            let adjust_content = match layer.kind {
+                LayerKind::Artboard { adjust_content_on_resize, .. } => Some(adjust_content_on_resize),
+                _ => None,
+            };
+            Ok(json!({ "id": args.id, "resizing": layer.resizing, "adjust_content": adjust_content }))
+        }
+
         "group" => {
             let args: GroupArgs = parse(args)?;
             let page = resolve_page_mut(doc, args.page)?;
@@ -494,6 +539,39 @@ mod tests {
         assert_eq!(layer.mask.mode, crate::model::MaskMode::Outline);
         assert!(layer.mask.inverted);
         assert!(!layer.mask.enabled, "omitted `mask` stays unchanged");
+    }
+
+    #[test]
+    fn set_resizing_changes_only_the_given_flags_and_rejects_an_empty_request() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+
+        apply(&mut doc, "set_resizing", json!({ "id": id, "pin_left": true, "fixed_width": true }))
+            .expect("set_resizing should succeed");
+        apply(&mut doc, "set_resizing", json!({ "id": id, "pin_top": true })).expect("set_resizing should succeed");
+        let resizing = doc.find(id).unwrap().resizing;
+        assert!(resizing.pin_left && resizing.fixed_width, "omitted flags stay unchanged");
+        assert!(resizing.pin_top);
+        assert!(!resizing.pin_right);
+
+        assert!(apply(&mut doc, "set_resizing", json!({ "id": id })).is_err());
+    }
+
+    #[test]
+    fn set_resizing_adjust_content_applies_only_to_an_artboard() {
+        let mut doc = Document::new();
+        let rect_id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+        assert!(apply(&mut doc, "set_resizing", json!({ "id": rect_id, "adjust_content": true })).is_err());
+
+        let artboard = Layer::new_artboard("Board", frame(0.0, 0.0, 100.0, 100.0));
+        let artboard_id = artboard.id;
+        doc.active_page_mut().layers.push(artboard);
+        apply(&mut doc, "set_resizing", json!({ "id": artboard_id, "adjust_content": true }))
+            .expect("set_resizing should succeed");
+        assert!(matches!(
+            doc.find(artboard_id).unwrap().kind,
+            LayerKind::Artboard { adjust_content_on_resize: true, .. }
+        ));
     }
 
     #[test]

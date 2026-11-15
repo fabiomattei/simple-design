@@ -14,7 +14,7 @@ use simple_design::ipc::{self, ops};
 use simple_design::ipc::protocol::{
     AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
     GroupArgs, InitArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs,
-    SetFrameArgs, SetMaskArgs, UngroupArgs,
+    SetFrameArgs, SetMaskArgs, SetResizingArgs, UngroupArgs,
 };
 use simple_design::model::{BoolOp, Document, Frame, MaskMode, TextAlign, TextFont, VerticalAlign};
 
@@ -275,6 +275,29 @@ enum Command {
         mode: Option<MaskModeArg>,
         #[arg(long)]
         inverted: Option<bool>,
+    },
+    /// Set a layer's resizing constraints — how it follows its parent
+    /// Group/Artboard when that is resized: `--pin-left`, `--pin-right`,
+    /// `--pin-top`, `--pin-bottom`, `--fixed-width`, `--fixed-height` (each
+    /// `true|false`, omitted = unchanged; all off = scale with the parent).
+    /// `--adjust-content true|false` (Artboards only) sets whether resizing
+    /// the artboard moves its content at all.
+    SetResizing {
+        id: Uuid,
+        #[arg(long)]
+        pin_left: Option<bool>,
+        #[arg(long)]
+        pin_right: Option<bool>,
+        #[arg(long)]
+        pin_top: Option<bool>,
+        #[arg(long)]
+        pin_bottom: Option<bool>,
+        #[arg(long)]
+        fixed_width: Option<bool>,
+        #[arg(long)]
+        fixed_height: Option<bool>,
+        #[arg(long)]
+        adjust_content: Option<bool>,
     },
     /// Group layers into a new Group layer.
     Group {
@@ -545,6 +568,10 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
         Command::SetMask { id, mask, ignore_mask, mode, inverted } => {
             ("set_mask", to_value(SetMaskArgs { id, mask, ignore_mask, mode: mode.map(Into::into), inverted }))
         }
+        Command::SetResizing { id, pin_left, pin_right, pin_top, pin_bottom, fixed_width, fixed_height, adjust_content } => (
+            "set_resizing",
+            to_value(SetResizingArgs { id, pin_left, pin_right, pin_top, pin_bottom, fixed_width, fixed_height, adjust_content }),
+        ),
         Command::Group { ids, page } => ("group", to_value(GroupArgs { page, ids })),
         Command::Ungroup { id, page } => ("ungroup", to_value(UngroupArgs { page, id })),
         Command::Flip { axis, ids, page } => ("flip", to_value(FlipArgs { page, ids, axis: axis.as_str().to_string() })),

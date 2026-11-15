@@ -257,6 +257,29 @@ pub struct SetMaskArgs {
     pub inverted: Option<bool>,
 }
 
+/// Sets a layer's `ResizingConstraints` — how it follows its parent
+/// Group/Artboard when that is resized — and, for an Artboard only,
+/// `adjust_content` ("Adjust content on resize"). An omitted field is left
+/// unchanged; at least one must be given.
+#[derive(Serialize, Deserialize)]
+pub struct SetResizingArgs {
+    pub id: Uuid,
+    #[serde(default)]
+    pub pin_left: Option<bool>,
+    #[serde(default)]
+    pub pin_right: Option<bool>,
+    #[serde(default)]
+    pub pin_top: Option<bool>,
+    #[serde(default)]
+    pub pin_bottom: Option<bool>,
+    #[serde(default)]
+    pub fixed_width: Option<bool>,
+    #[serde(default)]
+    pub fixed_height: Option<bool>,
+    #[serde(default)]
+    pub adjust_content: Option<bool>,
+}
+
 #[derive(Serialize, Deserialize)]
 pub struct GroupArgs {
     #[serde(default)]
