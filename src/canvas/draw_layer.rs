@@ -178,8 +178,12 @@ pub(super) fn draw_layer(
                 egui::FontId::proportional(12.0),
                 Color32::from_gray(100),
             );
+            // Children are cut at the artboard's edge, matching
+            // `export::artboard::draw_artboard`. Artboards never rotate, so a
+            // rect clip is exact.
+            let clipped = painter.with_clip_rect(screen_rect.intersect(painter.clip_rect()));
             let child_offset = parent_offset + layer.frame.pos.to_vec2();
-            draw_children(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, gradient_cache, shadow_cache, children, page, child_offset, origin, pan, zoom, opacity, editing_text);
+            draw_children(&clipped, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, gradient_cache, shadow_cache, children, page, child_offset, origin, pan, zoom, opacity, editing_text);
         }
         LayerKind::Group { children } => {
             let child_offset = parent_offset + layer.frame.pos.to_vec2();

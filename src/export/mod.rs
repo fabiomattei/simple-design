@@ -1,5 +1,6 @@
 use tiny_skia::{FillRule, PathBuilder, Pixmap, PixmapPaint, Transform};
 
+mod artboard;
 mod glyph_raster;
 mod image_layer;
 mod line_arrow;
@@ -17,10 +18,10 @@ use text_layer::draw_text_layer;
 
 pub(crate) use text_wrap::{wrap_line, wrap_line_rich};
 
+use artboard::draw_artboard;
 use image_layer::draw_image;
-use paint::to_color_with_opacity;
 use sk_geometry::{
-    compound_path_to_sk_path, fill_and_stroke, fill_rect, layer_transform, path_to_sk_path, polygon_ring_path, rounded_rect_path, to_sk_rect,
+    compound_path_to_sk_path, fill_and_stroke, layer_transform, path_to_sk_path, polygon_ring_path, rounded_rect_path, to_sk_rect,
 };
 
 use crate::boolean_ops;
@@ -146,9 +147,10 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], of
     let bounds = layer.frame.bounds().translate(offset);
     match &layer.kind {
         LayerKind::Artboard { children, background } => {
-            fill_rect(pixmap, bounds, to_color_with_opacity(*background, opacity), render_scale);
             let child_offset = offset + layer.frame.pos.to_vec2();
-            draw_children(pixmap, children, roots, child_offset, opacity, render_scale);
+            draw_artboard(pixmap, bounds, *background, opacity, child_offset, render_scale, |px, off| {
+                draw_children(px, children, roots, off, opacity, render_scale)
+            });
         }
         LayerKind::Group { children } => {
             let child_offset = offset + layer.frame.pos.to_vec2();
@@ -303,9 +305,10 @@ pub(crate) fn draw_layer_with_shadows(pixmap: &mut Pixmap, layer: &Layer, roots:
     match &layer.kind {
         LayerKind::Artboard { children, background } => {
             let bounds = layer.frame.bounds().translate(offset);
-            fill_rect(pixmap, bounds, to_color_with_opacity(*background, opacity), render_scale);
             let child_offset = offset + layer.frame.pos.to_vec2();
-            draw_children_with_shadows(pixmap, children, roots, child_offset, opacity, render_scale);
+            draw_artboard(pixmap, bounds, *background, opacity, child_offset, render_scale, |px, off| {
+                draw_children_with_shadows(px, children, roots, off, opacity, render_scale)
+            });
         }
         LayerKind::Group { children } => {
             let child_offset = offset + layer.frame.pos.to_vec2();
@@ -672,6 +675,35 @@ mod tests {
 
         let child_pixel = pixmap.pixel(10, 10).unwrap();
         assert_eq!((child_pixel.red(), child_pixel.green(), child_pixel.blue()), (0, 255, 0));
+    }
+
+    /// A child half outside its artboard is cut at the artboard's edge, even
+    /// where the artboard's drop-shadow padding leaves room for it to show.
+    #[test]
+    fn artboard_clips_children_that_extend_past_its_edge() {
+        let mut child = Layer::new(
+            "Child",
+            Frame::from_two_points(Pos2::new(20.0, 10.0), Pos2::new(60.0, 20.0)),
+            LayerKind::Rectangle { corner_radius: CornerRadii::ZERO },
+        );
+        child.style.fill = Some(crate::model::Paint::Solid(Color32::from_rgb(0, 255, 0)));
+        child.style.stroke = None;
+
+        let mut artboard = Layer::new_artboard("Board", Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(30.0, 30.0)));
+        artboard.style.shadows = vec![crate::model::Shadow { color: Color32::BLACK, offset: Vec2::ZERO, blur: 20.0, spread: 0.0 }];
+        if let LayerKind::Artboard { children, background } = &mut artboard.kind {
+            *background = Color32::WHITE;
+            children.push(child);
+        }
+
+        let pixmap = render_layer(&artboard).expect("should render");
+        let pad = (pixmap.width() - 30) / 2;
+        assert!(pad > 5, "shadow padding should leave room past the artboard's right edge");
+
+        let inside = pixmap.pixel(pad + 25, pad + 15).unwrap();
+        assert_eq!((inside.red(), inside.green(), inside.blue()), (0, 255, 0));
+        let outside = pixmap.pixel(pad + 33, pad + 15).unwrap();
+        assert_eq!(outside.green(), 0, "child must not draw past the artboard's edge (only black shadow there)");
     }
 
     #[test]
