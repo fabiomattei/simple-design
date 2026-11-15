@@ -739,7 +739,7 @@ impl CanvasWidget {
         if self.show_rulers {
             draw_rulers(&painter, full_rect, canvas_rect, origin, self.pan, self.zoom, response.hover_pos());
         }
-        self.handle_scroll_zoom(ui, &response);
+        self.handle_scroll_zoom(ui, &response, layout.origin);
 
         self.handle_secondary_click(ui, &response, history, tool, selection, layout.origin);
         self.show_canvas_menu(ui, history, selection);

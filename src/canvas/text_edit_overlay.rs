@@ -106,10 +106,17 @@ impl CanvasWidget {
         let inner = egui::Area::new(area_id)
             .order(egui::Order::Foreground)
             .fixed_pos(screen_pos)
+            // egui's default keeps an `Area` fully on screen by sliding it
+            // left/up, which detaches the editor from the layer whenever the
+            // layer extends past the window edge. Pin it and clip to the
+            // canvas instead, so it never paints over the side panels.
+            .constrain(false)
             .show(ui.ctx(), |ui| {
+                let mut clip = ui.clip_rect().intersect(canvas_rect);
                 if let Some(mask_clip) = mask_clip {
-                    ui.set_clip_rect(ui.clip_rect().intersect(mask_clip));
+                    clip = clip.intersect(mask_clip);
                 }
+                ui.set_clip_rect(clip);
                 ui.set_width(width);
                 egui::TextEdit::multiline(&mut buf)
                     .id(text_edit_id)

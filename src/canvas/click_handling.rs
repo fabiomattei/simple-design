@@ -363,13 +363,17 @@ impl CanvasWidget {
         }
     }
 
-    /// Zoom with ctrl/cmd+scroll or pinch; plain scroll pans.
-    pub(super) fn handle_scroll_zoom(&mut self, ui: &Ui, response: &Response) {
+    /// Zoom with ctrl/cmd+scroll or pinch, keeping the document point under
+    /// the pointer fixed on screen; plain scroll pans.
+    pub(super) fn handle_scroll_zoom(&mut self, ui: &Ui, response: &Response, origin: Pos2) {
         if response.hovered() {
             let scroll = ui.input(|i| i.smooth_scroll_delta);
             let zoom_delta = ui.input(|i| i.zoom_delta());
             if zoom_delta != 1.0 {
+                let anchor = response.hover_pos().unwrap_or(response.rect.center());
+                let anchor_doc = self.to_doc(origin, anchor);
                 self.zoom = (self.zoom * zoom_delta).clamp(0.1, 8.0);
+                self.pan = anchor - origin - anchor_doc.to_vec2() * self.zoom;
             } else if scroll != Vec2::ZERO {
                 self.pan += scroll;
             }

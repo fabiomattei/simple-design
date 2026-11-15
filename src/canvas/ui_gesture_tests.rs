@@ -291,3 +291,15 @@ fn shift_right_click_lists_every_layer_stacked_under_the_pointer() {
     assert_eq!(hits.len(), 2);
     assert!(h.widget.canvas_menu.is_none());
 }
+
+#[test]
+fn pinch_zoom_keeps_the_point_under_the_pointer_fixed() {
+    let mut h = Harness::new(Vec::new());
+    let doc_point = Pos2::new(300.0, 200.0);
+    let pointer = h.screen(doc_point);
+    h.frame(vec![Event::PointerMoved(pointer)]);
+    h.frame(vec![Event::Zoom(2.0)]);
+    assert_eq!(h.widget.zoom, 2.0);
+    let after = h.screen(doc_point);
+    assert!((after - pointer).length() < 0.01, "{doc_point:?} moved from {pointer:?} to {after:?}");
+}
