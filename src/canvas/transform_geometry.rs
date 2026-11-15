@@ -1,12 +1,9 @@
 //! Page-space rotate/resize/refit geometry shared by the canvas's drag
 //! gestures and `transform_ops.rs`'s numeric transforms.
 
-
 use egui::{Pos2, Rect, Vec2};
 
-use crate::model::{
-    Frame, Layer, LayerId, LayerKind, Page,
-};
+use crate::model::{Frame, Layer, LayerId, LayerKind, Page};
 use crate::shapes::rotate_point;
 
 /// A leaf layer's rotation state captured at drag start, in page-space

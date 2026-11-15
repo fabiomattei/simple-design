@@ -1,13 +1,9 @@
 //! Paints the layer tree onto the canvas with egui's painter — the
 //! interactive counterpart of `export.rs`'s `draw_layer`.
 
-
 use egui::{Color32, Pos2, Rect, Stroke as EguiStroke, Vec2};
 
-use crate::model::{
-    Layer, LayerId, LayerKind, Page,
-    Paint, TextAlign, TextResize, VerticalAlign,
-};
+use crate::model::{Layer, LayerId, LayerKind, Page, Paint, TextAlign, TextResize, VerticalAlign};
 use crate::shapes::{ellipse_points, rotate_point, rounded_rect_points};
 use crate::text_layout::{self, TextStyleParams};
 

@@ -6,9 +6,7 @@ use std::collections::HashMap;
 
 use egui::{Pos2, Rect, Vec2};
 
-use crate::model::{
-    ColorAdjust, HalftoneFill, Layer, LayerId, LayerKind, NoiseFill, Page, PatternFill,
-};
+use crate::model::{ColorAdjust, HalftoneFill, Layer, LayerId, LayerKind, NoiseFill, Page, PatternFill};
 
 /// One decoded-and-adjusted `Image` layer's egui texture, plus the
 /// `(version, color_adjust)` pair it was built from — cheap to compare every

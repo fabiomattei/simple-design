@@ -60,16 +60,16 @@ training data, check `~/.cargo/registry/src/*/egui-0.36.0/src/` directly.
   `frame.bounds()` for anything direction-insensitive, `frame.rotated_bounds()`
   when rotation matters. Any new recursive layer-tree traversal must
   accumulate `offset + layer.frame.pos.to_vec2()` the same way
-  `canvas.rs`/`export.rs`/`ipc::ops` already do, or nested shapes render or
+  `canvas/`/`export.rs`/`ipc::ops` already do, or nested shapes render or
   align in the wrong place.
 - **Undo** (`history.rs`): whole-`Document` snapshot cloning, not a command
   pattern. Convention: `history.snapshot()` before mutating, then mutate via
   `history.mutate()`. For a continuous gesture, snapshot only once at the start.
-- **Rendering is not shared**: `canvas.rs` (interactive) and `export.rs` (PNG)
+- **Rendering is not shared**: `canvas/` (interactive) and `export.rs` (PNG)
   are two separate implementations. A new `LayerKind`/`Paint` variant needs a
   matching case in both, or exports will silently not match what's on screen.
 - **Adding a new shape/tool** touches, in order: `tools.rs` → `model/layer.rs`
-  → `canvas.rs` (`new_layer_for_tool`, `draw_layer`) → `export.rs` (`draw_layer`)
+  → `canvas/` (`layer_creation.rs::new_layer_for_tool`, `draw_layer.rs::draw_layer`) → `export.rs` (`draw_layer`)
   → `ui/inspector.rs` → `ui/layers_panel.rs`'s `icon_for`.
 
 ## CLI / IPC (`src/ipc/`, `src/app/ipc_dispatch.rs`)

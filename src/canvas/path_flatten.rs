@@ -1,6 +1,5 @@
 //! Flattens a `Path`'s Bezier segments and rounded corners into a polyline.
 
-
 use egui::{Pos2, Vec2};
 
 use crate::model::PathPoint;

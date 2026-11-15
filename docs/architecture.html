@@ -41,12 +41,12 @@
 <h3>Canvas &amp; rendering</h3>
 <table>
   <tr><th>Module</th><th>Responsibility</th></tr>
-  <tr><td><code>canvas.rs</code></td><td>The interactive canvas: coordinate transforms, hit-testing, drawing, and all drag/click gesture handling. The largest and most subtle file (~7,000 lines) — see the drag state machine below.</td></tr>
+  <tr><td><code>canvas/</code></td><td>The interactive canvas, split by concern. <code>mod.rs</code> owns <code>CanvasWidget</code>, <code>DragState</code>, and <code>ui()</code> — per-frame input handling and the drag state machine below, the largest and most subtle part. Alongside it: <code>draw_layer.rs</code>/<code>fill_mesh.rs</code>/<code>texture_caches.rs</code> (rendering), <code>hit_test.rs</code>, <code>transform_geometry.rs</code> (rotate/resize/refit), <code>path_editing.rs</code>/<code>path_flatten.rs</code> (Pen tool and direct-selection point editing), <code>image_edit.rs</code>, <code>snapping.rs</code>, <code>rulers_guides.rs</code>, and <code>layer_creation.rs</code>.</td></tr>
   <tr><td><code>export.rs</code></td><td>Renders a single <code>Layer</code> subtree to a <code>tiny-skia</code> <code>Pixmap</code> and saves PNG. A completely separate implementation from the canvas renderer, not shared code — any new <code>LayerKind</code>/<code>Paint</code> variant needs a matching implementation here too.</td></tr>
   <tr><td><code>shapes.rs</code></td><td>Pure geometry generators (ellipse/star/polygon points, rounded corners, rotation) shared by the canvas renderer, PNG exporter, and boolean-op flattening — no egui painter / tiny-skia dependency.</td></tr>
-  <tr><td><code>masking.rs</code></td><td>The one masking algorithm both <code>canvas.rs</code> and <code>export.rs</code> share, so they can never disagree about what a mask looks like. Operates purely on <code>tiny_skia::Pixmap</code>/<code>Layer</code>, no egui dependency.</td></tr>
+  <tr><td><code>masking.rs</code></td><td>The one masking algorithm both <code>canvas/</code> and <code>export.rs</code> share, so they can never disagree about what a mask looks like. Operates purely on <code>tiny_skia::Pixmap</code>/<code>Layer</code>, no egui dependency.</td></tr>
   <tr><td><code>shadow.rs</code></td><td>Drop ("outer") and inner shadow rendering (<code>Style::shadows</code>/<code>inner_shadows</code>). Same shared-algorithm-over-<code>Pixmap</code> shape as <code>masking.rs</code>; blur is a 3-pass box blur approximating Gaussian.</td></tr>
-  <tr><td><code>noise_fill.rs</code> / <code>halftone_fill.rs</code></td><td>Procedural fill samplers backing <code>Paint::Noise</code>/<code>Paint::Halftone</code>. Each exposes one deterministic <code>sample(..)</code> function called independently by <code>canvas.rs</code> and <code>export.rs</code>, so the same seed/params rasterize identically at any resolution with no shared texture.</td></tr>
+  <tr><td><code>noise_fill.rs</code> / <code>halftone_fill.rs</code></td><td>Procedural fill samplers backing <code>Paint::Noise</code>/<code>Paint::Halftone</code>. Each exposes one deterministic <code>sample(..)</code> function called independently by <code>canvas/</code> and <code>export.rs</code>, so the same seed/params rasterize identically at any resolution with no shared texture.</td></tr>
   <tr><td><code>text_layout.rs</code> / <code>text_outline.rs</code></td><td>Canvas-side text layout (egui <code>Galley</code>s, plain and rich) and glyph-to-vector-outline conversion, respectively.</td></tr>
   <tr><td><code>fonts.rs</code> / <code>system_fonts.rs</code></td><td>Bundled and OS-discovered font registration; the single source of truth mapping any <code>TextFont</code> to raw bytes. See <a href="text-and-fonts.html">Text &amp; Fonts</a>.</td></tr>
 </table>
@@ -172,7 +172,7 @@ everywhere shapes are drawn, hit-tested, or exported:
       ancestors — <code>Page::absolute_offset(id)</code> computes exactly that by walking
       down from the page root.</li>
   <li>Recursion into children always threads <code>offset + layer.frame.pos.to_vec2()</code>
-      as the new base offset (<code>canvas.rs::draw_layer</code>,
+      as the new base offset (<code>canvas/draw_layer.rs::draw_layer</code>,
       <code>export.rs::draw_layer</code>, <code>hit_test_layers</code>). Any new recursive
       traversal over the layer tree must follow the same accumulation, or nested shapes will
       render/hit-test in the wrong place.</li>
@@ -188,7 +188,7 @@ top-left. When rotation is involved, use <code>frame.rotated_bounds()</code> ins
 gives the shape's actual on-screen footprint.
 </p>
 
-<h2>Drag state machine (<code>canvas.rs</code>)</h2>
+<h2>Drag state machine (<code>canvas/mod.rs</code>)</h2>
 <p>
 All mouse interaction on the canvas — panning, shape creation, marquee/rubber-band select,
 single moves, group moves, single-layer resize, group bounding-box resize, and rotation — is
@@ -243,7 +243,7 @@ For a continuous gesture (a drag), only snapshot on the frame the gesture <em>st
 <ol>
   <li><code>tools.rs</code> — add the <code>Tool</code> variant and its keyboard shortcut</li>
   <li><code>model/layer.rs</code> — add the <code>LayerKind</code> variant</li>
-  <li><code>canvas.rs</code> — <code>new_layer_for_tool</code>, <code>draw_layer</code> (<code>hit_test_layers</code> already handles bounds generically via <code>frame.bounds()</code>)</li>
+  <li><code>canvas/</code> — <code>layer_creation.rs::new_layer_for_tool</code>, <code>draw_layer.rs::draw_layer</code> (<code>hit_test_layers</code> already handles bounds generically via <code>frame.bounds()</code>)</li>
   <li><code>export.rs</code> — <code>draw_layer</code>; PNG rendering is a separate implementation from the canvas one, not shared</li>
   <li><code>ui/inspector.rs</code> — property editing UI</li>
   <li><code>ui/layers_panel.rs</code>'s <code>icon_for</code> — label only</li>

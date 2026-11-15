@@ -2,13 +2,9 @@
 //! earcut triangulation, gradient/texture-sampled meshes and the gradient
 //! stroke approximation.
 
-
 use egui::{Color32, Pos2, Rect, Stroke as EguiStroke};
 
-use crate::model::{
-    Gradient, HalftoneFill, Layer, NoiseFill,
-    Paint, PathPolygon, PatternFill,
-};
+use crate::model::{Gradient, HalftoneFill, Layer, NoiseFill, Paint, PathPolygon, PatternFill};
 use crate::shapes::rotate_point;
 
 use super::texture_caches::{HalftoneTextureCache, NoiseTextureCache, PatternTextureCache};

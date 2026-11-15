@@ -97,7 +97,7 @@ repository root.
 <table>
   <tr><th>Path</th><th>What lives there</th></tr>
   <tr><td><code>src/model/</code></td><td>Pure data model — <code>Document</code> → <code>Page</code> → <code>Layer</code> tree, serialized to <code>.sdesign</code> JSON</td></tr>
-  <tr><td><code>src/canvas.rs</code></td><td>The interactive canvas: coordinate transforms, hit-testing, drawing, all drag/click gestures</td></tr>
+  <tr><td><code>src/canvas/</code></td><td>The interactive canvas: coordinate transforms, hit-testing, drawing, all drag/click gestures</td></tr>
   <tr><td><code>src/ui/</code></td><td>Panels — layers panel, inspector, toolbar, pages bar — each emitting action enums</td></tr>
   <tr><td><code>src/app.rs</code></td><td>Owns undo history, selection, current tool; wires panels together each frame</td></tr>
   <tr><td><code>src/export.rs</code></td><td>Renders a layer subtree to a PNG via <code>tiny-skia</code>, independent of the canvas renderer</td></tr>

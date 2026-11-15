@@ -6,9 +6,7 @@ use std::collections::HashMap;
 use egui::{Pos2, Rect, Vec2};
 
 use crate::alignment::DistributeAxis;
-use crate::model::{
-    Layer, LayerId, LayerKind, Page,
-};
+use crate::model::{Layer, LayerId, LayerKind, Page};
 use crate::shapes::rotate_point;
 
 /// The layers in `ids` that still exist, sorted along `axis` by absolute
