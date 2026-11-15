@@ -1,15 +1,18 @@
 //! The Scale Layers mode panel and the multi-selection panel (align,
-//! distribute, tidy, flip, group, combine, flatten).
+//! distribute, tidy, X/Y/W/H, flip, group, combine, flatten).
 
 use egui::Ui;
 
 use crate::alignment::DistributeAxis;
 use crate::canvas::CanvasWidget;
+use crate::history::History;
 use crate::model::{BoolOp, LayerId};
 use crate::ui::icons;
 
 use super::align_strip::align_strip;
 use super::geometry_widgets::flip_buttons;
+use super::inspector_layout::{HeaderButton, section_header};
+use super::multi_frame_fields::multi_frame_fields;
 use super::InspectorAction;
 
 /// Sketch's "Scale Layers" mode (`K`) — shown regardless of single/multi
@@ -36,14 +39,17 @@ pub(super) fn scale_layers_panel(ui: &mut Ui, canvas: &mut CanvasWidget) {
 /// selected; returns the action of whichever button was clicked.
 pub(super) fn multi_selection_panel(
     ui: &mut Ui,
+    history: &mut History,
     selection: &[LayerId],
     canvas: &mut CanvasWidget,
 ) -> Option<InspectorAction> {
     ui.label(format!("{} layers selected", selection.len()));
-    ui.add_space(8.0);
+    section_header(ui, "Frame", HeaderButton::None);
     if let Some(action) = arrange_controls(ui, selection, canvas) {
         return Some(action);
     }
+    ui.add_space(4.0);
+    multi_frame_fields(ui, history, canvas, selection);
 
     ui.add_space(4.0);
     if let Some(action) = flip_buttons(ui) {

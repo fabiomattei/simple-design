@@ -234,10 +234,10 @@ pub enum ScaleAnchor {
     Center,
 }
 
-pub(super) struct ResizeLayerInfo {
+pub(crate) struct ResizeLayerInfo {
     pub(super) id: LayerId,
     pub(super) parent_offset: Vec2,
-    pub(super) abs_bounds: Rect,
+    pub(crate) abs_bounds: Rect,
     /// A clone of the layer's `kind` as it was *before* the drag touched it.
     /// `Path`/`CompoundPath` need this: unlike Rectangle/Oval (whose geometry
     /// IS `frame.bounds()`, always rederived fresh from `abs_bounds` below),
@@ -275,7 +275,7 @@ pub(super) struct ResizeLayerInfo {
 /// `refit_container_to_children` on each affected top-level container once
 /// the drag has applied its transform, keeps the container's own frame (and
 /// a `BooleanGroup`'s render offset) in sync with what's actually drawn.
-pub(super) fn collect_resizable_leaves(layer: &Layer, parent_offset: Vec2, out: &mut Vec<ResizeLayerInfo>) {
+pub(crate) fn collect_resizable_leaves(layer: &Layer, parent_offset: Vec2, out: &mut Vec<ResizeLayerInfo>) {
     if let Some(children) = layer.kind.children() {
         let child_offset = parent_offset + layer.frame.pos.to_vec2();
         for child in children {
@@ -304,7 +304,7 @@ pub(super) fn collect_resizable_leaves(layer: &Layer, parent_offset: Vec2, out: 
 /// container's own `frame`: `layers` only ever holds real leaves (see
 /// `collect_resizable_leaves`), so the caller must follow up with
 /// `refit_container_to_children` for every affected top-level container.
-pub(super) fn apply_resize_delta(
+pub(crate) fn apply_resize_delta(
     page: &mut Page,
     layers: &[ResizeLayerInfo],
     transform: impl Fn(Pos2) -> Pos2,

@@ -17,6 +17,7 @@ mod frame_section;
 mod image_section;
 mod inspector_layout;
 mod layer_styles;
+mod multi_frame_fields;
 mod multi_selection;
 mod paint_editor;
 mod shadow_section;
@@ -96,7 +97,7 @@ pub fn ui(
     scale_layers_panel(ui, canvas);
 
     if selection.len() > 1 {
-        return multi_selection_panel(ui, selection, canvas);
+        return multi_selection_panel(ui, history, selection, canvas);
     }
 
     let Some(&id) = selection.first() else {

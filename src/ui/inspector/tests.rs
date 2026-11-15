@@ -220,11 +220,11 @@ fn image_layer_shows_image_and_color_adjust_sections() {
 }
 
 #[test]
-fn multi_selection_shows_arrange_strip_tidy_and_combine() {
+fn multi_selection_shows_arrange_strip_tidy_frame_fields_and_combine() {
     let (a, b) = (layer(LayerKind::Oval), layer(LayerKind::Oval));
     let ids = [a.id, b.id];
     let found = headings(vec![a, b], &ids, &mut CanvasWidget::default(), Tool::Select);
-    assert_eq!(found, concat(&[&["Tidy", "Tidy", "Flip", "Group (Cmd+G)", "Combine"]]));
+    assert_eq!(found, concat(&[&["Tidy", "Tidy", "X", "Y", "W", "H", "Flip", "Group (Cmd+G)", "Combine"]]));
 }
 
 #[test]

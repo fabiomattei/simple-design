@@ -21,6 +21,7 @@ pub mod numeric_input;
 pub mod palette_io;
 pub mod panel_layout;
 pub mod recent_files;
+pub mod selection_transform;
 pub mod shadow;
 pub mod shapes;
 pub mod system_fonts;

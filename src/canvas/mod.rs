@@ -39,14 +39,15 @@ use texture_caches::{
     HalftoneTextureCache, ImageTextureCache, GradientTextureCache, MaskedGroupTextureCache, NoiseTextureCache, PatternTextureCache,
     ShadowTextureCache,
 };
-use transform_geometry::{
-    ResizeLayerInfo, RotateLayerInfo,
-};
+use transform_geometry::RotateLayerInfo;
 
 pub(crate) use path_flatten::flatten_path;
 pub(crate) use layer_creation::apply_text_auto_resize;
 pub use transform_geometry::ScaleAnchor;
-pub(crate) use transform_geometry::{apply_rotation_delta, collect_rotatable_leaves, refit_container_to_children};
+pub(crate) use transform_geometry::{
+    ResizeLayerInfo, apply_resize_delta, apply_rotation_delta, collect_resizable_leaves, collect_rotatable_leaves,
+    refit_container_to_children,
+};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum Handle {
