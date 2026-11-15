@@ -4,17 +4,20 @@
 
 use tiny_skia::{Color, Paint, Pixmap, PremultipliedColorU8, Transform};
 
+/// `Color32` stores premultiplied alpha, but `Color::from_rgba8` takes
+/// straight alpha (and premultiplies again at fill time), so unmultiply first.
 pub(super) fn to_color(c: egui::Color32) -> Color {
-    Color::from_rgba8(c.r(), c.g(), c.b(), c.a())
+    let [r, g, b, a] = c.to_srgba_unmultiplied();
+    Color::from_rgba8(r, g, b, a)
 }
 
-/// Scales `color`'s alpha channel by `opacity` (`0.0..=1.0`) before
-/// converting, mirroring `canvas/fill_mesh.rs`'s `with_opacity` so a layer's (and its
-/// ancestors', multiplicatively accumulated) opacity renders the same in the
-/// exported PNG as it does live.
+/// Scales `color`'s alpha by `opacity` (`0.0..=1.0`), mirroring
+/// `canvas/fill_mesh.rs`'s `with_opacity` so a layer's (and its ancestors',
+/// multiplicatively accumulated) opacity renders the same in the exported PNG
+/// as it does live. `Color32` is premultiplied, so scaling every channel is
+/// exactly scaling the alpha.
 pub(super) fn with_opacity(color: egui::Color32, opacity: f32) -> egui::Color32 {
-    let a = (color.a() as f32 * opacity.clamp(0.0, 1.0)).round() as u8;
-    egui::Color32::from_rgba_unmultiplied(color.r(), color.g(), color.b(), a)
+    color.gamma_multiply(opacity.clamp(0.0, 1.0))
 }
 
 pub(super) fn to_color_with_opacity(c: egui::Color32, opacity: f32) -> Color {
@@ -178,13 +181,10 @@ pub(super) fn to_sk_paint<'a>(paint: &crate::model::Paint, bounds: egui::Rect, o
     sk_paint
 }
 
-/// Premultiplies `color`'s RGB by its own alpha — the representation
-/// `tiny_skia::Pixmap`'s raw pixel storage requires (unlike `tiny_skia::Paint::set_color`,
-/// which accepts straight alpha and premultiplies internally at fill time).
+/// `color` as a raw `tiny_skia::Pixmap` pixel, which is premultiplied —
+/// the same representation `Color32` already stores, so no conversion.
 pub(super) fn premultiplied(color: egui::Color32) -> Option<PremultipliedColorU8> {
-    let a = color.a() as u16;
-    let mul = |v: u8| ((v as u16 * a) / 255) as u8;
-    PremultipliedColorU8::from_rgba(mul(color.r()), mul(color.g()), mul(color.b()), color.a())
+    PremultipliedColorU8::from_rgba(color.r(), color.g(), color.b(), color.a())
 }
 
 #[cfg(test)]
@@ -253,6 +253,22 @@ mod tests {
         let right = pixmap.pixel(pixmap.width() - 3, pixmap.height() / 2).expect("right pixel");
         assert!(left.red() > 200 && left.blue() < 50, "stroke start should be near the start color (red)");
         assert!(right.blue() > 200 && right.red() < 50, "stroke end should be near the end color (blue)");
+    }
+
+    #[test]
+    fn translucent_solid_fill_is_premultiplied_once() {
+        let mut layer = Layer::new(
+            "Rect",
+            Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(20.0, 20.0)),
+            LayerKind::Rectangle { corner_radius: CornerRadii::ZERO },
+        );
+        layer.style.fill = Some(crate::model::Paint::Solid(Color32::from_rgba_unmultiplied(255, 0, 0, 128)));
+        layer.style.stroke = None;
+
+        let pixmap = render_layer(&layer).expect("should render");
+        let center = pixmap.pixel(10, 10).expect("center pixel");
+        assert_eq!(center.alpha(), 128);
+        assert!((126..=130).contains(&center.red()), "50% red should store premultiplied red ≈128, got {}", center.red());
     }
 
     fn noise_rect_layer(seed: u32) -> Layer {

@@ -32,12 +32,12 @@ pub fn sample(fill: &HalftoneFill, local_point: Pos2, opacity: f32) -> Color32 {
     // local units at the boundary.
     let dot_weight = 1.0 - smoothstep(radius - EDGE_SOFTNESS * 0.5, radius + EDGE_SOFTNESS * 0.5, dist);
     let lerp = |a: u8, b: u8| (a as f32 + (b as f32 - a as f32) * dot_weight).round().clamp(0.0, 255.0) as u8;
-    let base = fill.background;
-    let dot = fill.dot;
-    let r = lerp(base.r(), dot.r());
-    let g = lerp(base.g(), dot.g());
-    let b = lerp(base.b(), dot.b());
-    let a_base = base.a() as f32 + (dot.a() as f32 - base.a() as f32) * dot_weight;
+    let base = fill.background.to_srgba_unmultiplied();
+    let dot = fill.dot.to_srgba_unmultiplied();
+    let r = lerp(base[0], dot[0]);
+    let g = lerp(base[1], dot[1]);
+    let b = lerp(base[2], dot[2]);
+    let a_base = base[3] as f32 + (dot[3] as f32 - base[3] as f32) * dot_weight;
     let alpha = (a_base * opacity).round().clamp(0.0, 255.0) as u8;
     Color32::from_rgba_unmultiplied(r, g, b, alpha)
 }

@@ -11,10 +11,10 @@ use super::texture_caches::{GradientTextureCache, HalftoneTextureCache, NoiseTex
 
 /// Scales `color`'s alpha channel by `opacity` (`0.0..=1.0`), used to apply a
 /// layer's (and its ancestors', multiplicatively accumulated) opacity to its
-/// fill/stroke without needing an offscreen compositing pass.
+/// fill/stroke without needing an offscreen compositing pass. `Color32` is
+/// premultiplied, so scaling every channel is exactly scaling the alpha.
 pub(super) fn with_opacity(color: Color32, opacity: f32) -> Color32 {
-    let a = (color.a() as f32 * opacity.clamp(0.0, 1.0)).round() as u8;
-    Color32::from_rgba_unmultiplied(color.r(), color.g(), color.b(), a)
+    color.gamma_multiply(opacity.clamp(0.0, 1.0))
 }
 
 /// Draws a set of even-odd-filled rings (each exterior + its holes) using

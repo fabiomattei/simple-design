@@ -85,17 +85,20 @@ pub(super) fn blend_glyph_pixel(pixmap: &mut Pixmap, x: i32, y: i32, coverage: f
     if x >= pixmap.width() || y >= pixmap.height() {
         return;
     }
-    let alpha = coverage.clamp(0.0, 1.0) * (color.a() as f32 / 255.0);
+    let coverage = coverage.clamp(0.0, 1.0);
+    let alpha = coverage * (color.a() as f32 / 255.0);
     if alpha <= 0.0 {
         return;
     }
     let idx = (y * pixmap.width() + x) as usize;
     let dst = pixmap.pixels()[idx];
     let inv = 1.0 - alpha;
+    // `Color32`'s RGB is already premultiplied by its own alpha, so only
+    // `coverage` scales it here.
     let out_a = (255.0 * alpha + dst.alpha() as f32 * inv).round().clamp(0.0, 255.0);
-    let out_r = (color.r() as f32 * alpha + dst.red() as f32 * inv).round().clamp(0.0, out_a);
-    let out_g = (color.g() as f32 * alpha + dst.green() as f32 * inv).round().clamp(0.0, out_a);
-    let out_b = (color.b() as f32 * alpha + dst.blue() as f32 * inv).round().clamp(0.0, out_a);
+    let out_r = (color.r() as f32 * coverage + dst.red() as f32 * inv).round().clamp(0.0, out_a);
+    let out_g = (color.g() as f32 * coverage + dst.green() as f32 * inv).round().clamp(0.0, out_a);
+    let out_b = (color.b() as f32 * coverage + dst.blue() as f32 * inv).round().clamp(0.0, out_a);
     if let Some(px) = PremultipliedColorU8::from_rgba(out_r as u8, out_g as u8, out_b as u8, out_a as u8) {
         pixmap.pixels_mut()[idx] = px;
     }

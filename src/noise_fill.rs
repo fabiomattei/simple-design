@@ -31,8 +31,9 @@ pub fn sample(fill: &NoiseFill, local_point: Pos2, opacity: f32) -> Color32 {
     let deviation = (cell_value(fill.seed, cell_x, cell_y) as f32 / 255.0 - 0.5) * 2.0 * fill.intensity;
     let factor = 1.0 + deviation;
     let apply = |channel: u8| (channel as f32 * factor).round().clamp(0.0, 255.0) as u8;
-    let alpha = (fill.base.a() as f32 * opacity).round().clamp(0.0, 255.0) as u8;
-    Color32::from_rgba_unmultiplied(apply(fill.base.r()), apply(fill.base.g()), apply(fill.base.b()), alpha)
+    let [r, g, b, a] = fill.base.to_srgba_unmultiplied();
+    let alpha = (a as f32 * opacity).round().clamp(0.0, 255.0) as u8;
+    Color32::from_rgba_unmultiplied(apply(r), apply(g), apply(b), alpha)
 }
 
 #[cfg(test)]

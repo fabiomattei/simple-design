@@ -272,10 +272,10 @@ impl NoiseTextureCache {
                 let frac = Pos2::new((i as f32 + 0.5) / tw as f32, (j as f32 + 0.5) / th as f32);
                 let local_point = Pos2::new(frac.x * local_size.x, frac.y * local_size.y);
                 let c = crate::noise_fill::sample(fill, local_point, 1.0);
-                rgba.extend_from_slice(&[c.r(), c.g(), c.b(), c.a()]);
+                rgba.extend_from_slice(&c.to_array());
             }
         }
-        let color_image = egui::ColorImage::from_rgba_unmultiplied([tw as usize, th as usize], &rgba);
+        let color_image = egui::ColorImage::from_rgba_premultiplied([tw as usize, th as usize], &rgba);
         let texture = ctx.load_texture(format!("noise-layer-{layer_id}"), color_image, egui::TextureOptions::NEAREST);
         let handle = texture.clone();
         self.0.insert(layer_id, CachedNoiseTexture { fill: *fill, local_size, pixel_size, texture });
@@ -318,10 +318,10 @@ impl HalftoneTextureCache {
                 let frac = Pos2::new((i as f32 + 0.5) / tw as f32, (j as f32 + 0.5) / th as f32);
                 let local_point = Pos2::new(frac.x * local_size.x, frac.y * local_size.y);
                 let c = crate::halftone_fill::sample(fill, local_point, 1.0);
-                rgba.extend_from_slice(&[c.r(), c.g(), c.b(), c.a()]);
+                rgba.extend_from_slice(&c.to_array());
             }
         }
-        let color_image = egui::ColorImage::from_rgba_unmultiplied([tw as usize, th as usize], &rgba);
+        let color_image = egui::ColorImage::from_rgba_premultiplied([tw as usize, th as usize], &rgba);
         let texture = ctx.load_texture(format!("halftone-layer-{layer_id}"), color_image, egui::TextureOptions::NEAREST);
         let handle = texture.clone();
         self.0.insert(layer_id, CachedHalftoneTexture { fill: *fill, local_size, pixel_size, texture });
@@ -368,10 +368,10 @@ impl GradientTextureCache {
                 let frac = Pos2::new((i as f32 + 0.5) / tw as f32, (j as f32 + 0.5) / th as f32);
                 let local_point = Pos2::new(frac.x * local_size.x, frac.y * local_size.y);
                 let c = gradient.sample_in_rect(local_point, local_rect);
-                rgba.extend_from_slice(&[c.r(), c.g(), c.b(), c.a()]);
+                rgba.extend_from_slice(&c.to_array());
             }
         }
-        let color_image = egui::ColorImage::from_rgba_unmultiplied([tw as usize, th as usize], &rgba);
+        let color_image = egui::ColorImage::from_rgba_premultiplied([tw as usize, th as usize], &rgba);
         let texture = ctx.load_texture(format!("gradient-layer-{layer_id}"), color_image, egui::TextureOptions::LINEAR);
         let handle = texture.clone();
         self.0.insert(layer_id, CachedGradientTexture { gradient: gradient.clone(), local_size, pixel_size, texture });

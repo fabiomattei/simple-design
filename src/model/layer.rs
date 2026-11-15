@@ -138,9 +138,11 @@ impl Gradient {
     }
 }
 
+/// Interpolates in premultiplied space (what `Color32` stores), matching
+/// `tiny-skia`'s gradient shader, so a fade to transparent doesn't darken.
 fn lerp_color(a: Color32, b: Color32, t: f32) -> Color32 {
     let lerp = |x: u8, y: u8| (x as f32 + (y as f32 - x as f32) * t).round().clamp(0.0, 255.0) as u8;
-    Color32::from_rgba_unmultiplied(lerp(a.r(), b.r()), lerp(a.g(), b.g()), lerp(a.b(), b.b()), lerp(a.a(), b.a()))
+    Color32::from_rgba_premultiplied(lerp(a.r(), b.r()), lerp(a.g(), b.g()), lerp(a.b(), b.b()), lerp(a.a(), b.a()))
 }
 
 /// A procedural grayscale-grain fill: brightness varies around `base` per
