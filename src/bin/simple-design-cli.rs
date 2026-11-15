@@ -13,7 +13,7 @@ use simple_design::io;
 use simple_design::templates;
 use simple_design::ipc::{self, ops};
 use simple_design::ipc::protocol::{
-    AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
+    AddArtboardArgs, AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
     GroupArgs, InitArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs,
     SetFrameArgs, SetMaskArgs, SetResizingArgs, UngroupArgs,
 };
@@ -101,6 +101,10 @@ enum Command {
         stroke_width: Option<f32>,
         #[arg(long)]
         corner_radius: Option<f32>,
+        /// Add inside this artboard/group instead of the page's top level —
+        /// --x/--y are then relative to it.
+        #[arg(long)]
+        parent: Option<Uuid>,
     },
     /// Add a filled ellipse, inscribed in the given x/y/w/h box.
     AddEllipse {
@@ -133,6 +137,10 @@ enum Command {
         /// Defaults to 1.0.
         #[arg(long)]
         stroke_width: Option<f32>,
+        /// Add inside this artboard/group instead of the page's top level —
+        /// --x/--y are then relative to it.
+        #[arg(long)]
+        parent: Option<Uuid>,
     },
     /// Add a text layer.
     AddText {
@@ -174,6 +182,10 @@ enum Command {
         page: Option<Uuid>,
         #[arg(long)]
         name: Option<String>,
+        /// Add inside this artboard/group instead of the page's top level —
+        /// --x/--y are then relative to it.
+        #[arg(long)]
+        parent: Option<Uuid>,
     },
     /// Add a bitmap image from a local file — PNG/JPEG/GIF/BMP/TIFF/WebP all
     /// work (re-encoded to PNG on insert, same as the GUI). `--w`/`--h`
@@ -192,6 +204,34 @@ enum Command {
         page: Option<Uuid>,
         #[arg(long)]
         name: Option<String>,
+        /// Add inside this artboard/group instead of the page's top level —
+        /// --x/--y are then relative to it.
+        #[arg(long)]
+        parent: Option<Uuid>,
+    },
+    /// Add a top-level artboard. Size it with --preset (desktop, web, tablet,
+    /// phone, a3, a4, a5, a6) and/or --w/--h, which override the preset's
+    /// dimensions; without a preset both --w and --h are required. Put layers
+    /// inside it with the add-* commands' --parent <artboard id>.
+    AddArtboard {
+        #[arg(long)]
+        x: f32,
+        #[arg(long)]
+        y: f32,
+        #[arg(long)]
+        w: Option<f32>,
+        #[arg(long)]
+        h: Option<f32>,
+        #[arg(long)]
+        preset: Option<String>,
+        /// Defaults to the preset's name, else "Artboard".
+        #[arg(long)]
+        name: Option<String>,
+        /// Hex background color, RRGGBB or RRGGBBAA (defaults to white).
+        #[arg(long)]
+        background: Option<HexColor>,
+        #[arg(long)]
+        page: Option<Uuid>,
     },
     /// Replace a layer's position/size/rotation outright.
     SetFrame {
@@ -508,7 +548,7 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
         Command::ListLayers { page, recursive } => ("list_layers", to_value(ListLayersArgs { page, recursive })),
         Command::GetLayer { id } => ("get_layer", to_value(GetLayerArgs { id })),
         Command::FindLayer { query, page } => ("find_layer", to_value(FindLayerArgs { page, query })),
-        Command::AddRect { x, y, w, h, rotation, page, name, fill, no_fill, no_stroke, stroke, stroke_width, corner_radius } => (
+        Command::AddRect { x, y, w, h, rotation, page, name, fill, no_fill, no_stroke, stroke, stroke_width, corner_radius, parent } => (
             "add_rect",
             to_value(AddShapeArgs {
                 page,
@@ -520,9 +560,10 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
                 stroke: stroke.map(|c| c.0),
                 stroke_width,
                 corner_radius,
+                parent,
             }),
         ),
-        Command::AddEllipse { x, y, w, h, rotation, page, name, fill, no_fill, no_stroke, stroke, stroke_width } => (
+        Command::AddEllipse { x, y, w, h, rotation, page, name, fill, no_fill, no_stroke, stroke, stroke_width, parent } => (
             "add_ellipse",
             to_value(AddShapeArgs {
                 page,
@@ -534,9 +575,10 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
                 stroke: stroke.map(|c| c.0),
                 stroke_width,
                 corner_radius: None,
+                parent,
             }),
         ),
-        Command::AddText { content, x, y, w, h, rotation, font_size, font, bold, true_bold, align, vertical_align, fill, page, name } => (
+        Command::AddText { content, x, y, w, h, rotation, font_size, font, bold, true_bold, align, vertical_align, fill, page, name, parent } => (
             "add_text",
             to_value(AddTextArgs {
                 page,
@@ -550,11 +592,16 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
                 vertical_align: vertical_align.map(Into::into),
                 fill: fill.map(|c| c.0),
                 name,
+                parent,
             }),
         ),
-        Command::AddImage { path, x, y, w, h, page, name } => (
+        Command::AddImage { path, x, y, w, h, page, name, parent } => (
             "add_image",
-            to_value(AddImageArgs { page, path: path.to_string_lossy().into_owned(), x, y, w, h, name }),
+            to_value(AddImageArgs { page, path: path.to_string_lossy().into_owned(), x, y, w, h, name, parent }),
+        ),
+        Command::AddArtboard { x, y, w, h, preset, name, background, page } => (
+            "add_artboard",
+            to_value(AddArtboardArgs { page, x, y, w, h, preset, name, background: background.map(|c| c.0) }),
         ),
         Command::SetFrame { id, x, y, w, h, rotation } => {
             ("set_frame", to_value(SetFrameArgs { id, frame: Frame { pos: Pos2::new(x, y), size: Vec2::new(w, h), rotation } }))

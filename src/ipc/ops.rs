@@ -18,13 +18,13 @@ use crate::grouping;
 use crate::image_ops;
 use crate::model::text_runs::{RunStyle, TextRun};
 use crate::model::{
-    CornerRadii, Document, Frame, Layer, LayerKind, ListType, Page, Paint, Stroke, Style, TextAlign, TextFont, TextResize,
+    CornerRadii, Document, PAPER_PRESETS, SCREEN_PRESETS, Frame, Layer, LayerKind, ListType, Page, Paint, Stroke, Style, TextAlign, TextFont, TextResize,
     TextTransform, VerticalAlign,
 };
 use crate::transform_ops::{self, FlipAxis};
 
 use super::protocol::{
-    AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
+    AddArtboardArgs, AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
     GroupArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFrameArgs, SetMaskArgs, SetResizingArgs,
     UngroupArgs,
 };
@@ -35,7 +35,8 @@ use super::protocol::{
 pub fn mutates(op: &str) -> bool {
     matches!(
         op,
-        "add_rect"
+        "add_artboard"
+            | "add_rect"
             | "add_ellipse"
             | "add_text"
             | "add_image"
@@ -102,6 +103,24 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             Ok(json!(out))
         }
 
+        "add_artboard" => {
+            let args: AddArtboardArgs = parse(args)?;
+            let preset = match &args.preset {
+                Some(name) => Some(find_artboard_preset(name)?),
+                None => None,
+            };
+            let w = args.w.or(preset.map(|p| p.size.x)).ok_or("add_artboard needs `w` or a `preset`")?;
+            let h = args.h.or(preset.map(|p| p.size.y)).ok_or("add_artboard needs `h` or a `preset`")?;
+            let name = args.name.unwrap_or_else(|| preset.map_or("Artboard", |p| p.name).to_string());
+            let mut layer = Layer::new_artboard(name, Frame { pos: Pos2::new(args.x, args.y), size: Vec2::new(w, h), rotation: 0.0 });
+            if let (Some(color), LayerKind::Artboard { background, .. }) = (args.background, &mut layer.kind) {
+                *background = color;
+            }
+            let id = layer.id;
+            resolve_page_mut(doc, args.page)?.layers.push(layer);
+            Ok(json!({ "id": id, "width": w, "height": h }))
+        }
+
         "add_rect" => {
             let args: AddShapeArgs = parse(args)?;
             let name = args.name.clone().unwrap_or_else(|| "Rectangle".to_string());
@@ -109,7 +128,7 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             let mut layer = Layer::new(name, args.frame, LayerKind::Rectangle { corner_radius: radius });
             apply_shape_style(&mut layer, &args);
             let id = layer.id;
-            resolve_page_mut(doc, args.page)?.layers.push(layer);
+            push_layer(doc, args.page, args.parent, layer)?;
             Ok(json!({ "id": id }))
         }
 
@@ -119,7 +138,7 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             let mut layer = Layer::new(name, args.frame, LayerKind::Oval);
             apply_shape_style(&mut layer, &args);
             let id = layer.id;
-            resolve_page_mut(doc, args.page)?.layers.push(layer);
+            push_layer(doc, args.page, args.parent, layer)?;
             Ok(json!({ "id": id }))
         }
 
@@ -173,7 +192,7 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             );
             layer.style = Style { fill: Some(Paint::Solid(fill)), stroke: None, ..Default::default() };
             let id = layer.id;
-            resolve_page_mut(doc, args.page)?.layers.push(layer);
+            push_layer(doc, args.page, args.parent, layer)?;
             Ok(json!({ "id": id }))
         }
 
@@ -200,7 +219,7 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
                 decoded.height(),
             );
             let id = layer.id;
-            resolve_page_mut(doc, args.page)?.layers.push(layer);
+            push_layer(doc, args.page, args.parent, layer)?;
             Ok(json!({ "id": id, "width": decoded.width(), "height": decoded.height() }))
         }
 
@@ -440,6 +459,36 @@ fn resolve_page_mut(doc: &mut Document, page: Option<Uuid>) -> Result<&mut Page,
     }
 }
 
+/// Appends `layer` to `parent`'s children if given, else to the page's top
+/// level. A parent is looked up in `page` when that's given, otherwise across
+/// every page — so `--parent` alone never silently misses because a
+/// `new_page` switched the active page (see `resolve_page`).
+fn push_layer(doc: &mut Document, page: Option<Uuid>, parent: Option<Uuid>, layer: Layer) -> Result<(), String> {
+    let Some(parent_id) = parent else {
+        resolve_page_mut(doc, page)?.layers.push(layer);
+        return Ok(());
+    };
+    let container = match page {
+        Some(_) => resolve_page_mut(doc, page)?.find_mut(parent_id),
+        None => doc.find_mut(parent_id),
+    }
+    .ok_or_else(|| format!("parent layer not found: {parent_id}"))?;
+    let kind = layer_kind_name(&container.kind);
+    let children = container.kind.children_mut().ok_or_else(|| format!("parent {parent_id} is a {kind}, not an artboard or group"))?;
+    children.push(layer);
+    Ok(())
+}
+
+/// Case-insensitive lookup across `SCREEN_PRESETS` and `PAPER_PRESETS`; an
+/// unknown name errors listing the valid ones.
+fn find_artboard_preset(name: &str) -> Result<&'static crate::model::ArtboardPreset, String> {
+    let mut presets = SCREEN_PRESETS.iter().chain(PAPER_PRESETS);
+    presets.find(|p| p.name.eq_ignore_ascii_case(name)).ok_or_else(|| {
+        let names: Vec<&str> = SCREEN_PRESETS.iter().chain(PAPER_PRESETS).map(|p| p.name).collect();
+        format!("unknown artboard preset {name:?} — available: {}", names.join(", "))
+    })
+}
+
 fn layer_summary(layer: &Layer, depth: usize) -> serde_json::Value {
     json!({
         "id": layer.id,
@@ -572,6 +621,40 @@ mod tests {
             doc.find(artboard_id).unwrap().kind,
             LayerKind::Artboard { adjust_content_on_resize: true, .. }
         ));
+    }
+
+    #[test]
+    fn add_artboard_from_a_preset_lets_w_h_override_and_rejects_an_unknown_preset() {
+        let mut doc = Document::new();
+        let args = json!({ "x": 10.0, "y": 20.0, "h": 2000.0, "preset": "desktop", "name": null, "background": [1, 2, 3, 255] });
+        let result = apply(&mut doc, "add_artboard", args).expect("add_artboard should succeed");
+        let id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let layer = doc.find(id).unwrap();
+        assert_eq!(layer.name, "Desktop");
+        assert_eq!(layer.frame, frame(10.0, 20.0, 1440.0, 2000.0));
+        assert!(matches!(layer.kind, LayerKind::Artboard { background, .. } if background == Color32::from_rgb(1, 2, 3)));
+
+        assert!(apply(&mut doc, "add_artboard", json!({ "x": 0.0, "y": 0.0, "preset": "nope", "name": null })).is_err());
+        assert!(apply(&mut doc, "add_artboard", json!({ "x": 0.0, "y": 0.0, "w": 10.0, "name": null })).is_err());
+    }
+
+    #[test]
+    fn add_rect_with_parent_lands_inside_it_and_rejects_a_non_container_parent() {
+        let mut doc = Document::new();
+        let args = json!({ "x": 0.0, "y": 0.0, "w": 100.0, "h": 100.0, "name": null });
+        let result = apply(&mut doc, "add_artboard", args).expect("add_artboard should succeed");
+        let artboard_id: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let rect_id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+
+        let args = json!({ "frame": frame(5.0, 5.0, 10.0, 10.0), "name": "Child", "parent": artboard_id });
+        apply(&mut doc, "add_rect", args).expect("add_rect into an artboard should succeed");
+        let children = doc.find(artboard_id).unwrap().kind.children().unwrap();
+        assert_eq!(children.len(), 1);
+        assert_eq!(children[0].name, "Child");
+        assert_eq!(doc.active_page().layers.len(), 2, "the child isn't also added at the top level");
+
+        let args = json!({ "frame": frame(0.0, 0.0, 1.0, 1.0), "name": null, "parent": rect_id });
+        assert!(apply(&mut doc, "add_rect", args).is_err());
     }
 
     #[test]

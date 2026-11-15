@@ -102,6 +102,11 @@ pub struct AddShapeArgs {
     /// `add_rect` only — ignored for `add_ellipse` (an `Oval` has no corners).
     #[serde(default)]
     pub corner_radius: Option<f32>,
+    /// A container (Artboard/Group) to add into instead of the page's top
+    /// level; `frame`/position is then relative to it, like every nested
+    /// `Layer.frame`. Searched across all pages unless `page` is also given.
+    #[serde(default)]
+    pub parent: Option<Uuid>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -139,6 +144,11 @@ pub struct AddTextArgs {
     #[serde(default)]
     pub fill: Option<Color32>,
     pub name: Option<String>,
+    /// A container (Artboard/Group) to add into instead of the page's top
+    /// level; `frame`/position is then relative to it, like every nested
+    /// `Layer.frame`. Searched across all pages unless `page` is also given.
+    #[serde(default)]
+    pub parent: Option<Uuid>,
 }
 
 /// Reads `path` off disk and re-encodes it PNG (same convention
@@ -157,6 +167,33 @@ pub struct AddImageArgs {
     #[serde(default)]
     pub h: Option<f32>,
     pub name: Option<String>,
+    /// A container (Artboard/Group) to add into instead of the page's top
+    /// level; `frame`/position is then relative to it, like every nested
+    /// `Layer.frame`. Searched across all pages unless `page` is also given.
+    #[serde(default)]
+    pub parent: Option<Uuid>,
+}
+
+/// A new top-level Artboard. Its size comes from `preset` (a
+/// `SCREEN_PRESETS`/`PAPER_PRESETS` name, case-insensitive) and/or `w`/`h`,
+/// which override the preset's dimensions individually; with no preset, both
+/// `w` and `h` are required. `name` defaults to the preset's name, else
+/// "Artboard"; `background` to white, like `Layer::new_artboard`.
+#[derive(Serialize, Deserialize)]
+pub struct AddArtboardArgs {
+    #[serde(default)]
+    pub page: Option<Uuid>,
+    pub x: f32,
+    pub y: f32,
+    #[serde(default)]
+    pub w: Option<f32>,
+    #[serde(default)]
+    pub h: Option<f32>,
+    #[serde(default)]
+    pub preset: Option<String>,
+    pub name: Option<String>,
+    #[serde(default)]
+    pub background: Option<Color32>,
 }
 
 #[derive(Serialize, Deserialize)]
