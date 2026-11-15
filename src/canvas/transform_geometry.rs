@@ -222,7 +222,7 @@ pub(super) fn display_bounds(layer: &Layer) -> Rect {
 /// A layer's resize state captured at drag start, in page-space (absolute,
 /// pan/zoom-only coordinates — not offset by ancestor layer positions).
 /// Where Scale mode's resize is anchored — see `DragState::ResizingGroup`'s
-/// `scale_anchor` field and `ui/inspector/`'s "Scale Layers" panel.
+/// `scale_anchor` field and `ui/inspector/multi_selection.rs`'s "Scale Layers" panel.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum ScaleAnchor {
     /// The dragged handle's opposite corner/edge stays fixed — identical to

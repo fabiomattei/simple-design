@@ -80,7 +80,7 @@ fn title_case(s: &str) -> String {
 }
 
 /// Resolves any `TextFont` tier to the `FontId` egui would actually draw it
-/// with — shared with `ui/inspector/`'s font-picker preview so it renders
+/// with — shared with `ui/inspector/text_font_picker.rs`'s font-picker preview so it renders
 /// each candidate in its real face rather than guessing at a mapping.
 pub(crate) fn font_id(ctx: &egui::Context, font: &TextFont, size: f32) -> FontId {
     match font {

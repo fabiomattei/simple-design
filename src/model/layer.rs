@@ -275,7 +275,7 @@ pub struct Style {
     pub stroke: Option<Stroke>,
     /// Independent opacity for the fill only (0.0-1.0), multiplied together
     /// with `Layer::opacity`/ancestor opacity at draw time — a
-    /// per-attribute opacity (see `ui/inspector/`'s Fill/Border sliders).
+    /// per-attribute opacity (see `ui/inspector/appearance_section.rs`'s Fill/Border sliders).
     /// A `Text` layer's glyph color is `fill`, so this also covers "text
     /// color opacity" per CLAUDE.md's Fonts section. `#[serde(default)]`
     /// (via the same helper `Layer::opacity` uses) so documents saved

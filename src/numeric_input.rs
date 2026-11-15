@@ -1,6 +1,6 @@
 /// Which edge/center of a layer's frame a resize/position value should be
 /// measured from, per the Inspector's keyboard operators (`…l`/`…r`/
-/// `…t`/`…b`/`…c`/`…m` — see `ui/inspector/`'s Position/Size fields).
+/// `…t`/`…b`/`…c`/`…m` — see `ui/inspector/geometry_section.rs`'s Position/Size fields).
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Anchor {
     Left,
