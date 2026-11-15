@@ -17,6 +17,9 @@ use crate::tools::Tool;
 use crate::transform_ops::FlipAxis;
 use crate::ui::{color_picker, icons};
 
+#[cfg(test)]
+mod tests;
+
 /// The nearest parent container's `(width, height)`, in doc units — the
 /// 100% reference for percentage dimension input (see
 /// `numeric_input::parse_dimension_expr`). Falls back to `fallback` (the
