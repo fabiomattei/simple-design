@@ -38,6 +38,7 @@ const HEADINGS: &[&str] = &[
     "W",
     "H",
     "Rotate",
+    "Resizing",
     "Flip",
     "Closed",
     "Corner radius",
@@ -186,7 +187,16 @@ fn group_adds_an_ungroup_button_after_appearance() {
 #[test]
 fn artboard_has_no_rotation_field() {
     let artboard = layer(LayerKind::Artboard { children: Vec::new(), background: Color32::WHITE, adjust_content_on_resize: false });
-    assert_eq!(headings_for_single(artboard), concat(&[&["X", "Y", "W", "H"], APPEARANCE]));
+    assert_eq!(headings_for_single(artboard), concat(&[&["X", "Y", "W", "H", "Resizing"], APPEARANCE]));
+}
+
+#[test]
+fn layer_inside_a_group_shows_resizing_after_the_transform_rows() {
+    let child = layer(LayerKind::Oval);
+    let child_id = child.id;
+    let group = layer(LayerKind::Group { children: vec![child] });
+    let found = headings(vec![group], &[child_id], &mut CanvasWidget::default(), Tool::Select);
+    assert_eq!(found, concat(&[TRANSFORM, &["Resizing"], APPEARANCE]));
 }
 
 #[test]

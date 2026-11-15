@@ -20,6 +20,7 @@ mod layer_styles;
 mod multi_frame_fields;
 mod multi_selection;
 mod paint_editor;
+mod resizing_section;
 mod shadow_section;
 mod text_font_picker;
 mod text_path_ui;
@@ -34,6 +35,7 @@ use frame_section::frame_section;
 use geometry_section::shape_fields;
 use image_section::image_section;
 use multi_selection::{multi_selection_panel, scale_layers_panel};
+use resizing_section::resizing_section;
 use text_section::text_section;
 
 pub enum InspectorAction {
@@ -125,6 +127,7 @@ pub fn ui(
     if let Some(action) = frame_section(ui, history, canvas, &layer) {
         return Some(action);
     }
+    resizing_section(ui, history, &layer);
     shape_fields(ui, history, canvas, &layer);
     text_section(ui, history, canvas, &layer, &text_selection);
     image_section(ui, history, canvas, &layer);
