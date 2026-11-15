@@ -658,6 +658,24 @@ impl App {
         }
     }
 
+    /// The Export dialog's HTML button: same as `run_export`, but asks for a
+    /// folder and writes HTML + CSS + images (see `html_export`).
+    fn run_html_export(&mut self) {
+        let dialog = &mut self.export_dialog;
+        let page = self.history.get().active_page();
+        let Some(layer) = dialog.layer_id.and_then(|id| page.find(id)) else {
+            dialog.error = Some("The layer no longer exists on this page.".to_string());
+            return;
+        };
+        let Some(parent_dir) = io::export_html_dialog() else {
+            return;
+        };
+        match crate::html_export::export_html(layer, &page.layers, &parent_dir) {
+            Ok(_) => dialog.open = false,
+            Err(error) => dialog.error = Some(format!("HTML export failed: {error}")),
+        }
+    }
+
     /// Asks for a folder and exports the single selected layer into it as
     /// HTML + CSS + images (see `html_export`). Failures are shown in a
     /// native alert, since this action has no dialog of its own.
@@ -1303,8 +1321,10 @@ impl eframe::App for App {
             self.last_rename_config = Some(self.rename_all.config.clone());
             self.apply_renames(names);
         }
-        if let Some(ExportDialogAction::Export) = export_dialog::ui(&ctx, &mut self.export_dialog) {
-            self.run_export();
+        match export_dialog::ui(&ctx, &mut self.export_dialog) {
+            Some(ExportDialogAction::Export) => self.run_export(),
+            Some(ExportDialogAction::ExportHtml) => self.run_html_export(),
+            None => {}
         }
     }
 }

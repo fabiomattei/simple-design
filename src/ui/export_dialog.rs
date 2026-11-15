@@ -21,13 +21,16 @@ pub struct ExportDialogState {
 
 pub enum ExportDialogAction {
     Export,
+    /// HTML + CSS + images into a folder (see `html_export`); ignores `settings`.
+    ExportHtml,
 }
 
 const SCALES: [f32; 4] = [0.5, 1.0, 2.0, 3.0];
 
-/// Draws the dialog if `state.open`; returns `Some(Export)` the frame the
-/// user clicks "Export...". The caller picks the path, writes the file, and
-/// either closes the dialog or sets `state.error`.
+/// Draws the dialog if `state.open`; returns `Some(Export)` or
+/// `Some(ExportHtml)` the frame the user clicks the matching button. The
+/// caller picks the path, writes the file(s), and either closes the dialog or
+/// sets `state.error`.
 pub fn ui(ctx: &egui::Context, state: &mut ExportDialogState) -> Option<ExportDialogAction> {
     if !state.open {
         return None;
@@ -47,6 +50,11 @@ pub fn ui(ctx: &egui::Context, state: &mut ExportDialogState) -> Option<ExportDi
         if ui.button("Export...").clicked() {
             action = Some(ExportDialogAction::Export);
         }
+        ui.separator();
+        if ui.button("Export as HTML...").clicked() {
+            action = Some(ExportDialogAction::ExportHtml);
+        }
+        ui.weak("HTML + CSS + images into a folder. Format and scale don't apply.");
     });
     state.open = state.open && still_open;
     action
