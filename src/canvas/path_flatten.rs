@@ -62,7 +62,7 @@ pub(super) fn corner_arc_points(points: &[PathPoint], i: usize) -> Vec<Pos2> {
 
 /// Flattens anchors + bezier handles into a polyline, for egui's `PathShape`
 /// (which has no native curve primitive covering fill of a multi-segment
-/// curve, unlike `tiny-skia`'s `cubic_to` used in `export.rs`). Output is in
+/// curve, unlike `tiny-skia`'s `cubic_to` used in `export/`). Output is in
 /// the same coordinate space as the input anchors — the caller applies
 /// whatever offset/to-screen transform is appropriate.
 ///

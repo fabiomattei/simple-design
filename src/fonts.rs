@@ -63,7 +63,7 @@ pub const HANDWRITING_BOLD_FAMILY: &str = "Handwriting Bold";
 /// Registers the extra font families above with the egui context. Must run
 /// once at startup, before any `Text` layer using a bundled non-default
 /// family (`Serif`/`Display`/`Handwriting`, or any per-run bold text — see
-/// this module's "Bold" doc section) is drawn on the canvas (`export.rs`/
+/// this module's "Bold" doc section) is drawn on the canvas (`export/`/
 /// `text_outline.rs` don't need this — they load the raw bytes directly).
 pub fn install_fonts(ctx: &egui::Context) {
     let mut fonts = FontDefinitions::default();
@@ -90,7 +90,7 @@ pub fn install_fonts(ctx: &egui::Context) {
 }
 
 /// Raw font bytes + face index for any `TextFont`, for `ab_glyph`'s
-/// rasterizer (`export.rs`, `text_outline.rs`) — these never go through
+/// rasterizer (`export/`, `text_outline.rs`) — these never go through
 /// egui's font registry at all, so they need the bytes directly rather than
 /// a `FontFamily` name. A `TextFont::System` naming a family that isn't
 /// installed on this machine falls back to `Proportional`'s bytes, matching
@@ -131,9 +131,9 @@ pub fn ab_glyph_bytes_bold(font: &TextFont) -> (Cow<'static, [u8]>, u32) {
 /// One `(bytes, face_index)` per style source a rich-text render needs to
 /// build an `ab_glyph::FontRef` from — `[0]` = `base`, `[i + 1]` =
 /// `runs[i]` — picking each source's bold or regular bytes per its own
-/// `RunStyle::bold`. Factored out of `export.rs`'s `draw_text_rich` and
+/// `RunStyle::bold`. Factored out of `export/mod.rs`'s `draw_text_rich` and
 /// `text_outline.rs`'s `convert_to_outlines_rich` (which used to duplicate
-/// this exact selection logic) since `export.rs`'s new `draw_text_in_area`
+/// this exact selection logic) since `export/`'s new `draw_text_in_area`
 /// needs the identical resolution a third time — callers still build their
 /// own `Vec<FontRef>` from the returned bytes locally (a `FontRef` borrows
 /// from its bytes, so it can't be returned from here without also returning

@@ -1,6 +1,6 @@
 //! Canvas-side text layout helpers, shared by the interactive `Text` layer
-//! renderer and by auto-resize measurement in `canvas.rs`. Deliberately not
-//! shared with `export.rs`'s independent `ab_glyph` rasterizer (see
+//! renderer and by auto-resize measurement in `canvas/layer_creation.rs`. Deliberately not
+//! shared with `export/`'s independent `ab_glyph` rasterizer (see
 //! `CLAUDE.md`'s note on canvas vs. export being separate render paths) —
 //! this module only ever produces `egui::Galley`s for on-screen use.
 use std::sync::Arc;
@@ -222,8 +222,8 @@ fn run_index_per_char(char_count: usize, runs: &[TextRun]) -> Vec<usize> {
 /// per `list`/`list_start`) if `list != None`.
 ///
 /// The single shared source of truth for run-boundary/transform/list-
-/// prefix semantics across every rich-text render path — `canvas.rs`
-/// (`layout_paragraphs_rich`, below), `export.rs`'s `draw_text_rich`, and
+/// prefix semantics across every rich-text render path — `canvas/`
+/// (`layout_paragraphs_rich`, below), `export/mod.rs`'s `draw_text_rich`, and
 /// `text_outline.rs`'s rich outline conversion all call this rather than
 /// each re-deriving it, so they can't silently drift apart on where a run
 /// boundary actually falls.
@@ -297,7 +297,7 @@ pub(crate) fn tagged_lines(
 /// `single_section`, so a single paragraph can mix fonts/sizes/colors/
 /// bold/italic/underline/strikethrough — egui's click-drag selection and
 /// cursor placement work against whichever `Galley` this produces with no
-/// extra work, which is what lets the in-place editor (`canvas.rs`) offer
+/// extra work, which is what lets the in-place editor (`canvas/text_edit_overlay.rs`) offer
 /// real text selection over rich content just by feeding this through
 /// `TextEdit::layouter`.
 ///
@@ -354,7 +354,7 @@ pub fn layout_paragraphs_rich(
 /// Builds a single whole-buffer `LayoutJob` (not split by paragraph — one
 /// `Galley` for the *entire* edit buffer, which is what `egui::TextEdit`'s
 /// `.layouter()` callback needs) reflecting `runs`' per-character styling,
-/// for the in-place rich-text editing overlay (`canvas.rs`). Because egui
+/// for the in-place rich-text editing overlay (`canvas/text_edit_overlay.rs`). Because egui
 /// uses this same `Galley` for both painting and all click/drag/keyboard
 /// selection and cursor placement, the editor gets real text selection
 /// over rich content for free — no custom selection code needed.
@@ -448,7 +448,7 @@ pub fn plain_editor_layout_job(ctx: &egui::Context, buf_text: &str, style: &Text
 /// between each pair. Returns each galley's y-offset from the first
 /// galley's top, plus the total stacked size (max width, summed height) —
 /// used both to position draw calls and to measure natural size for
-/// auto-resize (see `canvas.rs::apply_text_auto_resize`).
+/// auto-resize (see `canvas/layer_creation.rs::apply_text_auto_resize`).
 pub fn stack_paragraphs(galleys: &[Arc<Galley>], paragraph_spacing: f32) -> (Vec<f32>, Vec2) {
     let mut y = 0.0;
     let mut offsets = Vec::with_capacity(galleys.len());

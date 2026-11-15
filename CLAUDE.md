@@ -33,7 +33,7 @@ cargo test --lib <test_name>   # run one test, e.g. cargo test --lib renders_fil
 
 No separate lint/format CI — `cargo check`/`cargo build` emitting no warnings
 is the bar to clear. Tests are `#[cfg(test)] mod tests` blocks inline in the
-module they cover (most densely in `export.rs`, `io.rs`, and `ipc/ops.rs`).
+module they cover (most densely in `export/`, `io.rs`, and `ipc/ops.rs`).
 
 ## egui 0.36 gotcha
 
@@ -60,16 +60,16 @@ training data, check `~/.cargo/registry/src/*/egui-0.36.0/src/` directly.
   `frame.bounds()` for anything direction-insensitive, `frame.rotated_bounds()`
   when rotation matters. Any new recursive layer-tree traversal must
   accumulate `offset + layer.frame.pos.to_vec2()` the same way
-  `canvas/`/`export.rs`/`ipc::ops` already do, or nested shapes render or
+  `canvas/`/`export/`/`ipc::ops` already do, or nested shapes render or
   align in the wrong place.
 - **Undo** (`history.rs`): whole-`Document` snapshot cloning, not a command
   pattern. Convention: `history.snapshot()` before mutating, then mutate via
   `history.mutate()`. For a continuous gesture, snapshot only once at the start.
-- **Rendering is not shared**: `canvas/` (interactive) and `export.rs` (PNG)
+- **Rendering is not shared**: `canvas/` (interactive) and `export/` (PNG)
   are two separate implementations. A new `LayerKind`/`Paint` variant needs a
   matching case in both, or exports will silently not match what's on screen.
 - **Adding a new shape/tool** touches, in order: `tools.rs` → `model/layer.rs`
-  → `canvas/` (`layer_creation.rs::new_layer_for_tool`, `draw_layer.rs::draw_layer`) → `export.rs` (`draw_layer`)
+  → `canvas/` (`layer_creation.rs::new_layer_for_tool`, `draw_layer.rs::draw_layer`) → `export/` (`draw_layer`)
   → `ui/inspector.rs` → `ui/layers_panel.rs`'s `icon_for`.
 
 ## CLI / IPC (`src/ipc/`, `src/app/ipc_dispatch.rs`)

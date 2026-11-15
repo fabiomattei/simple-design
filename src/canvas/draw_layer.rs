@@ -1,5 +1,5 @@
 //! Paints the layer tree onto the canvas with egui's painter — the
-//! interactive counterpart of `export.rs`'s `draw_layer`.
+//! interactive counterpart of `export/mod.rs`'s `draw_layer`.
 
 use egui::{Color32, Pos2, Rect, Stroke as EguiStroke, Vec2};
 

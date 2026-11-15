@@ -120,7 +120,7 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             Ok(json!({ "id": id }))
         }
 
-        // Mirrors `Tool::Text`'s own defaults (`canvas.rs::new_layer_for_tool`)
+        // Mirrors `Tool::Text`'s own defaults (`canvas/layer_creation.rs::new_layer_for_tool`)
         // except `resize`, which is always `Fixed` here — a CLI-given frame is
         // always the caller's explicit choice, unlike a plain click in the GUI
         // (which has no drag to size a box from, so falls back to `Auto`).

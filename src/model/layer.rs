@@ -172,7 +172,7 @@ pub struct HalftoneFill {
 /// around as a decoded buffer). `tile_width` is the repeat width, in the
 /// same local-bounds units as `Frame::size`/`NoiseFill::scale`; height
 /// follows the source image's own aspect ratio (see
-/// `canvas.rs::PatternTextureCache`/`export.rs::to_sk_paint`, which both
+/// `canvas/texture_caches.rs::PatternTextureCache`/`export/paint.rs::to_sk_paint`, which both
 /// derive it from the decoded image rather than storing it here).
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct PatternFill {
@@ -225,7 +225,7 @@ impl Paint {
     }
 
     /// Whether this paint needs the tessellated/textured rendering path
-    /// (`canvas.rs::paint_polygon`'s mesh-based fill) instead of egui's
+    /// (`canvas/fill_mesh.rs::paint_polygon`'s mesh-based fill) instead of egui's
     /// flat-color fast path (e.g. a plain `Painter::rect` for an unrotated
     /// rectangle) — true for every non-`Solid` fill kind now that `Noise`/
     /// `Halftone`/`Pattern` join `Gradient`. Stroke-side call sites keep
@@ -249,7 +249,7 @@ impl From<Color32> for Paint {
 /// already use), `offset` moves it horizontally/vertically, `blur` is the
 /// softness radius in px, and `spread` expands (+) or contracts (-) it
 /// uniformly before blurring. Rendered by `shadow.rs`, which both
-/// `canvas.rs` and `export.rs` call into — see that module's doc comment.
+/// `canvas/` and `export/` call into — see that module's doc comment.
 #[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq)]
 pub struct Shadow {
     pub color: Color32,
@@ -336,7 +336,7 @@ pub struct Frame {
     /// behavior exactly. Only ever nonzero on a leaf shape layer — a
     /// `Group`/`Artboard`'s own `rotation` is always `0.0`; rotating a group
     /// bakes the rotation into each descendant's own frame instead (see
-    /// `canvas.rs`'s rotate-drag handling), so nothing needs to propagate
+    /// `canvas/transform_geometry.rs`'s rotate-drag handling), so nothing needs to propagate
     /// rotation through `Page::absolute_offset` or either renderer's
     /// child-offset accumulation.
     #[serde(default)]
@@ -396,7 +396,7 @@ impl Frame {
 }
 
 /// How a `PathPoint`'s two bezier handles behave relative to each other when
-/// one of them is dragged (see `canvas.rs`'s `EditingPathHandle` handling).
+/// one of them is dragged (see `canvas/drag_update.rs`'s `EditingPathHandle` handling).
 /// Mirrors the standard four vector point types.
 #[derive(Clone, Copy, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub enum PointType {
@@ -434,7 +434,7 @@ pub struct PathPoint {
     /// touching either of those segments) — a point that's otherwise
     /// curved just ignores a stray nonzero value here. `0.0` (the default,
     /// and always true for documents saved before this field existed)
-    /// means a plain sharp corner. `flatten_path`/`export.rs`'s
+    /// means a plain sharp corner. `flatten_path`/`export/`'s
     /// `path_to_sk_path` both inset-and-arc via
     /// `shapes::rounded_corner_arc_points`, clamped there to at most half
     /// the shorter adjacent segment — so setting this arbitrarily high is
@@ -457,7 +457,7 @@ pub struct PathPolygon {
 
 /// Independent per-corner rounding for a `Rectangle`, in document units.
 /// Each corner is clamped to at most half the shorter side by
-/// `shapes::rounded_rect_points`/`export.rs`'s `rounded_rect_path` — same
+/// `shapes::rounded_rect_points`/`export/sk_geometry.rs`'s `rounded_rect_path` — same
 /// "maximum radius, not a separate mode" convention as `PathPoint::corner_radius`.
 #[derive(Clone, Copy, Debug, Serialize, PartialEq)]
 pub struct CornerRadii {
@@ -648,7 +648,7 @@ pub enum LayerKind {
         width: u32,
         height: u32,
         /// Regenerated every time `encoded` changes; the texture cache
-        /// (`canvas.rs`) keys off `(LayerId, version, color_adjust)` instead
+        /// (`canvas/texture_caches.rs`) keys off `(LayerId, version, color_adjust)` instead
         /// of hashing `encoded` every frame. A fresh UUID (rather than an
         /// incrementing counter) avoids collisions across undo/redo, where
         /// re-editing after an undo can otherwise revisit a counter value a
@@ -701,7 +701,7 @@ pub enum VerticalAlign {
 /// standard "Resizing" options. `Auto` recomputes both width and height from the
 /// unwrapped content (no wrapping); `AutoHeight` wraps at the current width
 /// but recomputes height; `Fixed` never auto-adjusts and clips/wraps within
-/// the stored frame. See `canvas.rs::apply_text_auto_resize`.
+/// the stored frame. See `canvas/layer_creation.rs::apply_text_auto_resize`.
 #[derive(Clone, Copy, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub enum TextResize {
     #[default]
@@ -787,7 +787,7 @@ impl Default for TextPathAttachment {
 }
 
 /// An `Arrow` layer's end-marker style, drawn pointing along the segment's
-/// own direction at that end (see `shapes`/`canvas.rs`/`export.rs`'s arrow
+/// own direction at that end (see `shapes`/`canvas/`/`export/`'s arrow
 /// cap builders).
 #[derive(Clone, Copy, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub enum ArrowCap {
@@ -955,7 +955,7 @@ pub struct Layer {
     pub locked: bool,
     /// 0.0 (fully transparent) to 1.0 (fully opaque). Absent in older save
     /// files, hence `default`. A container's opacity multiplies into its
-    /// descendants' effective opacity when drawn (see `canvas.rs`/`export.rs`
+    /// descendants' effective opacity when drawn (see `canvas/`/`export/`
     /// `draw_layer`), rather than each layer's opacity being independent.
     #[serde(default = "default_opacity")]
     pub opacity: f32,
@@ -965,7 +965,7 @@ pub struct Layer {
     /// `children`/`Page::layers` list) down to the previous mask or the start
     /// of the list. See `masking::partition_mask_runs`, the single place
     /// that interprets this field (and `ignore_mask` below) for both
-    /// `canvas.rs` and `export.rs`. `#[serde(default)]` so documents saved
+    /// `canvas/` and `export/`. `#[serde(default)]` so documents saved
     /// before this field existed load with masking off everywhere.
     #[serde(default)]
     pub is_mask: bool,

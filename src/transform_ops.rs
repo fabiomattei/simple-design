@@ -1,5 +1,5 @@
 //! Whole-layer geometric transforms that aren't tree surgery (see
-//! `grouping.rs` for that) or a single drag gesture (see `canvas.rs`'s
+//! `grouping.rs` for that) or a single drag gesture (see `canvas/`'s
 //! `DragState`): flip, rotate copies, and flatten. Grouped in one module
 //! since they share the same "read the current selection, mutate frame/
 //! point geometry in place" shape.
@@ -27,7 +27,7 @@ pub enum FlipAxis {
 /// below. `Image` mirrors the bitmap itself (destructive, same philosophy as
 /// this codebase's other Image edits — see `image_ops::apply_cropped_image`).
 /// `Text` is a frame-only no-op: genuinely mirrored glyph rendering would
-/// need matching work in both `canvas.rs`'s egui layout and `export.rs`'s
+/// need matching work in both `canvas/`'s egui layout and `export/`'s
 /// `ab_glyph` rasterizer for very little payoff, so it's deliberately not
 /// attempted.
 pub fn flip_layer(layer: &mut Layer, axis: FlipAxis) {

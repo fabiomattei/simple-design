@@ -148,8 +148,8 @@ enum Command {
         /// Defaults to proportional.
         #[arg(long, value_enum)]
         font: Option<TextFontArg>,
-        /// Only the weak "faux bold" (offset double-draw) both canvas.rs and
-        /// export.rs fall back to — see `--true-bold` for real bold glyphs.
+        /// Only the weak "faux bold" (offset double-draw) both `canvas/` and
+        /// export/ fall back to — see `--true-bold` for real bold glyphs.
         #[arg(long)]
         bold: bool,
         /// Real bold-weight glyphs (via a `runs` entry), not just the faux

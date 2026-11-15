@@ -2,7 +2,7 @@
 //! target layer's outline (as an absolute-space polyline) and the arc-length
 //! / scanline queries `text_on_path_layout.rs`/`text_area_layout.rs` need to
 //! place glyphs or wrap lines against it. Shared by the canvas renderer
-//! (`canvas.rs`) and the exporter (`export.rs`) so both agree on where the
+//! (`canvas/`) and the exporter (`export/`) so both agree on where the
 //! outline actually is, the same reason `shapes.rs` centralizes plain shape
 //! point generation.
 //!
@@ -28,7 +28,7 @@ pub fn resolve_target_outline(roots: &[Layer], target: LayerId) -> Option<(Vec<P
 
 /// The accumulated offset of `id`'s ancestors within `roots` — i.e. the
 /// value that must be added to `id`'s own `frame.pos` to land in the same
-/// absolute space `resolve_target_outline`'s output is already in. `export.rs`
+/// absolute space `resolve_target_outline`'s output is already in. `export/`
 /// uses this (for both the `Text` layer itself and its attachment target) to
 /// convert that "root-relative" outline into whatever pixmap-space offset
 /// its own recursion happens to be accumulating, without needing a second

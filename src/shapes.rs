@@ -1,5 +1,5 @@
 //! Pure shape-geometry generators shared by the live canvas renderer
-//! (`canvas.rs`), the PNG exporter (`export.rs`), and boolean-op flattening
+//! (`canvas/`), the PNG exporter (`export/`), and boolean-op flattening
 //! (`boolean_ops.rs`). No egui painter / tiny-skia dependency — everything
 //! here is plain `Vec<Pos2>` in, `Vec<Pos2>` out, so all three consumers stay
 //! in sync by construction instead of re-deriving the same math three times.

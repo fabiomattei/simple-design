@@ -1,13 +1,13 @@
 //! App-wide look and feel: one dark and one light `egui::Style`, installed for both
 //! `egui::Theme`s so the UI follows the OS color scheme, plus the matching colors for the
-//! canvas chrome (backdrop, rulers, minimap) that `canvas.rs`/`minimap_panel.rs` paint by
+//! canvas chrome (backdrop, rulers, minimap) that `canvas/`/`minimap_panel.rs` paint by
 //! hand rather than through egui widgets.
 
 use egui::{Color32, CornerRadius, Margin, RichText, Stroke, Theme, Ui, Vec2, Visuals};
 
 use crate::ui::icons;
 
-/// Shared accent — same blue as `canvas.rs`'s `SELECTION_COLOR`, so selected widgets in the
+/// Shared accent — same blue as `canvas/mod.rs`'s `SELECTION_COLOR`, so selected widgets in the
 /// panels read as the same "selection" as handles on the canvas.
 pub const ACCENT: Color32 = Color32::from_rgb(0, 122, 255);
 

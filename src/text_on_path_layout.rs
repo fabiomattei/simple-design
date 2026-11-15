@@ -2,7 +2,7 @@
 //! `TextPathMode::OnPath` — walks `content` character by character along a
 //! path (from `text_path_geometry`), producing one already-laid-out
 //! single-character `Galley` plus a position/angle per glyph, for the canvas
-//! (`canvas.rs`) and exporter (`export.rs`) to each paint in their own way.
+//! (`canvas/`) and exporter (`export/`) to each paint in their own way.
 //!
 //! Only the first `\n`-separated line of `content` is placed — on-path text
 //! has no natural place to put a second line (there's exactly one path to
@@ -28,7 +28,7 @@ use crate::text_path_geometry::{point_and_tangent_at, polyline_length};
 /// the path. `pos` is the galley's top-left corner (egui's `TextShape`
 /// rotates about its own `pos`, so placing that corner directly on the path
 /// and rotating by `angle` orients the glyph tangent to it — see
-/// `canvas.rs`'s `draw_rotated_galley` for the same convention applied to
+/// `canvas/draw_layer.rs`'s `draw_rotated_galley` for the same convention applied to
 /// whole-layer rotation).
 pub struct PathGlyph {
     pub galley: Arc<Galley>,

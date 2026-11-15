@@ -1,10 +1,10 @@
 //! Converts a `Text` layer's glyphs into vector outlines ("Convert
 //! to Outlines"), wired up in `app.rs` (Edit menu + `⌥⌘O`).
 //!
-//! Independent of both `canvas.rs`'s `egui::Galley`-based render and
-//! `export.rs`'s `ab_glyph`-rasterizer render (per this codebase's
+//! Independent of both `canvas/`'s `egui::Galley`-based render and
+//! `export/`'s `ab_glyph`-rasterizer render (per this codebase's
 //! canvas/export-are-separate-implementations convention — see
-//! `CLAUDE.md`), except for the pure layout math it reuses from `export.rs`
+//! `CLAUDE.md`), except for the pure layout math it reuses from `export/`
 //! (`wrap_line`) and `text_layout.rs` (`display_string`), which have no
 //! rendering-backend dependency.
 use ab_glyph::{Font, FontRef, GlyphId, OutlineCurve, Point, ScaleFont};
@@ -19,7 +19,7 @@ use crate::model::{Layer, LayerKind, ListType, PathPolygon, TextAlign, TextResiz
 /// result in this app.
 const CURVE_STEPS: usize = 8;
 
-/// Approximates the faux-italic shear `canvas.rs`/`export.rs` apply when
+/// Approximates the faux-italic shear `canvas/`/`export/` apply when
 /// drawing, so a converted-to-outlines italic layer keeps its slant.
 const ITALIC_SHEAR: f32 = 0.22;
 
@@ -52,7 +52,7 @@ const ITALIC_SHEAR: f32 = 0.22;
 /// instead — see `convert_to_outlines_on_path`/`convert_to_outlines_in_area`
 /// — falling back to the plain frame-based layout below if it doesn't
 /// resolve (deleted target, `roots` not covering it), same graceful
-/// fallback `canvas.rs`/`export.rs` use.
+/// fallback `canvas/`/`export/` use.
 pub fn convert_to_outlines(layer: &Layer, roots: &[Layer]) -> Option<Vec<PathPolygon>> {
     let LayerKind::Text {
         content,
@@ -237,7 +237,7 @@ pub fn convert_to_outlines(layer: &Layer, roots: &[Layer]) -> Option<Vec<PathPol
 
 /// Rich-text counterpart to `convert_to_outlines`'s main loop, used when
 /// `runs` is non-empty — see `LayerKind::Text::runs`'s doc comment. Mirrors
-/// `export.rs`'s `draw_text_rich` (per-run face/scale resolution, char-
+/// `export/mod.rs`'s `draw_text_rich` (per-run face/scale resolution, char-
 /// driven `wrap_line_rich`/tagging via `text_layout::tagged_lines`, same-
 /// face-only kerning) but produces `PathPolygon`s from each glyph's own
 /// outline instead of rasterizing. Bold runs use `fonts::
@@ -413,7 +413,7 @@ fn convert_to_outlines_rich(
     Some(polygons)
 }
 
-/// Vector counterpart to `export.rs`'s `draw_text_on_path` — places
+/// Vector counterpart to `export/mod.rs`'s `draw_text_on_path` — places
 /// `tagged_first_line`'s glyphs one at a time along `points`, walking arc
 /// length exactly like the raster version, but transforms each glyph's own
 /// outline contours by a plain point rotation instead of rasterizing into a
@@ -514,7 +514,7 @@ fn convert_to_outlines_on_path(
 /// convention as `text_path_geometry::point_and_tangent_at`/
 /// `shapes::rotate_point`), after scaling to pixel units and applying the
 /// italic shear (relative to the glyph's own baseline, `y = 0`, same as
-/// `export.rs`'s `draw_rotated_glyph`). The vector equivalent of that
+/// `export/mod.rs`'s `draw_rotated_glyph`). The vector equivalent of that
 /// function's "scratch pixmap + `Transform::post_rotate_at`" trick — a
 /// plain point rotation is all that's needed here, no rasterization to
 /// preserve.
@@ -541,7 +541,7 @@ fn place_glyph_contours_on_path(contours: Vec<Vec<Point>>, scale_factor: ab_glyp
         .collect()
 }
 
-/// Vector counterpart to `export.rs`'s `draw_text_in_area` — wraps `content`
+/// Vector counterpart to `export/mod.rs`'s `draw_text_in_area` — wraps `content`
 /// via the same shared, backend-agnostic `text_area_wrap::wrap_in_area`
 /// decision (an `ab_glyph`-measured `measure` closure here instead of an
 /// `egui::Galley`'s width), then places each row's glyph outlines at its own
@@ -712,7 +712,7 @@ fn flatten_cubic(p0: Point, c1: Point, c2: Point, p1: Point) -> Vec<Point> {
 /// Nests a glyph's contours into `PathPolygon`s by point-in-polygon
 /// containment depth (even depth = a fillable exterior, odd = a hole of its
 /// immediate parent) — winding direction is irrelevant since every consumer
-/// of `PathPolygon` (`canvas.rs`/`export.rs`) already fills with
+/// of `PathPolygon` (`canvas/`/`export/`) already fills with
 /// `FillRule::EvenOdd`. One glyph is usually 1-3 contours, so the O(n²)
 /// containment check is negligible.
 fn group_contours_into_polygons(contours: Vec<Vec<Pos2>>) -> Vec<PathPolygon> {

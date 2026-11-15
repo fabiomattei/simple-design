@@ -45,7 +45,7 @@ pub fn paste_layers() -> Option<Vec<Layer>> {
 }
 
 /// Cmd+C: copies every layer in `selection` (skipping any id that's since
-/// vanished) — shared by `app.rs`'s keyboard shortcut and `canvas.rs`'s
+/// vanished) — shared by `app.rs`'s keyboard shortcut and `canvas/context_menus.rs`'s
 /// right-click menu so both stay in sync with exactly one implementation.
 pub fn copy_selection(history: &History, selection: &[LayerId]) {
     let page = history.get().active_page();

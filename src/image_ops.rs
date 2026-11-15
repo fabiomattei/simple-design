@@ -7,7 +7,7 @@
 //! PNG itself) is the one working representation used throughout; callers
 //! convert to whatever the consumer needs (`to_egui_color_image` for the
 //! canvas texture cache, `to_premultiplied_rgba` for compositing into
-//! `export.rs`'s `tiny_skia::Pixmap`).
+//! `export/`'s `tiny_skia::Pixmap`).
 use std::collections::VecDeque;
 use std::path::Path;
 
@@ -41,7 +41,7 @@ pub fn to_egui_color_image(img: &RgbaImage) -> egui::ColorImage {
 }
 
 /// Premultiplies `img`'s alpha, the representation `tiny_skia::Pixmap`
-/// requires (see `export.rs`'s `draw_image`).
+/// requires (see `export/image_layer.rs`'s `draw_image`).
 pub fn to_premultiplied_rgba(img: &RgbaImage) -> Vec<u8> {
     let mut out = Vec::with_capacity(img.as_raw().len());
     for px in img.pixels() {
@@ -97,7 +97,7 @@ pub fn apply_color_adjust(img: &RgbaImage, adjust: ColorAdjust) -> RgbaImage {
 /// repositions `layer.frame` so the crop's on-screen size/position stays
 /// consistent with how the un-cropped image was displayed, re-encodes, and
 /// bumps `version`. Shared by "Edit Image" mode's Crop-to-Selection
-/// (`canvas.rs`) and the inspector's Trim Transparent Pixels — both are "cut
+/// (`canvas/image_edit.rs`) and the inspector's Trim Transparent Pixels — both are "cut
 /// a sub-rect out of the current bitmap" operations that differ only in how
 /// the sub-rect was chosen. A no-op if `layer.kind` isn't `Image`.
 pub fn apply_cropped_image(layer: &mut Layer, new_img: &RgbaImage, offset_x: u32, offset_y: u32) {

@@ -100,7 +100,7 @@ repository root.
   <tr><td><code>src/canvas/</code></td><td>The interactive canvas: coordinate transforms, hit-testing, drawing, all drag/click gestures</td></tr>
   <tr><td><code>src/ui/</code></td><td>Panels — layers panel, inspector, toolbar, pages bar — each emitting action enums</td></tr>
   <tr><td><code>src/app.rs</code></td><td>Owns undo history, selection, current tool; wires panels together each frame</td></tr>
-  <tr><td><code>src/export.rs</code></td><td>Renders a layer subtree to a PNG via <code>tiny-skia</code>, independent of the canvas renderer</td></tr>
+  <tr><td><code>src/export/</code></td><td>Renders a layer subtree to a PNG via <code>tiny-skia</code>, independent of the canvas renderer</td></tr>
   <tr><td><code>src/history.rs</code></td><td>Snapshot-based undo/redo</td></tr>
 </table>
 <p>See <a href="architecture.html">Architecture</a> for the full module map and the

@@ -313,7 +313,7 @@ pub(super) const GRADIENT_STROKE_SEGMENTS_PER_EDGE: usize = 10;
 /// segments, each sampled at its own midpoint. `egui` has no per-vertex-color
 /// stroke primitive to interpolate properly like `triangulate_fill_with` does
 /// for fill, and building real mitered stroke-ribbon geometry here is more
-/// than a live-editing preview needs — the PNG exporter (`export.rs`) still
+/// than a live-editing preview needs — the PNG exporter (`export/`) still
 /// renders the exact gradient via a `tiny-skia` shader, so export quality
 /// isn't affected by this approximation.
 #[allow(clippy::too_many_arguments)]

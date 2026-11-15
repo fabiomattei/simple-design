@@ -7,7 +7,7 @@
 //!
 //! A system font is inherently machine-specific — a `.sdesign` file opened
 //! on a different OS, or one missing the referenced font, won't find it.
-//! Every render site (`text_layout.rs`, `canvas.rs`, `export.rs`,
+//! Every render site (`text_layout.rs`, `canvas/`, `export/`,
 //! `text_outline.rs`) treats a lookup miss as "fall back to
 //! `TextFont::Proportional`" rather than panicking or drawing nothing.
 

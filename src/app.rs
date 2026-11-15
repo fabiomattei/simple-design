@@ -329,7 +329,7 @@ impl App {
     /// `to_artboard`: Option/Alt was held on the align button — override the
     /// default (align to the selection's own combined bounds) to align
     /// against the nearest enclosing Artboard instead. A reference layer set
-    /// via `canvas.rs`'s "click an already-fully-selected layer again" takes
+    /// via `canvas/click_handling.rs`'s "click an already-fully-selected layer again" takes
     /// priority over both when present and still part of the selection.
     fn align_selection(&mut self, edge: AlignEdge, to_artboard: bool) {
         if self.selection.len() < 2 {
@@ -420,7 +420,7 @@ impl App {
 
     /// Cmd+C: copies the current selection to the OS clipboard. See
     /// `clipboard::copy_selection`/`paste_selection` — shared with
-    /// `canvas.rs`'s right-click Copy/Paste/Paste Over menu so both stay in
+    /// `canvas/context_menus.rs`'s right-click Copy/Paste/Paste Over menu so both stay in
     /// sync with exactly one implementation.
     fn copy_selection(&mut self) {
         clipboard::copy_selection(&self.history, &self.selection);
@@ -653,7 +653,7 @@ impl App {
         // Cmd+A: select every layer in the current selection's parent group
         // (or the whole page if nothing/multiple parents are selected) — see
         // `grouping::siblings_of`. Skipped when the selection is a single
-        // Path, since `canvas.rs` already binds Cmd+A there to "select every
+        // Path, since `canvas/click_handling.rs` already binds Cmd+A there to "select every
         // point on this path" (the common direct-selection-mode meaning).
         if !any_focused && ctx.input(|i| i.key_pressed(egui::Key::A) && i.modifiers.command) {
             let is_single_path = matches!(

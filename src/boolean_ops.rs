@@ -6,12 +6,12 @@
 //! `children` stay independently editable, recomputing the combined shape
 //! from scratch on every call rather than caching it. The closest existing
 //! precedent, `CompoundPath` rendering, already re-triangulates from
-//! scratch every frame with no caching (`canvas.rs`'s `draw_even_odd_polygons`
+//! scratch every frame with no caching (`canvas/fill_mesh.rs`'s `draw_even_odd_polygons`
 //! call sites); a `geo` boolean-op fold over a handful of shapes is smaller
 //! in cost than that, for the simple-shape complexity this app targets. If
 //! profiling ever shows this to be a real cost (e.g. a `BooleanGroup` built
 //! from an already-huge flattened `CompoundPath`), `MaskedGroupTextureCache`
-//! (`canvas.rs`) is the proven cache-by-content-clone pattern to reach for.
+//! (`canvas/texture_caches.rs`) is the proven cache-by-content-clone pattern to reach for.
 //!
 //! The older, destructive path (`apply_boolean_op`) flattens selected shapes
 //! into a single new `CompoundPath` layer, discarding the originals, instead
@@ -213,7 +213,7 @@ pub fn compute_boolean_group(children: &[Layer]) -> MultiPolygon<f64> {
 /// Converts a computed/combined `MultiPolygon` into the same ring
 /// representation `CompoundPath::polygons` stores, so a live `BooleanGroup`
 /// result can be rendered through the exact same even-odd-fill code path as
-/// a `CompoundPath` (`canvas.rs`/`export.rs`).
+/// a `CompoundPath` (`canvas/`/`export/`).
 pub fn multipolygon_to_polygons(mp: &MultiPolygon<f64>) -> Vec<PathPolygon> {
     mp.0.iter()
         .map(|poly| PathPolygon {
@@ -223,7 +223,7 @@ pub fn multipolygon_to_polygons(mp: &MultiPolygon<f64>) -> Vec<PathPolygon> {
         .collect()
 }
 
-/// Exact point-in-`MultiPolygon` test backing `canvas.rs`'s opaque
+/// Exact point-in-`MultiPolygon` test backing `canvas/hit_test.rs`'s opaque
 /// `BooleanGroup` hit-testing — `point` must already be in the same
 /// coordinate space `mp` is in (see `compute_boolean_group`'s doc comment).
 /// Uses `geo::Contains` directly rather than `masking::mask_covers_point`'s

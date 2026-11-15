@@ -3,7 +3,7 @@
 //! plain geometry types — same rationale as `masking.rs`: it operates purely
 //! on `tiny_skia::Pixmap`s, taking a layer's already-rasterized silhouette
 //! (its alpha-only shape, however it got drawn — `export::render_layer_plain`
-//! for both `export.rs` and `canvas.rs`'s `ShadowTextureCache`) as input, so
+//! for both `export/` and `canvas/texture_caches.rs`'s `ShadowTextureCache`) as input, so
 //! both renderers produce pixel-identical shadows.
 //!
 //! `tiny-skia` has no built-in blur/filter pipeline, so blur here is a
@@ -32,7 +32,7 @@ pub struct ShadowLayer {
 
 /// Hard cap on the padding added around a silhouette for blur/spread, so a
 /// pathological blur/spread value can't allocate an unbounded pixmap — same
-/// safety rationale as `canvas.rs`'s `NOISE_TEXTURE_MAX`.
+/// safety rationale as `canvas/texture_caches.rs`'s `NOISE_TEXTURE_MAX`.
 const MAX_SHADOW_PAD: u32 = 512;
 
 fn shadow_pad(shadow: &Shadow) -> u32 {
@@ -275,7 +275,7 @@ fn box_blur_pass(src: &[f32], dst: &mut [f32], width: usize, height: usize, radi
 
 /// Colors a coverage-only alpha buffer with a flat `color`, premultiplying
 /// as it goes — same premultiplied-`Pixmap` convention every other renderer
-/// in this codebase writes directly (see `export.rs::blend_glyph_pixel`).
+/// in this codebase writes directly (see `export/mod.rs::blend_glyph_pixel`).
 fn tint_pixmap(alpha: &[f32], width: u32, height: u32, color: Color32) -> Option<Pixmap> {
     let mut pixmap = Pixmap::new(width, height)?;
     let base_a = color.a() as f32 / 255.0;

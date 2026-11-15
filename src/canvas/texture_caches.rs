@@ -294,7 +294,7 @@ impl PatternTextureCache {
 /// `inner_shadows`), keyed by layer id. Built from the layer's own
 /// silhouette (`export::render_layer_plain` — always shadow-free, so this
 /// never recurses into a child's own shadow; see `shadow.rs`'s module doc
-/// comment for the overall shared-with-`export.rs` design) and cached the
+/// comment for the overall shared-with-`export/` design) and cached the
 /// same cheap-`PartialEq`-guarded way as `CachedMaskTexture`. Each shadow in
 /// the stack gets its own texture (rather than compositing the stack into
 /// one) since outer shadows can each be a different size/position (padding

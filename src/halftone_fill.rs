@@ -5,7 +5,7 @@ use crate::model::HalftoneFill;
 /// How wide (in local-bounds units) the soft edge around a dot's radius is.
 /// A hard threshold would alias visibly at any zoom/export resolution — see
 /// `noise_fill`'s doc comment for why this module doesn't rely on texture
-/// filtering for that instead (`canvas.rs`'s cache loads it `NEAREST`, same
+/// filtering for that instead (`canvas/texture_caches.rs`'s cache loads it `NEAREST`, same
 /// as noise, for crispness at the grid's own hard edges elsewhere).
 const EDGE_SOFTNESS: f32 = 0.75;
 

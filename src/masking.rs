@@ -1,8 +1,8 @@
 //! "Use shape as mask" (see `Layer::is_mask`/`Layer::ignore_mask`
 //! in `model/layer.rs`). This module holds the one algorithm both renderers
-//! share — `export.rs` composites directly with it, `canvas.rs` uses it to
+//! share — `export/` composites directly with it, `canvas/` uses it to
 //! rasterize a masked run into an offscreen `Pixmap` that gets cached as an
-//! egui texture (mirroring how `canvas.rs`'s `ImageTextureCache` handles
+//! egui texture (mirroring how `canvas/texture_caches.rs`'s `ImageTextureCache` handles
 //! `Image` layers) — so canvas and export can never disagree about what a
 //! mask looks like.
 //!
@@ -71,8 +71,8 @@ pub fn partition_mask_runs(children: &[Layer]) -> Vec<RenderUnit<'_>> {
 /// are forwarded to `draw_layer` exactly as a normal recursive draw call
 /// would (see `export::draw_layer`'s own `offset` accumulation convention) —
 /// callers are responsible for `target`, `offset` and scale all agreeing on
-/// the same coordinate mapping (export.rs draws at 1 document unit = 1
-/// pixel; canvas.rs's texture cache draws into a pixmap cropped and sized to
+/// the same coordinate mapping (export/ draws at 1 document unit = 1
+/// pixel; `canvas/texture_caches.rs`'s texture cache draws into a pixmap cropped and sized to
 /// the mask's own bounds, with `offset` shifted so the mask's local origin
 /// lands at the scratch pixmaps' `(0, 0)`).
 ///
@@ -103,11 +103,11 @@ pub fn composite_masked_run(
 
 /// Alpha-accurate point test against `mask`'s own silhouette, in the same
 /// parent-relative coordinate space as `point` (matching `mask.frame`'s own
-/// space) — backs `canvas.rs`'s hit-testing so a click inside a masked
+/// space) — backs `canvas/hit_test.rs`'s hit-testing so a click inside a masked
 /// content layer's bounding box, but outside the mask's actual coverage,
 /// doesn't select it.
 ///
-/// Only ever called on an actual click, not per frame — `canvas.rs`'s own
+/// Only ever called on an actual click, not per frame — `canvas/texture_caches.rs`'s own
 /// on-screen masked-run texture (`MaskedGroupTextureCache`) can't be reused
 /// here since egui textures live GPU-side with no CPU read-back, so this
 /// re-rasterizes `mask` alone (via `export::draw_layer`, same as
@@ -176,7 +176,7 @@ mod tests {
     /// A masked `Text` layer's `path_attachment` can resolve against a
     /// target that isn't part of the masked run's own `content` at all —
     /// `composite_masked_run`'s `draw_layer` callback decides what "roots"
-    /// means, and `canvas.rs`'s `MaskedGroupTextureCache` passes the whole
+    /// means, and `canvas/texture_caches.rs`'s `MaskedGroupTextureCache` passes the whole
     /// page's layers, not just `mask`/`content` (see that cache's doc
     /// comment). Proven here directly against `export::draw_layer`, without
     /// needing an `egui::Context`/live texture cache.
@@ -221,7 +221,7 @@ mod tests {
 
         let mask = rect_layer("Mask", Pos2::new(0.0, 0.0), Vec2::new(100.0, 40.0), Color32::WHITE);
         // `content` deliberately does NOT include `guide` — only `roots`
-        // (standing in for `canvas.rs`'s page-wide layer list) does.
+        // (standing in for `canvas/`'s page-wide layer list) does.
         let roots = vec![guide, mask.clone(), text.clone()];
 
         let mut target = Pixmap::new(100, 40).unwrap();

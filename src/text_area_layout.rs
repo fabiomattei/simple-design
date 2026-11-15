@@ -2,7 +2,7 @@
 //! `TextPathMode::AreaInside` ("Area Type"): turns `text_area_wrap`'s
 //! backend-agnostic wrapping decision into `egui::Galley`s. The wrapping
 //! itself (where each line breaks, its `x`/`y`) lives in `text_area_wrap.rs`,
-//! shared with `export.rs`'s `ab_glyph`-based rendering, so the two can't
+//! shared with `export/`'s `ab_glyph`-based rendering, so the two can't
 //! disagree on where a line breaks or sits.
 //!
 //! `list`/`paragraph_spacing` are deliberately not honored (only `transform`

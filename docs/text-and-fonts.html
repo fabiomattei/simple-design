@@ -92,7 +92,7 @@ layer-level only, never per-run.
 <p>The non-empty branch is always new code added alongside the untouched original, never a modification of it:</p>
 <ul>
   <li><code>canvas/draw_layer.rs::draw_layer</code>'s Text arm and <code>canvas/layer_creation.rs::apply_text_auto_resize</code> call <code>text_layout::layout_paragraphs_rich</code> instead of <code>layout_paragraphs</code></li>
-  <li><code>export.rs::draw_text</code> has a <code>draw_text_rich</code> sibling, with its own <code>wrap_line_rich</code> that walks character-by-character to look up the right run's face</li>
+  <li><code>export/mod.rs::draw_text</code> has a <code>draw_text_rich</code> sibling, with its own <code>wrap_line_rich</code> that walks character-by-character to look up the right run's face</li>
   <li><code>text_outline.rs::convert_to_outlines</code> has a <code>convert_to_outlines_rich</code> sibling</li>
 </ul>
 <p>

@@ -3,8 +3,8 @@ use egui::{Color32, Pos2};
 use crate::model::NoiseFill;
 
 /// Deterministic hash of a `(seed, cell)` triple to a byte, 0-255. Same
-/// inputs always produce the same output — this is what lets `canvas.rs`
-/// and `export.rs` independently rasterize the same grain pattern at
+/// inputs always produce the same output — this is what lets `canvas/`
+/// and `export/` independently rasterize the same grain pattern at
 /// different resolutions without sharing a texture. Wang-hash-style integer
 /// mixing; not cryptographic, just enough avalanche to avoid visible grid
 /// artifacts.
@@ -20,9 +20,9 @@ fn cell_value(seed: u32, cell_x: i32, cell_y: i32) -> u8 {
 
 /// The noise fill's color at `local_point`, expressed in the same
 /// unrotated-local-bounds space `Gradient::from`/`to` and
-/// `gradient_color_at_screen_point` use (see `canvas.rs`). `opacity` is the
+/// `gradient_color_at_screen_point` use (see `canvas/fill_mesh.rs`). `opacity` is the
 /// caller's already-combined layer/fill opacity, baked into the returned
-/// alpha — same convention `export.rs::to_sk_paint`'s gradient branch uses
+/// alpha — same convention `export/paint.rs::to_sk_paint`'s gradient branch uses
 /// per stop via `to_color_with_opacity`.
 pub fn sample(fill: &NoiseFill, local_point: Pos2, opacity: f32) -> Color32 {
     let scale = fill.scale.max(0.01);

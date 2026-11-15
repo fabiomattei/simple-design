@@ -6,7 +6,7 @@
 //!
 //! `TextRun::len` is a **char** count, not a byte count — chosen to match
 //! `egui::text::CCursor`'s indexing, since that's what the in-place
-//! editor's selection API speaks natively (`canvas.rs`'s rich-text editing
+//! editor's selection API speaks natively (`canvas/text_edit_overlay.rs`'s rich-text editing
 //! overlay reads/writes char-index `CCursorRange`s). A run carries no text
 //! of its own, only "this many of the upcoming characters share this
 //! style" — so growing/shrinking a run never needs to know *which part* of
@@ -50,7 +50,7 @@ pub struct TextRun {
 /// (typing, deleting a selection, pasting) — `change_start`/`chars_removed`/
 /// `chars_inserted` describe the edit purely as char counts, typically
 /// obtained by diffing the old and new buffer via common-prefix/suffix
-/// trimming (see `canvas.rs`'s editing overlay). No-op if `runs` is empty
+/// trimming (see `canvas/text_edit_overlay.rs`). No-op if `runs` is empty
 /// (uniform style hasn't been touched yet, nothing to keep in sync).
 ///
 /// Removes `chars_removed` chars at `change_start` first (shrinking/

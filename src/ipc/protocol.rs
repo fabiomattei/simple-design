@@ -119,7 +119,7 @@ pub struct AddTextArgs {
     #[serde(default)]
     pub bold: bool,
     /// A plain `bold` only gets the weak "faux bold" (offset double-draw)
-    /// both `canvas.rs` and `export.rs` fall back to when nothing better is
+    /// both `canvas/` and `export/` fall back to when nothing better is
     /// available — a real bold typeface is only baked in via the rich-text
     /// `runs` path (see `fonts::ab_glyph_bytes_bold`). `true_bold` opts a
     /// freshly-created layer into that: one `runs` entry spanning the whole

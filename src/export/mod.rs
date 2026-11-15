@@ -1,15 +1,22 @@
 use ab_glyph::{Font, FontRef, GlyphId, ScaleFont};
 use tiny_skia::{
-    Color, FillRule, Paint, PathBuilder, Pixmap, PixmapPaint, PremultipliedColorU8, Rect as SkRect,
-    Stroke as SkStroke, Transform,
+    Color, FillRule, Paint, PathBuilder, Pixmap, PixmapPaint, PremultipliedColorU8, Stroke as SkStroke, Transform,
+};
+
+mod image_layer;
+mod paint;
+mod sk_geometry;
+
+use image_layer::draw_image;
+use paint::{to_color, to_color_with_opacity, to_sk_paint, with_opacity};
+use sk_geometry::{
+    arrow_cap_size, arrow_cap_wings, compound_path_to_sk_path, fill_and_stroke, fill_rect, path_to_sk_path,
+    polygon_ring_path, rotation_transform, rounded_rect_path, to_sk_rect,
 };
 
 use crate::boolean_ops;
 use crate::model::text_runs::{RunStyle, TextRun};
-use crate::model::{
-    ColorAdjust, CornerRadii, Layer, LayerKind, ListType, PathPoint, PathPolygon, TextAlign, TextFont, TextResize,
-    TextTransform, VerticalAlign,
-};
+use crate::model::{Layer, LayerKind, ListType, TextAlign, TextFont, TextResize, TextTransform, VerticalAlign};
 
 /// Renders a single layer (and its descendants, if it's a container) to a
 /// standalone pixmap sized to the layer's own *rotated* bounds (its actual
@@ -67,7 +74,7 @@ fn effective_rotated_bounds(layer: &Layer, roots: &[Layer]) -> egui::Rect {
 /// silhouette/appearance render used internally as the input to shadow
 /// rendering itself (`shadow::render_outer_shadow`/`render_inner_shadow`
 /// need the shape's own rasterized alpha, not a shadow of it) and by
-/// `canvas.rs`'s `ShadowTextureCache`, which needs the exact same silhouette
+/// `canvas/texture_caches.rs`'s `ShadowTextureCache`, which needs the exact same silhouette
 /// the exported PNG's shadow would be built from. `roots` is forwarded to
 /// `draw_layer` for `path_attachment` resolution, same convention as
 /// `draw_layer`'s own doc comment — so a shadow cast by a path-attached
@@ -92,13 +99,13 @@ pub fn export_layer_to_png(layer: &Layer, path: &std::path::Path) -> anyhow::Res
 }
 
 /// `pub(crate)` (rather than private) so `masking.rs` can use it as the
-/// per-layer drawing callback for both `export.rs`'s own masked runs and
-/// `canvas.rs`'s masked-group texture cache — see `masking::composite_masked_run`.
+/// per-layer drawing callback for both `export/`'s own masked runs and
+/// `canvas/texture_caches.rs`'s masked-group texture cache — see `masking::composite_masked_run`.
 ///
 /// `roots` is where a `Text` layer's `path_attachment` looks for its target
 /// (via `text_path_geometry::resolve_target_outline`) — a standalone
 /// "Export Layer as PNG"/"Convert to Outlines" call passes just the one
-/// layer being rendered (`std::slice::from_ref`), while `canvas.rs`'s
+/// layer being rendered (`std::slice::from_ref`), while `canvas/texture_caches.rs`'s
 /// masked-group texture cache can pass the whole page's top-level layers,
 /// so a masked Text layer can still attach to a target anywhere on the
 /// page, not just within its own masked run.
@@ -875,42 +882,6 @@ pub(crate) fn draw_layer_with_shadows(pixmap: &mut Pixmap, layer: &Layer, roots:
     }
 }
 
-/// Rasterizes an `Image` layer into `pixmap`, scaled from its native pixel
-/// size to `bounds` (already offset-translated, same as every other shape
-/// case above) with bilinear filtering, applying the non-destructive Color
-/// Adjust effect first — mirrors what the canvas texture cache does for the
-/// live view (`canvas.rs`'s `ImageTextureCache`), so exported PNGs match.
-fn draw_image(
-    pixmap: &mut Pixmap,
-    encoded: &[u8],
-    color_adjust: ColorAdjust,
-    bounds: egui::Rect,
-    opacity: f32,
-    rotation: f32,
-) {
-    let Some(decoded) = crate::image_ops::decode(encoded) else { return };
-    let adjusted = crate::image_ops::apply_color_adjust(&decoded, color_adjust);
-    let (width, height) = (adjusted.width(), adjusted.height());
-    if width == 0 || height == 0 || bounds.width().abs() < 0.01 || bounds.height().abs() < 0.01 {
-        return;
-    }
-    let Some(size) = tiny_skia::IntSize::from_wh(width, height) else { return };
-    let premultiplied = crate::image_ops::to_premultiplied_rgba(&adjusted);
-    let Some(src) = Pixmap::from_vec(premultiplied, size) else { return };
-
-    let mut transform = Transform::from_translate(bounds.min.x, bounds.min.y)
-        .pre_scale(bounds.width() / width as f32, bounds.height() / height as f32);
-    if rotation != 0.0 {
-        transform = transform.post_rotate_at(rotation, bounds.center().x, bounds.center().y);
-    }
-    let paint = tiny_skia::PixmapPaint {
-        opacity: opacity.clamp(0.0, 1.0),
-        blend_mode: tiny_skia::BlendMode::SourceOver,
-        quality: tiny_skia::FilterQuality::Bilinear,
-    };
-    pixmap.draw_pixmap(0, 0, src.as_ref(), &paint, transform, None);
-}
-
 /// Rasterizes a `Text` layer's glyphs directly onto `pixmap` via `ab_glyph`,
 /// blending each glyph's per-pixel AA coverage over the existing contents.
 /// `bounds` is `layer.frame.bounds()` already translated by `offset` (same
@@ -918,7 +889,7 @@ fn draw_image(
 /// files (`epaint_default_fonts`) the canvas draws with via egui, so export
 /// visually matches the on-canvas glyphs.
 ///
-/// Independent of `canvas.rs`/`text_layout.rs`'s `egui::Galley`-based layout
+/// Independent of `canvas/`/`text_layout.rs`'s `egui::Galley`-based layout
 /// (per this codebase's convention of canvas/export being separate render
 /// paths — see `CLAUDE.md`) except for `text_layout::display_string`, which
 /// is pure string manipulation with no rendering-backend dependency and so
@@ -1388,7 +1359,7 @@ pub(crate) fn wrap_line_rich(
 /// Draws one glyph, faking bold (a second copy offset in x) and italic (a
 /// per-scanline horizontal shear around the baseline) since neither is
 /// available as a real font variant for the two bundled `TextFont`s — same
-/// technique `canvas.rs`'s draw arm uses for bold. `clip`, if set
+/// technique `canvas/draw_layer.rs`'s Text arm uses for bold. `clip`, if set
 /// (`TextResize::Fixed`), drops any pixel outside it.
 #[allow(clippy::too_many_arguments)]
 fn draw_text_glyph(
@@ -1471,415 +1442,12 @@ fn blend_glyph_pixel(pixmap: &mut Pixmap, x: i32, y: i32, coverage: f32, color: 
     }
 }
 
-fn fill_and_stroke(
-    pixmap: &mut Pixmap,
-    path: &tiny_skia::Path,
-    layer: &Layer,
-    fill_rule: FillRule,
-    bounds: egui::Rect,
-    opacity: f32,
-    transform: Transform,
-) {
-    if let Some(fill) = layer.style.fill.as_ref() {
-        let mut noise_storage = None;
-        let paint = to_sk_paint(fill, bounds, opacity * layer.style.fill_opacity, &mut noise_storage);
-        pixmap.fill_path(path, &paint, fill_rule, transform, None);
-    }
-    if let Some(stroke) = layer.style.stroke.as_ref() {
-        let mut noise_storage = None;
-        let paint = to_sk_paint(&stroke.paint, bounds, opacity * layer.style.stroke_opacity, &mut noise_storage);
-        let sk_stroke = SkStroke {
-            width: stroke.width,
-            ..Default::default()
-        };
-        pixmap.stroke_path(path, &paint, &sk_stroke, transform, None);
-    }
-}
-
-/// `tiny_skia::Transform::from_rotate_at` centered on `bounds`'s (already
-/// offset-translated) center — the one place every non-Text/Image shape arm
-/// below builds its rotation transform, so `layer.frame.rotation`'s pivot
-/// convention (`bounds().center()`, per `model/layer.rs`) stays consistent.
-/// `Transform::identity()` at `rotation == 0.0` (the overwhelmingly common
-/// case) avoids the floating-point round-trip through `from_rotate_at` for
-/// unrotated shapes, though the two are mathematically equivalent.
-fn rotation_transform(layer: &Layer, bounds: egui::Rect) -> Transform {
-    if layer.frame.rotation == 0.0 {
-        Transform::identity()
-    } else {
-        Transform::from_rotate_at(layer.frame.rotation, bounds.center().x, bounds.center().y)
-    }
-}
-
-/// Builds a `tiny-skia` path from anchors + bezier handles, offsetting every
-/// point by `offset` (the layer's absolute position within the pixmap).
-/// Straight segments (no handle on either side) use `line_to`; segments with
-/// a handle use a native cubic bezier rather than manual flattening — unless
-/// any point has a nonzero `corner_radius`, in which case the whole path is
-/// built from `canvas::flatten_path`'s already-rounding-aware sampled
-/// polyline instead (via `line_to` for every sample), so canvas and export
-/// share the exact same corner-rounding geometry rather than reimplementing
-/// `shapes::rounded_corner_arc_points`'s inset-and-arc math a second time
-/// here. Every existing (`corner_radius == 0.0` for every point, true for
-/// all pre-existing documents) path keeps the original native-bezier path
-/// unchanged.
-fn path_to_sk_path(points: &[PathPoint], closed: bool, offset: egui::Vec2) -> Option<tiny_skia::Path> {
-    if points.len() < 2 {
-        return None;
-    }
-    if points.iter().any(|p| p.corner_radius > 0.0) {
-        let flat = crate::canvas::flatten_path(points, closed);
-        if flat.len() < 2 {
-            return None;
-        }
-        let mut pb = PathBuilder::new();
-        let start = flat[0] + offset;
-        pb.move_to(start.x, start.y);
-        for p in &flat[1..] {
-            let p = *p + offset;
-            pb.line_to(p.x, p.y);
-        }
-        if closed {
-            pb.close();
-        }
-        return pb.finish();
-    }
-    let abs = |p: &PathPoint| p.anchor + offset;
-    let mut pb = PathBuilder::new();
-    let start = abs(&points[0]);
-    pb.move_to(start.x, start.y);
-    let n = points.len();
-    let last_index = if closed { n } else { n - 1 };
-    for i in 0..last_index {
-        let a = &points[i];
-        let b = &points[(i + 1) % n];
-        let p0 = abs(a);
-        let p3 = abs(b);
-        if a.handle_out.is_none() && b.handle_in.is_none() {
-            pb.line_to(p3.x, p3.y);
-        } else {
-            let c1 = p0 + a.handle_out.unwrap_or(egui::Vec2::ZERO);
-            let c2 = p3 + b.handle_in.unwrap_or(egui::Vec2::ZERO);
-            pb.cubic_to(c1.x, c1.y, c2.x, c2.y, p3.x, p3.y);
-        }
-    }
-    if closed {
-        pb.close();
-    }
-    pb.finish()
-}
-
-/// Builds one multi-subpath `tiny-skia` path from every polygon's exterior +
-/// hole rings, offsetting every point by `offset`. Fill with `FillRule::EvenOdd`
-/// so holes actually punch through (`Winding` would just fill everything).
-fn compound_path_to_sk_path(polygons: &[PathPolygon], offset: egui::Vec2) -> Option<tiny_skia::Path> {
-    let mut pb = PathBuilder::new();
-    let mut any_ring = false;
-    for poly in polygons {
-        for ring in std::iter::once(&poly.exterior).chain(poly.holes.iter()) {
-            if ring.len() < 3 {
-                continue;
-            }
-            any_ring = true;
-            let start = ring[0] + offset;
-            pb.move_to(start.x, start.y);
-            for p in &ring[1..] {
-                let p = *p + offset;
-                pb.line_to(p.x, p.y);
-            }
-            pb.close();
-        }
-    }
-    if !any_ring {
-        return None;
-    }
-    pb.finish()
-}
-
-fn rounded_rect_path(rect: egui::Rect, radii: CornerRadii) -> Option<tiny_skia::Path> {
-    let mut pb = PathBuilder::new();
-    let max_r = rect.width().min(rect.height()) / 2.0;
-    let [tl, tr, br, bl] = radii.as_array().map(|r| r.max(0.0).min(max_r));
-    if tl < 0.5 && tr < 0.5 && br < 0.5 && bl < 0.5 {
-        pb.push_rect(to_sk_rect(rect)?);
-    } else {
-        pb.move_to(rect.min.x + tl, rect.min.y);
-        pb.line_to(rect.max.x - tr, rect.min.y);
-        if tr >= 0.5 {
-            pb.quad_to(rect.max.x, rect.min.y, rect.max.x, rect.min.y + tr);
-        }
-        pb.line_to(rect.max.x, rect.max.y - br);
-        if br >= 0.5 {
-            pb.quad_to(rect.max.x, rect.max.y, rect.max.x - br, rect.max.y);
-        }
-        pb.line_to(rect.min.x + bl, rect.max.y);
-        if bl >= 0.5 {
-            pb.quad_to(rect.min.x, rect.max.y, rect.min.x, rect.max.y - bl);
-        }
-        pb.line_to(rect.min.x, rect.min.y + tl);
-        if tl >= 0.5 {
-            pb.quad_to(rect.min.x, rect.min.y, rect.min.x + tl, rect.min.y);
-        }
-        pb.close();
-    }
-    pb.finish()
-}
-
-/// Cap size for an `Arrow` end marker, scaled off the stroke width — mirrors
-/// `canvas.rs::draw_arrow_cap`'s sizing exactly, so canvas and export caps
-/// match visually.
-fn arrow_cap_size(stroke_width: f32) -> f32 {
-    (stroke_width * 3.5).max(8.0)
-}
-
-/// The two "wing" points of a `Triangle`/`Line` cap at `tip`, pointing
-/// `outward` from the shaft — `None` if `outward` is degenerate (zero-length,
-/// a start/end coincident with the other endpoint).
-fn arrow_cap_wings(tip: egui::Pos2, outward: egui::Vec2, stroke_width: f32) -> Option<(egui::Pos2, egui::Pos2)> {
-    if outward.length() < 1e-3 {
-        return None;
-    }
-    let dir = outward.normalized();
-    let perp = egui::Vec2::new(-dir.y, dir.x);
-    let size = arrow_cap_size(stroke_width);
-    let base = tip - dir * size;
-    Some((base + perp * size * 0.5, base - perp * size * 0.5))
-}
-
-/// A closed `tiny-skia` path tracing `points` (already in absolute pixmap
-/// space) in order — the shared builder for `Star`/`Polygon`.
-fn polygon_ring_path(points: &[egui::Pos2]) -> Option<tiny_skia::Path> {
-    if points.len() < 3 {
-        return None;
-    }
-    let mut pb = PathBuilder::new();
-    pb.move_to(points[0].x, points[0].y);
-    for p in &points[1..] {
-        pb.line_to(p.x, p.y);
-    }
-    pb.close();
-    pb.finish()
-}
-
-fn fill_rect(pixmap: &mut Pixmap, rect: egui::Rect, color: Color) {
-    let Some(sk_rect) = to_sk_rect(rect) else {
-        return;
-    };
-    let mut paint = Paint::default();
-    paint.set_color(color);
-    paint.anti_alias = true;
-    pixmap.fill_rect(sk_rect, &paint, Transform::identity(), None);
-}
-
-fn to_sk_rect(rect: egui::Rect) -> Option<SkRect> {
-    SkRect::from_ltrb(rect.min.x, rect.min.y, rect.max.x, rect.max.y)
-}
-
-fn to_color(c: egui::Color32) -> Color {
-    Color::from_rgba8(c.r(), c.g(), c.b(), c.a())
-}
-
-/// Scales `color`'s alpha channel by `opacity` (`0.0..=1.0`) before
-/// converting, mirroring `canvas.rs`'s `with_opacity` so a layer's (and its
-/// ancestors', multiplicatively accumulated) opacity renders the same in the
-/// exported PNG as it does live.
-fn with_opacity(color: egui::Color32, opacity: f32) -> egui::Color32 {
-    let a = (color.a() as f32 * opacity.clamp(0.0, 1.0)).round() as u8;
-    egui::Color32::from_rgba_unmultiplied(color.r(), color.g(), color.b(), a)
-}
-
-fn to_color_with_opacity(c: egui::Color32, opacity: f32) -> Color {
-    to_color(with_opacity(c, opacity))
-}
-
-/// Builds a `tiny-skia` `Paint` for `paint` (solid or gradient), anti-aliased.
-/// `bounds` is the shape's own absolute, *unrotated* bounds within the
-/// pixmap (matching whatever local space the path being filled/stroked was
-/// built in, before `rotation_transform` rotates it at draw time) —
-/// `Gradient::from`/`to` are normalized `0.0..=1.0` per axis within it, per
-/// `model::Gradient`'s doc comment. Building the shader's control points in
-/// that same unrotated space, rather than pre-rotating them here, is what
-/// lets the gradient rotate along with the shape: `Pixmap::fill_path`
-/// applies its `transform` argument to the shader exactly like it does to
-/// the path (see `tiny-skia`'s `painter.rs::fill_path`), so passing the same
-/// `rotation_transform(layer, bounds)` both places keeps them in sync.
-/// `noise_storage` exists only so a `Paint::Noise` fill's generated grain
-/// `Pixmap` can outlive this call: `tiny_skia::Pattern`'s shader *borrows*
-/// its source pixmap (unlike `Solid`/`Gradient`, which own their color data
-/// outright), so the caller must keep that pixmap alive for exactly as long
-/// as the returned `Paint` — declaring `let mut noise_storage = None;`
-/// immediately before the call, in the same scope as the following
-/// `fill_path`/`stroke_path`, does that. Every other `Paint` variant leaves
-/// it `None`.
-fn to_sk_paint<'a>(paint: &crate::model::Paint, bounds: egui::Rect, opacity: f32, noise_storage: &'a mut Option<Pixmap>) -> Paint<'a> {
-    let mut sk_paint = Paint { anti_alias: true, ..Default::default() };
-    match paint {
-        crate::model::Paint::Solid(c) => {
-            sk_paint.set_color(to_color_with_opacity(*c, opacity));
-        }
-        crate::model::Paint::Gradient(g) => {
-            let stops: Vec<tiny_skia::GradientStop> = g
-                .stops
-                .iter()
-                .map(|s| tiny_skia::GradientStop::new(s.offset.clamp(0.0, 1.0), to_color_with_opacity(s.color, opacity)))
-                .collect();
-            let w = bounds.width().max(1e-3);
-            let h = bounds.height().max(1e-3);
-            let to_abs =
-                |p: egui::Pos2| tiny_skia::Point::from_xy(bounds.min.x + p.x * w, bounds.min.y + p.y * h);
-            let shader = match g.kind {
-                crate::model::GradientKind::Linear => tiny_skia::LinearGradient::new(
-                    to_abs(g.from),
-                    to_abs(g.to),
-                    stops,
-                    tiny_skia::SpreadMode::Pad,
-                    Transform::identity(),
-                ),
-                crate::model::GradientKind::Radial => {
-                    let center = to_abs(g.from);
-                    let edge = to_abs(g.to);
-                    let radius = ((edge.x - center.x).powi(2) + (edge.y - center.y).powi(2)).sqrt().max(0.01);
-                    tiny_skia::RadialGradient::new(
-                        center,
-                        0.0,
-                        center,
-                        radius,
-                        stops,
-                        tiny_skia::SpreadMode::Pad,
-                        Transform::identity(),
-                    )
-                }
-            };
-            if let Some(shader) = shader {
-                sk_paint.shader = shader;
-            }
-        }
-        crate::model::Paint::Noise(n) => {
-            let width = bounds.width().round().max(1.0) as u32;
-            let height = bounds.height().round().max(1.0) as u32;
-            if let Some(mut pixmap) = Pixmap::new(width, height) {
-                for j in 0..height {
-                    for i in 0..width {
-                        // Zero-based, one pixel per document unit — export
-                        // renders unscaled (1:1), so this is directly the
-                        // same local-bounds coordinate space
-                        // `canvas.rs::NoiseTextureCache` samples, just at
-                        // full resolution instead of a quantized texture.
-                        let local_point = egui::Pos2::new(i as f32 + 0.5, j as f32 + 0.5);
-                        let color = crate::noise_fill::sample(n, local_point, opacity);
-                        if let Some(px) = premultiplied(color) {
-                            pixmap.pixels_mut()[(j * width + i) as usize] = px;
-                        }
-                    }
-                }
-                *noise_storage = Some(pixmap);
-                let pixmap_ref = noise_storage.as_ref().expect("just assigned").as_ref();
-                // Translates the pattern pixmap's own (0,0)-(width,height)
-                // origin onto `bounds`' unrotated absolute position — same
-                // role `to_abs` plays for the gradient shader above, and
-                // subject to the same `rotation_transform` composition this
-                // function's doc comment describes.
-                let transform = Transform::from_translate(bounds.min.x, bounds.min.y);
-                sk_paint.shader = tiny_skia::Pattern::new(pixmap_ref, tiny_skia::SpreadMode::Pad, tiny_skia::FilterQuality::Nearest, 1.0, transform);
-            }
-        }
-        crate::model::Paint::Halftone(h) => {
-            // Same shape as the `Paint::Noise` arm above — generated
-            // directly at full `bounds` resolution (not tiled from a
-            // smaller source), so `SpreadMode::Pad` like Noise, not Repeat.
-            let width = bounds.width().round().max(1.0) as u32;
-            let height = bounds.height().round().max(1.0) as u32;
-            if let Some(mut pixmap) = Pixmap::new(width, height) {
-                for j in 0..height {
-                    for i in 0..width {
-                        let local_point = egui::Pos2::new(i as f32 + 0.5, j as f32 + 0.5);
-                        let color = crate::halftone_fill::sample(h, local_point, opacity);
-                        if let Some(px) = premultiplied(color) {
-                            pixmap.pixels_mut()[(j * width + i) as usize] = px;
-                        }
-                    }
-                }
-                *noise_storage = Some(pixmap);
-                let pixmap_ref = noise_storage.as_ref().expect("just assigned").as_ref();
-                let transform = Transform::from_translate(bounds.min.x, bounds.min.y);
-                sk_paint.shader = tiny_skia::Pattern::new(pixmap_ref, tiny_skia::SpreadMode::Pad, tiny_skia::FilterQuality::Nearest, 1.0, transform);
-            }
-        }
-        crate::model::Paint::Pattern(p) => {
-            // Unlike `Noise`/`Halftone`, this pixmap holds the actual
-            // decoded tile image at its native resolution — the exact
-            // conversion `draw_image` (this file's `Image`-layer renderer)
-            // already uses for the same purpose.
-            if let Some(decoded) = crate::image_ops::decode(&p.encoded) {
-                let (width, height) = (decoded.width(), decoded.height());
-                if width > 0 && height > 0
-                    && let Some(size) = tiny_skia::IntSize::from_wh(width, height) {
-                        let premultiplied = crate::image_ops::to_premultiplied_rgba(&decoded);
-                        if let Some(pixmap) = Pixmap::from_vec(premultiplied, size) {
-                            *noise_storage = Some(pixmap);
-                            let pixmap_ref = noise_storage.as_ref().expect("just assigned").as_ref();
-                            let tile_width = p.tile_width.max(0.01);
-                            let tile_height = tile_width * (height as f32 / width as f32);
-                            // Scales the pixmap's native (width, height)
-                            // pixels down to one (tile_width, tile_height)
-                            // tile, then translates to `bounds`' unrotated
-                            // absolute position — `SpreadMode::Repeat` is
-                            // what makes it tile across the rest of the fill.
-                            let transform = Transform::from_translate(bounds.min.x, bounds.min.y)
-                                .pre_scale(tile_width / width as f32, tile_height / height as f32);
-                            // Unlike Noise/Halftone, opacity isn't baked
-                            // per-pixel here — the decoded tile is used
-                            // as-is, so it's applied via `Pattern`'s own
-                            // `opacity` argument instead.
-                            sk_paint.shader = tiny_skia::Pattern::new(
-                                pixmap_ref,
-                                tiny_skia::SpreadMode::Repeat,
-                                tiny_skia::FilterQuality::Bilinear,
-                                opacity.clamp(0.0, 1.0),
-                                transform,
-                            );
-                        }
-                    }
-            }
-        }
-    }
-    sk_paint
-}
-
-/// Premultiplies `color`'s RGB by its own alpha — the representation
-/// `tiny_skia::Pixmap`'s raw pixel storage requires (unlike `tiny_skia::Paint::set_color`,
-/// which accepts straight alpha and premultiplies internally at fill time).
-fn premultiplied(color: egui::Color32) -> Option<PremultipliedColorU8> {
-    let a = color.a() as u16;
-    let mul = |v: u8| ((v as u16 * a) / 255) as u8;
-    PremultipliedColorU8::from_rgba(mul(color.r()), mul(color.g()), mul(color.b()), color.a())
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::boolean_ops::apply_boolean_op;
-    use crate::model::{ArrowCap, BoolOp, Frame, Page, PointType};
+    use crate::model::{ArrowCap, BoolOp, CornerRadii, Frame, Page, PathPoint, PointType};
     use egui::{Color32, Pos2, Vec2};
-
-    #[test]
-    fn renders_image_layer_scaled_to_its_frame() {
-        let pixels = image::RgbaImage::from_pixel(2, 2, image::Rgba([0, 200, 0, 255]));
-        let encoded = crate::image_ops::encode_png(&pixels);
-        let layer = Layer::new_image(
-            "Photo",
-            Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(40.0, 20.0)),
-            encoded,
-            2,
-            2,
-        );
-
-        let pixmap = render_layer(&layer).expect("should render");
-        assert_eq!((pixmap.width(), pixmap.height()), (40, 20));
-        let center = pixmap.pixel(20, 10).expect("center pixel");
-        assert_eq!((center.red(), center.green(), center.blue()), (0, 200, 0));
-        assert_eq!(center.alpha(), 255);
-    }
 
     /// End-to-end check of `render_layer`'s shadow padding + `draw_layer_with_shadows`
     /// wiring (as opposed to `shadow.rs`'s own unit tests, which exercise the
@@ -2738,7 +2306,7 @@ mod tests {
     fn justified_non_last_line_stretches_further_right_than_left_aligned() {
         // Narrow enough that "aaaa bbbb" (line 1, non-last) wraps before
         // "cccc" (line 2, last — never stretched, matching typographic
-        // convention and `canvas.rs`'s `egui::LayoutJob` behavior), wide
+        // convention and `canvas/`'s `egui::LayoutJob` behavior), wide
         // enough that "aaaa bbbb" alone still fits on one line.
         let size = egui::Vec2::new(100.0, 150.0);
         let left = text_layer("aaaa bbbb cccc", 24.0, size, TextAlign::Left);
@@ -2874,170 +2442,6 @@ mod tests {
         };
         assert!(opaque_in_band(0..(pixmap.height() / 2)), "expected content on the first wrapped line");
         assert!(opaque_in_band((pixmap.height() / 2)..pixmap.height()), "expected content wrapped onto a second line");
-    }
-
-    #[test]
-    fn linear_gradient_fill_interpolates_left_to_right() {
-        let mut layer = Layer::new(
-            "Rect",
-            Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(100.0, 20.0)),
-            LayerKind::Rectangle { corner_radius: CornerRadii::ZERO },
-        );
-        layer.style.fill = Some(crate::model::Paint::Gradient(crate::model::Gradient::linear(
-            Color32::from_rgb(255, 0, 0),
-            Color32::from_rgb(0, 0, 255),
-        )));
-        layer.style.stroke = None;
-
-        let pixmap = render_layer(&layer).expect("should render");
-        let left = pixmap.pixel(1, 10).expect("left pixel");
-        let right = pixmap.pixel(98, 10).expect("right pixel");
-        assert!(left.red() > 200 && left.blue() < 50, "left edge should be near the start color (red)");
-        assert!(right.blue() > 200 && right.red() < 50, "right edge should be near the end color (blue)");
-    }
-
-    #[test]
-    fn radial_gradient_fill_is_brightest_at_center() {
-        let mut layer = Layer::new(
-            "Oval",
-            Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(80.0, 80.0)),
-            LayerKind::Oval,
-        );
-        layer.style.fill = Some(crate::model::Paint::Gradient(crate::model::Gradient::radial(
-            Color32::from_rgb(255, 255, 255),
-            Color32::from_rgb(0, 0, 0),
-        )));
-        layer.style.stroke = None;
-
-        let pixmap = render_layer(&layer).expect("should render");
-        let center = pixmap.pixel(40, 40).expect("center pixel");
-        let edge = pixmap.pixel(40, 41 + 38).expect("near-edge pixel");
-        assert!(center.red() > edge.red(), "radial gradient should be brightest at its center");
-    }
-
-    #[test]
-    fn gradient_stroke_interpolates_along_a_line() {
-        let mut layer = Layer::new(
-            "Line",
-            Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(100.0, 0.0)),
-            LayerKind::Line,
-        );
-        layer.style.fill = None;
-        layer.style.stroke = Some(crate::model::Stroke {
-            paint: crate::model::Paint::Gradient(crate::model::Gradient::linear(
-                Color32::from_rgb(255, 0, 0),
-                Color32::from_rgb(0, 0, 255),
-            )),
-            width: 6.0,
-        });
-
-        let pixmap = render_layer(&layer).expect("should render");
-        let left = pixmap.pixel(2, pixmap.height() / 2).expect("left pixel");
-        let right = pixmap.pixel(pixmap.width() - 3, pixmap.height() / 2).expect("right pixel");
-        assert!(left.red() > 200 && left.blue() < 50, "stroke start should be near the start color (red)");
-        assert!(right.blue() > 200 && right.red() < 50, "stroke end should be near the end color (blue)");
-    }
-
-    fn noise_rect_layer(seed: u32) -> Layer {
-        let mut layer = Layer::new(
-            "Rect",
-            Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(60.0, 60.0)),
-            LayerKind::Rectangle { corner_radius: CornerRadii::ZERO },
-        );
-        layer.style.fill = Some(crate::model::Paint::Noise(crate::model::NoiseFill {
-            base: Color32::from_rgb(128, 128, 128),
-            intensity: 0.8,
-            scale: 3.0,
-            seed,
-        }));
-        layer.style.stroke = None;
-        layer
-    }
-
-    #[test]
-    fn noise_fill_renders_grain_not_a_flat_color() {
-        let pixmap = render_layer(&noise_rect_layer(7)).expect("should render");
-        let colors: std::collections::HashSet<[u8; 4]> =
-            pixmap.pixels().iter().map(|p| [p.red(), p.green(), p.blue(), p.alpha()]).collect();
-        assert!(colors.len() > 1, "noise fill should vary pixel-to-pixel, not render as a single flat color");
-    }
-
-    #[test]
-    fn noise_fill_is_deterministic_for_the_same_seed() {
-        let a = render_layer(&noise_rect_layer(7)).expect("should render");
-        let b = render_layer(&noise_rect_layer(7)).expect("should render");
-        assert_eq!(a.data(), b.data(), "the same seed should always render the same grain pattern");
-    }
-
-    #[test]
-    fn noise_fill_differs_across_seeds() {
-        let a = render_layer(&noise_rect_layer(7)).expect("should render");
-        let b = render_layer(&noise_rect_layer(8)).expect("should render");
-        assert_ne!(a.data(), b.data(), "different seeds should render different grain patterns");
-    }
-
-    fn halftone_rect_layer() -> Layer {
-        let mut layer = Layer::new(
-            "Rect",
-            Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(60.0, 60.0)),
-            LayerKind::Rectangle { corner_radius: CornerRadii::ZERO },
-        );
-        layer.style.fill = Some(crate::model::Paint::Halftone(crate::model::HalftoneFill {
-            background: Color32::WHITE,
-            dot: Color32::BLACK,
-            scale: 10.0,
-            coverage: 0.8,
-        }));
-        layer.style.stroke = None;
-        layer
-    }
-
-    #[test]
-    fn halftone_fill_renders_a_dot_grid_not_a_flat_color() {
-        let pixmap = render_layer(&halftone_rect_layer()).expect("should render");
-        let colors: std::collections::HashSet<[u8; 4]> =
-            pixmap.pixels().iter().map(|p| [p.red(), p.green(), p.blue(), p.alpha()]).collect();
-        assert!(colors.len() > 1, "halftone fill should show both dot and background colors, not a single flat color");
-    }
-
-    fn two_color_tile_png() -> Vec<u8> {
-        let mut img = image::RgbaImage::new(2, 1);
-        img.put_pixel(0, 0, image::Rgba([255, 0, 0, 255]));
-        img.put_pixel(1, 0, image::Rgba([0, 0, 255, 255]));
-        crate::image_ops::encode_png(&img)
-    }
-
-    fn pattern_rect_layer(tile_width: f32) -> Layer {
-        let mut layer = Layer::new(
-            "Rect",
-            Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(80.0, 20.0)),
-            LayerKind::Rectangle { corner_radius: CornerRadii::ZERO },
-        );
-        layer.style.fill = Some(crate::model::Paint::Pattern(crate::model::PatternFill {
-            encoded: two_color_tile_png(),
-            tile_width,
-        }));
-        layer.style.stroke = None;
-        layer
-    }
-
-    #[test]
-    fn pattern_fill_contains_the_tile_images_colors() {
-        let pixmap = render_layer(&pattern_rect_layer(20.0)).expect("should render");
-        let has_reddish = pixmap.pixels().iter().any(|p| p.red() > 150 && p.blue() < 100);
-        let has_blueish = pixmap.pixels().iter().any(|p| p.blue() > 150 && p.red() < 100);
-        assert!(has_reddish && has_blueish, "pattern fill should contain both of the tile image's colors");
-    }
-
-    #[test]
-    fn pattern_fill_tiles_the_same_color_reappears_at_tile_width_offset() {
-        let tile_width = 20.0;
-        let pixmap = render_layer(&pattern_rect_layer(tile_width)).expect("should render");
-        let y = pixmap.height() / 2;
-        let first = pixmap.pixel(2, y).expect("first tile pixel");
-        let second = pixmap.pixel(2 + tile_width as u32, y).expect("second tile pixel");
-        assert!(first.red() > 150 && first.blue() < 100, "first tile should start reddish");
-        assert!(second.red() > 150 && second.blue() < 100, "pattern should repeat: second tile should also start reddish");
     }
 
     fn text_path_attachment_layer(target: crate::model::LayerId, mode: crate::model::TextPathMode) -> Layer {

@@ -3,7 +3,7 @@
 //! greedily against the target outline's own horizontal span at each line's
 //! height (`text_path_geometry::horizontal_spans_at_y`). Shared by the
 //! canvas (`text_area_layout.rs`, which turns each row into an
-//! `egui::Galley`) and the exporter (`export.rs`, which rasterizes each
+//! `egui::Galley`) and the exporter (`export/`, which rasterizes each
 //! row's glyphs via `ab_glyph`) so the two can't disagree on where a line
 //! breaks or sits — only how "these tagged chars at this position" become
 //! pixels differs per caller.
@@ -29,7 +29,7 @@ pub struct WrappedRow {
 }
 
 /// Width of a run-tagged char slice, in whatever units the caller renders
-/// with — the `measure` callback `wrap_in_area` and `export.rs`'s
+/// with — the `measure` callback `wrap_in_area` and `export/`'s
 /// `wrap_line_rich` take.
 pub type MeasureTaggedChars<'a> = dyn Fn(&[(char, Option<usize>)]) -> f32 + 'a;
 

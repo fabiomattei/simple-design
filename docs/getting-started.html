@@ -43,7 +43,7 @@
 </table>
 
 <p>
-Tests currently live alongside <code>src/export.rs</code> and <code>src/io.rs</code>
+Tests currently live alongside <code>src/export/</code> and <code>src/io.rs</code>
 (<code>#[cfg(test)] mod tests</code>), primarily covering the PNG renderer's pixel output and
 file round-trips. There is no separate lint/format CI — <code>cargo check</code> emitting no
 warnings is the bar to clear before considering a change done.
@@ -73,7 +73,7 @@ notably the <code>App::ui</code> signature, panel construction
 </p>
 <p>
 When adding a new shape or tool, the touch points (in order) are: <code>tools.rs</code>,
-<code>model/layer.rs</code>, <code>canvas/</code>, <code>export.rs</code>,
+<code>model/layer.rs</code>, <code>canvas/</code>, <code>export/</code>,
 <code>ui/inspector.rs</code>, and <code>ui/layers_panel.rs</code> — see
 <a href="architecture.html">Architecture</a> for what each one needs.
 </p>
