@@ -45,8 +45,8 @@ pub(super) fn draw_children(
             crate::masking::RenderUnit::Plain(child) => {
                 draw_layer(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, child, page, parent_offset, origin, pan, zoom, opacity, editing_text);
             }
-            crate::masking::RenderUnit::Masked { mask, content } => {
-                draw_masked_run(painter, ctx, mask_cache, mask, &content, page, parent_offset, origin, pan, zoom, opacity);
+            crate::masking::RenderUnit::Masked { mask, content, segment } => {
+                draw_masked_run(painter, ctx, mask_cache, mask, &content, segment, page, parent_offset, origin, pan, zoom, opacity);
             }
         }
     }
@@ -65,6 +65,7 @@ pub(super) fn draw_masked_run(
     mask_cache: &mut MaskedGroupTextureCache,
     mask: &Layer,
     content: &[&Layer],
+    segment: usize,
     page: &Page,
     parent_offset: Vec2,
     origin: Pos2,
@@ -72,7 +73,7 @@ pub(super) fn draw_masked_run(
     zoom: f32,
     opacity: f32,
 ) {
-    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, content, page) else {
+    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, content, segment, page) else {
         return;
     };
     let to_screen = |p: Pos2| origin + pan + (p.to_vec2() + parent_offset) * zoom;

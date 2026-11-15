@@ -22,8 +22,11 @@ pub enum RenderUnit<'a> {
     /// Drawn exactly as before masking existed.
     Plain(&'a Layer),
     /// `content` (in original back-to-front order) clipped to `mask`'s own
-    /// silhouette; `mask`'s own fill/stroke are never drawn.
-    Masked { mask: &'a Layer, content: Vec<&'a Layer> },
+    /// silhouette; `mask`'s own fill/stroke are never drawn. `segment`
+    /// numbers the pieces (from the back, starting at 0) one mask's run is
+    /// split into by interleaved `ignore_mask` layers, so a cache keyed per
+    /// unit can tell the pieces of the same mask apart.
+    Masked { mask: &'a Layer, content: Vec<&'a Layer>, segment: usize },
 }
 
 /// Groups a parent's `children` (already in back-to-front draw order, same
@@ -39,29 +42,45 @@ pub enum RenderUnit<'a> {
 /// principle already applied everywhere else in this codebase, extended to
 /// masks: hiding a mask via its eye icon reveals its content normally,
 /// rather than hiding the content along with it. `ignore_mask`
-/// layers opt out and always emit as `Plain`, in their original position —
-/// note this means an `ignore_mask` layer *interleaved inside* what would
-/// otherwise be one contiguous masked run ends up drawn beneath that run's
-/// eventual composite rather than at its exact interleaved depth. This is a
-/// deliberate simplification (like this codebase's other documented
-/// z-order/selection simplifications) rather than a bug: splitting a single
-/// mask's alpha computation across multiple sub-composites to preserve exact
-/// interleaving isn't worth the complexity for a rarely-used toggle.
+/// layers opt out and always emit as `Plain` at their exact depth: an
+/// `ignore_mask` layer interleaved inside a mask's run splits that run into
+/// separately masked pieces below and above it (see `split_run_around_ignored`).
 pub fn partition_mask_runs(children: &[Layer]) -> Vec<RenderUnit<'_>> {
     let mut units = Vec::new();
     let mut pending: Vec<&Layer> = Vec::new();
     for child in children {
         if child.is_mask && child.visible {
-            if !pending.is_empty() {
-                units.push(RenderUnit::Masked { mask: child, content: std::mem::take(&mut pending) });
-            }
-        } else if child.ignore_mask {
-            units.push(RenderUnit::Plain(child));
+            units.extend(split_run_around_ignored(child, std::mem::take(&mut pending)));
         } else {
             pending.push(child);
         }
     }
     units.extend(pending.into_iter().map(RenderUnit::Plain));
+    units
+}
+
+/// Turns one mask's `run` (back-to-front) into units: each maximal stretch
+/// of non-`ignore_mask` layers becomes a `Masked` piece, each `ignore_mask`
+/// layer a `Plain` unit between them. A run with no maskable layer at all
+/// yields only `Plain` units (the mask itself is dropped, as with an empty run).
+fn split_run_around_ignored<'a>(mask: &'a Layer, run: Vec<&'a Layer>) -> Vec<RenderUnit<'a>> {
+    let mut units = Vec::new();
+    let mut content: Vec<&Layer> = Vec::new();
+    let mut segment = 0;
+    for layer in run {
+        if layer.ignore_mask {
+            if !content.is_empty() {
+                units.push(RenderUnit::Masked { mask, content: std::mem::take(&mut content), segment });
+                segment += 1;
+            }
+            units.push(RenderUnit::Plain(layer));
+        } else {
+            content.push(layer);
+        }
+    }
+    if !content.is_empty() {
+        units.push(RenderUnit::Masked { mask, content, segment });
+    }
     units
 }
 
@@ -76,9 +95,12 @@ pub fn partition_mask_runs(children: &[Layer]) -> Vec<RenderUnit<'_>> {
 /// the mask's own bounds, with `offset` shifted so the mask's local origin
 /// lands at the scratch pixmaps' `(0, 0)`).
 ///
-/// `mask`'s own opacity is ignored (always drawn at full opacity into the
-/// mask scratch) — only its silhouette matters, never how transparent it'd
-/// otherwise look — a mask's own appearance is always hidden entirely.
+/// This is an alpha mask: content shows through in proportion to the
+/// mask's rendered alpha, so the mask's own `opacity`, `fill_opacity`,
+/// gradient stops and missing fill (only its stroke then reveals content)
+/// all affect the result. Ambient `parent_opacity` is *not* applied to the
+/// mask pass (only to `content`), so it isn't counted twice. The mask's own
+/// colors never appear in the output.
 pub fn composite_masked_run(
     target: &mut Pixmap,
     mask: &Layer,
@@ -243,7 +265,8 @@ mod tests {
         assert_eq!(units.len(), 0);
     }
 
-    /// `ignore_mask` opts a layer out of an active mask above it.
+    /// `ignore_mask` opts a layer out of an active mask above it, keeping
+    /// its exact depth (above the masked content it sits above).
     #[test]
     fn ignore_mask_layer_is_not_absorbed_into_the_masked_run() {
         let content = rect_layer("Content", Pos2::ZERO, Vec2::new(10.0, 10.0), Color32::BLUE);
@@ -255,8 +278,27 @@ mod tests {
 
         let units = partition_mask_runs(&children);
         assert_eq!(units.len(), 2);
-        assert!(matches!(units[0], RenderUnit::Plain(l) if l.name == "Ignored"));
-        assert!(matches!(&units[1], RenderUnit::Masked { content, .. } if content.len() == 1 && content[0].name == "Content"));
+        assert!(matches!(&units[0], RenderUnit::Masked { content, .. } if content.len() == 1 && content[0].name == "Content"));
+        assert!(matches!(units[1], RenderUnit::Plain(l) if l.name == "Ignored"));
+    }
+
+    /// An `ignore_mask` layer interleaved in a run splits it into two
+    /// pieces of the same mask, with the ignored layer drawn between them.
+    #[test]
+    fn interleaved_ignore_mask_layer_splits_the_run_at_its_exact_depth() {
+        let below = rect_layer("Below", Pos2::ZERO, Vec2::new(10.0, 10.0), Color32::BLUE);
+        let mut ignored = rect_layer("Ignored", Pos2::ZERO, Vec2::new(10.0, 10.0), Color32::GREEN);
+        ignored.ignore_mask = true;
+        let above = rect_layer("Above", Pos2::ZERO, Vec2::new(10.0, 10.0), Color32::RED);
+        let mut mask_layer = oval_layer("Mask", Pos2::ZERO, Vec2::new(10.0, 10.0));
+        mask_layer.is_mask = true;
+        let children = vec![below, ignored, above, mask_layer];
+
+        let units = partition_mask_runs(&children);
+        assert_eq!(units.len(), 3);
+        assert!(matches!(&units[0], RenderUnit::Masked { content, segment: 0, .. } if content[0].name == "Below"));
+        assert!(matches!(units[1], RenderUnit::Plain(l) if l.name == "Ignored"));
+        assert!(matches!(&units[2], RenderUnit::Masked { content, segment: 1, .. } if content[0].name == "Above"));
     }
 
     /// The mask layer's own fill never appears in the composited output —

@@ -217,7 +217,7 @@ fn draw_children(pixmap: &mut Pixmap, children: &[Layer], roots: &[Layer], offse
     for unit in crate::masking::partition_mask_runs(children) {
         match unit {
             crate::masking::RenderUnit::Plain(child) => draw_layer(pixmap, child, roots, offset, opacity),
-            crate::masking::RenderUnit::Masked { mask, content } => {
+            crate::masking::RenderUnit::Masked { mask, content, .. } => {
                 crate::masking::composite_masked_run(pixmap, mask, &content, offset, opacity, |px, l, off, op| {
                     draw_layer(px, l, roots, off, op)
                 });
@@ -234,7 +234,7 @@ fn draw_children_with_shadows(pixmap: &mut Pixmap, children: &[Layer], roots: &[
     for unit in crate::masking::partition_mask_runs(children) {
         match unit {
             crate::masking::RenderUnit::Plain(child) => draw_layer_with_shadows(pixmap, child, roots, offset, opacity),
-            crate::masking::RenderUnit::Masked { mask, content } => {
+            crate::masking::RenderUnit::Masked { mask, content, .. } => {
                 crate::masking::composite_masked_run(pixmap, mask, &content, offset, opacity, |px, l, off, op| {
                     draw_layer_with_shadows(px, l, roots, off, op)
                 });

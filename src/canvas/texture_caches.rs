@@ -55,7 +55,8 @@ impl ImageTextureCache {
 }
 
 /// One masked run's rasterized composite (see `masking::composite_masked_run`),
-/// cached as an egui texture keyed by the mask layer's id — the same
+/// cached as an egui texture keyed by the mask layer's id plus the run's
+/// `segment` (see `masking::RenderUnit::Masked`) — the same
 /// texture-cache-over-a-CPU-rasterizer pattern as `ImageTextureCache` above,
 /// since egui's immediate-mode `Painter` has no way to clip to an arbitrary
 /// shape itself (only axis-aligned clip rects). `mask`/`content` are cloned
@@ -90,7 +91,7 @@ pub(super) fn contains_path_attached_text(layer: &Layer) -> bool {
 }
 
 #[derive(Default)]
-pub struct MaskedGroupTextureCache(HashMap<LayerId, CachedMaskTexture>);
+pub struct MaskedGroupTextureCache(HashMap<(LayerId, usize), CachedMaskTexture>);
 
 impl MaskedGroupTextureCache {
     /// Returns the cached (or freshly built) texture for this masked run,
@@ -102,10 +103,11 @@ impl MaskedGroupTextureCache {
     /// `content` clone-equality) doesn't track, any masked run containing
     /// such a layer always rebuilds rather than risk a stale texture if its
     /// attachment target moves elsewhere on the page.
-    pub(super) fn get_or_build(&mut self, ctx: &egui::Context, mask: &Layer, content: &[&Layer], page: &Page) -> Option<(egui::TextureHandle, Rect)> {
+    pub(super) fn get_or_build(&mut self, ctx: &egui::Context, mask: &Layer, content: &[&Layer], segment: usize, page: &Page) -> Option<(egui::TextureHandle, Rect)> {
+        let key = (mask.id, segment);
         let bounds = mask.frame.rotated_bounds();
         let up_to_date = !content.iter().any(|l| contains_path_attached_text(l))
-            && self.0.get(&mask.id).is_some_and(|cached| {
+            && self.0.get(&key).is_some_and(|cached| {
                 cached.mask == *mask && cached.content.len() == content.len() && cached.content.iter().zip(content).all(|(a, b)| a == *b)
             });
         if !up_to_date {
@@ -120,9 +122,9 @@ impl MaskedGroupTextureCache {
                 crate::export::draw_layer_with_shadows(px, l, &page.layers, off, op)
             });
             let color_image = egui::ColorImage::from_rgba_premultiplied([width as usize, height as usize], pixmap.data());
-            let texture = ctx.load_texture(format!("mask-group-{}", mask.id), color_image, egui::TextureOptions::LINEAR);
+            let texture = ctx.load_texture(format!("mask-group-{}-{segment}", mask.id), color_image, egui::TextureOptions::LINEAR);
             self.0.insert(
-                mask.id,
+                key,
                 CachedMaskTexture {
                     mask: mask.clone(),
                     content: content.iter().map(|l| (*l).clone()).collect(),
@@ -130,13 +132,13 @@ impl MaskedGroupTextureCache {
                 },
             );
         }
-        self.0.get(&mask.id).map(|cached| (cached.texture.clone(), bounds))
+        self.0.get(&key).map(|cached| (cached.texture.clone(), bounds))
     }
 
     /// See `ImageTextureCache::evict_stale` — same rationale, keyed off the
     /// mask layer's id instead.
     pub(super) fn evict_stale(&mut self, live_ids: &std::collections::HashSet<LayerId>) {
-        self.0.retain(|id, _| live_ids.contains(id));
+        self.0.retain(|(id, _), _| live_ids.contains(id));
     }
 }
 

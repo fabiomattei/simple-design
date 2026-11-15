@@ -158,7 +158,7 @@ pub(super) fn hit_test_layers(layers: &[Layer], doc_pos: Pos2) -> Option<LayerId
     // easy-to-reason-about function like it was before masking existed.
     let mut mask_for: HashMap<LayerId, &Layer> = HashMap::new();
     for unit in crate::masking::partition_mask_runs(layers) {
-        if let crate::masking::RenderUnit::Masked { mask, content } = unit {
+        if let crate::masking::RenderUnit::Masked { mask, content, .. } = unit {
             for layer in content {
                 mask_for.insert(layer.id, mask);
             }
