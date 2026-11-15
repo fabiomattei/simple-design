@@ -248,6 +248,30 @@ fn double_clicking_a_text_layer_starts_in_place_editing() {
 }
 
 #[test]
+fn double_clicking_a_mask_over_text_starts_editing_the_masked_text() {
+    let frame = Frame { pos: Pos2::new(100.0, 100.0), size: Vec2::new(140.0, 34.0), rotation: 0.0 };
+    let text = new_layer_for_tool(Tool::Text, frame).expect("Text tool creates a layer");
+    let id = text.id;
+    let mut mask = rect_layer("Mask", 90.0, 90.0, 160.0, 54.0);
+    mask.is_mask = true;
+    let mask_id = mask.id;
+    let mut h = Harness::new(vec![text, mask]);
+
+    // A single click selects the mask, which sits on top.
+    h.click(Pos2::new(150.0, 115.0), Modifiers::NONE);
+    assert_eq!(h.selection, vec![mask_id]);
+
+    // Let egui's double-click window lapse so the single click above isn't
+    // counted as the first half of the double-click below.
+    for _ in 0..10 {
+        h.frame(Vec::new());
+    }
+    h.double_click(Pos2::new(150.0, 115.0));
+    assert_eq!(h.widget.editing_text, Some(id));
+    assert_eq!(h.selection, vec![id]);
+}
+
+#[test]
 fn right_click_on_the_canvas_opens_the_copy_paste_menu() {
     let mut h = Harness::new(Vec::new());
     let pos = h.screen(Pos2::new(300.0, 300.0));

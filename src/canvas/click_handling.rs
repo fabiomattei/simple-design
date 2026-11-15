@@ -208,7 +208,8 @@ impl CanvasWidget {
     /// editing that immediately. Double-clicking a mask (which a single
     /// click selects, since it sits on top of what it clips) instead
     /// selects the content layer it reveals under the pointer — see
-    /// `hit_test_through_mask`.
+    /// `hit_test_through_mask` — and starts editing it in place if it's a
+    /// `Text` layer.
     pub(super) fn handle_text_double_click(
         &mut self,
         response: &Response,
@@ -224,7 +225,11 @@ impl CanvasWidget {
                 if let Some(mask_id) = hit_test(page, doc_pos)
                     && page.find(mask_id).is_some_and(|l| l.is_mask) {
                         if let Some(content_id) = hit_test_through_mask(page, mask_id, doc_pos) {
+                            let is_text = matches!(page.find(content_id).map(|l| &l.kind), Some(LayerKind::Text { .. }));
                             *selection = vec![content_id];
+                            if is_text {
+                                self.start_editing_text(history, content_id);
+                            }
                         }
                         return;
                     }

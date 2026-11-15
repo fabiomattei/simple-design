@@ -46,7 +46,7 @@ pub(super) fn draw_children(
                 draw_layer(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, child, page, parent_offset, origin, pan, zoom, opacity, editing_text);
             }
             crate::masking::RenderUnit::Masked { mask, content, segment } => {
-                draw_masked_run(painter, ctx, mask_cache, mask, &content, segment, page, parent_offset, origin, pan, zoom, opacity);
+                draw_masked_run(painter, ctx, mask_cache, mask, &content, segment, page, parent_offset, origin, pan, zoom, opacity, editing_text);
             }
         }
     }
@@ -57,6 +57,8 @@ pub(super) fn draw_children(
 /// the mask's on-screen bounds — the same "cached raster + `painter.image`"
 /// pattern as an `Image` layer. The run's ambient opacity is baked into the
 /// texture, not applied as a `tint` (see `CachedMaskTexture`'s doc comment).
+/// A `Text` layer in `content` that's being edited in place is left out of
+/// the texture (see `hide_edited_text`).
 #[allow(clippy::too_many_arguments)]
 pub(super) fn draw_masked_run(
     painter: &egui::Painter,
@@ -71,13 +73,33 @@ pub(super) fn draw_masked_run(
     pan: Vec2,
     zoom: f32,
     opacity: f32,
+    editing_text: Option<LayerId>,
 ) {
-    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, content, segment, opacity, zoom, page) else {
+    let edited = hide_edited_text(content, editing_text);
+    let content: Vec<&Layer> = content.iter().map(|&layer| match &edited {
+        Some(hidden) if hidden.id == layer.id => hidden,
+        _ => layer,
+    }).collect();
+    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, &content, segment, opacity, zoom, page) else {
         return;
     };
     let to_screen = |p: Pos2| origin + pan + (p.to_vec2() + parent_offset) * zoom;
     let screen_rect = Rect::from_two_pos(to_screen(bounds.min), to_screen(bounds.max));
     painter.image(texture.id(), screen_rect, Rect::from_min_max(Pos2::ZERO, Pos2::new(1.0, 1.0)), Color32::WHITE);
+}
+
+/// A copy of whichever `content` layer contains `editing_text` (at any
+/// depth), with that `Text` layer hidden — while editing in place, the
+/// floating editor (`CanvasWidget::show_text_edit_overlay`) is the only
+/// visible copy of its text, same as `draw_layer`'s own Text arm. `None`
+/// when nothing in `content` is being edited. Because the copy differs from
+/// the live layer, `MaskedGroupTextureCache` rebuilds on entering and
+/// leaving edit mode with no extra bookkeeping.
+fn hide_edited_text(content: &[&Layer], editing_text: Option<LayerId>) -> Option<Layer> {
+    let id = editing_text?;
+    let mut edited = content.iter().find(|layer| layer.find(id).is_some()).map(|layer| (*layer).clone())?;
+    edited.find_mut(id)?.visible = false;
+    Some(edited)
 }
 
 #[allow(clippy::too_many_arguments)]
