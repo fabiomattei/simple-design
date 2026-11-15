@@ -1,6 +1,7 @@
 use tiny_skia::{FillRule, PathBuilder, Pixmap, PixmapPaint, Transform};
 
 mod artboard;
+mod encode;
 mod glyph_raster;
 mod image_layer;
 mod line_arrow;
@@ -17,6 +18,7 @@ use line_arrow::{draw_arrow, draw_line};
 use text_layer::draw_text_layer;
 
 pub(crate) use text_wrap::{wrap_line, wrap_line_rich};
+pub use encode::{ExportFormat, ExportSettings, PngCompression};
 
 use artboard::draw_artboard;
 use image_layer::draw_image;
@@ -37,13 +39,19 @@ use crate::model::{Layer, LayerKind};
 /// render with their own background color; everything else renders on a
 /// transparent background.
 pub fn render_layer(layer: &Layer) -> Option<Pixmap> {
+    render_layer_scaled(layer, 1.0)
+}
+
+/// Same as `render_layer`, at `render_scale` pixmap pixels per document unit
+/// (e.g. `2.0` for a 2x export).
+pub fn render_layer_scaled(layer: &Layer, render_scale: f32) -> Option<Pixmap> {
     let bounds = layer.frame.rotated_bounds();
     let pad = crate::shadow::outer_shadow_extent(&layer.style.shadows);
-    let width = (bounds.width() + 2.0 * pad).round().max(1.0) as u32;
-    let height = (bounds.height() + 2.0 * pad).round().max(1.0) as u32;
+    let width = ((bounds.width() + 2.0 * pad) * render_scale).round().max(1.0) as u32;
+    let height = ((bounds.height() + 2.0 * pad) * render_scale).round().max(1.0) as u32;
     let mut pixmap = Pixmap::new(width, height)?;
     let offset = egui::Vec2::new(-bounds.min.x + pad, -bounds.min.y + pad);
-    draw_layer_with_shadows(&mut pixmap, layer, std::slice::from_ref(layer), offset, 1.0, 1.0);
+    draw_layer_with_shadows(&mut pixmap, layer, std::slice::from_ref(layer), offset, 1.0, render_scale);
     Some(pixmap)
 }
 
@@ -120,6 +128,14 @@ pub fn export_layer_to_png(layer: &Layer, path: &std::path::Path) -> anyhow::Res
     let pixmap = render_layer(layer).ok_or_else(|| anyhow::anyhow!("layer has no visible area"))?;
     pixmap.save_png(path)?;
     Ok(())
+}
+
+/// Renders `layer` (and descendants) at `settings.scale` and writes it to
+/// `path` in `settings.format`. The extension of `path` is not consulted.
+pub fn export_layer(layer: &Layer, path: &std::path::Path, settings: &ExportSettings) -> anyhow::Result<()> {
+    let pixmap = render_layer_scaled(layer, settings.scale).ok_or_else(|| anyhow::anyhow!("layer has no visible area"))?;
+    let file = std::io::BufWriter::new(std::fs::File::create(path)?);
+    encode::encode_pixmap(&pixmap, settings, file)
 }
 
 /// `pub(crate)` (rather than private) so `masking.rs` can use it as the
@@ -338,6 +354,21 @@ mod tests {
         TextTransform, VerticalAlign,
     };
     use egui::{Color32, Pos2, Vec2};
+
+    #[test]
+    fn scaled_render_doubles_pixel_size_at_2x() {
+        let mut layer = Layer::new(
+            "Rect",
+            Frame::from_two_points(Pos2::new(0.0, 0.0), Pos2::new(40.0, 30.0)),
+            LayerKind::Rectangle { corner_radius: CornerRadii::ZERO },
+        );
+        layer.style.fill = Some(crate::model::Paint::Solid(Color32::from_rgb(255, 0, 0)));
+        layer.style.stroke = None;
+        let pixmap = render_layer_scaled(&layer, 2.0).expect("should render");
+        assert_eq!((pixmap.width(), pixmap.height()), (80, 60));
+        let bottom_right = pixmap.pixel(79, 59).unwrap();
+        assert_eq!((bottom_right.red(), bottom_right.alpha()), (255, 255));
+    }
 
     /// End-to-end check of `render_layer`'s shadow padding + `draw_layer_with_shadows`
     /// wiring (as opposed to `shadow.rs`'s own unit tests, which exercise the

@@ -17,6 +17,7 @@ use crate::panel_layout::PanelLayout;
 use crate::recent_files::RecentFiles;
 use crate::tools::Tool;
 use crate::transform_ops::{self, FlipAxis};
+use crate::ui::export_dialog::{self, ExportDialogAction, ExportDialogState};
 use crate::ui::layers_panel::LayersPanel;
 use crate::ui::pages_bar::{PagesAction, PagesBar};
 use crate::ui::palette_panel::PaletteAction;
@@ -60,6 +61,9 @@ pub struct App {
     /// The last-applied `RenameAllConfig`, for Edit > "Rename with Last
     /// Format" (re-runs it against the current selection with no dialog).
     last_rename_config: Option<RenameAllConfig>,
+    /// Export dialog state (toolbar Export button, ⌘E, File > Export
+    /// Selection) — see `ui/export_dialog.rs`.
+    export_dialog: ExportDialogState,
     /// View menu toggle for the Palette panel (`ui/palette_panel.rs`) —
     /// runtime-only, not persisted with the document (same convention as
     /// `CanvasWidget::show_rulers`/`show_grid`).
@@ -111,6 +115,7 @@ impl App {
             make_grid_gutter_y: 20.0,
             rename_all: RenameAllState::default(),
             last_rename_config: None,
+            export_dialog: ExportDialogState::default(),
             show_palette_panel: false,
             show_layers_panel: true,
             show_inspector_panel: true,
@@ -616,15 +621,34 @@ impl App {
         }
     }
 
-    fn export_selection_png(&mut self) {
+    fn open_export_dialog(&mut self) {
         let [id] = self.selection.as_slice() else {
             return;
         };
         let Some(layer) = self.history.get().active_page().find(*id) else {
             return;
         };
-        if let Some(path) = io::export_png_dialog(&format!("{}.png", layer.name)) {
-            let _ = crate::export::export_layer_to_png(layer, &path);
+        self.export_dialog.layer_id = Some(*id);
+        self.export_dialog.layer_name = layer.name.clone();
+        self.export_dialog.layer_size = layer.frame.rotated_bounds().size();
+        self.export_dialog.error = None;
+        self.export_dialog.open = true;
+    }
+
+    /// Asks for a path and writes the dialog's layer there. Closes the dialog
+    /// on success; on failure keeps it open with the error shown in it.
+    fn run_export(&mut self) {
+        let dialog = &mut self.export_dialog;
+        let Some(layer) = dialog.layer_id.and_then(|id| self.history.get().active_page().find(id)) else {
+            dialog.error = Some("The layer no longer exists on this page.".to_string());
+            return;
+        };
+        let Some(path) = io::export_image_dialog(&dialog.layer_name, dialog.settings.format) else {
+            return;
+        };
+        match crate::export::export_layer(layer, &path, &dialog.settings) {
+            Ok(()) => dialog.open = false,
+            Err(error) => dialog.error = Some(format!("Export failed: {error}")),
         }
     }
 
@@ -727,7 +751,7 @@ impl App {
             self.flip_selection(FlipAxis::Vertical);
         }
         if ctx.input(|i| i.key_pressed(egui::Key::E) && i.modifiers.command) {
-            self.export_selection_png();
+            self.open_export_dialog();
         }
         if !any_focused
             && ctx.input(|i| i.key_pressed(egui::Key::O) && i.modifiers.command && i.modifiers.alt)
@@ -900,11 +924,11 @@ impl eframe::App for App {
                     if ui
                         .add_enabled(
                             self.selection.len() == 1,
-                            egui::Button::new("Export Selection as PNG..."),
+                            egui::Button::new("Export Selection..."),
                         )
                         .clicked()
                     {
-                        self.export_selection_png();
+                        self.open_export_dialog();
                         ui.close();
                     }
                     ui.separator();
@@ -1166,13 +1190,19 @@ impl eframe::App for App {
 
         egui::Panel::top("toolbar").show(ui, |ui| {
             ui.add_space(3.0);
-            let action = toolbar::ui(ui, &mut self.tool, self.selection.len());
+            let selection_is_mask = match self.selection[..] {
+                [id] => self.history.get().active_page().find(id).is_some_and(|layer| layer.mask.enabled),
+                _ => false,
+            };
+            let action = toolbar::ui(ui, &mut self.tool, self.selection.len(), selection_is_mask);
             ui.add_space(3.0);
             match action {
                 Some(ToolbarAction::InsertImage) => self.insert_images_via_dialog(),
                 Some(ToolbarAction::Align(edge, to_artboard)) => self.align_selection(edge, to_artboard),
                 Some(ToolbarAction::Distribute(axis)) => self.distribute_selection(axis),
                 Some(ToolbarAction::Arrange(command)) => self.arrange_selection(command),
+                Some(ToolbarAction::ToggleMask) => self.toggle_mask_selection(),
+                Some(ToolbarAction::Export) => self.open_export_dialog(),
                 None => {}
             }
         });
@@ -1237,6 +1267,9 @@ impl eframe::App for App {
         if let Some(RenameAllAction::Apply(names)) = rename_all::ui(&ctx, &mut self.rename_all) {
             self.last_rename_config = Some(self.rename_all.config.clone());
             self.apply_renames(names);
+        }
+        if let Some(ExportDialogAction::Export) = export_dialog::ui(&ctx, &mut self.export_dialog) {
+            self.run_export();
         }
     }
 }

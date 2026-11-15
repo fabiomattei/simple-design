@@ -57,6 +57,14 @@ pub fn export_png_dialog(default_name: &str) -> Option<PathBuf> {
         .save_file()
 }
 
+/// File picker for the Export dialog, filtered to `format`'s extension.
+pub fn export_image_dialog(layer_name: &str, format: crate::export::ExportFormat) -> Option<PathBuf> {
+    rfd::FileDialog::new()
+        .set_file_name(format!("{layer_name}.{}", format.extension()))
+        .add_filter(format!("{} image", format.label()), &[format.extension()])
+        .save_file()
+}
+
 /// Serializes `document` as pretty-printed JSON and writes it to `path`.
 pub fn save_to(path: &PathBuf, document: &Document) -> anyhow::Result<()> {
     let json = serde_json::to_string_pretty(document)?;
