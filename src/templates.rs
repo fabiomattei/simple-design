@@ -81,6 +81,16 @@ const BUILT_IN: &[(&str, &str)] = &[
     ("Pricing Page - Brutalist", include_str!("../templates/pricing-brutalist.sdesign")),
     ("Pricing Page - Ocean", include_str!("../templates/pricing-ocean.sdesign")),
     ("Pricing Page - Sunset", include_str!("../templates/pricing-sunset.sdesign")),
+    ("Blog Header - Minimal Mono", include_str!("../templates/blog-header-minimal-mono.sdesign")),
+    ("Blog Header - Neon Night", include_str!("../templates/blog-header-neon-night.sdesign")),
+    ("Blog Header - Pastel", include_str!("../templates/blog-header-pastel.sdesign")),
+    ("Blog Header - Corporate Navy", include_str!("../templates/blog-header-corporate-navy.sdesign")),
+    ("Blog Header - Earthy", include_str!("../templates/blog-header-earthy.sdesign")),
+    ("Blog Header - Retro 70s", include_str!("../templates/blog-header-retro-70s.sdesign")),
+    ("Blog Header - Dark Luxe Gold", include_str!("../templates/blog-header-dark-luxe.sdesign")),
+    ("Blog Header - Brutalist", include_str!("../templates/blog-header-brutalist.sdesign")),
+    ("Blog Header - Ocean", include_str!("../templates/blog-header-ocean.sdesign")),
+    ("Blog Header - Sunset", include_str!("../templates/blog-header-sunset.sdesign")),
 ];
 
 #[derive(Clone)]
