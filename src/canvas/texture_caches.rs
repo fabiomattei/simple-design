@@ -6,7 +6,7 @@ use std::collections::HashMap;
 
 use egui::{Pos2, Rect, Vec2};
 
-use crate::model::{ColorAdjust, HalftoneFill, Layer, LayerId, LayerKind, NoiseFill, Page, PatternFill};
+use crate::model::{ColorAdjust, Gradient, HalftoneFill, Layer, LayerId, LayerKind, NoiseFill, Page, PatternFill};
 
 /// One decoded-and-adjusted `Image` layer's egui texture, plus the
 /// `(version, color_adjust)` pair it was built from — cheap to compare every
@@ -325,6 +325,56 @@ impl HalftoneTextureCache {
         let texture = ctx.load_texture(format!("halftone-layer-{layer_id}"), color_image, egui::TextureOptions::NEAREST);
         let handle = texture.clone();
         self.0.insert(layer_id, CachedHalftoneTexture { fill: *fill, local_size, pixel_size, texture });
+        Some(handle)
+    }
+
+    /// See `ImageTextureCache::evict_stale` — same rationale.
+    pub(super) fn evict_stale(&mut self, live_ids: &std::collections::HashSet<LayerId>) {
+        self.0.retain(|id, _| live_ids.contains(id));
+    }
+}
+
+/// `Paint::Gradient` fill's sibling of `CachedNoiseTexture`/`NoiseTextureCache`
+/// — identical shape, sampling `Gradient::sample_in_rect` over the layer's
+/// local bounds. Rasterized rather than drawn as per-vertex mesh colors
+/// because vertex-color interpolation is only exact for a two-stop linear
+/// gradient: radial gradients and extra stops need per-pixel sampling to
+/// match `export/`'s tiny-skia shader.
+pub(super) struct CachedGradientTexture {
+    gradient: Gradient,
+    local_size: Vec2,
+    pixel_size: (u32, u32),
+    texture: egui::TextureHandle,
+}
+
+#[derive(Default)]
+pub struct GradientTextureCache(HashMap<LayerId, CachedGradientTexture>);
+
+impl GradientTextureCache {
+    /// See `NoiseTextureCache::get_or_build` — same quantized-resolution
+    /// rationale, same per-pixel-sample-function shape.
+    pub(super) fn get_or_build(&mut self, ctx: &egui::Context, layer_id: LayerId, gradient: &Gradient, local_size: Vec2, screen_size: Vec2) -> Option<egui::TextureHandle> {
+        let quantize = |v: f32| ((v.ceil() as u32).max(1)).div_ceil(NOISE_TEXTURE_QUANTUM).max(1) * NOISE_TEXTURE_QUANTUM;
+        let pixel_size = (quantize(screen_size.x).min(NOISE_TEXTURE_MAX), quantize(screen_size.y).min(NOISE_TEXTURE_MAX));
+        if let Some(cached) = self.0.get(&layer_id)
+            && cached.gradient == *gradient && cached.local_size == local_size && cached.pixel_size == pixel_size {
+                return Some(cached.texture.clone());
+            }
+        let (tw, th) = pixel_size;
+        let local_rect = Rect::from_min_size(Pos2::ZERO, local_size);
+        let mut rgba = Vec::with_capacity((tw * th) as usize * 4);
+        for j in 0..th {
+            for i in 0..tw {
+                let frac = Pos2::new((i as f32 + 0.5) / tw as f32, (j as f32 + 0.5) / th as f32);
+                let local_point = Pos2::new(frac.x * local_size.x, frac.y * local_size.y);
+                let c = gradient.sample_in_rect(local_point, local_rect);
+                rgba.extend_from_slice(&[c.r(), c.g(), c.b(), c.a()]);
+            }
+        }
+        let color_image = egui::ColorImage::from_rgba_unmultiplied([tw as usize, th as usize], &rgba);
+        let texture = ctx.load_texture(format!("gradient-layer-{layer_id}"), color_image, egui::TextureOptions::LINEAR);
+        let handle = texture.clone();
+        self.0.insert(layer_id, CachedGradientTexture { gradient: gradient.clone(), local_size, pixel_size, texture });
         Some(handle)
     }
 

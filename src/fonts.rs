@@ -89,6 +89,21 @@ pub fn install_fonts(ctx: &egui::Context) {
     ctx.set_fonts(fonts);
 }
 
+/// `ab_glyph::PxScale` for `font_size` taken as the font's *em* size — the
+/// convention egui (the canvas renderer) and design tools use — rather than
+/// `PxScale::from(font_size)`, which ab_glyph takes as the ascent-to-descent
+/// height and so draws glyphs smaller by `height / em` (measured up to 1.4x
+/// for `TextFont::Display`). Every `ab_glyph` text path (`export/`,
+/// `text_outline.rs`) goes through this so their text matches the canvas.
+/// Same conversion as `ab_glyph::Font::pt_to_px_scale`, minus its pt-to-px
+/// factor; a font with no `units_per_em` falls back to the height convention.
+pub fn em_px_scale(face: &impl ab_glyph::Font, font_size: f32) -> ab_glyph::PxScale {
+    match face.units_per_em() {
+        Some(units_per_em) => ab_glyph::PxScale::from(font_size * face.height_unscaled() / units_per_em),
+        None => ab_glyph::PxScale::from(font_size),
+    }
+}
+
 /// Raw font bytes + face index for any `TextFont`, for `ab_glyph`'s
 /// rasterizer (`export/`, `text_outline.rs`) — these never go through
 /// egui's font registry at all, so they need the bytes directly rather than
@@ -146,4 +161,65 @@ pub fn run_font_byte_bufs(base: &crate::model::text_runs::RunStyle, runs: &[crat
         byte_bufs.push(if run.style.bold { ab_glyph_bytes_bold(&run.style.font) } else { ab_glyph_bytes(&run.style.font) });
     }
     byte_bufs
+}
+
+#[cfg(test)]
+mod tests {
+    use ab_glyph::{FontRef, ScaleFont};
+
+    use crate::model::{ListType, TextAlign, TextFont, TextTransform};
+    use crate::text_layout::{layout_paragraphs, TextStyleParams};
+
+    /// The canvas (egui) and every `ab_glyph` text path size a font the
+    /// same way (`em_px_scale`): for each bundled font, the same string's
+    /// width and line height agree within 1% (egui rounds metrics to whole
+    /// pixels; Serif's kerning differs slightly between the two).
+    #[test]
+    fn em_px_scale_matches_the_canvas_text_size_for_every_bundled_font() {
+        let ctx = egui::Context::default();
+        super::install_fonts(&ctx);
+        ctx.run_ui(Default::default(), |_| {}).drop_without_applying_deltas();
+        let text = "The quick brown fox jumps over the lazy dog";
+        let mut checked = 0;
+        ctx.run_ui(Default::default(), |_| {
+            for font in [TextFont::Proportional, TextFont::Monospace, TextFont::Serif, TextFont::Display, TextFont::Handwriting] {
+                let style = TextStyleParams {
+                    font: font.clone(),
+                    font_size: 48.0,
+                    align: TextAlign::Left,
+                    letter_spacing: 0.0,
+                    line_height: None,
+                    italic: false,
+                    underline: false,
+                    strikethrough: false,
+                    transform: TextTransform::None,
+                    list: ListType::None,
+                    list_start: 1,
+                };
+                let galley = &layout_paragraphs(&ctx, text, &style, 1.0, egui::Color32::BLACK, f32::INFINITY)[0];
+
+                let (bytes, index) = super::ab_glyph_bytes(&font);
+                let face = FontRef::try_from_slice_and_index(&bytes, index).unwrap();
+                let scaled = ab_glyph::Font::as_scaled(&face, super::em_px_scale(&face, 48.0));
+                let mut width = 0.0;
+                let mut prev = None;
+                for c in text.chars() {
+                    let id = scaled.glyph_id(c);
+                    if let Some(p) = prev {
+                        width += scaled.kern(p, id);
+                    }
+                    width += scaled.h_advance(id);
+                    prev = Some(id);
+                }
+                let line_height = scaled.height() + scaled.line_gap();
+
+                let close = |a: f32, b: f32| (a - b).abs() / b < 0.01;
+                assert!(close(width, galley.rect.width()), "{font:?}: width export {width} vs canvas {}", galley.rect.width());
+                assert!(close(line_height, galley.rect.height()), "{font:?}: line height export {line_height} vs canvas {}", galley.rect.height());
+                checked += 1;
+            }
+        })
+        .drop_without_applying_deltas();
+        assert_eq!(checked, 5);
+    }
 }

@@ -1,4 +1,4 @@
-use egui::{Color32, Pos2, Vec2};
+use egui::{Color32, Pos2, Rect, Vec2};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -41,7 +41,7 @@ pub enum GradientKind {
 /// renderer maps them to its own coordinate space at draw time). For
 /// `Linear`, `from`→`to` is the gradient axis. For `Radial`, `from` is the
 /// center and `|to - from|` (in bounds-space, scaled by the bounds size) is
-/// the radius.
+/// the radius. See `t_in_rect`, the one definition of that geometry.
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct Gradient {
     pub kind: GradientKind,
@@ -73,36 +73,40 @@ impl Gradient {
     }
 
     /// The gradient's parametric position `t` (unclamped — callers that need
-    /// `color_at`'s clamped sampling should just call that directly) for a
-    /// point already expressed in the same normalized (0.0-1.0 per axis)
-    /// space as `from`/`to`. `Linear` projects onto the `from`→`to` axis;
-    /// `Radial` is the point's normalized distance from `from`, in units of
-    /// `|to - from|`.
-    pub fn t_at(&self, point: Pos2) -> f32 {
+    /// `color_at`'s clamped sampling should just call that directly) for
+    /// `point`, expressed in the same space as `rect` (the painted shape's
+    /// unrotated bounds). `from`/`to` are mapped into `rect` first and `t` is
+    /// measured there — the same geometry `export/paint.rs`'s tiny-skia
+    /// shaders use, so canvas and export agree on non-square shapes: `Linear`
+    /// projects onto the mapped `from`→`to` axis; `Radial` is the distance
+    /// from the mapped `from` in units of the mapped `|to - from|` (a circle,
+    /// not an ellipse stretched to the bounds).
+    pub fn t_in_rect(&self, point: Pos2, rect: Rect) -> f32 {
+        let map = |p: Pos2| rect.min + p.to_vec2() * rect.size();
+        let (from, to) = (map(self.from), map(self.to));
         match self.kind {
             GradientKind::Linear => {
-                let axis = self.to - self.from;
+                let axis = to - from;
                 let len2 = axis.length_sq();
                 if len2 < 1e-9 {
                     return 0.0;
                 }
-                (point - self.from).dot(axis) / len2
+                (point - from).dot(axis) / len2
             }
             GradientKind::Radial => {
-                let radius = (self.to - self.from).length();
+                let radius = (to - from).length();
                 if radius < 1e-6 {
                     return 0.0;
                 }
-                (point - self.from).length() / radius
+                (point - from).length() / radius
             }
         }
     }
 
-    /// `color_at(self.t_at(point))` — the color at a point in the gradient's
-    /// own normalized (0.0-1.0 per axis, relative to the unrotated bounding
-    /// box being painted) space.
-    pub fn sample_normalized(&self, point: Pos2) -> Color32 {
-        self.color_at(self.t_at(point))
+    /// `color_at(self.t_in_rect(point, rect))` — the color at `point`, in
+    /// the same space as the painted shape's unrotated bounds `rect`.
+    pub fn sample_in_rect(&self, point: Pos2, rect: Rect) -> Color32 {
+        self.color_at(self.t_in_rect(point, rect))
     }
 
     /// Linearly interpolates the color at normalized position `t` (clamped
@@ -1164,6 +1168,22 @@ impl Layer {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// `t_in_rect` measures in the painted rect's own space: on a 200x100
+    /// rect a default radial gradient is a circle of radius 100 (not an
+    /// ellipse fitted to the bounds), and a diagonal linear axis is
+    /// projected in that space too — matching `export/paint.rs`'s shaders.
+    #[test]
+    fn gradient_t_in_rect_measures_in_the_rects_own_space() {
+        let rect = Rect::from_min_size(Pos2::ZERO, Vec2::new(200.0, 100.0));
+        let radial = Gradient::radial(Color32::WHITE, Color32::BLACK);
+        assert!((radial.t_in_rect(Pos2::new(100.0, 100.0), rect) - 0.5).abs() < 1e-5);
+        assert!((radial.t_in_rect(Pos2::new(200.0, 50.0), rect) - 1.0).abs() < 1e-5);
+
+        let linear = Gradient::linear(Color32::WHITE, Color32::BLACK);
+        // Axis (0,0)->(200,100): the point (100,0) projects to 20000/50000.
+        assert!((linear.t_in_rect(Pos2::new(100.0, 0.0), rect) - 0.4).abs() < 1e-5);
+    }
 
     /// An `Image` layer's PNG bytes are base64-encoded in JSON (see
     /// `base64_bytes`) rather than serialized as a raw byte array — this

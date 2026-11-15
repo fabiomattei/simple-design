@@ -130,7 +130,7 @@ pub fn convert_to_outlines(layer: &Layer, roots: &[Layer]) -> Option<Vec<PathPol
 
     let (font_bytes, face_index) = crate::fonts::ab_glyph_bytes(font);
     let face = FontRef::try_from_slice_and_index(&font_bytes, face_index).ok()?;
-    let scale = ab_glyph::PxScale::from(*font_size);
+    let scale = crate::fonts::em_px_scale(&face, *font_size);
     let scaled = face.as_scaled(scale);
     let scale_factor = scaled.scale_factor();
     let line_step = line_height.unwrap_or(scaled.height() + scaled.line_gap());
@@ -287,7 +287,7 @@ fn convert_to_outlines_rich(
             Some(i) => face_for_run.get(i).copied().unwrap_or(0),
         }
     };
-    let scale_of = |idx: Option<usize>| ab_glyph::PxScale::from(style_of(idx).font_size);
+    let scale_of = |idx: Option<usize>| crate::fonts::em_px_scale(&faces[face_index_of(idx)], style_of(idx).font_size);
 
     let measure = |chars: &[(char, Option<usize>)]| -> f32 {
         let mut width = 0.0;
@@ -463,7 +463,7 @@ fn convert_to_outlines_on_path(
             Some(i) => face_for_run.get(i).copied().unwrap_or(0),
         }
     };
-    let scale_of = |idx: Option<usize>| ab_glyph::PxScale::from(style_of(idx).font_size);
+    let scale_of = |idx: Option<usize>| crate::fonts::em_px_scale(&faces[face_index_of(idx)], style_of(idx).font_size);
 
     let points_vec: Vec<Pos2> = if flip { points.iter().rev().copied().collect() } else { points.to_vec() };
     let total = crate::text_path_geometry::polyline_length(&points_vec, closed);
@@ -584,7 +584,7 @@ fn convert_to_outlines_in_area(
             Some(i) => face_for_run.get(i).copied().unwrap_or(0),
         }
     };
-    let scale_of = |idx: Option<usize>| ab_glyph::PxScale::from(style_of(idx).font_size);
+    let scale_of = |idx: Option<usize>| crate::fonts::em_px_scale(&faces[face_index_of(idx)], style_of(idx).font_size);
 
     let measure = |chars: &[(char, Option<usize>)]| -> f32 {
         let mut width = 0.0;

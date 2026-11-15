@@ -60,7 +60,7 @@
   <li><strong>Undo</strong> / <strong>Redo</strong> — <kbd>⌘Z</kbd> / <kbd>⇧⌘Z</kbd> (or <kbd>⌘Y</kbd>)</li>
   <li><strong>Duplicate</strong> (<kbd>⌘D</kbd>) / <strong>Duplicate Below</strong> (<kbd>⇧⌘D</kbd>), with a configurable default offset</li>
   <li><strong>Group</strong> (<kbd>⌘G</kbd>) / <strong>Ungroup</strong> (<kbd>⇧⌘G</kbd>)</li>
-  <li><strong>Use as Mask</strong> (<kbd>⇧⌘M</kbd>)</li>
+  <li><strong>Use as Mask</strong> (<kbd>⇧⌘M</kbd>) — on one layer, toggles it as a mask; on several sibling layers, groups them and makes the topmost one the mask (see <a href="#masking">Masking</a>)</li>
   <li><strong>Flip Horizontal</strong> (<kbd>⇧H</kbd>) / <strong>Flip Vertical</strong> (<kbd>⇧V</kbd>)</li>
   <li><strong>Rotate Copies</strong> — duplicates a selection N times around a center, stepping by a given angle</li>
   <li><strong>Make Grid</strong> — duplicates a single layer across a cols × rows grid with configurable gutters</li>
@@ -73,6 +73,15 @@
 <ul>
   <li><strong>Rulers</strong>, <strong>Pixel Grid</strong>, <strong>Snapping</strong> — runtime toggles, not saved in the document</li>
   <li><strong>Clear Guides</strong> — removes this page's ruler guides (guides themselves <em>are</em> saved per-page)</li>
+</ul>
+
+<h2 id="masking">Masking</h2>
+<ul>
+  <li>A mask clips the layers <em>below</em> it in the same group, back to the previous mask; the mask itself is never drawn. Use <kbd>⇧⌘M</kbd> on a multi-selection to group the mask with its content in one step, so it can't clip anything else</li>
+  <li><strong>Selecting masked content</strong> — a single click selects the mask (it sits on top); a double-click selects the layer it reveals under the pointer, and starts editing it in place if it's a Text layer. While editing, the text editor is clipped to the mask's bounding box</li>
+  <li><strong>Mask Mode</strong> (right-click the mask in the Layers panel) — <em>Alpha</em> (default): content shows in proportion to the mask's own transparency, so its opacity, gradient and missing fill all count; <em>Outline</em>: content shows wherever the mask's shape is, whatever its fill or opacity</li>
+  <li><strong>Invert Mask</strong> — reveals the content outside the mask's shape instead of inside</li>
+  <li><strong>Ignore Underlying Mask</strong> — right-click a content layer to keep it unclipped, at its exact depth in the stack</li>
 </ul>
 
 <h2>Selection &amp; editing shortcuts</h2>

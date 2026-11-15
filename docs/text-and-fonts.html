@@ -33,6 +33,15 @@ through egui's font registry). <code>fonts::ab_glyph_bytes</code> is the single 
 any <code>TextFont</code> to raw bytes for the latter two, so it must stay in sync with
 whatever the canvas side resolves to.
 </p>
+<p>
+A layer's <code>font_size</code> is the font's <em>em size</em> — egui's convention and the
+usual design-tool one. <code>ab_glyph</code>'s <code>PxScale::from(size)</code> means the
+font's ascent-to-descent height instead, which draws glyphs smaller by
+<code>height / em</code> (up to 1.4x for Display), so every <code>ab_glyph</code> path goes
+through <code>fonts::em_px_scale</code> to convert. A test
+(<code>fonts.rs</code>) checks that the two engines agree on width and line height for every
+bundled font.
+</p>
 <table>
   <tr><th>Tier</th><th>Source</th><th>Notes</th></tr>
   <tr><td><code>Proportional</code> / <code>Monospace</code></td><td>egui's own built-in default families</td><td><code>Ubuntu-Light</code> / <code>Hack-Regular</code> from <code>epaint_default_fonts</code>. No setup needed.</td></tr>

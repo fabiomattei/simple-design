@@ -33,10 +33,16 @@ pub fn rotated_corners(rect: Rect, degrees: f32) -> [Pos2; 4] {
 
 /// An ellipse outline inscribed in a `2*rx` x `2*ry` box centered on `center`, as a fixed 64-point polygon ring.
 pub fn ellipse_points(center: Pos2, rx: f32, ry: f32) -> Vec<Pos2> {
-    const N: usize = 64;
-    (0..N)
+    ellipse_points_n(center, rx, ry, 64)
+}
+
+/// `ellipse_points` with `segments` points instead of 64 — for the canvas,
+/// which picks a count from the ellipse's on-screen size so a large or
+/// zoomed-in oval stays smooth (see `canvas/draw_layer.rs`'s `Oval` arm).
+pub fn ellipse_points_n(center: Pos2, rx: f32, ry: f32, segments: usize) -> Vec<Pos2> {
+    (0..segments)
         .map(|i| {
-            let t = i as f32 / N as f32 * std::f32::consts::TAU;
+            let t = i as f32 / segments as f32 * std::f32::consts::TAU;
             Pos2::new(center.x + rx * t.cos(), center.y + ry * t.sin())
         })
         .collect()

@@ -68,6 +68,12 @@ training data, check `~/.cargo/registry/src/*/egui-0.36.0/src/` directly.
 - **Rendering is not shared**: `canvas/` (interactive) and `export/` (PNG)
   are two separate implementations. A new `LayerKind`/`Paint` variant needs a
   matching case in both, or exports will silently not match what's on screen.
+  Two exceptions: a *masked* group is drawn on canvas through `export::draw_layer`
+  into a cached texture (`masking.rs`, `canvas/texture_caches.rs`), at a
+  zoom-dependent `render_scale` — which every `export/` draw function takes;
+  PNG export passes `1.0`. And text size must agree between egui and `ab_glyph`:
+  any new `ab_glyph` text path converts `font_size` (an em size) with
+  `fonts::em_px_scale`, never `PxScale::from(font_size)`.
 - **Adding a new shape/tool** touches, in order: `tools.rs` → `model/layer.rs`
   → `canvas/` (`layer_creation.rs::new_layer_for_tool`, `draw_layer.rs::draw_layer`) → `export/` (`draw_layer`)
   → `ui/inspector/` → `ui/layers_panel.rs`'s `icon_for`.
@@ -122,6 +128,11 @@ missing it fails to load outright rather than silently.
   mirrors the GUI's own `canvas.reference_layer` (`app.rs::align_selection`).
   Without it, `align` moves *every* listed layer to their common bounding
   box, including ones you meant to keep fixed.
+- `set-mask <id>` sets any of `--mask`, `--ignore-mask`, `--mode alpha|outline`
+  and `--inverted` (each `true|false`, omitted = unchanged). A mask clips the
+  siblings *below* it in its parent back to the previous mask, so `group` it
+  with its content first — the GUI's ⇧⌘M does that automatically for a
+  multi-selection, the CLI doesn't.
 - **Prefer `list-layers --recursive` / `find-layer <query>` over `get-document`
   for locating a layer.** `get-document` dumps the *entire* document —
   every field (`style`, `runs`, `letter_spacing`, ...) for every layer — which

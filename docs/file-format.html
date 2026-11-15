@@ -97,6 +97,8 @@ depends on the specific <code>LayerKind</code> variant).
   "opacity": 1.0,
   "is_mask": false,
   "ignore_mask": false,
+  "mask_mode": "Alpha",
+  "mask_inverted": false,
   "bool_op": "Union",
   "kind": {
     "Rectangle": {
@@ -104,6 +106,19 @@ depends on the specific <code>LayerKind</code> variant).
     }
   }
 }</code></pre>
+
+<h3>Masking fields</h3>
+<p>
+Four fields control masking; all are <code>#[serde(default)]</code>, so files saved before any
+of them existed load with masking off.
+</p>
+<table>
+  <tr><th>Field</th><th>Meaning</th></tr>
+  <tr><td><code>is_mask</code></td><td>"Use as Mask": the layer is never drawn itself; it clips the sibling layers <em>below</em> it in the same parent, back to the previous mask</td></tr>
+  <tr><td><code>ignore_mask</code></td><td>"Ignore Underlying Mask": this layer is never clipped, and is drawn at its exact depth even in the middle of a masked run</td></tr>
+  <tr><td><code>mask_mode</code></td><td><code>"Alpha"</code> (default): content shows in proportion to the mask's rendered alpha, so its opacity, fill opacity, gradient and missing fill all count. <code>"Outline"</code>: content shows wherever the mask's geometry is, regardless of fill, stroke or opacity. Only meaningful with <code>is_mask</code></td></tr>
+  <tr><td><code>mask_inverted</code></td><td>Reveals content <em>outside</em> the mask's shape instead of inside it. Only meaningful with <code>is_mask</code></td></tr>
+</table>
 
 <h3>Layer kinds</h3>
 <table>
@@ -141,6 +156,10 @@ older <code>.sdesign</code> file still loads unchanged, with every solid color b
   ],
   "from": [0.0, 0.0], "to": [1.0, 1.0]
 }
+// from/to are 0.0-1.0 points in the shape's unrotated bounding box, mapped into
+// that box before measuring: a Linear gradient is perpendicular to the mapped
+// from->to axis, and a Radial one is a circle (not an ellipse stretched to the
+// box) of radius |mapped to - mapped from|. See Gradient::t_in_rect.
 
 "fill": { "base": [128,128,128,255], "intensity": 0.3,    // Noise
           "scale": 4.0, "seed": 1234 }

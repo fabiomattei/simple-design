@@ -4,13 +4,13 @@
 use egui::{Color32, Pos2, Rect, Stroke as EguiStroke, Vec2};
 
 use crate::model::{Layer, LayerId, LayerKind, Page, Paint, TextAlign, TextResize, VerticalAlign};
-use crate::shapes::{ellipse_points, rotate_point, rounded_rect_points};
+use crate::shapes::{ellipse_points_n, rotate_point, rounded_rect_points};
 use crate::text_layout::{self, TextStyleParams};
 
-use super::fill_mesh::{draw_even_odd_polygons, paint_gradient_stroke, paint_polygon, with_opacity};
+use super::fill_mesh::{draw_even_odd_polygons, gradient_color_at_screen_point, paint_gradient_stroke, paint_polygon, with_opacity};
 use super::path_flatten::flatten_path;
 use super::texture_caches::{
-    HalftoneTextureCache, ImageTextureCache, MaskedGroupTextureCache, NoiseTextureCache, PatternTextureCache,
+    HalftoneTextureCache, ImageTextureCache, GradientTextureCache, MaskedGroupTextureCache, NoiseTextureCache, PatternTextureCache,
     ShadowTextureCache,
 };
 
@@ -30,6 +30,7 @@ pub(super) fn draw_children(
     noise_cache: &mut NoiseTextureCache,
     halftone_cache: &mut HalftoneTextureCache,
     pattern_cache: &mut PatternTextureCache,
+    gradient_cache: &mut GradientTextureCache,
     shadow_cache: &mut ShadowTextureCache,
     children: &[Layer],
     page: &Page,
@@ -43,7 +44,7 @@ pub(super) fn draw_children(
     for unit in crate::masking::partition_mask_runs(children) {
         match unit {
             crate::masking::RenderUnit::Plain(child) => {
-                draw_layer(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, child, page, parent_offset, origin, pan, zoom, opacity, editing_text);
+                draw_layer(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, gradient_cache, shadow_cache, child, page, parent_offset, origin, pan, zoom, opacity, editing_text);
             }
             crate::masking::RenderUnit::Masked { mask, content, segment } => {
                 draw_masked_run(painter, ctx, mask_cache, mask, &content, segment, page, parent_offset, origin, pan, zoom, opacity, editing_text);
@@ -116,6 +117,7 @@ pub(super) fn draw_layer(
     noise_cache: &mut NoiseTextureCache,
     halftone_cache: &mut HalftoneTextureCache,
     pattern_cache: &mut PatternTextureCache,
+    gradient_cache: &mut GradientTextureCache,
     shadow_cache: &mut ShadowTextureCache,
     layer: &Layer,
     page: &Page,
@@ -177,18 +179,21 @@ pub(super) fn draw_layer(
                 Color32::from_gray(100),
             );
             let child_offset = parent_offset + layer.frame.pos.to_vec2();
-            draw_children(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, children, page, child_offset, origin, pan, zoom, opacity, editing_text);
+            draw_children(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, gradient_cache, shadow_cache, children, page, child_offset, origin, pan, zoom, opacity, editing_text);
         }
         LayerKind::Group { children } => {
             let child_offset = parent_offset + layer.frame.pos.to_vec2();
-            draw_children(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, shadow_cache, children, page, child_offset, origin, pan, zoom, opacity, editing_text);
+            draw_children(painter, ctx, image_cache, mask_cache, noise_cache, halftone_cache, pattern_cache, gradient_cache, shadow_cache, children, page, child_offset, origin, pan, zoom, opacity, editing_text);
         }
         LayerKind::Rectangle { corner_radius } => {
             let bounds = layer.frame.bounds();
             let screen_rect = Rect::from_two_pos(to_screen(bounds.min), to_screen(bounds.max));
             let scaled = corner_radius.scaled(zoom);
+            // egui's `CornerRadius` is `u8`, so a radius past 255 screen px
+            // would be clamped there — the tessellated path has no such limit.
             let tessellation_required = layer.style.fill.as_ref().is_some_and(Paint::needs_tessellated_fill)
-                || layer.style.stroke.as_ref().is_some_and(|s| s.paint.is_gradient());
+                || layer.style.stroke.as_ref().is_some_and(|s| s.paint.is_gradient())
+                || scaled.as_array().iter().any(|&r| r > 255.0);
             if layer.frame.rotation == 0.0 && !tessellation_required {
                 // Fast, pixel-identical-to-before path: egui's native
                 // rounded-rect painter has no rotation (or gradient/noise)
@@ -205,7 +210,9 @@ pub(super) fn draw_layer(
                     },
                     fill,
                     stroke,
-                    egui::StrokeKind::Inside,
+                    // Centered on the edge, like every other canvas shape
+                    // and `export/`'s tiny-skia strokes.
+                    egui::StrokeKind::Middle,
                 );
             } else {
                 let center = screen_rect.center();
@@ -213,18 +220,22 @@ pub(super) fn draw_layer(
                     .into_iter()
                     .map(|p| rotate_point(p, center, layer.frame.rotation))
                     .collect();
-                paint_polygon(painter, ctx, noise_cache, halftone_cache, pattern_cache, points, true, screen_rect, center, layer.frame.rotation, layer, fill, stroke, opacity, false);
+                paint_polygon(painter, ctx, noise_cache, halftone_cache, pattern_cache, gradient_cache, points, true, screen_rect, center, layer.frame.rotation, layer, fill, stroke, opacity, false);
             }
         }
         LayerKind::Oval => {
             let bounds = layer.frame.bounds();
             let screen_rect = Rect::from_two_pos(to_screen(bounds.min), to_screen(bounds.max));
             let center = screen_rect.center();
-            let points: Vec<Pos2> = ellipse_points(center, screen_rect.width() / 2.0, screen_rect.height() / 2.0)
+            let (rx, ry) = (screen_rect.width() / 2.0, screen_rect.height() / 2.0);
+            // About one segment per 3 screen px of circumference, so a big or
+            // zoomed-in oval stays as smooth as `export/`'s true curve.
+            let segments = ((std::f32::consts::TAU * rx.abs().max(ry.abs()) / 3.0) as usize).clamp(32, 2048);
+            let points: Vec<Pos2> = ellipse_points_n(center, rx, ry, segments)
                 .into_iter()
                 .map(|p| rotate_point(p, center, layer.frame.rotation))
                 .collect();
-            paint_polygon(painter, ctx, noise_cache, halftone_cache, pattern_cache, points, true, screen_rect, center, layer.frame.rotation, layer, fill, stroke, opacity, false);
+            paint_polygon(painter, ctx, noise_cache, halftone_cache, pattern_cache, gradient_cache, points, true, screen_rect, center, layer.frame.rotation, layer, fill, stroke, opacity, false);
         }
         LayerKind::Star { points: point_count, inner_ratio } => {
             let bounds = layer.frame.bounds();
@@ -240,7 +251,7 @@ pub(super) fn draw_layer(
             .into_iter()
             .map(|p| rotate_point(p, center, layer.frame.rotation))
             .collect();
-            paint_polygon(painter, ctx, noise_cache, halftone_cache, pattern_cache, points, true, screen_rect, center, layer.frame.rotation, layer, fill, stroke, opacity, false);
+            paint_polygon(painter, ctx, noise_cache, halftone_cache, pattern_cache, gradient_cache, points, true, screen_rect, center, layer.frame.rotation, layer, fill, stroke, opacity, false);
         }
         LayerKind::Polygon { sides } => {
             let bounds = layer.frame.bounds();
@@ -251,7 +262,7 @@ pub(super) fn draw_layer(
                     .into_iter()
                     .map(|p| rotate_point(p, center, layer.frame.rotation))
                     .collect();
-            paint_polygon(painter, ctx, noise_cache, halftone_cache, pattern_cache, points, true, screen_rect, center, layer.frame.rotation, layer, fill, stroke, opacity, false);
+            paint_polygon(painter, ctx, noise_cache, halftone_cache, pattern_cache, gradient_cache, points, true, screen_rect, center, layer.frame.rotation, layer, fill, stroke, opacity, false);
         }
         LayerKind::Line => {
             let bounds = layer.frame.bounds();
@@ -272,7 +283,7 @@ pub(super) fn draw_layer(
                     opacity * layer.style.stroke_opacity,
                 );
             } else {
-                painter.line_segment([a, b], stroke);
+                draw_round_capped_segment(painter, a, b, stroke);
             }
         }
         LayerKind::Arrow { start_cap, end_cap } => {
@@ -294,21 +305,22 @@ pub(super) fn draw_layer(
                     opacity * layer.style.stroke_opacity,
                 );
             } else {
-                painter.line_segment([a, b], stroke);
+                draw_round_capped_segment(painter, a, b, stroke);
             }
             if stroke.color != Color32::TRANSPARENT {
                 // Caps point along the segment's own screen-space direction
                 // (not `layer.frame.rotation`, which is already baked into
-                // `a`/`b` above) — always outward from the shaft. Caps stay
-                // solid-colored (at the stroke's end color) even for a
-                // gradient stroke — a minor approximation, consistent with
-                // "canvas gradients are a preview" elsewhere in this file.
-                let cap_color = layer
+                // `a`/`b` above) — always outward from the shaft. A gradient
+                // stroke's cap is one solid color: the gradient sampled at
+                // that cap's tip, the same position-based sampling the shaft uses.
+                let cap_color = |tip: Pos2| layer
                     .style
                     .stroke
                     .as_ref()
                     .map(|s| match &s.paint {
-                        Paint::Gradient(g) => with_opacity(g.color_at(1.0), opacity * layer.style.stroke_opacity),
+                        Paint::Gradient(g) => {
+                            gradient_color_at_screen_point(g, tip, screen_rect, center, layer.frame.rotation, opacity * layer.style.stroke_opacity)
+                        }
                         // Stroke paint can never be `Noise`/`Halftone`/
                         // `Pattern` (see `ui/inspector/paint_editor.rs::paint_editor`'s
                         // `allow_texture_fills`, fill-only) — kept
@@ -318,8 +330,8 @@ pub(super) fn draw_layer(
                         Paint::Solid(_) | Paint::Noise(_) | Paint::Halftone(_) | Paint::Pattern(_) => stroke.color,
                     })
                     .unwrap_or(stroke.color);
-                draw_arrow_cap(painter, a, a - b, *start_cap, cap_color, stroke.width);
-                draw_arrow_cap(painter, b, b - a, *end_cap, cap_color, stroke.width);
+                draw_arrow_cap(painter, a, a - b, *start_cap, cap_color(a), stroke.width, zoom);
+                draw_arrow_cap(painter, b, b - a, *end_cap, cap_color(b), stroke.width, zoom);
             }
         }
         LayerKind::Path { points, closed } => {
@@ -340,6 +352,7 @@ pub(super) fn draw_layer(
                     noise_cache,
                     halftone_cache,
                     pattern_cache,
+                    gradient_cache,
                     screen_points,
                     *closed,
                     screen_bounds,
@@ -354,7 +367,7 @@ pub(super) fn draw_layer(
             }
         }
         LayerKind::CompoundPath { polygons } => {
-            draw_even_odd_polygons(painter, ctx, noise_cache, halftone_cache, pattern_cache, polygons, layer, fill, stroke, opacity, to_screen);
+            draw_even_odd_polygons(painter, ctx, noise_cache, halftone_cache, pattern_cache, gradient_cache, polygons, layer, fill, stroke, opacity, to_screen);
         }
         LayerKind::BooleanGroup { children } => {
             // No `draw_children` call here, unlike `Group`/`Artboard` — only
@@ -364,7 +377,7 @@ pub(super) fn draw_layer(
             // from this layer's own `style`.
             let combined = crate::boolean_ops::compute_boolean_group(children);
             let polygons = crate::boolean_ops::multipolygon_to_polygons(&combined);
-            draw_even_odd_polygons(painter, ctx, noise_cache, halftone_cache, pattern_cache, &polygons, layer, fill, stroke, opacity, to_screen);
+            draw_even_odd_polygons(painter, ctx, noise_cache, halftone_cache, pattern_cache, gradient_cache, &polygons, layer, fill, stroke, opacity, to_screen);
         }
         LayerKind::Text {
             content,
@@ -538,8 +551,9 @@ pub(super) fn draw_layer(
                         if *bold && runs.is_empty() {
                             // No real bold weight is available for any of the
                             // bundled fonts (see `TextFont`) — fake it by
-                            // drawing a second copy offset by half a screen
-                            // pixel, regardless of zoom. The rich-text path
+                            // drawing a second copy offset by 0.6 document
+                            // units (scaled by zoom), the same offset
+                            // `export/glyph_raster.rs::draw_text_glyph` uses. The rich-text path
                             // (`runs` non-empty) doesn't need this: bold there
                             // is already a real bold-weight font family baked
                             // into the galley per run (see `fonts.rs`'s "Bold"
@@ -548,7 +562,7 @@ pub(super) fn draw_layer(
                             // (which is linear in the pos-minus-pivot deviation)
                             // keeps the nudge aligned with the rotated baseline,
                             // without double-applying the rotation.
-                            draw_rotated_galley(text_painter, pos + Vec2::new(0.6, 0.0), galley, color);
+                            draw_rotated_galley(text_painter, pos + Vec2::new(0.6 * zoom, 0.0), galley, color);
                         }
                     }
                 }
@@ -602,14 +616,15 @@ pub(super) fn draw_layer(
 /// arrow's caps always point along its own segment direction (which
 /// `outward` already reflects, since the caller derives it from the
 /// already-rotated endpoints), independent of whether the layer additionally
-/// carries a `frame.rotation` on top.
-pub(super) fn draw_arrow_cap(painter: &egui::Painter, tip: Pos2, outward: Vec2, cap: crate::model::ArrowCap, color: Color32, stroke_width: f32) {
+/// carries a `frame.rotation` on top. The minimum cap size is 8 document
+/// units (`8 * zoom` on screen), matching `export::sk_geometry::arrow_cap_size`.
+pub(super) fn draw_arrow_cap(painter: &egui::Painter, tip: Pos2, outward: Vec2, cap: crate::model::ArrowCap, color: Color32, stroke_width: f32, zoom: f32) {
     if outward.length() < 1e-3 {
         return;
     }
     let dir = outward.normalized();
     let perp = Vec2::new(-dir.y, dir.x);
-    let size = (stroke_width * 3.5).max(8.0);
+    let size = (stroke_width * 3.5).max(8.0 * zoom);
     match cap {
         crate::model::ArrowCap::None => {}
         crate::model::ArrowCap::Triangle => {
@@ -631,8 +646,33 @@ pub(super) fn draw_arrow_cap(painter: &egui::Painter, tip: Pos2, outward: Vec2, 
             let p1 = base + perp * size * 0.5;
             let p2 = base - perp * size * 0.5;
             let cap_stroke = EguiStroke::new(stroke_width, color);
-            painter.line_segment([p1, tip], cap_stroke);
-            painter.line_segment([p2, tip], cap_stroke);
+            draw_round_capped_segment(painter, p1, tip, cap_stroke);
+            draw_round_capped_segment(painter, p2, tip, cap_stroke);
         }
     }
+}
+
+/// A straight stroke from `a` to `b` (screen space) with round ends, matching
+/// `export/line_arrow.rs`'s `LineCap::Round` — egui's own `line_segment` has
+/// flat ends and no cap option. Drawn as one filled convex capsule rather than
+/// a segment plus two end circles, so a translucent stroke doesn't darken
+/// where they'd overlap.
+fn draw_round_capped_segment(painter: &egui::Painter, a: Pos2, b: Pos2, stroke: EguiStroke) {
+    const ARC_SEGMENTS: usize = 12;
+    let radius = stroke.width / 2.0;
+    if stroke.color == Color32::TRANSPARENT || radius <= 0.0 {
+        return;
+    }
+    let along = b - a;
+    let dir = if along.length() > 1e-3 { along.normalized() } else { Vec2::X };
+    let perp = Vec2::new(-dir.y, dir.x);
+    // Half circle around `b` (from +perp through +dir to -perp), then around `a`.
+    let half_circle = |center: Pos2, start: Vec2, end_dir: Vec2| {
+        (0..=ARC_SEGMENTS).map(move |i| {
+            let t = i as f32 / ARC_SEGMENTS as f32 * std::f32::consts::PI;
+            center + (start * t.cos() + end_dir * t.sin()) * radius
+        })
+    };
+    let points: Vec<Pos2> = half_circle(b, perp, dir).chain(half_circle(a, -perp, -dir)).collect();
+    painter.add(egui::Shape::convex_polygon(points, stroke.color, EguiStroke::NONE));
 }

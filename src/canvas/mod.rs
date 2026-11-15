@@ -36,7 +36,7 @@ use image_edit::{ImageEditState, build_mask_overlay};
 use path_editing::draw_pen_preview;
 use rulers_guides::{draw_guides, draw_pixel_grid, draw_rulers};
 use texture_caches::{
-    HalftoneTextureCache, ImageTextureCache, MaskedGroupTextureCache, NoiseTextureCache, PatternTextureCache,
+    HalftoneTextureCache, ImageTextureCache, GradientTextureCache, MaskedGroupTextureCache, NoiseTextureCache, PatternTextureCache,
     ShadowTextureCache,
 };
 use transform_geometry::{
@@ -411,6 +411,7 @@ pub struct CanvasWidget {
     noise_cache: NoiseTextureCache,
     halftone_cache: HalftoneTextureCache,
     pattern_cache: PatternTextureCache,
+    gradient_cache: GradientTextureCache,
     shadow_cache: ShadowTextureCache,
     image_edit: Option<ImageEditState>,
     /// The `Text` layer currently being edited in place on canvas (see
@@ -519,6 +520,7 @@ impl Default for CanvasWidget {
             noise_cache: NoiseTextureCache::default(),
             halftone_cache: HalftoneTextureCache::default(),
             pattern_cache: PatternTextureCache::default(),
+            gradient_cache: GradientTextureCache::default(),
             shadow_cache: ShadowTextureCache::default(),
             image_edit: None,
             editing_text: None,
@@ -792,6 +794,7 @@ impl CanvasWidget {
             &mut self.noise_cache,
             &mut self.halftone_cache,
             &mut self.pattern_cache,
+            &mut self.gradient_cache,
             &mut self.shadow_cache,
             &page.layers,
             page,
@@ -807,6 +810,7 @@ impl CanvasWidget {
         self.noise_cache.evict_stale(&page.all_layer_ids());
         self.halftone_cache.evict_stale(&page.all_layer_ids());
         self.pattern_cache.evict_stale(&page.all_layer_ids());
+        self.gradient_cache.evict_stale(&page.all_layer_ids());
         self.shadow_cache.evict_stale(&page.all_layer_ids());
 
         self.paint_image_edit_overlay(&ctx, canvas_painter, page, origin);

@@ -7,7 +7,7 @@ use egui::{Color32, Pos2, Rect, Stroke as EguiStroke};
 use crate::model::{Gradient, HalftoneFill, Layer, NoiseFill, Paint, PathPolygon, PatternFill};
 use crate::shapes::rotate_point;
 
-use super::texture_caches::{HalftoneTextureCache, NoiseTextureCache, PatternTextureCache};
+use super::texture_caches::{GradientTextureCache, HalftoneTextureCache, NoiseTextureCache, PatternTextureCache};
 
 /// Scales `color`'s alpha channel by `opacity` (`0.0..=1.0`), used to apply a
 /// layer's (and its ancestors', multiplicatively accumulated) opacity to its
@@ -31,6 +31,7 @@ pub(super) fn draw_even_odd_polygons(
     noise_cache: &mut NoiseTextureCache,
     halftone_cache: &mut HalftoneTextureCache,
     pattern_cache: &mut PatternTextureCache,
+    gradient_cache: &mut GradientTextureCache,
     polygons: &[PathPolygon],
     layer: &Layer,
     fill: Color32,
@@ -82,10 +83,7 @@ pub(super) fn draw_even_odd_polygons(
         // unlike `PathShape`'s fill, which only covers a single ring.
         if layer.style.fill.is_some() {
             let mesh = if let Some(g) = fill_gradient {
-                let color_at = |p: Pos2| {
-                    gradient_color_at_screen_point(g, p, screen_rect, screen_center, rotation, opacity * layer.style.fill_opacity)
-                };
-                triangulate_fill_with(&ext_screen, &holes_screen, color_at)
+                gradient_textured_mesh(ctx, gradient_cache, layer, g, &ext_screen, &holes_screen, screen_rect, screen_center, rotation, opacity)
             } else if let Some(n) = fill_noise {
                 noise_textured_mesh(ctx, noise_cache, layer, n, &ext_screen, &holes_screen, screen_rect, screen_center, rotation, opacity)
             } else if let Some(h) = fill_halftone {
@@ -125,7 +123,7 @@ pub(super) fn draw_even_odd_polygons(
     }
 }
 
-/// Shared earcut step for `triangulate_fill_with`/`triangulate_fill_textured`:
+/// Shared earcut step for `triangulate_fill`/`triangulate_fill_textured`:
 /// flattens `exterior`/`holes` (already in screen space) into the vertex
 /// positions and index list `earcutr` produces, before either per-vertex
 /// color or UV is attached — `egui::epaint::PathShape`'s own fill is a fan
@@ -153,27 +151,21 @@ pub(super) fn earcut_polygon(exterior: &[Pos2], holes: &[Vec<Pos2>]) -> Option<(
 }
 
 /// Triangulates a polygon-with-holes (already in screen space) via `earcutr`
-/// so it can be filled correctly even with holes, which `egui::epaint::PathShape`
-/// (a single-ring fan/ear-clip) can't represent. Each vertex's color comes from
-/// `color_at`, so a flat closure gives the old single-color behavior while a
-/// gradient-sampling one (see `paint_polygon`) gets a properly interpolated
-/// gradient fill for free from the same triangulation.
-pub(super) fn triangulate_fill_with(exterior: &[Pos2], holes: &[Vec<Pos2>], color_at: impl Fn(Pos2) -> Color32) -> Option<egui::Mesh> {
+/// and fills it with one flat `color` — earcut so it's filled correctly even
+/// with holes, which `egui::epaint::PathShape` (a single-ring fan/ear-clip)
+/// can't represent.
+pub(super) fn triangulate_fill(exterior: &[Pos2], holes: &[Vec<Pos2>], color: Color32) -> Option<egui::Mesh> {
     let (positions, indices) = earcut_polygon(exterior, holes)?;
     Some(egui::Mesh {
-        vertices: positions.into_iter().map(|p| egui::epaint::Vertex::untextured(p, color_at(p))).collect(),
+        vertices: positions.into_iter().map(|p| egui::epaint::Vertex::untextured(p, color)).collect(),
         indices,
         ..Default::default()
     })
 }
 
-pub(super) fn triangulate_fill(exterior: &[Pos2], holes: &[Vec<Pos2>], color: Color32) -> Option<egui::Mesh> {
-    triangulate_fill_with(exterior, holes, |_| color)
-}
-
-/// The `Paint::Noise` sibling of `triangulate_fill_with`'s gradient path:
-/// same earcut triangulation, but each vertex samples `texture_id` at
-/// `uv_at(vertex)` instead of carrying an interpolated flat color, and
+/// The textured sibling of `triangulate_fill` (gradient, noise, halftone and
+/// pattern fills): same earcut triangulation, but each vertex samples `texture_id` at
+/// `uv_at(vertex)` instead of carrying a flat color, and
 /// `tint` (typically opacity-only white, see `Image` layers' own textured
 /// path) is multiplied over the sampled texel by egui's mesh renderer.
 pub(super) fn triangulate_fill_textured(
@@ -194,21 +186,16 @@ pub(super) fn triangulate_fill_textured(
 /// `rotation` about `center` first so the gradient stays fixed to the
 /// shape as it rotates (`Gradient`'s normalized `from`/`to` are relative to
 /// the shape's *unrotated* bounding box — see its doc comment), then
-/// normalizing against `screen_rect` (that same unrotated bounding box, in
-/// screen space) before sampling.
+/// sampling against `screen_rect` (that same unrotated bounding box, in
+/// screen space) via `Gradient::sample_in_rect`.
 pub(super) fn gradient_color_at_screen_point(gradient: &Gradient, p: Pos2, screen_rect: Rect, center: Pos2, rotation: f32, opacity: f32) -> Color32 {
     let local = rotate_point(p, center, -rotation);
-    let w = screen_rect.width().max(1e-3);
-    let h = screen_rect.height().max(1e-3);
-    let u = (local.x - screen_rect.min.x) / w;
-    let v = (local.y - screen_rect.min.y) / h;
-    with_opacity(gradient.sample_normalized(Pos2::new(u, v)), opacity)
+    with_opacity(gradient.sample_in_rect(local, screen_rect), opacity)
 }
 
 /// Builds (or reuses, via `noise_cache`) `n`'s grain texture and tessellates
 /// `exterior`/`holes` (already in screen space) into a UV-mapped mesh
-/// sampling it — the `Paint::Noise` sibling of `triangulate_fill_with`'s
-/// gradient path. Each vertex's `uv` is its fractional position within the
+/// sampling it. Each vertex's `uv` is its fractional position within the
 /// shape's *unrotated* `screen_rect` (rotation undone about `center` first,
 /// same normalization `gradient_color_at_screen_point` uses above) — this
 /// lines up with how `NoiseTextureCache::get_or_build` rasterized the
@@ -231,6 +218,33 @@ pub(super) fn noise_textured_mesh(
     opacity: f32,
 ) -> Option<egui::Mesh> {
     let texture = noise_cache.get_or_build(ctx, layer.id, n, layer.frame.bounds().size(), screen_rect.size())?;
+    let uv_at = |p: Pos2| {
+        let local = rotate_point(p, center, -rotation);
+        let w = screen_rect.width().max(1e-3);
+        let h = screen_rect.height().max(1e-3);
+        Pos2::new((local.x - screen_rect.min.x) / w, (local.y - screen_rect.min.y) / h)
+    };
+    let tint = with_opacity(Color32::WHITE, opacity * layer.style.fill_opacity);
+    triangulate_fill_textured(exterior, holes, texture.id(), uv_at, tint)
+}
+
+/// `Paint::Gradient`'s sibling of `noise_textured_mesh` — identical shape,
+/// backed by `GradientTextureCache` (see its doc comment for why a gradient
+/// fill is a texture rather than per-vertex colors).
+#[allow(clippy::too_many_arguments)]
+pub(super) fn gradient_textured_mesh(
+    ctx: &egui::Context,
+    gradient_cache: &mut GradientTextureCache,
+    layer: &Layer,
+    g: &Gradient,
+    exterior: &[Pos2],
+    holes: &[Vec<Pos2>],
+    screen_rect: Rect,
+    center: Pos2,
+    rotation: f32,
+    opacity: f32,
+) -> Option<egui::Mesh> {
+    let texture = gradient_cache.get_or_build(ctx, layer.id, g, layer.frame.bounds().size(), screen_rect.size())?;
     let uv_at = |p: Pos2| {
         let local = rotate_point(p, center, -rotation);
         let w = screen_rect.width().max(1e-3);
@@ -310,8 +324,8 @@ pub(super) const GRADIENT_STROKE_SEGMENTS_PER_EDGE: usize = 10;
 
 /// Approximates a gradient-colored stroke by subdividing the outline
 /// (`points`, already in absolute screen space) into short solid-colored
-/// segments, each sampled at its own midpoint. `egui` has no per-vertex-color
-/// stroke primitive to interpolate properly like `triangulate_fill_with` does
+/// segments, each sampled at its own midpoint. `egui` has no textured stroke
+/// primitive to sample a gradient texture like `gradient_textured_mesh` does
 /// for fill, and building real mitered stroke-ribbon geometry here is more
 /// than a live-editing preview needs — the PNG exporter (`export/`) still
 /// renders the exact gradient via a `tiny-skia` shader, so export quality
@@ -352,8 +366,8 @@ pub(super) fn paint_gradient_stroke(
 /// `layer`'s own `Style::fill`/`stroke`. When both resolve to a flat color,
 /// this is exactly the single `PathShape` `draw_layer` always drew (`fill_flat`/
 /// `stroke_flat` are the same values it already computed) — a `Paint::Gradient`
-/// fill instead triangulates via `triangulate_fill_with` and a gradient stroke
-/// falls back to `paint_gradient_stroke`'s segmented approximation.
+/// fill instead becomes a textured mesh (`gradient_textured_mesh`) and a
+/// gradient stroke falls back to `paint_gradient_stroke`'s segmented approximation.
 /// `force_transparent_fill` mirrors the open-`Path` "can't fill an open path"
 /// case `draw_layer`'s `Path` arm already handled.
 #[allow(clippy::too_many_arguments)]
@@ -363,6 +377,7 @@ pub(super) fn paint_polygon(
     noise_cache: &mut NoiseTextureCache,
     halftone_cache: &mut HalftoneTextureCache,
     pattern_cache: &mut PatternTextureCache,
+    gradient_cache: &mut GradientTextureCache,
     points: Vec<Pos2>,
     closed: bool,
     screen_rect: Rect,
@@ -377,16 +392,14 @@ pub(super) fn paint_polygon(
     let fill_paint = layer.style.fill.as_ref();
 
     // Fill is always triangulated via earcut (`triangulate_fill`/
-    // `triangulate_fill_with`), never `PathShape`'s own fill: that fill is a
+    // `triangulate_fill_textured`), never `PathShape`'s own fill: that fill is a
     // fan from vertex 0 that's only correct for convex polygons (see its doc
     // comment, "convex area") — a concave shape like `Star` produces stray
     // triangles (most visibly one jutting out past the top point) since the
     // fan crosses outside the outline between non-adjacent concave vertices.
     if !force_transparent_fill {
         if let Some(Paint::Gradient(g)) = fill_paint {
-            let color_at =
-                |p: Pos2| gradient_color_at_screen_point(g, p, screen_rect, center, rotation, opacity * layer.style.fill_opacity);
-            if let Some(mesh) = triangulate_fill_with(&points, &[], color_at) {
+            if let Some(mesh) = gradient_textured_mesh(ctx, gradient_cache, layer, g, &points, &[], screen_rect, center, rotation, opacity) {
                 painter.add(egui::Shape::mesh(mesh));
             }
         } else if let Some(Paint::Noise(n)) = fill_paint {

@@ -77,7 +77,7 @@ pub(super) fn draw_text_on_path(
             Some(i) => face_for_run.get(i).copied().unwrap_or(0),
         }
     };
-    let scale_of = |idx: Option<usize>| ab_glyph::PxScale::from(style_of(idx).font_size);
+    let scale_of = |idx: Option<usize>| crate::fonts::em_px_scale(&faces[face_index_of(idx)], style_of(idx).font_size);
 
     let points: Vec<egui::Pos2> = if flip { path_points.iter().rev().copied().collect() } else { path_points.to_vec() };
     let total = crate::text_path_geometry::polyline_length(&points, closed);

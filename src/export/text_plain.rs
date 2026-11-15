@@ -54,7 +54,7 @@ pub(super) fn draw_text(
     let color = with_opacity(fill.to_color32(), opacity * layer.style.fill_opacity);
     let (font_bytes, face_index) = crate::fonts::ab_glyph_bytes(font);
     let Ok(face) = FontRef::try_from_slice_and_index(&font_bytes, face_index) else { return };
-    let scale = ab_glyph::PxScale::from(font_size);
+    let scale = crate::fonts::em_px_scale(&face, font_size);
     let scaled = face.as_scaled(scale);
     let line_step = line_height.unwrap_or(scaled.height() + scaled.line_gap());
 

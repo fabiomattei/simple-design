@@ -1256,8 +1256,9 @@ mod tests {
         // Narrow enough that "aaaa bbbb" (line 1, non-last) wraps before
         // "cccc" (line 2, last — never stretched, matching typographic
         // convention and `canvas/`'s `egui::LayoutJob` behavior), wide
-        // enough that "aaaa bbbb" alone still fits on one line.
-        let size = egui::Vec2::new(100.0, 150.0);
+        // enough that "aaaa bbbb" alone still fits on one line (at 24px:
+        // ~110 vs ~160 units wide).
+        let size = egui::Vec2::new(135.0, 150.0);
         let left = text_layer("aaaa bbbb cccc", 24.0, size, TextAlign::Left);
         let justify = text_layer("aaaa bbbb cccc", 24.0, size, TextAlign::Justify);
         let left_pixmap = render_layer(&left).expect("should render");

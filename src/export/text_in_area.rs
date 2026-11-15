@@ -64,7 +64,7 @@ pub(super) fn draw_text_in_area(
             Some(i) => face_for_run.get(i).copied().unwrap_or(0),
         }
     };
-    let scale_of = |idx: Option<usize>| ab_glyph::PxScale::from(style_of(idx).font_size);
+    let scale_of = |idx: Option<usize>| crate::fonts::em_px_scale(&faces[face_index_of(idx)], style_of(idx).font_size);
 
     let measure = |chars: &[(char, Option<usize>)]| -> f32 {
         let mut width = 0.0;
