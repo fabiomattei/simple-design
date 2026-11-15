@@ -1,8 +1,9 @@
 //! "Export as HTML": writes a layer tree as `index.html` + `style.css` +
-//! `images/` into a folder. Layers CSS can describe become styled elements
+//! `images/` + `fonts/` into a folder. Layers CSS can describe become styled elements
 //! (`css_rules`); everything else is rasterized (`raster_fallback`).
 
 mod element_tree;
+mod font_files;
 mod raster_fallback;
 
 use std::path::{Path, PathBuf};
@@ -17,11 +18,12 @@ pub fn export_html(layer: &crate::model::Layer, roots: &[crate::model::Layer], p
     std::fs::create_dir_all(&dir)?;
     std::fs::write(dir.join("index.html"), site.html)?;
     std::fs::write(dir.join("style.css"), site.css)?;
-    if !site.images.is_empty() {
-        std::fs::create_dir_all(dir.join("images"))?;
-    }
-    for (relative_path, bytes) in site.images {
-        std::fs::write(dir.join(relative_path), bytes)?;
+    for (relative_path, bytes) in site.assets {
+        let path = dir.join(relative_path);
+        if let Some(parent) = path.parent() {
+            std::fs::create_dir_all(parent)?;
+        }
+        std::fs::write(path, bytes)?;
     }
     Ok(dir)
 }

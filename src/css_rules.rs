@@ -6,9 +6,14 @@
 //!
 //! `left`/`top` are `frame.pos`, which is parent-relative — the same meaning
 //! as `position: absolute` inside a positioned parent.
+//!
+//! Also used by HTML export (`html_export/`). Kept as one file past the size
+//! target on purpose: box, paint, and text rules all share the private
+//! `color`/`px` formatting, and splitting would mean sharing or copying it.
 
 use egui::{Color32, Vec2};
 
+use crate::model::text_runs::RunStyle;
 use crate::model::{GradientKind, Layer, LayerKind, Paint, Shadow, TextAlign, TextFont, TextTransform};
 
 /// Returns `layer`'s declarations as one CSS block, headed by a comment with
@@ -168,6 +173,27 @@ fn text_rules(layer: &Layer, lines: &mut Vec<String>) {
     }
 }
 
+/// Declarations for one rich-text run (`TextRun::style`). Every property is
+/// stated explicitly, even `normal`, so a run never inherits the layer-level
+/// defaults that `text_rules` wrote on the enclosing element. A run with no
+/// color inherits the element's `color`, same as on canvas. Pure.
+pub fn run_declarations(style: &RunStyle, fill_opacity: f32) -> Vec<String> {
+    let mut lines = vec![format!("font-family: {};", font_family(&style.font)), format!("font-size: {};", px(style.font_size))];
+    if let Some(run_color) = style.color {
+        lines.push(format!("color: {};", color(run_color, fill_opacity)));
+    }
+    lines.push(format!("font-weight: {};", if style.bold { "bold" } else { "normal" }));
+    lines.push(format!("font-style: {};", if style.italic { "italic" } else { "normal" }));
+    let decoration = match (style.underline, style.strikethrough) {
+        (false, false) => "none",
+        (true, false) => "underline",
+        (false, true) => "line-through",
+        (true, true) => "underline line-through",
+    };
+    lines.push(format!("text-decoration: {decoration};"));
+    lines
+}
+
 /// `None` for the procedural/texture fills, which CSS has no equivalent for.
 /// `size` is the painted box, needed because gradient endpoints are stored
 /// normalized to it (see `Gradient`).
@@ -209,16 +235,32 @@ fn shadow_css(shadow: &Shadow, prefix: &str) -> String {
     format!("{prefix}{} {} {} {} {}", px(shadow.offset.x), px(shadow.offset.y), px(shadow.blur), px(shadow.spread), color(shadow.color, 1.0))
 }
 
-/// The bundled fonts' real family names (see `fonts.rs` / `assets/fonts/`)
-/// with a generic fallback.
-fn font_family(font: &TextFont) -> String {
+/// The CSS family name for a bundled font (its real name, see `fonts.rs` /
+/// `assets/fonts/`); `None` for `TextFont::System`. Shared with
+/// `html_export/font_files.rs`, whose `@font-face` rules must declare exactly
+/// these names for `font_family`'s output to pick them up.
+pub fn bundled_family_name(font: &TextFont) -> Option<&'static str> {
     match font {
-        TextFont::Proportional => "\"Ubuntu\", sans-serif".to_string(),
-        TextFont::Monospace => "\"Hack\", monospace".to_string(),
-        TextFont::Serif => "\"Merriweather\", serif".to_string(),
-        TextFont::Display => "\"Poppins\", sans-serif".to_string(),
-        TextFont::Handwriting => "\"Caveat\", cursive".to_string(),
-        TextFont::System(name) => format!("\"{name}\""),
+        TextFont::Proportional => Some("Ubuntu"),
+        TextFont::Monospace => Some("Hack"),
+        TextFont::Serif => Some("Merriweather"),
+        TextFont::Display => Some("Poppins"),
+        TextFont::Handwriting => Some("Caveat"),
+        TextFont::System(_) => None,
+    }
+}
+
+/// A font's family name plus a generic fallback.
+fn font_family(font: &TextFont) -> String {
+    let generic = match font {
+        TextFont::Monospace => "monospace",
+        TextFont::Serif => "serif",
+        TextFont::Handwriting => "cursive",
+        TextFont::Proportional | TextFont::Display | TextFont::System(_) => "sans-serif",
+    };
+    match font {
+        TextFont::System(name) => format!("\"{name}\", {generic}"),
+        bundled => format!("\"{}\", {generic}", bundled_family_name(bundled).unwrap_or_default()),
     }
 }
 
@@ -341,6 +383,13 @@ mod tests {
             assert!(css.contains(expected), "missing `{expected}` in:\n{css}");
         }
         assert!(!css.contains("background"), "{css}");
+    }
+
+    #[test]
+    fn run_states_every_property_explicitly() {
+        let style = RunStyle { font: TextFont::Display, font_size: 12.0, color: None, bold: false, italic: true, underline: false, strikethrough: true };
+        let lines = run_declarations(&style, 1.0);
+        assert_eq!(lines, ["font-family: \"Poppins\", sans-serif;", "font-size: 12px;", "font-weight: normal;", "font-style: italic;", "text-decoration: line-through;"]);
     }
 
     #[test]
