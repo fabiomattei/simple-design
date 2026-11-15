@@ -1166,10 +1166,14 @@ impl eframe::App for App {
 
         egui::Panel::top("toolbar").show(ui, |ui| {
             ui.add_space(3.0);
-            let action = toolbar::ui(ui, &mut self.tool);
+            let action = toolbar::ui(ui, &mut self.tool, self.selection.len());
             ui.add_space(3.0);
-            if let Some(ToolbarAction::InsertImage) = action {
-                self.insert_images_via_dialog();
+            match action {
+                Some(ToolbarAction::InsertImage) => self.insert_images_via_dialog(),
+                Some(ToolbarAction::Align(edge, to_artboard)) => self.align_selection(edge, to_artboard),
+                Some(ToolbarAction::Distribute(axis)) => self.distribute_selection(axis),
+                Some(ToolbarAction::Arrange(command)) => self.arrange_selection(command),
+                None => {}
             }
         });
 

@@ -1,3 +1,4 @@
+pub mod arrange_icons;
 pub mod color_picker;
 pub mod icons;
 pub mod inspector;
