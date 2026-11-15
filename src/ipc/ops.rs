@@ -25,7 +25,7 @@ use crate::transform_ops::{self, FlipAxis};
 
 use super::protocol::{
     AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
-    GroupArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFrameArgs, UngroupArgs,
+    GroupArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFrameArgs, SetMaskArgs, UngroupArgs,
 };
 
 /// Ops that mutate `doc` — the CLI's headless mode only needs to re-save
@@ -45,6 +45,7 @@ pub fn mutates(op: &str) -> bool {
             | "new_page"
             | "rename_page"
             | "rename_layer"
+            | "set_mask"
             | "group"
             | "ungroup"
             | "flip"
@@ -273,6 +274,21 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             Ok(json!({ "id": args.id }))
         }
 
+        "set_mask" => {
+            let args: SetMaskArgs = parse(args)?;
+            if args.mask.is_none() && args.ignore_mask.is_none() {
+                return Err("set_mask needs `mask` and/or `ignore_mask`".to_string());
+            }
+            let layer = doc.find_mut(args.id).ok_or_else(|| format!("layer not found: {}", args.id))?;
+            if let Some(mask) = args.mask {
+                layer.is_mask = mask;
+            }
+            if let Some(ignore_mask) = args.ignore_mask {
+                layer.ignore_mask = ignore_mask;
+            }
+            Ok(json!({ "id": args.id, "is_mask": layer.is_mask, "ignore_mask": layer.ignore_mask }))
+        }
+
         "group" => {
             let args: GroupArgs = parse(args)?;
             let page = resolve_page_mut(doc, args.page)?;
@@ -436,6 +452,24 @@ mod tests {
         let args = json!({ "page": null, "frame": frame(x, y, w, h), "name": null });
         let result = apply(doc, "add_rect", args).expect("add_rect should succeed");
         serde_json::from_value(result["id"].clone()).unwrap()
+    }
+
+    #[test]
+    fn set_mask_changes_only_the_given_fields_and_rejects_an_empty_request() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
+
+        apply(&mut doc, "set_mask", json!({ "id": id, "mask": true })).expect("set_mask should succeed");
+        let layer = doc.find(id).unwrap();
+        assert!(layer.is_mask);
+        assert!(!layer.ignore_mask);
+
+        apply(&mut doc, "set_mask", json!({ "id": id, "ignore_mask": true })).expect("set_mask should succeed");
+        let layer = doc.find(id).unwrap();
+        assert!(layer.is_mask, "omitted `mask` stays unchanged");
+        assert!(layer.ignore_mask);
+
+        assert!(apply(&mut doc, "set_mask", json!({ "id": id })).is_err());
     }
 
     #[test]

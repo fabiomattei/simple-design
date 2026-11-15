@@ -238,6 +238,20 @@ pub struct RenameLayerArgs {
     pub name: String,
 }
 
+/// Sets a layer's `is_mask` ("Use as Mask") and/or `ignore_mask` ("Ignore
+/// Underlying Mask"); an omitted field is left unchanged. At least one must
+/// be given. A mask clips the siblings *below* it in its parent, back to the
+/// previous mask — so group the mask with its content first (`group`)
+/// unless it should clip everything beneath it at that level.
+#[derive(Serialize, Deserialize)]
+pub struct SetMaskArgs {
+    pub id: Uuid,
+    #[serde(default)]
+    pub mask: Option<bool>,
+    #[serde(default)]
+    pub ignore_mask: Option<bool>,
+}
+
 #[derive(Serialize, Deserialize)]
 pub struct GroupArgs {
     #[serde(default)]

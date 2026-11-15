@@ -14,7 +14,7 @@ use simple_design::ipc::{self, ops};
 use simple_design::ipc::protocol::{
     AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
     GroupArgs, InitArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs,
-    SetFrameArgs, UngroupArgs,
+    SetFrameArgs, SetMaskArgs, UngroupArgs,
 };
 use simple_design::model::{BoolOp, Document, Frame, TextAlign, TextFont, VerticalAlign};
 
@@ -259,6 +259,16 @@ enum Command {
     RenameLayer {
         id: Uuid,
         name: String,
+    },
+    /// Set "Use as Mask" (`--mask true|false`) and/or "Ignore Underlying
+    /// Mask" (`--ignore-mask true|false`) on a layer. A mask clips the
+    /// siblings below it in its parent, so group it with its content first.
+    SetMask {
+        id: Uuid,
+        #[arg(long)]
+        mask: Option<bool>,
+        #[arg(long)]
+        ignore_mask: Option<bool>,
     },
     /// Group layers into a new Group layer.
     Group {
@@ -511,6 +521,7 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
         Command::NewPage { name } => ("new_page", to_value(NewPageArgs { name })),
         Command::RenamePage { id, name } => ("rename_page", to_value(RenamePageArgs { id, name })),
         Command::RenameLayer { id, name } => ("rename_layer", to_value(RenameLayerArgs { id, name })),
+        Command::SetMask { id, mask, ignore_mask } => ("set_mask", to_value(SetMaskArgs { id, mask, ignore_mask })),
         Command::Group { ids, page } => ("group", to_value(GroupArgs { page, ids })),
         Command::Ungroup { id, page } => ("ungroup", to_value(UngroupArgs { page, id })),
         Command::Flip { axis, ids, page } => ("flip", to_value(FlipArgs { page, ids, axis: axis.as_str().to_string() })),
