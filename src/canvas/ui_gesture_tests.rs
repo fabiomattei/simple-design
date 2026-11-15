@@ -92,13 +92,18 @@ impl Harness {
 
     /// Press at `from`, move to `to` over several frames, release there.
     fn drag_screen(&mut self, from: Pos2, to: Pos2) {
-        self.frame(vec![Event::PointerMoved(from)]);
-        self.frame(vec![Self::press(from, PointerButton::Primary, true, Modifiers::NONE)]);
+        self.drag_screen_with(from, to, Modifiers::NONE);
+    }
+
+    /// `drag_screen` with `modifiers` held for the whole gesture.
+    fn drag_screen_with(&mut self, from: Pos2, to: Pos2, modifiers: Modifiers) {
+        self.frame(vec![Event::ModifiersChanged(modifiers), Event::PointerMoved(from)]);
+        self.frame(vec![Self::press(from, PointerButton::Primary, true, modifiers)]);
         for step in 1..=4 {
             self.frame(vec![Event::PointerMoved(from + (to - from) * (step as f32 / 4.0))]);
         }
-        self.frame(vec![Self::press(to, PointerButton::Primary, false, Modifiers::NONE)]);
-        self.frame(Vec::new());
+        self.frame(vec![Self::press(to, PointerButton::Primary, false, modifiers)]);
+        self.frame(vec![Event::ModifiersChanged(Modifiers::NONE)]);
     }
 
     fn drag(&mut self, from_doc: Pos2, to_doc: Pos2) {
@@ -169,6 +174,22 @@ fn marquee_drag_over_empty_canvas_selects_every_intersecting_layer() {
     let mut expected = vec![a_id, b_id];
     expected.sort();
     assert_eq!(selected, expected);
+}
+
+#[test]
+fn shift_drag_starting_on_a_layer_marquee_selects_instead_of_moving() {
+    let a = rect_layer("A", 100.0, 100.0, 80.0, 80.0);
+    let b = rect_layer("B", 300.0, 100.0, 80.0, 80.0);
+    let (a_id, b_id) = (a.id, b.id);
+    let mut h = Harness::new(vec![a, b]);
+    let (from, to) = (h.screen(Pos2::new(140.0, 140.0)), h.screen(Pos2::new(350.0, 250.0)));
+    h.drag_screen_with(from, to, Modifiers::SHIFT);
+    let mut selected = h.selection.clone();
+    selected.sort();
+    let mut expected = vec![a_id, b_id];
+    expected.sort();
+    assert_eq!(selected, expected);
+    assert_eq!(h.layer(a_id).frame.pos, Pos2::new(100.0, 100.0));
 }
 
 #[test]

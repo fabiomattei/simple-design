@@ -132,6 +132,16 @@ pub(super) fn collect_marquee_hits(
             continue;
         }
         let abs_bounds = layer.frame.rotated_bounds().translate(offset);
+        // Sketch's rule: an artboard is only picked when the marquee fully
+        // encloses it; otherwise the marquee selects what's inside it, so
+        // area-selecting within an artboard doesn't just grab the artboard.
+        if let LayerKind::Artboard { children, .. } = &layer.kind
+            && !marquee.contains_rect(abs_bounds)
+        {
+            let child_offset = offset + layer.frame.pos.to_vec2();
+            collect_marquee_hits(children, child_offset, marquee, contained_only, ignore_groups, out);
+            continue;
+        }
         let matches = if contained_only {
             marquee.contains_rect(abs_bounds)
         } else {
@@ -452,6 +462,28 @@ mod tests {
         let mut ignoring_hits = Vec::new();
         collect_marquee_hits(&layers, Vec2::ZERO, marquee, false, true, &mut ignoring_hits);
         assert_eq!(ignoring_hits, vec![child_id], "with ignore_groups, only the leaf child matches");
+    }
+
+    #[test]
+    fn collect_marquee_hits_selects_artboard_children_unless_artboard_fully_enclosed() {
+        let mut artboard = Layer::new_artboard("Board", Frame { pos: Pos2::new(100.0, 100.0), size: Vec2::new(200.0, 200.0), rotation: 0.0 });
+        let child = rect_layer("Child", 10.0, 10.0, 20.0, 20.0);
+        let far_child = rect_layer("Far", 150.0, 150.0, 20.0, 20.0);
+        let child_id = child.id;
+        let artboard_id = artboard.id;
+        let LayerKind::Artboard { children, .. } = &mut artboard.kind else { unreachable!() };
+        children.extend([child, far_child]);
+        let layers = vec![artboard];
+
+        let inside = Rect::from_min_max(Pos2::new(105.0, 105.0), Pos2::new(140.0, 140.0));
+        let mut inside_hits = Vec::new();
+        collect_marquee_hits(&layers, Vec2::ZERO, inside, false, false, &mut inside_hits);
+        assert_eq!(inside_hits, vec![child_id]);
+
+        let enclosing = Rect::from_min_max(Pos2::new(50.0, 50.0), Pos2::new(350.0, 350.0));
+        let mut enclosing_hits = Vec::new();
+        collect_marquee_hits(&layers, Vec2::ZERO, enclosing, false, false, &mut enclosing_hits);
+        assert_eq!(enclosing_hits, vec![artboard_id]);
     }
 
     #[test]

@@ -322,18 +322,11 @@ impl CanvasWidget {
         doc_pos: Pos2,
     ) {
         let page = history.get().active_page();
-        let shift = modifiers.shift;
-        if shift {
-            if selection.contains(&id) {
-                selection.retain(|&s| s != id);
-            } else {
-                selection.push(id);
-                self.drag = DragState::MovingSelection {
-                    start_doc: doc_pos,
-                    starts: move_starts(page, selection),
-                };
-                history.snapshot();
-            }
+        if modifiers.shift {
+            // Shift+drag always area-selects, even when it starts on a
+            // layer (or inside an artboard, which hit-tests as the
+            // artboard). Shift+click toggling is handled on click instead.
+            self.begin_marquee_drag(selection, modifiers, doc_pos);
         } else if modifiers.alt {
             self.begin_duplicate_drag(history, selection, id, doc_pos);
         } else {
