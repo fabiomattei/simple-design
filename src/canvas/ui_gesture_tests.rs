@@ -303,3 +303,40 @@ fn pinch_zoom_keeps_the_point_under_the_pointer_fixed() {
     let after = h.screen(doc_point);
     assert!((after - pointer).length() < 0.01, "{doc_point:?} moved from {pointer:?} to {after:?}");
 }
+
+#[test]
+fn dragging_a_side_handle_of_a_short_layer_resizes_instead_of_rotating() {
+    // 34pt tall: short enough that the side handles crowd the corners.
+    let rect = rect_layer("A", 100.0, 100.0, 140.0, 34.0);
+    let id = rect.id;
+    let mut h = Harness::new(vec![rect]);
+    h.click(Pos2::new(150.0, 115.0), Modifiers::NONE);
+    h.drag(Pos2::new(240.0, 117.0), Pos2::new(180.0, 120.0));
+    let layer = h.layer(id);
+    assert_eq!(layer.frame.rotation, 0.0);
+    assert_eq!(layer.frame.bounds(), Rect::from_min_size(Pos2::new(100.0, 100.0), Vec2::new(80.0, 34.0)));
+}
+
+#[test]
+fn dragging_the_rotation_handle_rotates_the_selected_layer() {
+    let rect = rect_layer("A", 100.0, 100.0, 100.0, 80.0);
+    let id = rect.id;
+    let mut h = Harness::new(vec![rect]);
+    h.click(Pos2::new(150.0, 140.0), Modifiers::NONE);
+    // The handle sits `ROTATE_HANDLE_OFFSET` screen px above the top center
+    // (zoom is 1, so that's the same in doc space); dragging it to the right
+    // of the pivot (150, 140) is a quarter turn clockwise.
+    let handle = Pos2::new(150.0, 100.0 - super::ROTATE_HANDLE_OFFSET);
+    h.drag(handle, Pos2::new(250.0, 140.0));
+    assert!((h.layer(id).frame.rotation - 90.0).abs() < 0.5, "rotation {}", h.layer(id).frame.rotation);
+}
+
+#[test]
+fn dragging_just_outside_a_corner_no_longer_rotates() {
+    let rect = rect_layer("A", 100.0, 100.0, 100.0, 80.0);
+    let id = rect.id;
+    let mut h = Harness::new(vec![rect]);
+    h.click(Pos2::new(150.0, 140.0), Modifiers::NONE);
+    h.drag(Pos2::new(212.0, 192.0), Pos2::new(150.0, 260.0));
+    assert_eq!(h.layer(id).frame.rotation, 0.0);
+}

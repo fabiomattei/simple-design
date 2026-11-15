@@ -331,7 +331,7 @@ impl CanvasWidget {
             && self.image_edit.is_none()
             && hover.point.is_none()
             && hover.handle.is_none()
-            && hover.rotate_corner.is_none()
+            && !hover.rotate_handle
             && hover.gap_handle.is_none()
             && !is_single_path_selected
         {

@@ -127,12 +127,9 @@ impl Handle {
 
 const HANDLE_RADIUS: f32 = 4.5;
 const HANDLE_HIT_RADIUS: f32 = 8.0;
-/// Outer bound (in screen pixels, from a corner handle's center) of the
-/// "hover here to rotate" zone — an annulus starting just past
-/// `HANDLE_HIT_RADIUS` (which claims the resize hit-test first) and ending
-/// here, so hovering a bit further out from a corner than a resize grab
-/// switches to rotate instead, a common corner-rotate gesture.
-const ROTATE_ZONE_OUTER_RADIUS: f32 = 20.0;
+/// Distance, in screen pixels, from the top-center resize handle to the
+/// dedicated rotation handle above it — the only place a rotate drag starts.
+const ROTATE_HANDLE_OFFSET: f32 = 24.0;
 const SELECTION_COLOR: Color32 = Color32::from_rgb(0, 122, 255);
 
 /// Width, in screen pixels, of the top/left ruler strips.
@@ -212,7 +209,7 @@ impl<'a> SelectionView<'a> {
 /// has been mutated.
 struct HoverState {
     handle: Option<Handle>,
-    rotate_corner: Option<Handle>,
+    rotate_handle: bool,
     point: Option<(usize, PathPart)>,
     gap_handle: Option<usize>,
     /// The Smart Distribute layers in gap-handle order; empty unless the gap
@@ -289,8 +286,8 @@ enum DragState {
         scale_style: bool,
         scale_anchor: ScaleAnchor,
     },
-    /// Dragging a corner's outer "rotate" zone (just beyond its resize hit
-    /// radius — see `HANDLE_HIT_RADIUS`/rotate-ring check in `paint_bounding_box_handles`).
+    /// Dragging the rotation handle above the top edge (see
+    /// `ROTATE_HANDLE_OFFSET` and `paint_bounding_box_handles`).
     /// `pivot` is the selection's overall bounds center in page-space,
     /// captured once at drag start; `layers` is built by
     /// `collect_rotatable_leaves`, so a selected `Group`/`Artboard` rotates

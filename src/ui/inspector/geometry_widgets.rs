@@ -66,22 +66,26 @@ pub(super) fn arrow_cap_combo(ui: &mut Ui, salt: (&str, LayerId), cap: &mut Arro
 }
 
 pub(super) fn flip_buttons(ui: &mut Ui) -> Option<InspectorAction> {
-    let mut action = None;
     ui.label("Flip");
-    ui.horizontal(|ui| {
-        if icons::flip_button(ui, FlipAxis::Horizontal)
-            .on_hover_text("Flip Horizontal (⇧H)")
-            .clicked()
-        {
-            action = Some(InspectorAction::Flip(FlipAxis::Horizontal));
-        }
-        if icons::flip_button(ui, FlipAxis::Vertical)
-            .on_hover_text("Flip Vertical (⇧V)")
-            .clicked()
-        {
-            action = Some(InspectorAction::Flip(FlipAxis::Vertical));
-        }
-    });
+    ui.horizontal(flip_icon_buttons).inner
+}
+
+/// Just the two Flip icons, unlabeled — laid out in whatever row `ui` is,
+/// e.g. beside the single-layer Rotate field.
+pub(super) fn flip_icon_buttons(ui: &mut Ui) -> Option<InspectorAction> {
+    let mut action = None;
+    if icons::flip_button(ui, FlipAxis::Horizontal)
+        .on_hover_text("Flip Horizontal (⇧H)")
+        .clicked()
+    {
+        action = Some(InspectorAction::Flip(FlipAxis::Horizontal));
+    }
+    if icons::flip_button(ui, FlipAxis::Vertical)
+        .on_hover_text("Flip Vertical (⇧V)")
+        .clicked()
+    {
+        action = Some(InspectorAction::Flip(FlipAxis::Vertical));
+    }
     action
 }
 

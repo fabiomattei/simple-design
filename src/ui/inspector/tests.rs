@@ -28,16 +28,16 @@ const HEADINGS: &[&str] = &[
     "Screen",
     "Scale Layers",
     "Finish",
-    "Align",
-    "Distribute",
     "Tidy",
     "Group (Cmd+G)",
     "Combine",
     "Text",
     "Image",
-    "Position",
-    "Size",
-    "Rotation",
+    "X",
+    "Y",
+    "W",
+    "H",
+    "Rotate",
     "Flip",
     "Closed",
     "Corner radius",
@@ -58,15 +58,15 @@ const HEADINGS: &[&str] = &[
     "Color Adjust",
     "Opacity",
     "Layer Style",
-    "Fill",
-    "Stroke",
-    "Drop Shadow",
-    "Inner Shadow",
+    "Fills",
+    "Borders",
+    "Shadows",
+    "Inner Shadows",
     "Ungroup (Cmd+Shift+G)",
 ];
 
-const TRANSFORM: &[&str] = &["Position", "Size", "Rotation", "Flip"];
-const APPEARANCE: &[&str] = &["Opacity", "Layer Style", "Fill", "Stroke", "Drop Shadow", "Inner Shadow"];
+const TRANSFORM: &[&str] = &["X", "Y", "W", "H", "Rotate"];
+const APPEARANCE: &[&str] = &["Opacity", "Layer Style", "Fills", "Borders", "Shadows", "Inner Shadows"];
 const TYPOGRAPHY: &[&str] = &[
     "Text",
     "Font size: ",
@@ -186,7 +186,7 @@ fn group_adds_an_ungroup_button_after_appearance() {
 #[test]
 fn artboard_has_no_rotation_field() {
     let artboard = layer(LayerKind::Artboard { children: Vec::new(), background: Color32::WHITE });
-    assert_eq!(headings_for_single(artboard), concat(&[&["Position", "Size", "Flip"], APPEARANCE]));
+    assert_eq!(headings_for_single(artboard), concat(&[&["X", "Y", "W", "H"], APPEARANCE]));
 }
 
 #[test]
@@ -220,11 +220,11 @@ fn image_layer_shows_image_and_color_adjust_sections() {
 }
 
 #[test]
-fn multi_selection_shows_align_distribute_tidy_and_combine() {
+fn multi_selection_shows_arrange_strip_tidy_and_combine() {
     let (a, b) = (layer(LayerKind::Oval), layer(LayerKind::Oval));
     let ids = [a.id, b.id];
     let found = headings(vec![a, b], &ids, &mut CanvasWidget::default(), Tool::Select);
-    assert_eq!(found, concat(&[&["Align", "Distribute", "Tidy", "Tidy", "Flip", "Group (Cmd+G)", "Combine"]]));
+    assert_eq!(found, concat(&[&["Tidy", "Tidy", "Flip", "Group (Cmd+G)", "Combine"]]));
 }
 
 #[test]
@@ -245,4 +245,59 @@ fn artboard_tool_with_nothing_selected_offers_size_presets() {
 fn nothing_selected_says_so() {
     let found = headings(Vec::new(), &[], &mut CanvasWidget::default(), Tool::Select);
     assert_eq!(found, concat(&[&["No selection"]]));
+}
+
+/// The docked panel's default width (`app.rs`'s `panels_column`).
+const PANEL_WIDTH: f32 = 260.0;
+
+/// Renders the inspector for one layer the way `app.rs` docks it — inside a
+/// vertical `ScrollArea`, `PANEL_WIDTH` wide — and returns every painted
+/// text with the x of its left edge.
+fn texts_in_docked_panel(layer: Layer) -> Vec<(String, f32)> {
+    let id = layer.id;
+    let mut doc = Document::new();
+    doc.active_page_mut().layers.push(layer);
+    let mut history = History::new(doc);
+    let mut canvas = CanvasWidget::default();
+    let ctx = egui::Context::default();
+    crate::fonts::install_fonts(&ctx);
+    let input = || egui::RawInput {
+        screen_rect: Some(Rect::from_min_size(Pos2::ZERO, Vec2::new(PANEL_WIDTH, SCREEN_SIZE.y))),
+        ..Default::default()
+    };
+    ctx.run_ui(input(), |_| {}).drop_without_applying_deltas();
+    let mut output = ctx.run_ui(input(), |root| {
+        egui::ScrollArea::vertical().show(root, |ui_in_scroll| {
+            ui(ui_in_scroll, &mut history, &[id], &mut canvas, Tool::Select);
+        });
+    });
+    output.textures_delta.clear();
+    let mut positioned = Vec::new();
+    for clipped in &output.shapes {
+        collect_positioned_texts(&clipped.shape, &mut positioned);
+    }
+    positioned
+}
+
+fn collect_positioned_texts(shape: &egui::Shape, out: &mut Vec<(String, f32)>) {
+    match shape {
+        egui::Shape::Text(text) => out.push((text.galley.text().to_string(), text.pos.x)),
+        egui::Shape::Vec(shapes) => shapes.iter().for_each(|s| collect_positioned_texts(s, out)),
+        _ => {}
+    }
+}
+
+/// Regression: an over-wide row (the Layer Style name field at egui's
+/// default width) once widened the scroll content past the panel, pushing
+/// every section's right-aligned + button out of view — so an unset fill,
+/// border or shadow could never be added.
+#[test]
+fn section_add_buttons_stay_inside_the_docked_panel() {
+    let mut bare = layer(LayerKind::Oval);
+    bare.style.fill = None;
+    bare.style.stroke = None;
+    let add_button_xs: Vec<f32> =
+        texts_in_docked_panel(bare).into_iter().filter(|(text, _)| text == "+").map(|(_, x)| x).collect();
+    assert_eq!(add_button_xs.len(), 4, "Fills, Borders, Shadows and Inner Shadows each paint a +");
+    assert!(add_button_xs.iter().all(|&x| x < PANEL_WIDTH), "+ painted outside the panel: {add_button_xs:?}");
 }

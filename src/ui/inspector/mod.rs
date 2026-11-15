@@ -13,6 +13,7 @@ mod appearance_section;
 mod geometry_section;
 mod geometry_widgets;
 mod image_section;
+mod inspector_layout;
 mod layer_styles;
 mod multi_selection;
 mod paint_editor;
@@ -114,8 +115,8 @@ pub fn ui(
         if canvas.is_editing_text(id) { canvas.text_edit_selection.clone().filter(|r| !r.is_empty()) } else { None };
 
     ui.label(egui::RichText::new(&layer.name).strong());
-    ui.label(layer.kind.type_name());
-    ui.add_space(8.0);
+    ui.weak(layer.kind.type_name());
+    ui.add_space(6.0);
 
     if let Some(action) = transform_section(ui, history, canvas, &layer) {
         return Some(action);

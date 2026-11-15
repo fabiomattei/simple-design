@@ -55,81 +55,23 @@ pub(super) fn paint_editor(
     allow_texture_fills: bool,
     apply: impl Fn(&mut Layer, Paint),
 ) {
-    if allow_gradient {
-        let mut kind_idx = match current {
-            Paint::Solid(_) => 0,
-            Paint::Gradient(g) => match g.kind {
-                GradientKind::Linear => 1,
-                GradientKind::Radial => 2,
-            },
-            Paint::Noise(_) => 3,
-            Paint::Halftone(_) => 4,
-            Paint::Pattern(_) => 5,
-        };
-        let prev_idx = kind_idx;
-        egui::ComboBox::from_id_salt(("paint-kind", slot, id))
-            .selected_text(match kind_idx {
-                0 => "Solid",
-                1 => "Linear",
-                2 => "Radial",
-                3 => "Noise",
-                4 => "Halftone",
-                _ => "Pattern",
-            })
-            .show_ui(ui, |ui| {
-                ui.selectable_value(&mut kind_idx, 0, "Solid");
-                ui.selectable_value(&mut kind_idx, 1, "Linear");
-                ui.selectable_value(&mut kind_idx, 2, "Radial");
-                if allow_texture_fills {
-                    ui.selectable_value(&mut kind_idx, 3, "Noise");
-                    ui.selectable_value(&mut kind_idx, 4, "Halftone");
-                    ui.selectable_value(&mut kind_idx, 5, "Pattern");
-                }
-            });
-        if kind_idx != prev_idx {
-            // `Pattern` needs a file picked synchronously before there's
-            // anything to apply — same blocking `rfd` call every other
-            // picker in this app already makes (just from here instead of
-            // an `app.rs` menu handler). Cancelling the dialog leaves the
-            // fill type unchanged, unlike every other option here.
-            if kind_idx == 5 {
-                if let Some(path) = crate::io::open_pattern_image_dialog()
-                    && let Some(pattern) = pattern_fill_from_path(&path) {
-                        history.snapshot();
-                        if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                            apply(l, Paint::Pattern(pattern));
-                        }
-                    }
-                return;
+    // Swatch (Solid only) and type combo share one row, Sketch-style; every
+    // other paint's controls go on the rows below.
+    let kind_changed = ui
+        .horizontal(|ui| {
+            if let Paint::Solid(color) = current {
+                solid_swatch(ui, history, id, *color, &apply);
             }
-            history.snapshot();
-            let base = current.to_color32();
-            let new_paint = match kind_idx {
-                0 => Paint::Solid(base),
-                1 => Paint::Gradient(Gradient::linear(base, base)),
-                2 => Paint::Gradient(Gradient::radial(base, base)),
-                3 => Paint::Noise(NoiseFill { base, intensity: 0.5, scale: 4.0, seed: 1 }),
-                _ => Paint::Halftone(HalftoneFill { background: egui::Color32::WHITE, dot: base, scale: 8.0, coverage: 0.7 }),
-            };
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                apply(l, new_paint);
-            }
-            return;
-        }
+            allow_gradient && paint_kind_combo(ui, history, id, slot, current, allow_texture_fills, &apply)
+        })
+        .inner;
+    if kind_changed {
+        return;
     }
 
     match current {
-        Paint::Solid(color) => {
-            let mut color = *color;
-            let cr = color_picker::edit(ui, &mut color, &history.get().palette);
-            if should_snapshot(&cr) {
-                history.snapshot();
-            }
-            if cr.changed()
-                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                    apply(l, Paint::Solid(color));
-                }
-        }
+        // Drawn in the row above, beside the type combo.
+        Paint::Solid(_) => {}
         Paint::Gradient(gradient) => {
             let mut g = gradient.clone();
             let mut changed = false;
@@ -328,4 +270,93 @@ pub(super) fn paint_editor(
                 }
         }
     }
+}
+
+/// The paint type dropdown (Solid/Linear/Radial, plus Noise/Halftone/
+/// Pattern when `allow_texture_fills`). Applies the new type itself and
+/// returns whether it did — the caller then skips drawing the old type's
+/// controls for this frame.
+fn paint_kind_combo(
+    ui: &mut Ui,
+    history: &mut History,
+    id: LayerId,
+    slot: &str,
+    current: &Paint,
+    allow_texture_fills: bool,
+    apply: &impl Fn(&mut Layer, Paint),
+) -> bool {
+    let mut kind_idx = match current {
+        Paint::Solid(_) => 0,
+        Paint::Gradient(g) => match g.kind {
+            GradientKind::Linear => 1,
+            GradientKind::Radial => 2,
+        },
+        Paint::Noise(_) => 3,
+        Paint::Halftone(_) => 4,
+        Paint::Pattern(_) => 5,
+    };
+    let prev_idx = kind_idx;
+    egui::ComboBox::from_id_salt(("paint-kind", slot, id))
+        .selected_text(match kind_idx {
+            0 => "Solid",
+            1 => "Linear",
+            2 => "Radial",
+            3 => "Noise",
+            4 => "Halftone",
+            _ => "Pattern",
+        })
+        .show_ui(ui, |ui| {
+            ui.selectable_value(&mut kind_idx, 0, "Solid");
+            ui.selectable_value(&mut kind_idx, 1, "Linear");
+            ui.selectable_value(&mut kind_idx, 2, "Radial");
+            if allow_texture_fills {
+                ui.selectable_value(&mut kind_idx, 3, "Noise");
+                ui.selectable_value(&mut kind_idx, 4, "Halftone");
+                ui.selectable_value(&mut kind_idx, 5, "Pattern");
+            }
+        });
+    if kind_idx != prev_idx {
+        // `Pattern` needs a file picked synchronously before there's
+        // anything to apply — same blocking `rfd` call every other
+        // picker in this app already makes (just from here instead of
+        // an `app.rs` menu handler). Cancelling the dialog leaves the
+        // fill type unchanged, unlike every other option here.
+        if kind_idx == 5 {
+            if let Some(path) = crate::io::open_pattern_image_dialog()
+                && let Some(pattern) = pattern_fill_from_path(&path) {
+                    history.snapshot();
+                    if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+                        apply(l, Paint::Pattern(pattern));
+                    }
+                }
+            return true;
+        }
+        history.snapshot();
+        let base = current.to_color32();
+        let new_paint = match kind_idx {
+            0 => Paint::Solid(base),
+            1 => Paint::Gradient(Gradient::linear(base, base)),
+            2 => Paint::Gradient(Gradient::radial(base, base)),
+            3 => Paint::Noise(NoiseFill { base, intensity: 0.5, scale: 4.0, seed: 1 }),
+            _ => Paint::Halftone(HalftoneFill { background: egui::Color32::WHITE, dot: base, scale: 8.0, coverage: 0.7 }),
+        };
+        if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            apply(l, new_paint);
+        }
+        return true;
+    }
+    false
+}
+
+/// A `Paint::Solid`'s color swatch.
+fn solid_swatch(ui: &mut Ui, history: &mut History, id: LayerId, color: egui::Color32, apply: &impl Fn(&mut Layer, Paint)) {
+    let mut color = color;
+    let cr = color_picker::edit(ui, &mut color, &history.get().palette);
+    if should_snapshot(&cr) {
+        history.snapshot();
+    }
+    if cr.changed()
+        && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            apply(l, Paint::Solid(color));
+        }
 }

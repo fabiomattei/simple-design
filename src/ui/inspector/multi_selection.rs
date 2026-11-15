@@ -83,11 +83,12 @@ pub(super) fn multi_selection_panel(
     None
 }
 
-/// The Align, Distribute and Tidy rows; returns the clicked action.
+/// Sketch's unlabeled strip of the six Align icons followed by the two
+/// Distribute icons, then the Tidy row; returns the clicked action.
 fn arrange_controls(ui: &mut Ui, selection: &[LayerId], canvas: &mut CanvasWidget) -> Option<InspectorAction> {
     let mut return_action = None;
-    ui.label("Align");
-    ui.horizontal(|ui| {
+    ui.horizontal_wrapped(|ui| {
+        ui.spacing_mut().item_spacing.x = 2.0;
         for edge in [AlignEdge::Left, AlignEdge::HCenter, AlignEdge::Right] {
             if icons::align_button(ui, edge)
                 .on_hover_text(align_label(edge))
@@ -104,11 +105,7 @@ fn arrange_controls(ui: &mut Ui, selection: &[LayerId], canvas: &mut CanvasWidge
                 return_action = Some(InspectorAction::Align(edge, ui.input(|i| i.modifiers.alt)));
             }
         }
-    });
-
-    ui.add_space(4.0);
-    ui.label("Distribute");
-    ui.horizontal(|ui| {
+        ui.separator();
         let enabled = selection.len() >= 3;
         if icons::distribute_button(ui, DistributeAxis::Horizontal, enabled)
             .on_hover_text("Distribute horizontal spacing")

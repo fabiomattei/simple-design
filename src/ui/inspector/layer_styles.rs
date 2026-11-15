@@ -101,8 +101,11 @@ pub(super) fn layer_style_ui(ui: &mut Ui, history: &mut History, id: LayerId, st
 
     let name_buf_id = ui.id().with("new_layer_style_name");
     let mut name_buf = ui.memory_mut(|m| m.data.get_persisted_mut_or_default::<String>(name_buf_id).clone());
-    ui.horizontal(|ui| {
-        ui.add(egui::TextEdit::singleline(&mut name_buf).hint_text("Style name"));
+    // Right-to-left so the button is placed first and the name field takes
+    // only the width left over: at egui's default width the field overflows
+    // the panel, widening the inspector's scroll content and pushing every
+    // right-aligned control (this button, the section +/− buttons) out of view.
+    ui.horizontal(|ui| ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
         if ui.add_enabled(!name_buf.trim().is_empty(), egui::Button::new("Save as New Style")).clicked() {
             history.snapshot();
             let new_id = uuid::Uuid::new_v4();
@@ -115,7 +118,8 @@ pub(super) fn layer_style_ui(ui: &mut Ui, history: &mut History, id: LayerId, st
                 name_buf.clear();
             }
         }
-    });
+        ui.add(egui::TextEdit::singleline(&mut name_buf).hint_text("Style name").desired_width(ui.available_width()));
+    }));
     ui.memory_mut(|m| *m.data.get_persisted_mut_or_default::<String>(name_buf_id) = name_buf);
 
     if let Some(sid) = style_id {

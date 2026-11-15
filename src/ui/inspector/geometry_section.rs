@@ -12,11 +12,12 @@ use crate::model::{Layer, LayerId, LayerKind};
 use crate::numeric_input::{self, Anchor};
 use crate::ui::icons;
 
-use super::geometry_widgets::{arrow_cap_combo, corner_radius_field, flip_buttons};
+use super::geometry_widgets::{arrow_cap_combo, corner_radius_field, flip_icon_buttons};
+use super::inspector_layout::{FIELD_WIDTH, captioned_field};
 use super::{InspectorAction, should_snapshot};
 
-/// Position, Size and Rotation fields plus the Flip buttons; returns the
-/// Flip action if one was clicked.
+/// Sketch-style geometry rows — X/Y, W/lock/H, then Rotate with the Flip
+/// icons beside it; returns the Flip action if one was clicked.
 pub(super) fn transform_section(
     ui: &mut Ui,
     history: &mut History,
@@ -33,30 +34,27 @@ pub(super) fn transform_section(
     let (extent_w, extent_h) = parent_extent(history, id, (layer.frame.size.x as f64, layer.frame.size.y as f64));
     position_fields(ui, history, layer, extent_w, extent_h);
     size_fields(ui, history, canvas, layer, extent_w, extent_h);
-    rotation_field(ui, history, layer);
-
-    ui.add_space(4.0);
-    if let Some(action) = flip_buttons(ui) {
-        return Some(action);
-    }
-    None
+    ui.horizontal_top(|ui| {
+        rotation_field(ui, history, layer);
+        flip_icon_buttons(ui)
+    })
+    .inner
 }
 
 fn position_fields(ui: &mut Ui, history: &mut History, layer: &Layer, extent_w: f64, extent_h: f64) {
     let id = layer.id;
-    ui.label("Position");
-    ui.horizontal(|ui| {
+    ui.horizontal_top(|ui| {
         let mut x = layer.frame.pos.x;
         let mut y = layer.frame.pos.y;
         let (cur_x, cur_y) = (x as f64, y as f64);
         let x_anchor: Cell<Option<Anchor>> = Cell::new(None);
         let y_anchor: Cell<Option<Anchor>> = Cell::new(None);
-        let rx = ui.add(egui::DragValue::new(&mut x).prefix("X: ").custom_parser(|s| {
+        let rx = captioned_field(ui, "X", FIELD_WIDTH, egui::DragValue::new(&mut x).custom_parser(|s| {
             let (val, anchor) = numeric_input::parse_dimension_expr(cur_x, s, extent_w)?;
             x_anchor.set(anchor);
             Some(val)
         }));
-        let ry = ui.add(egui::DragValue::new(&mut y).prefix("Y: ").custom_parser(|s| {
+        let ry = captioned_field(ui, "Y", FIELD_WIDTH, egui::DragValue::new(&mut y).custom_parser(|s| {
             let (val, anchor) = numeric_input::parse_dimension_expr(cur_y, s, extent_h)?;
             y_anchor.set(anchor);
             Some(val)
@@ -93,31 +91,31 @@ fn size_fields(
     extent_h: f64,
 ) {
     let id = layer.id;
-    ui.label("Size");
-    ui.horizontal(|ui| {
+    ui.horizontal_top(|ui| {
         let mut w = layer.frame.size.x;
         let mut h = layer.frame.size.y;
         let (cur_w, cur_h) = (w as f64, h as f64);
         let w_anchor: Cell<Option<Anchor>> = Cell::new(None);
         let h_anchor: Cell<Option<Anchor>> = Cell::new(None);
-        let rw = ui.add(egui::DragValue::new(&mut w).prefix("W: ").custom_parser(|s| {
+        let rw = captioned_field(ui, "W", FIELD_WIDTH, egui::DragValue::new(&mut w).custom_parser(|s| {
             let (val, anchor) = numeric_input::parse_dimension_expr(cur_w, s, extent_w)?;
             w_anchor.set(anchor);
             Some(val)
         }));
-        let rh = ui.add(egui::DragValue::new(&mut h).prefix("H: ").custom_parser(|s| {
-            let (val, anchor) = numeric_input::parse_dimension_expr(cur_h, s, extent_h)?;
-            h_anchor.set(anchor);
-            Some(val)
-        }));
+        // Between W and H, like Sketch — the lock relates the two.
         let lock_icon = if canvas.aspect_locked { "🔒" } else { "🔓" };
         if ui
-            .button(lock_icon)
+            .small_button(lock_icon)
             .on_hover_text("Lock proportions (⌥⌘L)")
             .clicked()
         {
             canvas.aspect_locked = !canvas.aspect_locked;
         }
+        let rh = captioned_field(ui, "H", FIELD_WIDTH, egui::DragValue::new(&mut h).custom_parser(|s| {
+            let (val, anchor) = numeric_input::parse_dimension_expr(cur_h, s, extent_h)?;
+            h_anchor.set(anchor);
+            Some(val)
+        }));
         if should_snapshot(&rw) || should_snapshot(&rh) {
             history.snapshot();
         }
@@ -164,18 +162,15 @@ fn rotation_field(ui: &mut Ui, history: &mut History, layer: &Layer) {
     // drag-to-rotate handle provides) — so this field only ever shows for a
     // single non-Artboard layer.
     if !matches!(layer.kind, LayerKind::Artboard { .. }) {
-        ui.label("Rotation");
-        ui.horizontal(|ui| {
-            let mut rotation = layer.frame.rotation;
-            let r = ui.add(egui::DragValue::new(&mut rotation).prefix("° ").speed(1.0));
-            if should_snapshot(&r) {
-                history.snapshot();
+        let mut rotation = layer.frame.rotation;
+        let r = captioned_field(ui, "Rotate", FIELD_WIDTH, egui::DragValue::new(&mut rotation).suffix("°").speed(1.0));
+        if should_snapshot(&r) {
+            history.snapshot();
+        }
+        if r.changed()
+            && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+                l.frame.rotation = rotation;
             }
-            if r.changed()
-                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                    l.frame.rotation = rotation;
-                }
-        });
     }
 }
 

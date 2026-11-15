@@ -1,5 +1,5 @@
 //! The selection overlay drawn over the document each frame — line
-//! endpoints, path points or a bounding box with resize/rotate handles,
+//! endpoints, path points or a bounding box with resize and rotation handles,
 //! Smart Distribute gap handles, the Option-hover distance measurement — and
 //! the hover hit-testing against those targets that drag start and
 //! click-to-select act on.
@@ -16,7 +16,7 @@ use super::hit_test::{distribution_order, gap_handle_positions, hit_test};
 use super::snapping::draw_distance_measurement;
 use super::transform_geometry::display_bounds;
 use super::{
-    CanvasLayout, CanvasWidget, DragState, HANDLE_HIT_RADIUS, HANDLE_RADIUS, Handle, HoverState, PathPart, ROTATE_ZONE_OUTER_RADIUS, SELECTION_COLOR, SelectionView,
+    CanvasLayout, CanvasWidget, DragState, HANDLE_HIT_RADIUS, HANDLE_RADIUS, Handle, HoverState, PathPart, ROTATE_HANDLE_OFFSET, SELECTION_COLOR, SelectionView,
 };
 
 impl CanvasWidget {
@@ -55,10 +55,10 @@ impl CanvasWidget {
             response.hover_pos()
         };
 
-        let (handle, rotate_corner, point) = self.paint_selection_handles(painter, view, layout.origin, hit_test_pos);
+        let (handle, rotate_handle, point) = self.paint_selection_handles(painter, view, layout.origin, hit_test_pos);
         let (gap_handle_order, gap_handle) =
             self.paint_gap_handles(painter, page, tool, selection, layout.origin, hit_test_pos);
-        let hover = HoverState { handle, rotate_corner, point, gap_handle, gap_handle_order };
+        let hover = HoverState { handle, rotate_handle, point, gap_handle, gap_handle_order };
         self.update_cursor(ui, response, page, tool, layout, &hover);
         self.paint_distance_measurement(ui, painter, response, page, view, tool, selection, layout);
         hover
@@ -66,24 +66,24 @@ impl CanvasWidget {
 
     /// Paints the handles for the selection — a line/arrow's two endpoints,
     /// a single path's anchors and control handles, or a bounding box — and
-    /// returns the resize handle, rotate zone and path point under
-    /// `hit_test_pos`, in that order.
+    /// returns the resize handle, whether the rotation handle is hovered, and
+    /// the path point under `hit_test_pos`, in that order.
     fn paint_selection_handles(
         &self,
         painter: &egui::Painter,
         view: &SelectionView,
         origin: Pos2,
         hit_test_pos: Option<Pos2>,
-    ) -> (Option<Handle>, Option<Handle>, Option<(usize, PathPart)>) {
+    ) -> (Option<Handle>, bool, Option<(usize, PathPart)>) {
         if let Some((layer, offset)) = view.single_line {
-            (self.paint_line_handles(painter, layer, offset, origin, hit_test_pos), None, None)
+            (self.paint_line_handles(painter, layer, offset, origin, hit_test_pos), false, None)
         } else if let Some((layer, offset)) = view.single_path {
-            (None, None, self.paint_path_points(painter, layer, offset, origin, hit_test_pos))
+            (None, false, self.paint_path_points(painter, layer, offset, origin, hit_test_pos))
         } else if !view.layers.is_empty() {
-            let (handle, rotate_corner) = self.paint_bounding_box_handles(painter, &view.layers, origin, hit_test_pos);
-            (handle, rotate_corner, None)
+            let (handle, rotate_handle) = self.paint_bounding_box_handles(painter, &view.layers, origin, hit_test_pos);
+            (handle, rotate_handle, None)
         } else {
-            (None, None, None)
+            (None, false, None)
         }
     }
 
@@ -168,31 +168,37 @@ impl CanvasWidget {
         hovered_point
     }
 
-    /// Returns the resize handle and rotate zone under `hit_test_pos`.
+    /// Paints the eight resize handles plus the rotation handle above the
+    /// top edge; returns the resize handle under `hit_test_pos` and whether
+    /// the rotation handle is under it.
     fn paint_bounding_box_handles(
         &self,
         painter: &egui::Painter,
         selected_layers: &[(&Layer, Vec2)],
         origin: Pos2,
         hit_test_pos: Option<Pos2>,
-    ) -> (Option<Handle>, Option<Handle>) {
+    ) -> (Option<Handle>, bool) {
         let (screen_rect, outline_rotation) = self.paint_selection_outlines(painter, selected_layers, origin);
         let mut hovered_handle = None;
-        let mut hovered_rotate_corner = None;
         for h in Handle::ALL {
             let p = rotate_point(h.pos(screen_rect), screen_rect.center(), outline_rotation);
-            if let Some(mp) = hit_test_pos {
-                if mp.distance(p) <= HANDLE_HIT_RADIUS {
-                    hovered_handle = Some(h);
-                } else if matches!(h, Handle::TopLeft | Handle::TopRight | Handle::BottomRight | Handle::BottomLeft)
-                    && mp.distance(p) <= ROTATE_ZONE_OUTER_RADIUS
-                {
-                    hovered_rotate_corner = Some(h);
-                }
+            if hit_test_pos.is_some_and(|mp| mp.distance(p) <= HANDLE_HIT_RADIUS) {
+                hovered_handle = Some(h);
             }
             painter.circle(p, HANDLE_RADIUS, Color32::WHITE, EguiStroke::new(1.5, SELECTION_COLOR));
         }
-        (hovered_handle, hovered_rotate_corner)
+        let top = rotate_point(screen_rect.center_top(), screen_rect.center(), outline_rotation);
+        let rotate_pos = rotate_point(
+            screen_rect.center_top() - Vec2::new(0.0, ROTATE_HANDLE_OFFSET),
+            screen_rect.center(),
+            outline_rotation,
+        );
+        painter.line_segment([top, rotate_pos], EguiStroke::new(1.0, SELECTION_COLOR));
+        painter.circle(rotate_pos, HANDLE_RADIUS, SELECTION_COLOR, EguiStroke::new(1.5, Color32::WHITE));
+        // A resize handle hit wins, in case a tiny box puts both in reach.
+        let rotate_hovered =
+            hovered_handle.is_none() && hit_test_pos.is_some_and(|mp| mp.distance(rotate_pos) <= HANDLE_HIT_RADIUS);
+        (hovered_handle, rotate_hovered)
     }
 
     /// Outlines each selected layer and the selection's overall bounds;
@@ -288,7 +294,7 @@ impl CanvasWidget {
     }
 
     /// Sets the pointer cursor for what's under it: a resize or gap handle,
-    /// a rotate zone, a guide (Select tool), or the Pan/Scissors tool itself.
+    /// the rotation handle, a guide (Select tool), or the Pan/Scissors tool itself.
     fn update_cursor(
         &self,
         ui: &Ui,
@@ -303,7 +309,7 @@ impl CanvasWidget {
             ui.ctx().set_cursor_icon(h.cursor());
         } else if hover.gap_handle.is_some() {
             ui.ctx().set_cursor_icon(egui::CursorIcon::ResizeColumn);
-        } else if hover.rotate_corner.is_some() {
+        } else if hover.rotate_handle {
             ui.ctx().set_cursor_icon(egui::CursorIcon::Crosshair);
         } else if *tool == Tool::Select {
             let guide_cursor = response

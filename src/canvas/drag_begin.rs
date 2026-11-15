@@ -113,7 +113,7 @@ impl CanvasWidget {
     }
 
     /// Select-tool drag start, by priority: a path point or control handle,
-    /// a Smart Distribute gap handle, a rotate zone, a resize handle, empty
+    /// a Smart Distribute gap handle, the rotation handle, a resize handle, empty
     /// space around a single selected path (point marquee), then whatever
     /// layer — or empty canvas — is under the pointer.
     ///
@@ -142,7 +142,7 @@ impl CanvasWidget {
                 self.drag = drag;
                 history.snapshot();
             }
-        } else if hover.rotate_corner.is_some() {
+        } else if hover.rotate_handle {
             if let Some(drag) = rotate_drag(&view.layers, doc_pos) {
                 self.drag = drag;
                 history.snapshot();
