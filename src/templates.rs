@@ -91,6 +91,16 @@ const BUILT_IN: &[(&str, &str)] = &[
     ("Blog Header - Brutalist", include_str!("../templates/blog-header-brutalist.sdesign")),
     ("Blog Header - Ocean", include_str!("../templates/blog-header-ocean.sdesign")),
     ("Blog Header - Sunset", include_str!("../templates/blog-header-sunset.sdesign")),
+    ("Quote Card - Minimal Mono", include_str!("../templates/quote-card-minimal-mono.sdesign")),
+    ("Quote Card - Neon Night", include_str!("../templates/quote-card-neon-night.sdesign")),
+    ("Quote Card - Pastel", include_str!("../templates/quote-card-pastel.sdesign")),
+    ("Quote Card - Corporate Navy", include_str!("../templates/quote-card-corporate-navy.sdesign")),
+    ("Quote Card - Earthy", include_str!("../templates/quote-card-earthy.sdesign")),
+    ("Quote Card - Retro 70s", include_str!("../templates/quote-card-retro-70s.sdesign")),
+    ("Quote Card - Dark Luxe Gold", include_str!("../templates/quote-card-dark-luxe.sdesign")),
+    ("Quote Card - Brutalist", include_str!("../templates/quote-card-brutalist.sdesign")),
+    ("Quote Card - Ocean", include_str!("../templates/quote-card-ocean.sdesign")),
+    ("Quote Card - Sunset", include_str!("../templates/quote-card-sunset.sdesign")),
 ];
 
 #[derive(Clone)]
