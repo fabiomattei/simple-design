@@ -73,14 +73,13 @@ pub fn paste_selection(history: &mut History, selection: &mut Vec<LayerId>, dupl
                 Some(layer.frame.rotated_bounds().translate(offset))
             })
             .reduce(|a, b| a.union(b));
-        if let Some(sel_bounds) = sel_bounds {
-            if let Some(paste_bounds) = layers.iter().map(|l| l.frame.bounds()).reduce(|a, b| a.union(b)) {
+        if let Some(sel_bounds) = sel_bounds
+            && let Some(paste_bounds) = layers.iter().map(|l| l.frame.bounds()).reduce(|a, b| a.union(b)) {
                 let delta = sel_bounds.min - paste_bounds.min;
                 for l in &mut layers {
                     l.frame.pos += delta;
                 }
             }
-        }
     } else {
         for l in &mut layers {
             l.frame.pos += duplicate_offset;

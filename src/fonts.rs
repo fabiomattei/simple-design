@@ -11,8 +11,8 @@
 //! than bundled in the binary.
 //!
 //! Sourced from Google Fonts, SIL Open Font License — see the `OFL-*.txt`
-//! files alongside the `.ttf`s in `assets/fonts/`. Each was subset to Latin
-//! + common punctuation/symbols and, for the two that ship as variable
+//! files alongside the `.ttf`s in `assets/fonts/`. Each was subset to
+//! Latin plus common punctuation/symbols and, for the two that ship as variable
 //! fonts upstream, instanced down to a single static weight to keep the
 //! bundled binary size in line with the two built-in fonts.
 //!

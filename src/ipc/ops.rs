@@ -237,11 +237,10 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
                 None => None,
             };
             let mut ids = args.ids.clone();
-            if let Some(anchor) = args.to {
-                if !ids.contains(&anchor) {
+            if let Some(anchor) = args.to
+                && !ids.contains(&anchor) {
                     ids.push(anchor);
                 }
-            }
 
             alignment::align(page, &ids, edge, align_to);
             Ok(json!({ "ids": args.ids }))

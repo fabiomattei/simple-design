@@ -61,12 +61,11 @@ pub fn ui(ui: &mut egui::Ui, page: &Page, pan: &mut Vec2, zoom: f32, viewport_si
     let vp_screen = Rect::from_min_max(to_thumb(viewport_doc.min), to_thumb(viewport_doc.max));
     clipped.rect_stroke(vp_screen, 0.0, EguiStroke::new(1.5, VIEWPORT_COLOR), egui::StrokeKind::Outside);
 
-    if (response.clicked() || response.dragged()) && scale > 0.0 {
-        if let Some(pos) = response.interact_pointer_pos() {
+    if (response.clicked() || response.dragged()) && scale > 0.0
+        && let Some(pos) = response.interact_pointer_pos() {
             let doc_pos = bounds.min + (pos - thumb_origin) / scale;
             *pan = viewport_size / 2.0 - doc_pos.to_vec2() * zoom;
         }
-    }
 }
 
 /// Union of every visible top-level layer's rotated on-screen footprint, in

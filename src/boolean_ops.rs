@@ -305,11 +305,10 @@ fn translated(points: &[Pos2], offset: Vec2) -> Vec<Pos2> {
 /// `rounded_rect_points`/stored `PathPolygon` rings don't.
 fn ring_from_points(points: &[Pos2]) -> LineString<f64> {
     let mut coords: Vec<Coord<f64>> = points.iter().map(|p| Coord { x: p.x as f64, y: p.y as f64 }).collect();
-    if let (Some(first), Some(last)) = (coords.first().copied(), coords.last().copied()) {
-        if (first.x - last.x).abs() > 1e-9 || (first.y - last.y).abs() > 1e-9 {
+    if let (Some(first), Some(last)) = (coords.first().copied(), coords.last().copied())
+        && ((first.x - last.x).abs() > 1e-9 || (first.y - last.y).abs() > 1e-9) {
             coords.push(first);
         }
-    }
     LineString::new(coords)
 }
 

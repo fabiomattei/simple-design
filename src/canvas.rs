@@ -40,11 +40,10 @@ impl ImageTextureCache {
         version: LayerId,
         color_adjust: ColorAdjust,
     ) -> Option<egui::TextureHandle> {
-        if let Some(cached) = self.0.get(&layer_id) {
-            if cached.version == version && cached.color_adjust == color_adjust {
+        if let Some(cached) = self.0.get(&layer_id)
+            && cached.version == version && cached.color_adjust == color_adjust {
                 return Some(cached.texture.clone());
             }
-        }
         let decoded = crate::image_ops::decode(encoded)?;
         let adjusted = crate::image_ops::apply_color_adjust(&decoded, color_adjust);
         let color_image = crate::image_ops::to_egui_color_image(&adjusted);
@@ -184,11 +183,10 @@ impl NoiseTextureCache {
     fn get_or_build(&mut self, ctx: &egui::Context, layer_id: LayerId, fill: &NoiseFill, local_size: Vec2, screen_size: Vec2) -> Option<egui::TextureHandle> {
         let quantize = |v: f32| ((v.ceil() as u32).max(1)).div_ceil(NOISE_TEXTURE_QUANTUM).max(1) * NOISE_TEXTURE_QUANTUM;
         let pixel_size = (quantize(screen_size.x).min(NOISE_TEXTURE_MAX), quantize(screen_size.y).min(NOISE_TEXTURE_MAX));
-        if let Some(cached) = self.0.get(&layer_id) {
-            if cached.fill == *fill && cached.local_size == local_size && cached.pixel_size == pixel_size {
+        if let Some(cached) = self.0.get(&layer_id)
+            && cached.fill == *fill && cached.local_size == local_size && cached.pixel_size == pixel_size {
                 return Some(cached.texture.clone());
             }
-        }
         let (tw, th) = pixel_size;
         let mut rgba = Vec::with_capacity((tw * th) as usize * 4);
         for j in 0..th {
@@ -231,11 +229,10 @@ impl HalftoneTextureCache {
     fn get_or_build(&mut self, ctx: &egui::Context, layer_id: LayerId, fill: &HalftoneFill, local_size: Vec2, screen_size: Vec2) -> Option<egui::TextureHandle> {
         let quantize = |v: f32| ((v.ceil() as u32).max(1)).div_ceil(NOISE_TEXTURE_QUANTUM).max(1) * NOISE_TEXTURE_QUANTUM;
         let pixel_size = (quantize(screen_size.x).min(NOISE_TEXTURE_MAX), quantize(screen_size.y).min(NOISE_TEXTURE_MAX));
-        if let Some(cached) = self.0.get(&layer_id) {
-            if cached.fill == *fill && cached.local_size == local_size && cached.pixel_size == pixel_size {
+        if let Some(cached) = self.0.get(&layer_id)
+            && cached.fill == *fill && cached.local_size == local_size && cached.pixel_size == pixel_size {
                 return Some(cached.texture.clone());
             }
-        }
         let (tw, th) = pixel_size;
         let mut rgba = Vec::with_capacity((tw * th) as usize * 4);
         for j in 0..th {
@@ -277,11 +274,10 @@ pub struct PatternTextureCache(HashMap<LayerId, CachedPatternTexture>);
 
 impl PatternTextureCache {
     fn get_or_build(&mut self, ctx: &egui::Context, layer_id: LayerId, fill: &PatternFill) -> Option<(egui::TextureHandle, f32)> {
-        if let Some(cached) = self.0.get(&layer_id) {
-            if cached.encoded == fill.encoded {
+        if let Some(cached) = self.0.get(&layer_id)
+            && cached.encoded == fill.encoded {
                 return Some((cached.texture.clone(), cached.aspect));
             }
-        }
         let decoded = crate::image_ops::decode(&fill.encoded)?;
         let aspect = decoded.height() as f32 / (decoded.width().max(1) as f32);
         let color_image = crate::image_ops::to_egui_color_image(&decoded);
@@ -1293,11 +1289,10 @@ impl CanvasWidget {
         if shape.is_mask {
             return None;
         }
-        if let Some((Some(parent_id), _)) = grouping::parent_and_index(&page.layers, shape_id) {
-            if matches!(page.find(parent_id).map(|l| &l.kind), Some(LayerKind::BooleanGroup { .. })) {
+        if let Some((Some(parent_id), _)) = grouping::parent_and_index(&page.layers, shape_id)
+            && matches!(page.find(parent_id).map(|l| &l.kind), Some(LayerKind::BooleanGroup { .. })) {
                 return None;
             }
-        }
         let frame = shape.frame;
 
         history.snapshot();
@@ -1407,14 +1402,12 @@ impl CanvasWidget {
         let layer_id = edit.layer_id;
         let (w, h) = (x1 - x0 + 1, y1 - y0 + 1);
         history.snapshot();
-        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-            if let LayerKind::Image { encoded, .. } = &layer.kind {
-                if let Some(decoded) = crate::image_ops::decode(encoded) {
+        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+            && let LayerKind::Image { encoded, .. } = &layer.kind
+                && let Some(decoded) = crate::image_ops::decode(encoded) {
                     let cropped = crate::image_ops::crop_to_rect(&decoded, x0, y0, w, h);
                     crate::image_ops::apply_cropped_image(layer, &cropped, x0, y0);
                 }
-            }
-        }
         self.end_image_edit();
     }
 
@@ -1428,15 +1421,13 @@ impl CanvasWidget {
         }
         let (layer_id, mask) = (edit.layer_id, edit.mask.clone());
         history.snapshot();
-        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-            if let LayerKind::Image { encoded, version, .. } = &mut layer.kind {
-                if let Some(mut decoded) = crate::image_ops::decode(encoded) {
+        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+            && let LayerKind::Image { encoded, version, .. } = &mut layer.kind
+                && let Some(mut decoded) = crate::image_ops::decode(encoded) {
                     crate::image_ops::fill_mask(&mut decoded, &mask, [color.r(), color.g(), color.b()]);
                     *encoded = crate::image_ops::encode_png(&decoded);
                     *version = LayerId::new_v4();
                 }
-            }
-        }
         self.clear_image_edit_selection();
     }
 
@@ -1450,15 +1441,13 @@ impl CanvasWidget {
         }
         let (layer_id, mask) = (edit.layer_id, edit.mask.clone());
         history.snapshot();
-        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-            if let LayerKind::Image { encoded, version, .. } = &mut layer.kind {
-                if let Some(mut decoded) = crate::image_ops::decode(encoded) {
+        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+            && let LayerKind::Image { encoded, version, .. } = &mut layer.kind
+                && let Some(mut decoded) = crate::image_ops::decode(encoded) {
                     crate::image_ops::clear_mask(&mut decoded, &mask);
                     *encoded = crate::image_ops::encode_png(&decoded);
                     *version = LayerId::new_v4();
                 }
-            }
-        }
         self.clear_image_edit_selection();
     }
 
@@ -1635,15 +1624,13 @@ impl CanvasWidget {
             return false;
         };
         history.snapshot();
-        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-            if let LayerKind::Path { points, .. } = &mut layer.kind {
-                if let Some(pt) = points.get_mut(index) {
+        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+            && let LayerKind::Path { points, .. } = &mut layer.kind
+                && let Some(pt) = points.get_mut(index) {
                     pt.point_type = PointType::Mirror;
                     pt.handle_out = Some(handle_out);
                     pt.handle_in = Some(-handle_out);
                 }
-            }
-        }
         true
     }
 
@@ -1684,8 +1671,8 @@ impl CanvasWidget {
         }
         let local_anchor = doc_pos - frame_pos.to_vec2() - offset;
         history.snapshot();
-        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-            if let LayerKind::Path { points, .. } = &mut layer.kind {
+        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+            && let LayerKind::Path { points, .. } = &mut layer.kind {
                 points.insert(
                     seg_index + 1,
                     PathPoint {
@@ -1697,7 +1684,6 @@ impl CanvasWidget {
                     },
                 );
             }
-        }
     }
 
     /// Alt/Option-click-to-delete-anchor on a single selected `Path`.
@@ -1725,11 +1711,10 @@ impl CanvasWidget {
         });
         let Some(index) = hit else { return };
         history.snapshot();
-        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-            if let LayerKind::Path { points, .. } = &mut layer.kind {
+        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+            && let LayerKind::Path { points, .. } = &mut layer.kind {
                 points.remove(index);
             }
-        }
         normalize_path_frame(history.mutate().active_page_mut(), layer_id);
     }
 
@@ -1764,13 +1749,12 @@ impl CanvasWidget {
             return;
         }
         history.snapshot();
-        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-            if let LayerKind::Path { points, .. } = &mut layer.kind {
+        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+            && let LayerKind::Path { points, .. } = &mut layer.kind {
                 for &index in indices.iter().rev() {
                     points.remove(index);
                 }
             }
-        }
         normalize_path_frame(history.mutate().active_page_mut(), layer_id);
         self.selected_points.clear();
     }
@@ -1788,8 +1772,8 @@ impl CanvasWidget {
     /// so no geometry changes on switch.
     fn apply_point_type(&mut self, history: &mut History, layer_id: LayerId, point_type: PointType) {
         history.snapshot();
-        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-            if let LayerKind::Path { points, closed } = &mut layer.kind {
+        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+            && let LayerKind::Path { points, closed } = &mut layer.kind {
                 let closed = *closed;
                 for &index in &self.selected_points {
                     let existing = points.get(index).and_then(|pt| pt.handle_out.or(pt.handle_in.map(|h| -h)));
@@ -1815,7 +1799,6 @@ impl CanvasWidget {
                     }
                 }
             }
-        }
     }
 
     /// The first selected point's `corner_radius` on `layer_id`, for the
@@ -1838,15 +1821,14 @@ impl CanvasWidget {
     /// a `DragValue` writes through, snapshotting is the *caller's*
     /// responsibility (once per gesture), not done here on every call.
     pub fn apply_corner_radius(&mut self, history: &mut History, layer_id: LayerId, radius: f32) {
-        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-            if let LayerKind::Path { points, .. } = &mut layer.kind {
+        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+            && let LayerKind::Path { points, .. } = &mut layer.kind {
                 for &index in &self.selected_points {
                     if let Some(pt) = points.get_mut(index) {
                         pt.corner_radius = radius;
                     }
                 }
             }
-        }
     }
 
     /// Sets every point in `selected_points` on `layer_id` to *its own*
@@ -1857,8 +1839,8 @@ impl CanvasWidget {
     /// editing the frame/points afterward doesn't keep this in sync.
     pub fn apply_max_corner_radius(&mut self, history: &mut History, layer_id: LayerId) {
         history.snapshot();
-        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-            if let LayerKind::Path { points, closed } = &mut layer.kind {
+        if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+            && let LayerKind::Path { points, closed } = &mut layer.kind {
                 let closed = *closed;
                 let n = points.len();
                 for &index in &self.selected_points {
@@ -1874,7 +1856,6 @@ impl CanvasWidget {
                     points[index].corner_radius = len_prev.min(len_next) * 0.5;
                 }
             }
-        }
     }
 
     /// Scissors-tool click on a single selected `Path`: cuts it at the
@@ -1913,12 +1894,11 @@ impl CanvasWidget {
                 opened.extend_from_slice(&points[..i]);
                 opened.push(points[i]);
                 history.snapshot();
-                if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-                    if let LayerKind::Path { points, closed } = &mut layer.kind {
+                if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+                    && let LayerKind::Path { points, closed } = &mut layer.kind {
                         *points = opened;
                         *closed = false;
                     }
-                }
                 normalize_path_frame(history.mutate().active_page_mut(), layer_id);
             } else if i > 0 && i < n - 1 {
                 let first = points[..=i].to_vec();
@@ -1958,12 +1938,11 @@ impl CanvasWidget {
             }
             opened.push(new_point);
             history.snapshot();
-            if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id) {
-                if let LayerKind::Path { points, closed } = &mut layer.kind {
+            if let Some(layer) = history.mutate().active_page_mut().find_mut(layer_id)
+                && let LayerKind::Path { points, closed } = &mut layer.kind {
                     *points = opened;
                     *closed = false;
                 }
-            }
             normalize_path_frame(history.mutate().active_page_mut(), layer_id);
         } else {
             let mut first = points[..=seg_index].to_vec();
@@ -2053,9 +2032,9 @@ impl CanvasWidget {
         // ignored rather than inserted at some arbitrary fallback position.
         let dropped_paths: Vec<std::path::PathBuf> =
             ui.ctx().input(|i| i.raw.dropped_files.iter().map(|f| f.path().to_path_buf()).collect());
-        if !dropped_paths.is_empty() {
-            if let Some(drop_pos) = ui.ctx().input(|i| i.pointer.interact_pos()) {
-                if canvas_rect.contains(drop_pos) {
+        if !dropped_paths.is_empty()
+            && let Some(drop_pos) = ui.ctx().input(|i| i.pointer.interact_pos())
+                && canvas_rect.contains(drop_pos) {
                     let doc_pos = self.to_doc(origin, drop_pos);
                     let layers = crate::image_ops::build_image_grid(&dropped_paths, doc_pos, 320.0, 20.0);
                     if !layers.is_empty() {
@@ -2069,8 +2048,6 @@ impl CanvasWidget {
                         *selection = new_ids;
                     }
                 }
-            }
-        }
 
         // Direct-selection point selection (`selected_points`) is scoped to
         // whichever single Path layer it was made on. Drop it the moment
@@ -2161,12 +2138,11 @@ impl CanvasWidget {
                         self.try_insert_path_point(history, selection, doc_pos, origin);
                     }
                 }
-            } else if response.clicked() && ui.input(|i| i.modifiers.alt) {
-                if let Some(mouse) = response.interact_pointer_pos() {
+            } else if response.clicked() && ui.input(|i| i.modifiers.alt)
+                && let Some(mouse) = response.interact_pointer_pos() {
                     let doc_pos = self.to_doc(origin, mouse);
                     self.try_delete_path_point(history, selection, doc_pos, origin);
                 }
-            }
             // Point-type shortcuts (1-4), applied to every point in
             // `selected_points`. Only meaningful once a point is selected, so
             // this can't misfire as e.g. a zoom-level or tool shortcut typed
@@ -2197,8 +2173,8 @@ impl CanvasWidget {
         // Double-clicking a bare `Rectangle`/`Oval` instead gives it a
         // inline text label (see `add_shape_label`) and starts
         // editing that immediately.
-        if *tool == Tool::Select && response.double_clicked() {
-            if let Some(mouse) = response.interact_pointer_pos() {
+        if *tool == Tool::Select && response.double_clicked()
+            && let Some(mouse) = response.interact_pointer_pos() {
                 let doc_pos = self.to_doc(origin, mouse);
                 if let Some(id) = hit_test(history.get().active_page(), doc_pos) {
                     let is_text =
@@ -2210,21 +2186,18 @@ impl CanvasWidget {
                     if is_text {
                         *selection = vec![id];
                         self.start_editing_text(history, id);
-                    } else if is_labelable_shape {
-                        if let Some(text_id) = self.add_shape_label(history, id) {
+                    } else if is_labelable_shape
+                        && let Some(text_id) = self.add_shape_label(history, id) {
                             *selection = vec![text_id];
                         }
-                    }
                 }
             }
-        }
 
-        if *tool == Tool::Scissors && response.clicked() {
-            if let Some(mouse) = response.interact_pointer_pos() {
+        if *tool == Tool::Scissors && response.clicked()
+            && let Some(mouse) = response.interact_pointer_pos() {
                 let doc_pos = self.to_doc(origin, mouse);
                 self.try_scissor_path(history, selection, doc_pos, origin);
             }
-        }
 
         canvas_painter.rect_filled(canvas_rect, 0.0, crate::ui::theme::canvas_colors(ui.visuals().dark_mode).backdrop);
         if self.show_grid {
@@ -2262,8 +2235,8 @@ impl CanvasWidget {
         // "Edit Image" mode's selection overlay: a translucent tint over
         // every masked pixel, rebuilt only when the mask actually changed
         // (see `ImageEditState::overlay_stale`).
-        if let Some(edit) = &self.image_edit {
-            if let (Some(bounds_layer), Some(offset)) =
+        if let Some(edit) = &self.image_edit
+            && let (Some(bounds_layer), Some(offset)) =
                 (page.find(edit.layer_id), page.absolute_offset(edit.layer_id))
             {
                 let doc_bounds = bounds_layer.frame.bounds().translate(offset);
@@ -2294,7 +2267,6 @@ impl CanvasWidget {
                     egui::StrokeKind::Outside,
                 );
             }
-        }
 
         draw_guides(&canvas_painter, canvas_rect, origin, self.pan, self.zoom, &page.guides);
 
@@ -2370,11 +2342,10 @@ impl CanvasWidget {
             let start = rotate_point(self.to_screen(origin, layer.frame.start() + offset), center, layer.frame.rotation);
             let end = rotate_point(self.to_screen(origin, layer.frame.end() + offset), center, layer.frame.rotation);
             for (h, p) in [(Handle::TopLeft, start), (Handle::BottomRight, end)] {
-                if let Some(mp) = hit_test_pos {
-                    if mp.distance(p) <= HANDLE_HIT_RADIUS {
+                if let Some(mp) = hit_test_pos
+                    && mp.distance(p) <= HANDLE_HIT_RADIUS {
                         hovered_handle = Some(h);
                     }
-                }
                 painter.circle(p, HANDLE_RADIUS, Color32::WHITE, EguiStroke::new(1.5, SELECTION_COLOR));
             }
         } else if let Some((layer, offset)) = single_path {
@@ -2389,11 +2360,10 @@ impl CanvasWidget {
                             [anchor_screen, handle_screen],
                             EguiStroke::new(1.0, Color32::from_gray(120)),
                         );
-                        if let Some(mp) = hit_test_pos {
-                            if mp.distance(handle_screen) <= HANDLE_HIT_RADIUS {
+                        if let Some(mp) = hit_test_pos
+                            && mp.distance(handle_screen) <= HANDLE_HIT_RADIUS {
                                 hovered_point = Some((i, part));
                             }
-                        }
                         let hl = hovered_point == Some((i, part));
                         let r = if hl { 4.5 } else { 3.0 };
                         painter.circle_filled(handle_screen, r, Color32::WHITE);
@@ -2403,11 +2373,10 @@ impl CanvasWidget {
                             EguiStroke::new(1.0, if hl { SELECTION_COLOR } else { Color32::from_gray(120) }),
                         );
                     }
-                    if let Some(mp) = hit_test_pos {
-                        if mp.distance(anchor_screen) <= HANDLE_HIT_RADIUS {
+                    if let Some(mp) = hit_test_pos
+                        && mp.distance(anchor_screen) <= HANDLE_HIT_RADIUS {
                             hovered_point = Some((i, PathPart::Anchor));
                         }
-                    }
                     let hl = hovered_point == Some((i, PathPart::Anchor));
                     let selected = self.selected_points.contains(&i);
                     let radius = if hl || selected { HANDLE_RADIUS * 1.3 } else { HANDLE_RADIUS };
@@ -2476,8 +2445,8 @@ impl CanvasWidget {
         // exact set of layers from the most recent Distribute is still
         // selected (see `last_distributed`'s doc comment).
         let mut gap_handle_order: Vec<(LayerId, Rect)> = Vec::new();
-        if *tool == Tool::Select && matches!(self.drag, DragState::None) {
-            if let Some((dist_ids, axis)) = self.last_distributed.clone() {
+        if *tool == Tool::Select && matches!(self.drag, DragState::None)
+            && let Some((dist_ids, axis)) = self.last_distributed.clone() {
                 let mut a = dist_ids.clone();
                 let mut b = selection.clone();
                 a.sort();
@@ -2486,17 +2455,15 @@ impl CanvasWidget {
                     gap_handle_order = distribution_order(page, &dist_ids, axis);
                     for (i, doc_pos) in gap_handle_positions(&gap_handle_order, axis).into_iter().enumerate() {
                         let p = self.to_screen(origin, doc_pos);
-                        if let Some(mp) = hit_test_pos {
-                            if mp.distance(p) <= HANDLE_HIT_RADIUS {
+                        if let Some(mp) = hit_test_pos
+                            && mp.distance(p) <= HANDLE_HIT_RADIUS {
                                 hovered_gap_handle = Some(i);
                             }
-                        }
                         let hl = hovered_gap_handle == Some(i);
                         painter.circle(p, if hl { 5.0 } else { 3.5 }, SELECTION_COLOR, EguiStroke::new(1.0, Color32::WHITE));
                     }
                 }
             }
-        }
         if let Some(h) = hovered_handle {
             ui.ctx().set_cursor_icon(h.cursor());
         } else if hovered_gap_handle.is_some() {
@@ -2529,25 +2496,20 @@ impl CanvasWidget {
         // edges — a "measure distance" affordance. Only while
         // idle (no drag in progress) so it doesn't fight the snap-line
         // overlay drawn during an actual move/resize.
-        if *tool == Tool::Select && matches!(self.drag, DragState::None) && ui.input(|i| i.modifiers.alt) {
-            if let Some(sel_bounds) = selected_layers
+        if *tool == Tool::Select && matches!(self.drag, DragState::None) && ui.input(|i| i.modifiers.alt)
+            && let Some(sel_bounds) = selected_layers
                 .iter()
                 .map(|(l, o)| l.frame.rotated_bounds().translate(*o))
                 .reduce(|a, b| a.union(b))
-            {
-                if let Some(mp) = response.hover_pos().filter(|mp| canvas_rect.contains(*mp)) {
+                && let Some(mp) = response.hover_pos().filter(|mp| canvas_rect.contains(*mp)) {
                     let doc_pos = self.to_doc(origin, mp);
-                    if let Some(hover_id) = hit_test(page, doc_pos) {
-                        if !selection.contains(&hover_id) {
-                            if let (Some(hl), Some(hoff)) = (page.find(hover_id), page.absolute_offset(hover_id)) {
+                    if let Some(hover_id) = hit_test(page, doc_pos)
+                        && !selection.contains(&hover_id)
+                            && let (Some(hl), Some(hoff)) = (page.find(hover_id), page.absolute_offset(hover_id)) {
                                 let hover_bounds = hl.frame.rotated_bounds().translate(hoff);
                                 draw_distance_measurement(&painter, |p| self.to_screen(origin, p), sel_bounds, hover_bounds);
                             }
-                        }
-                    }
                 }
-            }
-        }
 
         // Direct-selection point selection: shift-click toggles a point in
         // `selected_points`, a plain click replaces it, and Cmd/Ctrl+A
@@ -2558,15 +2520,13 @@ impl CanvasWidget {
         // insert) and Alt-click (point delete), which are handled earlier
         // and shouldn't also toggle a selection.
         if *tool == Tool::Select {
-            if let Some((layer, _)) = single_path {
-                if ui.input(|i| i.modifiers.command && i.key_pressed(egui::Key::A)) {
-                    if let LayerKind::Path { points, .. } = &layer.kind {
+            if let Some((layer, _)) = single_path
+                && ui.input(|i| i.modifiers.command && i.key_pressed(egui::Key::A))
+                    && let LayerKind::Path { points, .. } = &layer.kind {
                         self.selected_points = (0..points.len()).collect();
                     }
-                }
-            }
-            if response.clicked() && !response.double_clicked() && !ui.input(|i| i.modifiers.alt) {
-                if let Some((index, PathPart::Anchor)) = hovered_point {
+            if response.clicked() && !response.double_clicked() && !ui.input(|i| i.modifiers.alt)
+                && let Some((index, PathPart::Anchor)) = hovered_point {
                     if ui.input(|i| i.modifiers.shift) {
                         if let Some(pos) = self.selected_points.iter().position(|&i| i == index) {
                             self.selected_points.remove(pos);
@@ -2577,7 +2537,6 @@ impl CanvasWidget {
                         self.selected_points = vec![index];
                     }
                 }
-            }
         }
 
         // --- Input handling ---
@@ -3164,13 +3123,12 @@ impl CanvasWidget {
                     // make the container drift.
                 }
                 DragState::DrawingPenHandle { point_index } => {
-                    if let Some(points) = &mut self.pen {
-                        if let Some(pt) = points.get_mut(*point_index) {
+                    if let Some(points) = &mut self.pen
+                        && let Some(pt) = points.get_mut(*point_index) {
                             let delta = doc_pos - pt.anchor;
                             pt.handle_out = Some(delta);
                             pt.handle_in = Some(-delta);
                         }
-                    }
                 }
                 DragState::EditingPathAnchor {
                     layer_id,
@@ -3179,15 +3137,14 @@ impl CanvasWidget {
                     start_anchors,
                 } => {
                     let delta = doc_pos - *start_doc;
-                    if let Some(layer) = history.mutate().active_page_mut().find_mut(*layer_id) {
-                        if let LayerKind::Path { points, .. } = &mut layer.kind {
+                    if let Some(layer) = history.mutate().active_page_mut().find_mut(*layer_id)
+                        && let LayerKind::Path { points, .. } = &mut layer.kind {
                             for (&index, &start_anchor) in point_indices.iter().zip(start_anchors.iter()) {
                                 if let Some(pt) = points.get_mut(index) {
                                     pt.anchor = start_anchor + delta;
                                 }
                             }
                         }
-                    }
                 }
                 DragState::EditingPathHandle {
                     layer_id,
@@ -3197,8 +3154,8 @@ impl CanvasWidget {
                 } => {
                     if let Some(layer) = history.mutate().active_page_mut().find_mut(*layer_id) {
                         let frame_pos = layer.frame.pos;
-                        if let LayerKind::Path { points, .. } = &mut layer.kind {
-                            if let Some(pt) = points.get_mut(*point_index) {
+                        if let LayerKind::Path { points, .. } = &mut layer.kind
+                            && let Some(pt) = points.get_mut(*point_index) {
                                 let anchor_abs = frame_pos + *parent_offset + pt.anchor.to_vec2();
                                 let delta = doc_pos - anchor_abs;
                                 match side {
@@ -3236,7 +3193,6 @@ impl CanvasWidget {
                                     PointType::Disconnected | PointType::Straight => {}
                                 }
                             }
-                        }
                     }
                 }
                 DragState::CreatingGuide { orientation } => {
@@ -3280,21 +3236,19 @@ impl CanvasWidget {
                     // A plain click (no meaningful drag) still places a Text
                     // layer at a default size — text is usually authored by
                     // clicking then typing, not by dragging out a box first.
-                    if frame.size.x.abs() > 2.0 || frame.size.y.abs() > 2.0 || *tool == Tool::Text {
-                        if let Some(new_layer) = new_layer_for_tool(*tool, frame) {
+                    if (frame.size.x.abs() > 2.0 || frame.size.y.abs() > 2.0 || *tool == Tool::Text)
+                        && let Some(new_layer) = new_layer_for_tool(*tool, frame) {
                             let new_id = new_layer.id;
                             let is_text = matches!(new_layer.kind, LayerKind::Text { .. });
                             let hint = self.insert_hint_parent.take();
                             insert_layer(history.mutate().active_page_mut(), new_layer, *start_doc, hint);
-                            if is_text {
-                                if let Some(l) = history.mutate().active_page_mut().find_mut(new_id) {
+                            if is_text
+                                && let Some(l) = history.mutate().active_page_mut().find_mut(new_id) {
                                     apply_text_auto_resize(&ctx, l);
                                 }
-                            }
                             *selection = vec![new_id];
                             *tool = Tool::Select;
                         }
-                    }
                 }
                 DragState::Marquee {
                     start_doc,
@@ -3429,8 +3383,8 @@ impl CanvasWidget {
                     // A drag too small to be an intentional handle pull (e.g. a
                     // slightly-jittery click) leaves a plain corner point instead
                     // of a near-zero-length handle.
-                    if let Some(points) = &mut self.pen {
-                        if let Some(pt) = points.get_mut(*point_index) {
+                    if let Some(points) = &mut self.pen
+                        && let Some(pt) = points.get_mut(*point_index) {
                             let tiny = pt
                                 .handle_out
                                 .map(|v| v.length() * self.zoom < PEN_HANDLE_MIN_DRAG)
@@ -3441,7 +3395,6 @@ impl CanvasWidget {
                                 pt.point_type = PointType::Straight;
                             }
                         }
-                    }
                 }
                 DragState::EditingPathAnchor { layer_id, .. } => {
                     normalize_path_frame(history.mutate().active_page_mut(), *layer_id);
@@ -3455,9 +3408,9 @@ impl CanvasWidget {
                     // Same near-zero-drag cleanup as `DrawingPenHandle`: dragging
                     // a handle back onto its anchor removes it, turning that side
                     // back into a straight corner.
-                    if let Some(layer) = history.mutate().active_page_mut().find_mut(*layer_id) {
-                        if let LayerKind::Path { points, .. } = &mut layer.kind {
-                            if let Some(pt) = points.get_mut(*point_index) {
+                    if let Some(layer) = history.mutate().active_page_mut().find_mut(*layer_id)
+                        && let LayerKind::Path { points, .. } = &mut layer.kind
+                            && let Some(pt) = points.get_mut(*point_index) {
                                 let target = match side {
                                     HandleSide::In => &mut pt.handle_in,
                                     HandleSide::Out => &mut pt.handle_out,
@@ -3467,8 +3420,6 @@ impl CanvasWidget {
                                     *target = None;
                                 }
                             }
-                        }
-                    }
                 }
                 DragState::ResizingGroup { .. } | DragState::Rotating { .. } => {
                     // The one-time counterpart to the comments in `dragged`'s
@@ -3493,17 +3444,14 @@ impl CanvasWidget {
                         // same click-vs-drag threshold `CreatingShape` uses.
                         let tiny = (end_doc.x - start_doc.x).abs() <= 2.0 && (end_doc.y - start_doc.y).abs() <= 2.0;
                         if tiny {
-                            if let Some((px, py)) = doc_to_pixel(start_doc, bounds_doc, width, height) {
-                                if let Some(layer) = history.get().active_page().find(layer_id) {
-                                    if let LayerKind::Image { encoded, .. } = &layer.kind {
-                                        if let Some(decoded) = crate::image_ops::decode(encoded) {
+                            if let Some((px, py)) = doc_to_pixel(start_doc, bounds_doc, width, height)
+                                && let Some(layer) = history.get().active_page().find(layer_id)
+                                    && let LayerKind::Image { encoded, .. } = &layer.kind
+                                        && let Some(decoded) = crate::image_ops::decode(encoded) {
                                             let tolerance = self.image_edit_tolerance();
                                             let wand = crate::image_ops::magic_wand_mask(&decoded, (px, py), tolerance);
                                             merge_mask(&mut new_mask, &wand, subtract);
                                         }
-                                    }
-                                }
-                            }
                         } else {
                             let clipped = Rect::from_two_pos(start_doc, end_doc).intersect(bounds_doc);
                             if clipped.width() > 0.0 && clipped.height() > 0.0 {
@@ -3873,8 +3821,8 @@ impl CanvasWidget {
                 (range.start.0 < range.end.0).then_some(range.start.0..range.end.0)
             });
 
-            if inner.response.response.changed() {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            if inner.response.response.changed()
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                     if let LayerKind::Text { content, runs, .. } = &mut l.kind {
                         if !runs.is_empty() {
                             let (start, removed, inserted) = crate::model::text_runs::diff_chars(content, &buf);
@@ -3884,7 +3832,6 @@ impl CanvasWidget {
                     }
                     apply_text_auto_resize(&ctx, l);
                 }
-            }
 
             let escape_pressed = ui.input(|i| i.key_pressed(egui::Key::Escape));
             if inner.response.response.lost_focus() || escape_pressed {
@@ -4455,8 +4402,8 @@ fn draw_rulers(
 
     // A thin crosshair highlight on both rulers tracking the pointer, like
     // most vector tools' ruler readouts.
-    if let Some(mp) = hover_pos {
-        if canvas_rect.contains(mp) || top_rect.contains(mp) || left_rect.contains(mp) {
+    if let Some(mp) = hover_pos
+        && (canvas_rect.contains(mp) || top_rect.contains(mp) || left_rect.contains(mp)) {
             painter.line_segment(
                 [Pos2::new(mp.x, top_rect.min.y), Pos2::new(mp.x, top_rect.max.y)],
                 EguiStroke::new(1.0, SELECTION_COLOR),
@@ -4466,7 +4413,6 @@ fn draw_rulers(
                 EguiStroke::new(1.0, SELECTION_COLOR),
             );
         }
-    }
 }
 
 /// Reads out a `Path` layer's frame position, ancestor offset, and points
@@ -4808,22 +4754,20 @@ fn insert_layer(page: &mut Page, mut layer: Layer, start_doc: Pos2, hint: Option
             .absolute_offset(hint_id)
             .zip(page.find(hint_id))
             .map(|(ancestor_offset, l)| l.frame.pos.to_vec2() + ancestor_offset);
-        if let Some(hint_abs_pos) = hint_abs_pos {
-            if let Some(children) = page.find_mut(hint_id).and_then(|l| l.kind.children_mut()) {
+        if let Some(hint_abs_pos) = hint_abs_pos
+            && let Some(children) = page.find_mut(hint_id).and_then(|l| l.kind.children_mut()) {
                 layer.frame.pos -= hint_abs_pos;
                 children.push(layer);
                 return;
             }
-        }
     }
     for parent in page.layers.iter_mut() {
-        if let LayerKind::Artboard { children, .. } = &mut parent.kind {
-            if parent.frame.bounds().contains(start_doc) {
+        if let LayerKind::Artboard { children, .. } = &mut parent.kind
+            && parent.frame.bounds().contains(start_doc) {
                 layer.frame.pos -= parent.frame.pos.to_vec2();
                 children.push(layer);
                 return;
             }
-        }
     }
     page.layers.push(layer);
 }
@@ -4980,11 +4924,10 @@ fn hit_test_layers(layers: &[Layer], doc_pos: Pos2) -> Option<LayerId> {
             if !crate::boolean_ops::point_in_multipolygon(&combined, local_pos) {
                 continue;
             }
-            if let Some(mask) = mask_for.get(&layer.id) {
-                if !crate::masking::mask_covers_point(mask, doc_pos) {
+            if let Some(mask) = mask_for.get(&layer.id)
+                && !crate::masking::mask_covers_point(mask, doc_pos) {
                     continue;
                 }
-            }
             return Some(layer.id);
         }
 
@@ -4999,11 +4942,10 @@ fn hit_test_layers(layers: &[Layer], doc_pos: Pos2) -> Option<LayerId> {
         if !bounds.contains(test_pos) {
             continue;
         }
-        if let Some(mask) = mask_for.get(&layer.id) {
-            if !crate::masking::mask_covers_point(mask, doc_pos) {
+        if let Some(mask) = mask_for.get(&layer.id)
+            && !crate::masking::mask_covers_point(mask, doc_pos) {
                 continue;
             }
-        }
         if let Some(children) = layer.kind.children() {
             let local_pos = doc_pos - layer.frame.pos.to_vec2();
             if let Some(hit) = hit_test_layers(children, local_pos) {
@@ -5763,10 +5705,11 @@ fn earcut_polygon(exterior: &[Pos2], holes: &[Vec<Pos2>]) -> Option<(Vec<Pos2>, 
 /// gradient fill for free from the same triangulation.
 fn triangulate_fill_with(exterior: &[Pos2], holes: &[Vec<Pos2>], color_at: impl Fn(Pos2) -> Color32) -> Option<egui::Mesh> {
     let (positions, indices) = earcut_polygon(exterior, holes)?;
-    let mut mesh = egui::Mesh::default();
-    mesh.vertices = positions.into_iter().map(|p| egui::epaint::Vertex::untextured(p, color_at(p))).collect();
-    mesh.indices = indices;
-    Some(mesh)
+    Some(egui::Mesh {
+        vertices: positions.into_iter().map(|p| egui::epaint::Vertex::untextured(p, color_at(p))).collect(),
+        indices,
+        ..Default::default()
+    })
 }
 
 fn triangulate_fill(exterior: &[Pos2], holes: &[Vec<Pos2>], color: Color32) -> Option<egui::Mesh> {
@@ -5918,6 +5861,7 @@ const GRADIENT_STROKE_SEGMENTS_PER_EDGE: usize = 10;
 /// than a live-editing preview needs — the PNG exporter (`export.rs`) still
 /// renders the exact gradient via a `tiny-skia` shader, so export quality
 /// isn't affected by this approximation.
+#[allow(clippy::too_many_arguments)]
 fn paint_gradient_stroke(
     painter: &egui::Painter,
     points: &[Pos2],
@@ -6002,11 +5946,10 @@ fn paint_polygon(
             if let Some(mesh) = pattern_textured_mesh(ctx, pattern_cache, layer, p, &points, &[], screen_rect, center, rotation, opacity) {
                 painter.add(egui::Shape::mesh(mesh));
             }
-        } else if fill_flat != Color32::TRANSPARENT {
-            if let Some(mesh) = triangulate_fill(&points, &[], fill_flat) {
+        } else if fill_flat != Color32::TRANSPARENT
+            && let Some(mesh) = triangulate_fill(&points, &[], fill_flat) {
                 painter.add(egui::Shape::mesh(mesh));
             }
-        }
     }
 
     if let Some(stroke) = layer.style.stroke.as_ref() {
@@ -6176,16 +6119,14 @@ fn draw_pen_preview(
 
     for (i, p) in points.iter().enumerate() {
         let anchor_screen = to_screen(p.anchor);
-        for handle in [p.handle_in, p.handle_out] {
-            if let Some(h) = handle {
-                let handle_screen = to_screen(p.anchor + h);
-                painter.line_segment(
-                    [anchor_screen, handle_screen],
-                    EguiStroke::new(1.0, Color32::from_gray(120)),
-                );
-                painter.circle_filled(handle_screen, 3.0, Color32::WHITE);
-                painter.circle_stroke(handle_screen, 3.0, EguiStroke::new(1.0, Color32::from_gray(120)));
-            }
+        for h in [p.handle_in, p.handle_out].into_iter().flatten() {
+            let handle_screen = to_screen(p.anchor + h);
+            painter.line_segment(
+                [anchor_screen, handle_screen],
+                EguiStroke::new(1.0, Color32::from_gray(120)),
+            );
+            painter.circle_filled(handle_screen, 3.0, Color32::WHITE);
+            painter.circle_stroke(handle_screen, 3.0, EguiStroke::new(1.0, Color32::from_gray(120)));
         }
         let is_first = i == 0;
         let radius = if is_first { HANDLE_RADIUS } else { HANDLE_RADIUS * 0.7 };
@@ -7312,11 +7253,11 @@ mod tests {
 
             // Anchor cuts: rebuild fresh state for each index since cutting
             // mutates/replaces the layer.
-            for i in 0..n {
+            for point in &base_points {
                 let (mut history, path_id) = make_history();
                 let mut selection = vec![path_id];
                 let mut widget = CanvasWidget::default();
-                let abs = base_points[i].anchor + frame_pos.to_vec2() + artboard_offset;
+                let abs = point.anchor + frame_pos.to_vec2() + artboard_offset;
                 widget.try_scissor_path(&mut history, &mut selection, abs, Pos2::ZERO);
             }
 

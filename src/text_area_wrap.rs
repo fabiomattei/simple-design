@@ -28,6 +28,15 @@ pub struct WrappedRow {
     pub y: f32,
 }
 
+/// Width of a run-tagged char slice, in whatever units the caller renders
+/// with — the `measure` callback `wrap_in_area` and `export.rs`'s
+/// `wrap_line_rich` take.
+pub type MeasureTaggedChars<'a> = dyn Fn(&[(char, Option<usize>)]) -> f32 + 'a;
+
+/// One word (or empty paragraph) waiting to be placed, paired with whether
+/// it starts a new paragraph (forcing a line break before it).
+type QueuedToken = (Vec<(char, Option<usize>)>, bool);
+
 /// Wraps `content` inside the closed outline `points` (inset by `padding` on
 /// every side), stacking rows `line_height` apart starting at the shape's
 /// topmost point. `measure` returns a run-tagged char slice's width in
@@ -43,7 +52,7 @@ pub fn wrap_in_area(
     content: &str,
     runs: &[TextRun],
     transform: TextTransform,
-    measure: &dyn Fn(&[(char, Option<usize>)]) -> f32,
+    measure: &MeasureTaggedChars<'_>,
     line_height: f32,
     align: TextAlign,
     points: &[Pos2],
@@ -58,7 +67,7 @@ pub fn wrap_in_area(
         return Vec::new();
     }
 
-    let mut queue: Vec<(Vec<(char, Option<usize>)>, bool)> = Vec::new();
+    let mut queue: Vec<QueuedToken> = Vec::new();
     for (paragraph_index, paragraph) in crate::text_layout::tagged_lines(content, runs, transform, ListType::None, 1).into_iter().enumerate() {
         let tokens = tokenize(&paragraph);
         if tokens.is_empty() {
@@ -146,7 +155,7 @@ fn tokenize(paragraph: &[(char, Option<usize>)]) -> Vec<Vec<(char, Option<usize>
 fn push_row(
     rows: &mut Vec<WrappedRow>,
     chars: Vec<(char, Option<usize>)>,
-    measure: &dyn Fn(&[(char, Option<usize>)]) -> f32,
+    measure: &MeasureTaggedChars<'_>,
     align: TextAlign,
     x0: f32,
     avail: f32,

@@ -296,11 +296,10 @@ fn convert_to_outlines_rich(
             let face_idx = face_index_of(idx);
             let scaled = faces[face_idx].as_scaled(scale_of(idx));
             let id = scaled.glyph_id(c);
-            if let Some((prev_id, prev_face_idx)) = prev {
-                if prev_face_idx == face_idx {
+            if let Some((prev_id, prev_face_idx)) = prev
+                && prev_face_idx == face_idx {
                     width += scaled.kern(prev_id, id);
                 }
-            }
             width += scaled.h_advance(id) + letter_spacing;
             prev = Some((id, face_idx));
         }
@@ -383,11 +382,10 @@ fn convert_to_outlines_rich(
             let scaled = face.as_scaled(scale);
             let scale_factor = scaled.scale_factor();
             let id = scaled.glyph_id(c);
-            if let Some((prev_id, prev_face_idx)) = prev {
-                if prev_face_idx == face_idx {
+            if let Some((prev_id, prev_face_idx)) = prev
+                && prev_face_idx == face_idx {
                     cursor_x += scaled.kern(prev_id, id);
                 }
-            }
             if let Some(outline) = face.outline(id) {
                 let contours = glyph_contours(&outline.curves);
                 let placed: Vec<Vec<Pos2>> = contours
@@ -595,11 +593,10 @@ fn convert_to_outlines_in_area(
             let face_idx = face_index_of(idx);
             let scaled = faces[face_idx].as_scaled(scale_of(idx));
             let id = scaled.glyph_id(c);
-            if let Some((prev_id, prev_face_idx)) = prev {
-                if prev_face_idx == face_idx {
+            if let Some((prev_id, prev_face_idx)) = prev
+                && prev_face_idx == face_idx {
                     width += scaled.kern(prev_id, id);
                 }
-            }
             width += scaled.h_advance(id) + letter_spacing;
             prev = Some((id, face_idx));
         }
@@ -627,11 +624,10 @@ fn convert_to_outlines_in_area(
             let scaled = faces[face_idx].as_scaled(scale_of(idx));
             let scale_factor = scaled.scale_factor();
             let id = scaled.glyph_id(c);
-            if let Some((prev_id, prev_face_idx)) = prev {
-                if prev_face_idx == face_idx {
+            if let Some((prev_id, prev_face_idx)) = prev
+                && prev_face_idx == face_idx {
                     cursor_x += scaled.kern(prev_id, id);
                 }
-            }
             if let Some(outline) = faces[face_idx].outline(id) {
                 let contours = glyph_contours(&outline.curves);
                 let placed: Vec<Vec<Pos2>> = contours
@@ -729,14 +725,11 @@ fn group_contours_into_polygons(contours: Vec<Vec<Pos2>>) -> Vec<PathPolygon> {
     }
 
     let sample: Vec<Pos2> = contours.iter().map(|c| c[0]).collect();
-    let mut depth = vec![0usize; n];
-    for i in 0..n {
-        for j in 0..n {
-            if i != j && point_in_polygon(sample[i], &contours[j]) {
-                depth[i] += 1;
-            }
-        }
-    }
+    let depth: Vec<usize> = sample
+        .iter()
+        .enumerate()
+        .map(|(i, &point)| contours.iter().enumerate().filter(|&(j, contour)| i != j && point_in_polygon(point, contour)).count())
+        .collect();
     let mut parent: Vec<Option<usize>> = vec![None; n];
     for i in 0..n {
         for j in 0..n {
@@ -749,17 +742,16 @@ fn group_contours_into_polygons(contours: Vec<Vec<Pos2>>) -> Vec<PathPolygon> {
     let mut polygon_index = vec![None; n];
     let mut polygons = Vec::new();
     for i in 0..n {
-        if depth[i] % 2 == 0 {
+        if depth[i].is_multiple_of(2) {
             polygon_index[i] = Some(polygons.len());
             polygons.push(PathPolygon { exterior: contours[i].clone(), holes: Vec::new() });
         }
     }
     for i in 0..n {
-        if depth[i] % 2 == 1 {
-            if let Some(idx) = parent[i].and_then(|p| polygon_index[p]) {
+        if depth[i] % 2 == 1
+            && let Some(idx) = parent[i].and_then(|p| polygon_index[p]) {
                 polygons[idx].holes.push(contours[i].clone());
             }
-        }
     }
     polygons
 }

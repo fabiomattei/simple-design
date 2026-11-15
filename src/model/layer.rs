@@ -1038,11 +1038,10 @@ impl Layer {
     /// `grouping::duplicate_layers`'s doc comment for why that's correct,
     /// not a missed case.
     pub fn remap_path_attachment_targets(&mut self, map: &std::collections::HashMap<LayerId, LayerId>) {
-        if let LayerKind::Text { path_attachment: Some(attachment), .. } = &mut self.kind {
-            if let Some(&new_target) = map.get(&attachment.target) {
+        if let LayerKind::Text { path_attachment: Some(attachment), .. } = &mut self.kind
+            && let Some(&new_target) = map.get(&attachment.target) {
                 attachment.target = new_target;
             }
-        }
         if let Some(children) = self.kind.children_mut() {
             for child in children {
                 child.remap_path_attachment_targets(map);

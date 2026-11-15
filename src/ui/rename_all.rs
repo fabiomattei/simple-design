@@ -169,6 +169,7 @@ fn token_label(token: &Token) -> String {
 /// the dialog opens (`App`'s Cmd+R/"Rename All" handlers), not re-derived
 /// live each frame — same "snapshot the working set at open time" choice
 /// `layers_panel.rs`'s inline rename makes for its own single-layer case.
+#[derive(Default)]
 pub struct RenameAllState {
     pub open: bool,
     pub config: RenameAllConfig,
@@ -186,11 +187,6 @@ pub struct RenameAllState {
     pub selected_ids: Vec<LayerId>,
 }
 
-impl Default for RenameAllState {
-    fn default() -> Self {
-        Self { open: false, config: RenameAllConfig::default(), items: Vec::new(), selected_ids: Vec::new() }
-    }
-}
 
 /// Sketch's "Rename with Last Format" (re-running `config` against a new
 /// selection with no dialog shown at all) isn't a variant here — `app.rs`

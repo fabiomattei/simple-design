@@ -209,11 +209,10 @@ fn shadow_section(ui: &mut Ui, history: &mut History, id: LayerId, heading: &str
     if snapshot_now {
         history.snapshot();
     }
-    if changed {
-        if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+    if changed
+        && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
             apply(l, list);
         }
-    }
 }
 
 /// One corner's `DragValue` in the `Rectangle` inspector's corner-radius
@@ -238,13 +237,11 @@ fn corner_radius_field(
     if should_snapshot(&resp) {
         history.snapshot();
     }
-    if resp.changed() {
-        if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-            if let LayerKind::Rectangle { corner_radius } = &mut l.kind {
+    if resp.changed()
+        && let Some(l) = history.mutate().active_page_mut().find_mut(id)
+            && let LayerKind::Rectangle { corner_radius } = &mut l.kind {
                 apply(corner_radius, v);
             }
-        }
-    }
 }
 
 /// Reads and decodes the image at `path`, re-encoding it to PNG bytes —
@@ -283,6 +280,7 @@ fn pattern_fill_from_path(path: &std::path::Path) -> Option<crate::model::Patter
 /// `history.mutate().active_page_mut().find_mut(id)` — on every change,
 /// snapshotting first exactly when a drag/edit gesture starts
 /// (`should_snapshot`), same convention as every other control here.
+#[allow(clippy::too_many_arguments)]
 fn paint_editor(
     ui: &mut Ui,
     history: &mut History,
@@ -331,14 +329,13 @@ fn paint_editor(
             // an `app.rs` menu handler). Cancelling the dialog leaves the
             // fill type unchanged, unlike every other option here.
             if kind_idx == 5 {
-                if let Some(path) = crate::io::open_pattern_image_dialog() {
-                    if let Some(pattern) = pattern_fill_from_path(&path) {
+                if let Some(path) = crate::io::open_pattern_image_dialog()
+                    && let Some(pattern) = pattern_fill_from_path(&path) {
                         history.snapshot();
                         if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                             apply(l, Paint::Pattern(pattern));
                         }
                     }
-                }
                 return;
             }
             history.snapshot();
@@ -364,11 +361,10 @@ fn paint_editor(
             if should_snapshot(&cr) {
                 history.snapshot();
             }
-            if cr.changed() {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            if cr.changed()
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                     apply(l, Paint::Solid(color));
                 }
-            }
         }
         Paint::Gradient(gradient) => {
             let mut g = gradient.clone();
@@ -485,11 +481,10 @@ fn paint_editor(
             if snapshot_now {
                 history.snapshot();
             }
-            if changed {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            if changed
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                     apply(l, Paint::Noise(n));
                 }
-            }
         }
         Paint::Halftone(halftone) => {
             let mut h = *halftone;
@@ -532,11 +527,10 @@ fn paint_editor(
             if snapshot_now {
                 history.snapshot();
             }
-            if changed {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            if changed
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                     apply(l, Paint::Halftone(h));
                 }
-            }
         }
         Paint::Pattern(pattern) => {
             let mut p = pattern.clone();
@@ -549,9 +543,9 @@ fn paint_editor(
             }
             changed |= tr.changed();
 
-            if ui.small_button("Replace Image…").clicked() {
-                if let Some(path) = crate::io::open_pattern_image_dialog() {
-                    if let Some(new_pattern) = pattern_fill_from_path(&path) {
+            if ui.small_button("Replace Image…").clicked()
+                && let Some(path) = crate::io::open_pattern_image_dialog()
+                    && let Some(new_pattern) = pattern_fill_from_path(&path) {
                         // Keeps the current `tile_width` rather than
                         // resetting it to the new image's native width —
                         // replacing the tile shouldn't undo a scale the
@@ -560,17 +554,14 @@ fn paint_editor(
                         changed = true;
                         snapshot_now = true;
                     }
-                }
-            }
 
             if snapshot_now {
                 history.snapshot();
             }
-            if changed {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            if changed
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                     apply(l, Paint::Pattern(p));
                 }
-            }
         }
     }
 }
@@ -729,17 +720,15 @@ fn text_style_ui(ui: &mut Ui, history: &mut History, id: LayerId, style_id: Opti
         if ui.add_enabled(!name_buf.trim().is_empty(), egui::Button::new("Save as New Style")).clicked() {
             history.snapshot();
             let new_id = uuid::Uuid::new_v4();
-            if let Some(layer) = history.get().find(id) {
-                if let Some(style) = text_style_from_layer(name_buf.trim().to_string(), new_id, layer) {
+            if let Some(layer) = history.get().find(id)
+                && let Some(style) = text_style_from_layer(name_buf.trim().to_string(), new_id, layer) {
                     history.mutate().text_styles.push(style);
-                    if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                        if let LayerKind::Text { style_id, .. } = &mut l.kind {
+                    if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                        && let LayerKind::Text { style_id, .. } = &mut l.kind {
                             *style_id = Some(new_id);
                         }
-                    }
                     name_buf.clear();
                 }
-            }
         }
     });
     ui.memory_mut(|m| *m.data.get_persisted_mut_or_default::<String>(name_buf_id) = name_buf);
@@ -773,11 +762,10 @@ fn text_style_ui(ui: &mut Ui, history: &mut History, id: LayerId, style_id: Opti
             }
             if ui.button("Detach").clicked() {
                 history.snapshot();
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                    if let LayerKind::Text { style_id, .. } = &mut l.kind {
+                if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                    && let LayerKind::Text { style_id, .. } = &mut l.kind {
                         *style_id = None;
                     }
-                }
             }
         });
     }
@@ -835,22 +823,20 @@ fn text_path_attachment_ui(ui: &mut Ui, history: &mut History, id: LayerId, path
         .show_ui(ui, |ui| {
             if ui.selectable_label(path_attachment.is_none(), "None").clicked() && path_attachment.is_some() {
                 history.snapshot();
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                    if let LayerKind::Text { path_attachment, .. } = &mut l.kind {
+                if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                    && let LayerKind::Text { path_attachment, .. } = &mut l.kind {
                         *path_attachment = None;
                     }
-                }
             }
             for (target_id, name) in &targets {
                 let selected = path_attachment.map(|a| a.target) == Some(*target_id);
                 if ui.selectable_label(selected, name).clicked() && !selected {
                     history.snapshot();
-                    if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                        if let LayerKind::Text { path_attachment, .. } = &mut l.kind {
+                    if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                        && let LayerKind::Text { path_attachment, .. } = &mut l.kind {
                             let (mode, offset) = path_attachment.as_ref().map_or((TextPathMode::OnPath, 0.0), |a| (a.mode, a.offset));
                             *path_attachment = Some(TextPathAttachment { target: *target_id, mode, offset, start: 0.0, flip: false });
                         }
-                    }
                 }
             }
         });
@@ -873,11 +859,10 @@ fn text_path_attachment_ui(ui: &mut Ui, history: &mut History, id: LayerId, path
             });
         if mode != attachment.mode {
             history.snapshot();
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                if let LayerKind::Text { path_attachment: Some(a), .. } = &mut l.kind {
+            if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                && let LayerKind::Text { path_attachment: Some(a), .. } = &mut l.kind {
                     a.mode = mode;
                 }
-            }
         }
     });
 
@@ -890,13 +875,11 @@ fn text_path_attachment_ui(ui: &mut Ui, history: &mut History, id: LayerId, path
     if should_snapshot(&offset_resp) {
         history.snapshot();
     }
-    if offset_resp.changed() {
-        if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-            if let LayerKind::Text { path_attachment: Some(a), .. } = &mut l.kind {
+    if offset_resp.changed()
+        && let Some(l) = history.mutate().active_page_mut().find_mut(id)
+            && let LayerKind::Text { path_attachment: Some(a), .. } = &mut l.kind {
                 a.offset = offset;
             }
-        }
-    }
 
     if attachment.mode == TextPathMode::OnPath {
         let mut start = attachment.start;
@@ -904,22 +887,19 @@ fn text_path_attachment_ui(ui: &mut Ui, history: &mut History, id: LayerId, path
         if should_snapshot(&start_resp) {
             history.snapshot();
         }
-        if start_resp.changed() {
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                if let LayerKind::Text { path_attachment: Some(a), .. } = &mut l.kind {
+        if start_resp.changed()
+            && let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                && let LayerKind::Text { path_attachment: Some(a), .. } = &mut l.kind {
                     a.start = start;
                 }
-            }
-        }
 
         let mut flip = attachment.flip;
         if ui.checkbox(&mut flip, "Flip direction").changed() {
             history.snapshot();
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                if let LayerKind::Text { path_attachment: Some(a), .. } = &mut l.kind {
+            if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                && let LayerKind::Text { path_attachment: Some(a), .. } = &mut l.kind {
                     a.flip = flip;
                 }
-            }
         }
     }
 }
@@ -1082,14 +1062,13 @@ fn replace_image(history: &mut History, id: LayerId) {
     let Ok(bytes) = std::fs::read(&path) else { return };
     let Some(decoded) = crate::image_ops::decode(&bytes) else { return };
     history.snapshot();
-    if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-        if let LayerKind::Image { encoded, width, height, version, .. } = &mut l.kind {
+    if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+        && let LayerKind::Image { encoded, width, height, version, .. } = &mut l.kind {
             *encoded = crate::image_ops::encode_png(&decoded);
             *width = decoded.width();
             *height = decoded.height();
             *version = uuid::Uuid::new_v4();
         }
-    }
 }
 
 fn align_label(edge: AlignEdge) -> &'static str {
@@ -1275,8 +1254,8 @@ pub fn ui(
         if should_snapshot(&rx) || should_snapshot(&ry) {
             history.snapshot();
         }
-        if rx.changed() || ry.changed() {
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+        if (rx.changed() || ry.changed())
+            && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                 let (w, h) = (l.frame.size.x, l.frame.size.y);
                 // A typed X/Y value positions whichever edge/center the
                 // anchor letter names, not always the top-left corner — see
@@ -1292,7 +1271,6 @@ pub fn ui(
                     _ => y,
                 };
             }
-        }
     });
 
     ui.label("Size");
@@ -1323,8 +1301,8 @@ pub fn ui(
         if should_snapshot(&rw) || should_snapshot(&rh) {
             history.snapshot();
         }
-        if rw.changed() || rh.changed() {
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+        if (rw.changed() || rh.changed())
+            && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                 let (old_w, old_h) = (l.frame.size.x, l.frame.size.y);
                 let mut new_w = w;
                 let mut new_h = h;
@@ -1354,7 +1332,6 @@ pub fn ui(
                 l.frame.size.x = new_w;
                 l.frame.size.y = new_h;
             }
-        }
     });
 
     // Rotation is meaningless for an Artboard (a page-frame boundary, not a
@@ -1371,11 +1348,10 @@ pub fn ui(
             if should_snapshot(&r) {
                 history.snapshot();
             }
-            if r.changed() {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            if r.changed()
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                     l.frame.rotation = rotation;
                 }
-            }
         });
     }
 
@@ -1389,11 +1365,10 @@ pub fn ui(
         let r = ui.checkbox(&mut is_closed, "Closed");
         if r.changed() {
             history.snapshot();
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                if let LayerKind::Path { closed, .. } = &mut l.kind {
+            if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                && let LayerKind::Path { closed, .. } = &mut l.kind {
                     *closed = is_closed;
                 }
-            }
         }
 
         // Per-point corner radius/smoothing — only meaningful once at least
@@ -1401,8 +1376,8 @@ pub fn ui(
         // selection is keyboard/click-driven in the canvas itself, same as
         // the Num1-4 point-type shortcuts, so this is the first inspector UI
         // for individual path points rather than the whole layer).
-        if canvas.has_point_selection() {
-            if let Some(radius) = canvas.selected_point_corner_radius(history, id) {
+        if canvas.has_point_selection()
+            && let Some(radius) = canvas.selected_point_corner_radius(history, id) {
                 ui.horizontal(|ui| {
                     let mut r = radius;
                     let resp = ui.add(
@@ -1421,7 +1396,6 @@ pub fn ui(
                     }
                 });
             }
-        }
     }
 
     if let LayerKind::Rectangle { corner_radius } = &layer.kind {
@@ -1451,14 +1425,12 @@ pub fn ui(
             if should_snapshot(&pr) || should_snapshot(&rr) {
                 history.snapshot();
             }
-            if pr.changed() || rr.changed() {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                    if let LayerKind::Star { points, inner_ratio } = &mut l.kind {
+            if (pr.changed() || rr.changed())
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                    && let LayerKind::Star { points, inner_ratio } = &mut l.kind {
                         *points = point_count;
                         *inner_ratio = ratio;
                     }
-                }
-            }
         });
     }
 
@@ -1468,13 +1440,11 @@ pub fn ui(
         if should_snapshot(&r) {
             history.snapshot();
         }
-        if r.changed() {
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                if let LayerKind::Polygon { sides } = &mut l.kind {
+        if r.changed()
+            && let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                && let LayerKind::Polygon { sides } = &mut l.kind {
                     *sides = side_count;
                 }
-            }
-        }
     }
 
     if let LayerKind::Arrow { start_cap, end_cap } = &layer.kind {
@@ -1486,12 +1456,11 @@ pub fn ui(
             let changed_end = arrow_cap_combo(ui, ("arrow-end-cap", id), &mut end);
             if changed_start || changed_end {
                 history.snapshot();
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                    if let LayerKind::Arrow { start_cap, end_cap } = &mut l.kind {
+                if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                    && let LayerKind::Arrow { start_cap, end_cap } = &mut l.kind {
                         *start_cap = start;
                         *end_cap = end;
                     }
-                }
             }
         });
     }
@@ -1544,14 +1513,13 @@ pub fn ui(
         if should_snapshot(&content_resp) {
             history.snapshot();
         }
-        if content_resp.changed() {
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+        if content_resp.changed()
+            && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                 if let LayerKind::Text { content, .. } = &mut l.kind {
                     *content = buf;
                 }
                 apply_text_auto_resize(&ctx, l);
             }
-        }
 
         if let Some(sel) = &text_selection {
             let current = selected_or_base(runs, sel, base_style.font_size, |s| s.font_size);
@@ -1564,14 +1532,13 @@ pub fn ui(
             if should_snapshot(&size_resp) {
                 history.snapshot();
             }
-            if size_resp.changed() {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            if size_resp.changed()
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                     if let LayerKind::Text { content, runs, .. } = &mut l.kind {
                         crate::model::text_runs::apply(content, runs, &base_style, sel.clone(), |s| s.font_size = size);
                     }
                     apply_text_auto_resize(&ctx, l);
                 }
-            }
         } else {
             let mut size = *font_size;
             let size_resp = ui.add(
@@ -1582,14 +1549,13 @@ pub fn ui(
             if should_snapshot(&size_resp) {
                 history.snapshot();
             }
-            if size_resp.changed() {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            if size_resp.changed()
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                     if let LayerKind::Text { font_size, .. } = &mut l.kind {
                         *font_size = size;
                     }
                     apply_text_auto_resize(&ctx, l);
                 }
-            }
         }
 
         ui.horizontal(|ui| {
@@ -1822,11 +1788,10 @@ pub fn ui(
             ] {
                 if ui.selectable_label(*vertical_align == choice, label).clicked() && *vertical_align != choice {
                     history.snapshot();
-                    if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                        if let LayerKind::Text { vertical_align, .. } = &mut l.kind {
+                    if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                        && let LayerKind::Text { vertical_align, .. } = &mut l.kind {
                             *vertical_align = choice;
                         }
-                    }
                 }
             }
         });
@@ -1868,14 +1833,13 @@ pub fn ui(
                 if should_snapshot(&resp) {
                     history.snapshot();
                 }
-                if resp.changed() {
-                    if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+                if resp.changed()
+                    && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                         if let LayerKind::Text { line_height, .. } = &mut l.kind {
                             *line_height = Some(value);
                         }
                         apply_text_auto_resize(&ctx, l);
                     }
-                }
             }
         });
 
@@ -1885,14 +1849,13 @@ pub fn ui(
             if should_snapshot(&resp) {
                 history.snapshot();
             }
-            if resp.changed() {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            if resp.changed()
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                     if let LayerKind::Text { letter_spacing, .. } = &mut l.kind {
                         *letter_spacing = spacing;
                     }
                     apply_text_auto_resize(&ctx, l);
                 }
-            }
 
             let mut para_spacing = *paragraph_spacing;
             let resp = ui.add(
@@ -1903,14 +1866,13 @@ pub fn ui(
             if should_snapshot(&resp) {
                 history.snapshot();
             }
-            if resp.changed() {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            if resp.changed()
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                     if let LayerKind::Text { paragraph_spacing, .. } = &mut l.kind {
                         *paragraph_spacing = para_spacing;
                     }
                     apply_text_auto_resize(&ctx, l);
                 }
-            }
         });
 
         ui.horizontal(|ui| {
@@ -1956,14 +1918,13 @@ pub fn ui(
                 if should_snapshot(&resp) {
                     history.snapshot();
                 }
-                if resp.changed() {
-                    if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+                if resp.changed()
+                    && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                         if let LayerKind::Text { list_start, .. } = &mut l.kind {
                             *list_start = start;
                         }
                         apply_text_auto_resize(&ctx, l);
                     }
-                }
             }
         });
 
@@ -1984,11 +1945,10 @@ pub fn ui(
             }
             if ui.button("Reset to Original Size").clicked() {
                 history.snapshot();
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                    if let LayerKind::Image { width, height, .. } = &l.kind {
+                if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                    && let LayerKind::Image { width, height, .. } = &l.kind {
                         l.frame.size = egui::Vec2::new(*width as f32, *height as f32);
                     }
-                }
             }
         });
 
@@ -2035,29 +1995,24 @@ pub fn ui(
         ui.add_space(4.0);
         if ui.button("Remove Background").clicked() {
             history.snapshot();
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                if let LayerKind::Image { encoded, .. } = &l.kind {
-                    if let Some(decoded) = crate::image_ops::decode(encoded) {
+            if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                && let LayerKind::Image { encoded, .. } = &l.kind
+                    && let Some(decoded) = crate::image_ops::decode(encoded) {
                         let out = crate::image_ops::remove_background(&decoded, BACKGROUND_REMOVAL_TOLERANCE);
                         if let LayerKind::Image { encoded, version, .. } = &mut l.kind {
                             *encoded = crate::image_ops::encode_png(&out);
                             *version = uuid::Uuid::new_v4();
                         }
                     }
-                }
-            }
         }
         if ui.button("Trim Transparent Pixels").clicked() {
             history.snapshot();
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                if let LayerKind::Image { encoded, .. } = &l.kind {
-                    if let Some(decoded) = crate::image_ops::decode(encoded) {
-                        if let Some((trimmed, ox, oy)) = crate::image_ops::trim_transparent(&decoded) {
+            if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                && let LayerKind::Image { encoded, .. } = &l.kind
+                    && let Some(decoded) = crate::image_ops::decode(encoded)
+                        && let Some((trimmed, ox, oy)) = crate::image_ops::trim_transparent(&decoded) {
                             crate::image_ops::apply_cropped_image(l, &trimmed, ox, oy);
                         }
-                    }
-                }
-            }
         }
         if ui.button("Minimize File Size").on_hover_text(
             "Resamples the image down to its current on-screen pixel size, discarding excess resolution."
@@ -2079,20 +2034,17 @@ pub fn ui(
         if should_snapshot(&hue_r) || should_snapshot(&sat_r) || should_snapshot(&bri_r) || should_snapshot(&con_r) {
             history.snapshot();
         }
-        if hue_r.changed() || sat_r.changed() || bri_r.changed() || con_r.changed() {
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                if let LayerKind::Image { color_adjust, .. } = &mut l.kind {
+        if (hue_r.changed() || sat_r.changed() || bri_r.changed() || con_r.changed())
+            && let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                && let LayerKind::Image { color_adjust, .. } = &mut l.kind {
                     *color_adjust = adjust;
                 }
-            }
-        }
         if ui.button("Reset Color Adjust").clicked() {
             history.snapshot();
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                if let LayerKind::Image { color_adjust, .. } = &mut l.kind {
+            if let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                && let LayerKind::Image { color_adjust, .. } = &mut l.kind {
                     *color_adjust = ColorAdjust::default();
                 }
-            }
         }
     }
 
@@ -2106,11 +2058,10 @@ pub fn ui(
     if should_snapshot(&opacity_resp) {
         history.snapshot();
     }
-    if opacity_resp.changed() {
-        if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+    if opacity_resp.changed()
+        && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
             l.opacity = opacity_pct / 100.0;
         }
-    }
 
     layer_style_ui(ui, history, id, layer.style_id);
 
@@ -2148,15 +2099,13 @@ pub fn ui(
             if should_snapshot(&cr) {
                 history.snapshot();
             }
-            if cr.changed() {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                    if let LayerKind::Text { content, runs, .. } = &mut l.kind {
+            if cr.changed()
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                    && let LayerKind::Text { content, runs, .. } = &mut l.kind {
                         crate::model::text_runs::apply(content, runs, &base_style, sel.clone(), |s| {
                             s.color = Some(color)
                         });
                     }
-                }
-            }
         });
     } else {
         let mut has_fill = layer.style.fill.is_some();
@@ -2187,11 +2136,10 @@ pub fn ui(
             if should_snapshot(&fo) {
                 history.snapshot();
             }
-            if fo.changed() {
-                if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+            if fo.changed()
+                && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                     l.style.fill_opacity = fill_opacity_pct / 100.0;
                 }
-            }
         }
     }
 
@@ -2218,13 +2166,11 @@ pub fn ui(
         if should_snapshot(&wr) {
             history.snapshot();
         }
-        if wr.changed() {
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
-                if let Some(s) = l.style.stroke.as_mut() {
+        if wr.changed()
+            && let Some(l) = history.mutate().active_page_mut().find_mut(id)
+                && let Some(s) = l.style.stroke.as_mut() {
                     s.width = width;
                 }
-            }
-        }
         let mut stroke_opacity_pct = layer.style.stroke_opacity * 100.0;
         let so = ui.add(
             egui::Slider::new(&mut stroke_opacity_pct, 0.0..=100.0)
@@ -2234,11 +2180,10 @@ pub fn ui(
         if should_snapshot(&so) {
             history.snapshot();
         }
-        if so.changed() {
-            if let Some(l) = history.mutate().active_page_mut().find_mut(id) {
+        if so.changed()
+            && let Some(l) = history.mutate().active_page_mut().find_mut(id) {
                 l.style.stroke_opacity = stroke_opacity_pct / 100.0;
             }
-        }
     }
 
     shadow_section(ui, history, id, "Drop Shadow", &layer.style.shadows, |l, shadows| l.style.shadows = shadows);
@@ -2250,11 +2195,10 @@ pub fn ui(
         return Some(InspectorAction::Duplicate);
     }
 
-    if matches!(layer.kind, LayerKind::Group { .. }) {
-        if ui.button("Ungroup (Cmd+Shift+G)").clicked() {
+    if matches!(layer.kind, LayerKind::Group { .. })
+        && ui.button("Ungroup (Cmd+Shift+G)").clicked() {
             return Some(InspectorAction::Ungroup);
         }
-    }
 
     // Only offered for kinds `transform_ops::flatten_to_compound_path`
     // actually supports (fillable shapes, plus an already-closed Path or

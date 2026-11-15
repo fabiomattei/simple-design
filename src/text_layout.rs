@@ -371,6 +371,7 @@ pub fn layout_paragraphs_rich(
 /// `job.justify`, set once up front so it covers both the empty- and
 /// non-empty-buffer paths below) — unlike the cosmetics above, alignment
 /// doesn't inject or reorder characters, so it can't desync the cursor.
+#[allow(clippy::too_many_arguments)]
 pub fn editor_layout_job(
     ctx: &egui::Context,
     buf_text: &str,

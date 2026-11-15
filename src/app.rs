@@ -470,12 +470,11 @@ impl App {
         } else {
             self.current_path.clone()
         };
-        if let Some(path) = path {
-            if io::save_to(&path, self.history.get()).is_ok() {
+        if let Some(path) = path
+            && io::save_to(&path, self.history.get()).is_ok() {
                 self.recent_files.push(&path);
                 self.current_path = Some(path);
             }
-        }
     }
 
     fn open(&mut self) {

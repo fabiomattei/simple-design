@@ -152,7 +152,7 @@ pub fn rounded_corner_arc_points(prev: Pos2, corner: Pos2, next: Pos2, radius: f
     // on the bisector, via the angle between dir_prev/dir_next directly.
     let cos_theta = (dir_prev.x * dir_next.x + dir_prev.y * dir_next.y).clamp(-1.0, 1.0);
     let half_angle = (cos_theta.acos()) * 0.5;
-    if half_angle < 1e-4 || half_angle > std::f32::consts::FRAC_PI_2 - 1e-4 {
+    if !(1e-4..=std::f32::consts::FRAC_PI_2 - 1e-4).contains(&half_angle) {
         // Degenerate (near-straight or near-180) corner: skip the arc, just
         // use the two inset points with a straight join between them.
         return vec![inset_prev, inset_next];

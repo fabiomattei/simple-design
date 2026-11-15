@@ -194,11 +194,10 @@ pub fn move_layer(page: &mut Page, id: LayerId, new_parent: Option<LayerId>, mut
     if new_parent == Some(id) {
         return;
     }
-    if let Some(new_parent_id) = new_parent {
-        if page.find(id).is_some_and(|dragged| dragged.find(new_parent_id).is_some()) {
+    if let Some(new_parent_id) = new_parent
+        && page.find(id).is_some_and(|dragged| dragged.find(new_parent_id).is_some()) {
             return; // would move a layer into its own descendant
         }
-    }
     let Some((removed, old_parent, old_index)) = extract(page, id) else { return };
 
     if old_parent == new_parent && old_index < index {
@@ -233,7 +232,7 @@ fn extract(page: &mut Page, id: LayerId) -> Option<(Layer, Option<LayerId>, usiz
     extract_from_children(&mut page.layers, id)
 }
 
-fn extract_from_children(layers: &mut Vec<Layer>, id: LayerId) -> Option<(Layer, Option<LayerId>, usize)> {
+fn extract_from_children(layers: &mut [Layer], id: LayerId) -> Option<(Layer, Option<LayerId>, usize)> {
     for layer in layers.iter_mut() {
         if let Some(children) = layer.kind.children_mut() {
             if let Some(pos) = children.iter().position(|c| c.id == id) {
@@ -252,11 +251,10 @@ fn extract_from_children(layers: &mut Vec<Layer>, id: LayerId) -> Option<(Layer,
 /// the Cmd+A shortcut ("select all layers in the parent group"), see
 /// `app.rs::handle_shortcuts`.
 pub fn siblings_of(page: &Page, ids: &[LayerId]) -> Vec<LayerId> {
-    if !ids.is_empty() {
-        if let Some(list) = find_common_parent_list_ref(&page.layers, ids) {
+    if !ids.is_empty()
+        && let Some(list) = find_common_parent_list_ref(&page.layers, ids) {
             return list.iter().map(|l| l.id).collect();
         }
-    }
     page.layers.iter().map(|l| l.id).collect()
 }
 
@@ -289,11 +287,10 @@ fn find_common_parent_list_ref<'a>(layers: &'a [Layer], ids: &[LayerId]) -> Opti
         return Some(layers);
     }
     for layer in layers {
-        if let Some(children) = layer.kind.children() {
-            if let Some(found) = find_common_parent_list_ref(children, ids) {
+        if let Some(children) = layer.kind.children()
+            && let Some(found) = find_common_parent_list_ref(children, ids) {
                 return Some(found);
             }
-        }
     }
     None
 }
@@ -310,11 +307,10 @@ pub(crate) fn find_common_parent_list<'a>(
         return Some(layers);
     }
     for layer in layers.iter_mut() {
-        if let Some(children) = layer.kind.children_mut() {
-            if let Some(found) = find_common_parent_list(children, ids) {
+        if let Some(children) = layer.kind.children_mut()
+            && let Some(found) = find_common_parent_list(children, ids) {
                 return Some(found);
             }
-        }
     }
     None
 }

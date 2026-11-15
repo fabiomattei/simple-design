@@ -190,13 +190,12 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], of
             pb.move_to(a.x, a.y);
             pb.line_to(b.x, b.y);
             for (tip, outward, cap) in [(a, a - b, *start_cap), (b, b - a, *end_cap)] {
-                if cap == crate::model::ArrowCap::Line {
-                    if let Some((p1, p2)) = arrow_cap_wings(tip, outward, stroke.width) {
+                if cap == crate::model::ArrowCap::Line
+                    && let Some((p1, p2)) = arrow_cap_wings(tip, outward, stroke.width) {
                         pb.move_to(p1.x, p1.y);
                         pb.line_to(tip.x, tip.y);
                         pb.line_to(p2.x, p2.y);
                     }
-                }
             }
             if let Some(path) = pb.finish() {
                 pixmap.stroke_path(&path, &paint, &sk_stroke, transform, None);
@@ -696,11 +695,10 @@ fn draw_text_in_area(
             let face_idx = face_index_of(idx);
             let scaled = faces[face_idx].as_scaled(scale_of(idx));
             let id = scaled.glyph_id(c);
-            if let Some((prev_id, prev_face_idx)) = prev {
-                if prev_face_idx == face_idx {
+            if let Some((prev_id, prev_face_idx)) = prev
+                && prev_face_idx == face_idx {
                     width += scaled.kern(prev_id, id);
                 }
-            }
             width += scaled.h_advance(id) + letter_spacing;
             prev = Some((id, face_idx));
         }
@@ -728,11 +726,10 @@ fn draw_text_in_area(
             let scale = scale_of(idx);
             let scaled = faces[face_idx].as_scaled(scale);
             let id = scaled.glyph_id(c);
-            if let Some((prev_id, prev_face_idx)) = prev {
-                if prev_face_idx == face_idx {
+            if let Some((prev_id, prev_face_idx)) = prev
+                && prev_face_idx == face_idx {
                     cursor_x += scaled.kern(prev_id, id);
                 }
-            }
             let style = style_of(idx);
             let color = with_opacity(style.color.unwrap_or(base.color.unwrap_or(egui::Color32::BLACK)), opacity);
             let x_before = cursor_x;
@@ -1152,11 +1149,10 @@ fn draw_text_rich(
             let face_idx = face_index_of(idx);
             let scaled = faces[face_idx].as_scaled(scale_of(idx));
             let id = scaled.glyph_id(c);
-            if let Some((prev_id, prev_face_idx)) = prev {
-                if prev_face_idx == face_idx {
+            if let Some((prev_id, prev_face_idx)) = prev
+                && prev_face_idx == face_idx {
                     width += scaled.kern(prev_id, id);
                 }
-            }
             width += scaled.h_advance(id) + letter_spacing;
             prev = Some((id, face_idx));
         }
@@ -1248,11 +1244,10 @@ fn draw_text_rich(
             let scale = scale_of(idx);
             let scaled = faces[face_idx].as_scaled(scale);
             let id = scaled.glyph_id(c);
-            if let Some((prev_id, prev_face_idx)) = prev {
-                if prev_face_idx == face_idx {
+            if let Some((prev_id, prev_face_idx)) = prev
+                && prev_face_idx == face_idx {
                     cursor_x += scaled.kern(prev_id, id);
                 }
-            }
             let style = style_of(idx);
             let run_color = with_opacity(style.color.unwrap_or(base.color.unwrap_or(egui::Color32::BLACK)), opacity);
             let x_before = cursor_x;
@@ -1346,7 +1341,7 @@ pub(crate) fn wrap_line(line: &str, measure: &dyn Fn(&str) -> f32, space_width: 
 /// "space width is approximate" simplification `wrap_line` already makes.
 pub(crate) fn wrap_line_rich(
     line: &[(char, Option<usize>)],
-    measure: &dyn Fn(&[(char, Option<usize>)]) -> f32,
+    measure: &crate::text_area_wrap::MeasureTaggedChars<'_>,
     space_width: f32,
     max_width: f32,
 ) -> Vec<Vec<(char, Option<usize>)>> {
@@ -1423,15 +1418,14 @@ fn draw_text_glyph(
             } else {
                 raw_x
             };
-            if let Some(clip) = clip {
-                if (px as f32) < clip.min.x
+            if let Some(clip) = clip
+                && ((px as f32) < clip.min.x
                     || (px as f32) >= clip.max.x
                     || (raw_y as f32) < clip.min.y
-                    || (raw_y as f32) >= clip.max.y
+                    || (raw_y as f32) >= clip.max.y)
                 {
                     return;
                 }
-            }
             blend_glyph_pixel(pixmap, px, raw_y, coverage, color);
         });
     }
@@ -1718,8 +1712,7 @@ fn to_color_with_opacity(c: egui::Color32, opacity: f32) -> Color {
 /// `fill_path`/`stroke_path`, does that. Every other `Paint` variant leaves
 /// it `None`.
 fn to_sk_paint<'a>(paint: &crate::model::Paint, bounds: egui::Rect, opacity: f32, noise_storage: &'a mut Option<Pixmap>) -> Paint<'a> {
-    let mut sk_paint = Paint::default();
-    sk_paint.anti_alias = true;
+    let mut sk_paint = Paint { anti_alias: true, ..Default::default() };
     match paint {
         crate::model::Paint::Solid(c) => {
             sk_paint.set_color(to_color_with_opacity(*c, opacity));
@@ -1819,8 +1812,8 @@ fn to_sk_paint<'a>(paint: &crate::model::Paint, bounds: egui::Rect, opacity: f32
             // already uses for the same purpose.
             if let Some(decoded) = crate::image_ops::decode(&p.encoded) {
                 let (width, height) = (decoded.width(), decoded.height());
-                if width > 0 && height > 0 {
-                    if let Some(size) = tiny_skia::IntSize::from_wh(width, height) {
+                if width > 0 && height > 0
+                    && let Some(size) = tiny_skia::IntSize::from_wh(width, height) {
                         let premultiplied = crate::image_ops::to_premultiplied_rgba(&decoded);
                         if let Some(pixmap) = Pixmap::from_vec(premultiplied, size) {
                             *noise_storage = Some(pixmap);
@@ -1847,7 +1840,6 @@ fn to_sk_paint<'a>(paint: &crate::model::Paint, bounds: egui::Rect, opacity: f32
                             );
                         }
                     }
-                }
             }
         }
     }

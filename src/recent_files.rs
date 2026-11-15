@@ -84,7 +84,7 @@ mod tests {
 
         push_front(&mut paths, PathBuf::from("/f5.sdesign"));
         assert_eq!(paths[0], PathBuf::from("/f5.sdesign"));
-        assert_eq!(paths.iter().filter(|p| **p == PathBuf::from("/f5.sdesign")).count(), 1);
+        assert_eq!(paths.iter().filter(|p| p.as_path() == Path::new("/f5.sdesign")).count(), 1);
         assert_eq!(paths.len(), MAX_ENTRIES);
     }
 }
