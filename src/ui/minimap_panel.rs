@@ -85,8 +85,10 @@ fn draw_layer(painter: &egui::Painter, layer: &Layer, offset: Vec2, to_thumb: &i
         LayerKind::Artboard { children, background } => {
             let r = Rect::from_min_max(to_thumb(bounds.min), to_thumb(bounds.max));
             painter.rect_filled(r, 0.0, *background);
+            // Children are cut at the artboard's edge, same as the canvas.
+            let clipped = painter.with_clip_rect(r.intersect(painter.clip_rect()));
             for child in children {
-                draw_layer(painter, child, child_offset, to_thumb);
+                draw_layer(&clipped, child, child_offset, to_thumb);
             }
         }
         LayerKind::Group { children } | LayerKind::BooleanGroup { children } => {
