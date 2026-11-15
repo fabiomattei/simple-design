@@ -55,9 +55,8 @@ pub(super) fn draw_children(
 /// Draws a masked run's cached composite texture (see
 /// `MaskedGroupTextureCache::get_or_build`) as a single textured rect over
 /// the mask's on-screen bounds — the same "cached raster + `painter.image`"
-/// pattern as an `Image` layer, including applying the run's *ambient*
-/// opacity via `tint` at draw time rather than baking it into the texture
-/// (see `CachedMaskTexture`'s doc comment for why).
+/// pattern as an `Image` layer. The run's ambient opacity is baked into the
+/// texture, not applied as a `tint` (see `CachedMaskTexture`'s doc comment).
 #[allow(clippy::too_many_arguments)]
 pub(super) fn draw_masked_run(
     painter: &egui::Painter,
@@ -73,13 +72,12 @@ pub(super) fn draw_masked_run(
     zoom: f32,
     opacity: f32,
 ) {
-    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, content, segment, page) else {
+    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, content, segment, opacity, page) else {
         return;
     };
     let to_screen = |p: Pos2| origin + pan + (p.to_vec2() + parent_offset) * zoom;
     let screen_rect = Rect::from_two_pos(to_screen(bounds.min), to_screen(bounds.max));
-    let tint = with_opacity(Color32::WHITE, opacity);
-    painter.image(texture.id(), screen_rect, Rect::from_min_max(Pos2::ZERO, Pos2::new(1.0, 1.0)), tint);
+    painter.image(texture.id(), screen_rect, Rect::from_min_max(Pos2::ZERO, Pos2::new(1.0, 1.0)), Color32::WHITE);
 }
 
 #[allow(clippy::too_many_arguments)]

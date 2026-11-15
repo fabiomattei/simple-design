@@ -65,16 +65,15 @@ impl ImageTextureCache {
 /// separate dirty-flag/version scheme threaded through every edit path that
 /// could touch a masked layer.
 ///
-/// Built at full opacity (`parent_opacity = 1.0`) regardless of the run's
-/// ambient (ancestor-accumulated) opacity — that's applied at draw time via
-/// the same `tint` mechanism `Image` layers use, so a change to an ancestor
-/// `Group`/`Artboard`'s opacity slider doesn't need to invalidate this
-/// cache. Each content layer's own `opacity` field, by contrast, *is* baked
-/// into the texture, which is why it's part of the `PartialEq` key (it's a
-/// plain field on the cloned `Layer`).
+/// Built with the run's ambient (ancestor-accumulated) `opacity` passed to
+/// each content layer, exactly as `export/` composites a masked run, rather
+/// than built opaque and faded as a whole at draw time — the two differ
+/// wherever content layers overlap. That makes `opacity` part of the key,
+/// so dragging an ancestor's opacity slider rebuilds the texture.
 pub(super) struct CachedMaskTexture {
     mask: Layer,
     content: Vec<Layer>,
+    opacity: f32,
     texture: egui::TextureHandle,
 }
 
@@ -95,20 +94,22 @@ pub struct MaskedGroupTextureCache(HashMap<(LayerId, usize), CachedMaskTexture>)
 
 impl MaskedGroupTextureCache {
     /// Returns the cached (or freshly built) texture for this masked run,
-    /// plus the parent-space bounds (`mask.frame.rotated_bounds()`) it
-    /// should be drawn into on screen. `page` lets a path-attached `Text`
+    /// plus the parent-space bounds it should be drawn into on screen: the
+    /// mask's `rotated_bounds()` grown by its stroke width, so a mask's
+    /// stroke (which also reveals content) isn't cropped at its frame. `page` lets a path-attached `Text`
     /// layer inside `content` resolve its target anywhere on the page, not
     /// just within this masked run's own `mask`/`content` — but since that
     /// means this render can depend on a layer this cache's key (`mask`/
     /// `content` clone-equality) doesn't track, any masked run containing
     /// such a layer always rebuilds rather than risk a stale texture if its
     /// attachment target moves elsewhere on the page.
-    pub(super) fn get_or_build(&mut self, ctx: &egui::Context, mask: &Layer, content: &[&Layer], segment: usize, page: &Page) -> Option<(egui::TextureHandle, Rect)> {
+    pub(super) fn get_or_build(&mut self, ctx: &egui::Context, mask: &Layer, content: &[&Layer], segment: usize, opacity: f32, page: &Page) -> Option<(egui::TextureHandle, Rect)> {
         let key = (mask.id, segment);
-        let bounds = mask.frame.rotated_bounds();
+        let stroke_width = mask.style.stroke.as_ref().map_or(0.0, |stroke| stroke.width);
+        let bounds = mask.frame.rotated_bounds().expand(stroke_width);
         let up_to_date = !content.iter().any(|l| contains_path_attached_text(l))
             && self.0.get(&key).is_some_and(|cached| {
-                cached.mask == *mask && cached.content.len() == content.len() && cached.content.iter().zip(content).all(|(a, b)| a == *b)
+                cached.mask == *mask && cached.opacity == opacity && cached.content.len() == content.len() && cached.content.iter().zip(content).all(|(a, b)| a == *b)
             });
         if !up_to_date {
             let width = bounds.width().round().max(1.0) as u32;
@@ -118,7 +119,7 @@ impl MaskedGroupTextureCache {
             // own top-left) lands at the scratch pixmap's `(0, 0)` — same
             // idea as `export::render_layer`'s `offset` computation.
             let render_offset = Vec2::new(-bounds.min.x, -bounds.min.y);
-            crate::masking::composite_masked_run(&mut pixmap, mask, content, render_offset, 1.0, |px, l, off, op| {
+            crate::masking::composite_masked_run(&mut pixmap, mask, content, render_offset, opacity, |px, l, off, op| {
                 crate::export::draw_layer_with_shadows(px, l, &page.layers, off, op)
             });
             let color_image = egui::ColorImage::from_rgba_premultiplied([width as usize, height as usize], pixmap.data());
@@ -128,6 +129,7 @@ impl MaskedGroupTextureCache {
                 CachedMaskTexture {
                     mask: mask.clone(),
                     content: content.iter().map(|l| (*l).clone()).collect(),
+                    opacity,
                     texture,
                 },
             );
