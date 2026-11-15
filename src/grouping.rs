@@ -149,6 +149,18 @@ pub fn group_layers(page: &mut Page, ids: &[LayerId]) -> Option<LayerId> {
     Some(id)
 }
 
+/// "Use as Mask" on a multi-layer selection: groups `ids` (via
+/// `group_layers`, same sibling requirement) and makes the new group's
+/// topmost child its mask, so the mask clips only the selected layers
+/// instead of everything below it in the original parent. Returns the new
+/// group's id, or `None` if `group_layers` couldn't group them.
+pub fn group_as_mask(page: &mut Page, ids: &[LayerId]) -> Option<LayerId> {
+    let group_id = group_layers(page, ids)?;
+    let topmost = page.find_mut(group_id)?.kind.children_mut()?.last_mut()?;
+    topmost.is_mask = true;
+    Some(group_id)
+}
+
 /// Ungroups the given group layer, splicing its children back into the
 /// parent at the group's former position (converted back to parent-relative
 /// coordinates). Returns the ids of the layers spliced in, in their new
@@ -349,6 +361,22 @@ mod tests {
 
     fn rect(name: &str) -> Layer {
         Layer::new(name, Frame { pos: Pos2::ZERO, size: Vec2::new(10.0, 10.0), rotation: 0.0 }, LayerKind::Rectangle { corner_radius: CornerRadii::ZERO })
+    }
+
+    #[test]
+    fn group_as_mask_groups_the_selection_and_masks_with_its_topmost_layer() {
+        let mut page = Page::new("Page 1");
+        page.layers.push(rect("Background"));
+        page.layers.push(rect("Photo"));
+        page.layers.push(rect("Circle"));
+        let ids = vec![page.layers[1].id, page.layers[2].id];
+
+        let group_id = group_as_mask(&mut page, &ids).expect("should group");
+
+        // "Background" stays outside the group, so the new mask can't clip it.
+        assert_eq!(names(&page), vec!["Background", "Group"]);
+        let LayerKind::Group { children } = &page.find(group_id).unwrap().kind else { unreachable!() };
+        assert_eq!(children.iter().map(|l| (l.name.as_str(), l.is_mask)).collect::<Vec<_>>(), vec![("Photo", false), ("Circle", true)]);
     }
 
     fn names(page: &Page) -> Vec<&str> {

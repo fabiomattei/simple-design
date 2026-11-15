@@ -433,20 +433,26 @@ impl App {
         clipboard::paste_selection(&mut self.history, &mut self.selection, self.canvas.duplicate_offset, over);
     }
 
-    /// The Cmd/Ctrl+Shift+M "Use as Mask" shortcut — same effect as the
-    /// layers-panel context menu's checkbox (`LayerAction::ToggleMask`), but
-    /// keyed off the current selection instead of a single clicked row, so
-    /// it can flip more than one layer at once.
+    /// The Cmd/Ctrl+Shift+M "Use as Mask" shortcut. One selected layer:
+    /// toggles it, same as the layers-panel checkbox
+    /// (`LayerAction::ToggleMask`). Several: groups them with the topmost as
+    /// the mask (`grouping::group_as_mask`) and selects the new group — a
+    /// no-op if they aren't siblings, same as Group.
     fn toggle_mask_selection(&mut self) {
-        if self.selection.is_empty() {
-            return;
-        }
-        let ids = self.selection.clone();
-        self.history.snapshot();
-        let page = self.history.mutate().active_page_mut();
-        for id in ids {
-            if let Some(l) = page.find_mut(id) {
-                l.is_mask = !l.is_mask;
+        match self.selection[..] {
+            [] => {}
+            [id] => {
+                self.history.snapshot();
+                if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
+                    l.is_mask = !l.is_mask;
+                }
+            }
+            _ => {
+                let ids = self.selection.clone();
+                self.history.snapshot();
+                if let Some(group_id) = grouping::group_as_mask(self.history.mutate().active_page_mut(), &ids) {
+                    self.selection = vec![group_id];
+                }
             }
         }
     }
