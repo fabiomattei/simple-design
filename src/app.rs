@@ -15,6 +15,7 @@ use crate::model::{BoolOp, Document, Frame, Layer, LayerId, LayerKind, Paint};
 use crate::palette_io;
 use crate::panel_layout::PanelLayout;
 use crate::recent_files::RecentFiles;
+use crate::templates::{self, Template};
 use crate::tools::Tool;
 use crate::transform_ops::{self, FlipAxis};
 use crate::ui::export_dialog::{self, ExportDialogAction, ExportDialogState};
@@ -210,10 +211,43 @@ impl App {
     }
 
     fn new_document(&mut self) {
-        self.history = History::new(Document::new());
+        self.start_unsaved_document(Document::new());
+    }
+
+    /// File > New from Template: like File > New, but starting from a copy
+    /// of `template` instead of an empty document.
+    fn new_from_template(&mut self, template: &Template) {
+        match template.instantiate() {
+            Ok(document) => self.start_unsaved_document(document),
+            Err(err) => io::show_error("New from Template", &format!("Couldn't load template \"{}\": {err}", template.name)),
+        }
+    }
+
+    fn start_unsaved_document(&mut self, document: Document) {
+        self.history = History::new(document);
         self.pages_bar = PagesBar::default();
         self.selection.clear();
         self.current_path = None;
+    }
+
+    /// File > Save as Template: writes a copy of the document into the user
+    /// templates folder, where File > New from Template picks it up. The
+    /// open document keeps its own path — this is a copy, not a Save As.
+    fn save_as_template(&mut self) {
+        let Some(dir) = templates::user_templates_dir() else {
+            io::show_error("Save as Template", "No config folder found (set HOME or XDG_CONFIG_HOME).");
+            return;
+        };
+        if let Err(err) = std::fs::create_dir_all(&dir) {
+            io::show_error("Save as Template", &format!("Couldn't create {}: {err}", dir.display()));
+            return;
+        }
+        let default_name = format!("{}.sdesign", self.history.get().name);
+        if let Some(path) = io::save_template_dialog(&dir, &default_name)
+            && let Err(err) = io::save_to(&path, self.history.get())
+        {
+            io::show_error("Save as Template", &format!("Couldn't save {}: {err}", path.display()));
+        }
     }
 
     fn group_selection(&mut self) {
@@ -928,6 +962,18 @@ impl eframe::App for App {
                         self.new_document();
                         ui.close();
                     }
+                    ui.menu_button("New from Template", |ui| {
+                        let mut chosen = None;
+                        for template in templates::all_templates() {
+                            if ui.button(&template.name).clicked() {
+                                chosen = Some(template);
+                            }
+                        }
+                        if let Some(template) = chosen {
+                            self.new_from_template(&template);
+                            ui.close();
+                        }
+                    });
                     if ui.button("Open...").clicked() {
                         self.open();
                         ui.close();
@@ -961,6 +1007,10 @@ impl eframe::App for App {
                     }
                     if ui.button("Save As...").clicked() {
                         self.save(true);
+                        ui.close();
+                    }
+                    if ui.button("Save as Template...").clicked() {
+                        self.save_as_template();
                         ui.close();
                     }
                     ui.separator();

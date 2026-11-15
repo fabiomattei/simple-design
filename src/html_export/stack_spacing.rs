@@ -10,8 +10,9 @@ use super::layout_inference::Axis;
 
 /// How far apart (in document units) gaps or edges may be and still count
 /// as equal. Snapping to their average moves elements by at most this much,
-/// in exchange for much cleaner CSS (`gap` / `align-items`).
-const TOLERANCE: f32 = 3.0;
+/// in exchange for much cleaner CSS (`gap` / `align-items`). Shared with
+/// `grid_detection`, so rows/columns and grids snap the same way.
+pub(super) const TOLERANCE: f32 = 3.0;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CrossAlign {
@@ -69,7 +70,8 @@ pub fn stack_spacing(axis: Axis, stack_bounds: Rect, child_bounds: &[Rect]) -> S
     StackSpacing { gap, main_margins, align, cross_margins }
 }
 
-fn within_tolerance(values: &[f32]) -> bool {
+/// Whether all `values` lie within `TOLERANCE` of each other (true when empty).
+pub(super) fn within_tolerance(values: &[f32]) -> bool {
     let min = values.iter().copied().fold(f32::INFINITY, f32::min);
     let max = values.iter().copied().fold(f32::NEG_INFINITY, f32::max);
     values.is_empty() || max - min <= TOLERANCE

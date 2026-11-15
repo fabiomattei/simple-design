@@ -35,6 +35,7 @@ pub mod text_layout;
 pub mod text_on_path_layout;
 pub mod text_outline;
 pub mod text_path_geometry;
+pub mod templates;
 pub mod tools;
 pub mod ui;
 

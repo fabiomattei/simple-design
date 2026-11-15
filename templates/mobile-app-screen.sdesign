@@ -1,0 +1,2435 @@
+{
+  "name": "Mobile App Screen",
+  "generator": "simple-design (companion CLI: simple-design-cli --help)",
+  "pages": [
+    {
+      "id": "959e6e86-15d6-4a45-96a2-08651a6f354e",
+      "name": "Page 1",
+      "layers": [
+        {
+          "id": "7a2f70d2-fefa-4063-be66-eb07329804fc",
+          "name": "Phone",
+          "frame": {
+            "pos": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "size": {
+              "x": 375.0,
+              "y": 812.0
+            },
+            "rotation": 0.0
+          },
+          "style": {
+            "fill": null,
+            "stroke": null,
+            "fill_opacity": 1.0,
+            "stroke_opacity": 1.0,
+            "shadows": [],
+            "inner_shadows": []
+          },
+          "visible": true,
+          "locked": false,
+          "opacity": 1.0,
+          "is_mask": false,
+          "ignore_mask": false,
+          "mask_mode": "Alpha",
+          "mask_inverted": false,
+          "bool_op": "Union",
+          "style_id": null,
+          "resizing": {
+            "pin_left": false,
+            "pin_right": false,
+            "pin_top": false,
+            "pin_bottom": false,
+            "fixed_width": false,
+            "fixed_height": false
+          },
+          "kind": {
+            "Artboard": {
+              "children": [
+                {
+                  "id": "16bcee9d-969c-4943-9bc4-a43f168dc1f4",
+                  "name": "Status / Time",
+                  "frame": {
+                    "pos": {
+                      "x": 24.0,
+                      "y": 12.0
+                    },
+                    "size": {
+                      "x": 60.0,
+                      "y": 22.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "9:41",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "dedd239c-c545-4e8f-8e42-40c72ae8a4f0",
+                  "name": "Status / Battery",
+                  "frame": {
+                    "pos": {
+                      "x": 323.0,
+                      "y": 17.0
+                    },
+                    "size": {
+                      "x": 28.0,
+                      "y": 12.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 3.0,
+                        "top_right": 3.0,
+                        "bottom_right": 3.0,
+                        "bottom_left": 3.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "17437ab1-4c14-40c5-8a2e-84ab95107da4",
+                  "name": "Header / Greeting",
+                  "frame": {
+                    "pos": {
+                      "x": 24.0,
+                      "y": 64.0
+                    },
+                    "size": {
+                      "x": 260.0,
+                      "y": 22.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Good morning",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "3f68aa03-7295-49f5-a3a6-72614f87a155",
+                  "name": "Header / Title",
+                  "frame": {
+                    "pos": {
+                      "x": 24.0,
+                      "y": 88.0
+                    },
+                    "size": {
+                      "x": 260.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Your tasks",
+                      "font_size": 32.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 10,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 32.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "13913067-50a4-4efa-8484-094c660cf350",
+                  "name": "Header / Avatar",
+                  "frame": {
+                    "pos": {
+                      "x": 307.0,
+                      "y": 72.0
+                    },
+                    "size": {
+                      "x": 44.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "10172d08-4942-4bbc-827e-7f986228f07b",
+                  "name": "Search / Field",
+                  "frame": {
+                    "pos": {
+                      "x": 24.0,
+                      "y": 148.0
+                    },
+                    "size": {
+                      "x": 327.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 12.0,
+                        "top_right": 12.0,
+                        "bottom_right": 12.0,
+                        "bottom_left": 12.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "8020a13b-7cd1-480e-9af6-bcab02b6859f",
+                  "name": "Search / Placeholder",
+                  "frame": {
+                    "pos": {
+                      "x": 44.0,
+                      "y": 148.0
+                    },
+                    "size": {
+                      "x": 200.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      156,
+                      163,
+                      175,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Search",
+                      "font_size": 16.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "e88214d8-908e-46e1-89d4-f6734614cd1a",
+                  "name": "Card 1 / Background",
+                  "frame": {
+                    "pos": {
+                      "x": 24.0,
+                      "y": 212.0
+                    },
+                    "size": {
+                      "x": 327.0,
+                      "y": 84.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 16.0,
+                        "top_right": 16.0,
+                        "bottom_right": 16.0,
+                        "bottom_left": 16.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "08076312-29f9-4e64-9de5-70f9b1699151",
+                  "name": "Card 1 / Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 230.0
+                    },
+                    "size": {
+                      "x": 48.0,
+                      "y": 48.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      224,
+                      231,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 12.0,
+                        "top_right": 12.0,
+                        "bottom_right": 12.0,
+                        "bottom_left": 12.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "68e8d3aa-84e9-48b5-9ec0-c06eb490fcfe",
+                  "name": "Card 1 / Title",
+                  "frame": {
+                    "pos": {
+                      "x": 104.0,
+                      "y": 230.0
+                    },
+                    "size": {
+                      "x": 220.0,
+                      "y": 24.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Task title",
+                      "font_size": 17.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 10,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 17.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "63c491d6-9fa5-4b8d-9add-dd12e351b4dd",
+                  "name": "Card 1 / Subtitle",
+                  "frame": {
+                    "pos": {
+                      "x": 104.0,
+                      "y": 256.0
+                    },
+                    "size": {
+                      "x": 220.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Due today \u00b7 3 subtasks",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "47944441-7434-48cb-9610-177bc8e3fe67",
+                  "name": "Card 2 / Background",
+                  "frame": {
+                    "pos": {
+                      "x": 24.0,
+                      "y": 308.0
+                    },
+                    "size": {
+                      "x": 327.0,
+                      "y": 84.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 16.0,
+                        "top_right": 16.0,
+                        "bottom_right": 16.0,
+                        "bottom_left": 16.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "6bc07724-6531-4975-91cc-2821fd79a715",
+                  "name": "Card 2 / Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 326.0
+                    },
+                    "size": {
+                      "x": 48.0,
+                      "y": 48.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      224,
+                      231,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 12.0,
+                        "top_right": 12.0,
+                        "bottom_right": 12.0,
+                        "bottom_left": 12.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "4145ba1e-d263-46d1-abf9-ae908bf60b79",
+                  "name": "Card 2 / Title",
+                  "frame": {
+                    "pos": {
+                      "x": 104.0,
+                      "y": 326.0
+                    },
+                    "size": {
+                      "x": 220.0,
+                      "y": 24.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Task title",
+                      "font_size": 17.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 10,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 17.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "e0e28d99-ef6b-4418-9713-2e589c5a9b51",
+                  "name": "Card 2 / Subtitle",
+                  "frame": {
+                    "pos": {
+                      "x": 104.0,
+                      "y": 352.0
+                    },
+                    "size": {
+                      "x": 220.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Due today \u00b7 3 subtasks",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "6e043731-6092-49a7-9e7b-9f94d605a2e9",
+                  "name": "Card 3 / Background",
+                  "frame": {
+                    "pos": {
+                      "x": 24.0,
+                      "y": 404.0
+                    },
+                    "size": {
+                      "x": 327.0,
+                      "y": 84.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 16.0,
+                        "top_right": 16.0,
+                        "bottom_right": 16.0,
+                        "bottom_left": 16.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "2f2e12cd-5f16-4e30-9766-c38410e6114e",
+                  "name": "Card 3 / Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 422.0
+                    },
+                    "size": {
+                      "x": 48.0,
+                      "y": 48.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      224,
+                      231,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 12.0,
+                        "top_right": 12.0,
+                        "bottom_right": 12.0,
+                        "bottom_left": 12.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "aee54375-d3e7-439b-b7ac-a8aff81c1da2",
+                  "name": "Card 3 / Title",
+                  "frame": {
+                    "pos": {
+                      "x": 104.0,
+                      "y": 422.0
+                    },
+                    "size": {
+                      "x": 220.0,
+                      "y": 24.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Task title",
+                      "font_size": 17.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 10,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 17.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "a1580baa-4387-4f5c-98ed-1b2eeaf7efde",
+                  "name": "Card 3 / Subtitle",
+                  "frame": {
+                    "pos": {
+                      "x": 104.0,
+                      "y": 448.0
+                    },
+                    "size": {
+                      "x": 220.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Due today \u00b7 3 subtasks",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "4f9e85ef-aa40-4b54-b1a5-ed244ffb612b",
+                  "name": "Card 4 / Background",
+                  "frame": {
+                    "pos": {
+                      "x": 24.0,
+                      "y": 500.0
+                    },
+                    "size": {
+                      "x": 327.0,
+                      "y": 84.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 16.0,
+                        "top_right": 16.0,
+                        "bottom_right": 16.0,
+                        "bottom_left": 16.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "76bf407d-3eb3-4f9a-8bac-35a76b1d9bfc",
+                  "name": "Card 4 / Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 518.0
+                    },
+                    "size": {
+                      "x": 48.0,
+                      "y": 48.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      224,
+                      231,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 12.0,
+                        "top_right": 12.0,
+                        "bottom_right": 12.0,
+                        "bottom_left": 12.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "bd689ded-8232-49bd-999b-25698a6196d7",
+                  "name": "Card 4 / Title",
+                  "frame": {
+                    "pos": {
+                      "x": 104.0,
+                      "y": 518.0
+                    },
+                    "size": {
+                      "x": 220.0,
+                      "y": 24.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Task title",
+                      "font_size": 17.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 10,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 17.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "35d53cbb-cc85-41cf-b1fc-212b7813448f",
+                  "name": "Card 4 / Subtitle",
+                  "frame": {
+                    "pos": {
+                      "x": 104.0,
+                      "y": 544.0
+                    },
+                    "size": {
+                      "x": 220.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Due today \u00b7 3 subtasks",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "3b926ca0-d937-468c-822f-a20bd6dae8d9",
+                  "name": "Tab bar / Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 728.0
+                    },
+                    "size": {
+                      "x": 375.0,
+                      "y": 84.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "365c8b02-ed78-46df-9bb4-f7515986756b",
+                  "name": "Tab bar / Divider",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 728.0
+                    },
+                    "size": {
+                      "x": 375.0,
+                      "y": 1.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      229,
+                      231,
+                      235,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "24e16f69-7098-4cc1-b252-965d20d16ed2",
+                  "name": "Tab / Home icon",
+                  "frame": {
+                    "pos": {
+                      "x": 35.0,
+                      "y": 744.0
+                    },
+                    "size": {
+                      "x": 24.0,
+                      "y": 24.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      79,
+                      70,
+                      229,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "1790348e-848a-47a2-8fa5-09d1f189fcd3",
+                  "name": "Tab / Home label",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 772.0
+                    },
+                    "size": {
+                      "x": 94.0,
+                      "y": 16.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      79,
+                      70,
+                      229,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Home",
+                      "font_size": 11.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "460c911b-ee95-4504-8972-0475e3e4530b",
+                  "name": "Tab / Search icon",
+                  "frame": {
+                    "pos": {
+                      "x": 128.0,
+                      "y": 744.0
+                    },
+                    "size": {
+                      "x": 24.0,
+                      "y": 24.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "c0104114-7ce9-4836-874f-643c67478c06",
+                  "name": "Tab / Search label",
+                  "frame": {
+                    "pos": {
+                      "x": 93.0,
+                      "y": 772.0
+                    },
+                    "size": {
+                      "x": 94.0,
+                      "y": 16.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Search",
+                      "font_size": 11.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "5ac40f12-bd01-4dac-bc51-36e53cb81497",
+                  "name": "Tab / Inbox icon",
+                  "frame": {
+                    "pos": {
+                      "x": 222.0,
+                      "y": 744.0
+                    },
+                    "size": {
+                      "x": 24.0,
+                      "y": 24.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "779a61a7-c325-4808-b755-d414c3cf055c",
+                  "name": "Tab / Inbox label",
+                  "frame": {
+                    "pos": {
+                      "x": 187.0,
+                      "y": 772.0
+                    },
+                    "size": {
+                      "x": 94.0,
+                      "y": 16.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Inbox",
+                      "font_size": 11.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "0ef81794-2afb-4b5e-b659-a4f489ac4041",
+                  "name": "Tab / Profile icon",
+                  "frame": {
+                    "pos": {
+                      "x": 316.0,
+                      "y": 744.0
+                    },
+                    "size": {
+                      "x": 24.0,
+                      "y": 24.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "0df62cb8-45d6-4c1e-a527-798207dd60d7",
+                  "name": "Tab / Profile label",
+                  "frame": {
+                    "pos": {
+                      "x": 281.0,
+                      "y": 772.0
+                    },
+                    "size": {
+                      "x": 94.0,
+                      "y": 16.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Profile",
+                      "font_size": 11.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                }
+              ],
+              "background": [
+                243,
+                244,
+                246,
+                255
+              ],
+              "adjust_content_on_resize": false
+            }
+          }
+        }
+      ],
+      "guides": []
+    }
+  ],
+  "active_page": 0,
+  "text_styles": [],
+  "layer_styles": [],
+  "palette": [
+    {
+      "color": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        34,
+        32,
+        52,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        69,
+        40,
+        60,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        102,
+        57,
+        49,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        143,
+        86,
+        59,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        223,
+        113,
+        38,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        217,
+        160,
+        102,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        238,
+        195,
+        154,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        251,
+        242,
+        54,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        153,
+        229,
+        80,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        106,
+        190,
+        48,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        55,
+        148,
+        110,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        75,
+        105,
+        47,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        82,
+        75,
+        36,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        50,
+        60,
+        57,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        63,
+        63,
+        116,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        48,
+        96,
+        130,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        91,
+        110,
+        225,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        99,
+        155,
+        255,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        95,
+        205,
+        228,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        203,
+        219,
+        252,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        155,
+        173,
+        183,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        132,
+        126,
+        135,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        105,
+        106,
+        106,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        89,
+        86,
+        82,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        118,
+        66,
+        138,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        172,
+        50,
+        50,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        217,
+        87,
+        99,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        215,
+        123,
+        186,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        143,
+        151,
+        74,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        138,
+        111,
+        48,
+        255
+      ],
+      "name": ""
+    }
+  ]
+}

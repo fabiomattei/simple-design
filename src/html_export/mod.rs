@@ -5,6 +5,7 @@
 mod element_tree;
 mod flex_children;
 mod font_files;
+mod grid_detection;
 mod layout_inference;
 mod raster_fallback;
 mod stack_spacing;

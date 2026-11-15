@@ -210,6 +210,10 @@ pub struct SaveArgs {
 pub struct InitArgs {
     #[serde(default)]
     pub name: Option<String>,
+    /// A `templates::all_templates` name (case-insensitive) to start from
+    /// instead of an empty document.
+    #[serde(default)]
+    pub template: Option<String>,
 }
 
 /// Sets which layers are highlighted in the GUI — purely a courtesy so you

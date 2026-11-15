@@ -1,7 +1,8 @@
 //! Flexbox layout mode's handling of a container's children: decides which
 //! children can flow (`plan_children`), then emits the inferred rows and
-//! columns as wrapper `<div>`s, with the remaining children absolutely
-//! positioned on top (`SiteBuilder::add_planned_children`).
+//! columns as wrapper `<div>`s — or a `display: grid` wrapper where a column
+//! of rows is really a grid (`grid_detection`) — with the remaining children
+//! absolutely positioned on top (`SiteBuilder::add_planned_children`).
 //!
 //! Every child gets `z-index` from its layer order, because flowed items are
 //! emitted in visual order, not layer order, and positioned elements would
@@ -9,6 +10,7 @@
 //! that `z-index` applies to them too.
 
 use super::element_tree::{Placement, SiteBuilder};
+use super::grid_detection::{detect_grid, GridSpec};
 use super::layout_inference::{infer_layout, Axis, InferredLayout, LayoutNode};
 use super::raster_fallback::is_css_expressible;
 use super::stack_spacing::{stack_spacing, CrossAlign};
@@ -75,8 +77,48 @@ impl SiteBuilder<'_> {
                 self.add_layer(&children[*index], depth, Placement::InFlow { margins }, Some(*index))?;
                 Ok(())
             }
+            LayoutNode::Stack { axis: Axis::Column, bounds, children: rows } if let Some(grid) = detect_grid(rows) => {
+                self.add_grid(&grid, *bounds, rows, children, depth, margins)
+            }
             LayoutNode::Stack { axis, bounds, children: nodes } => self.add_stack(*axis, *bounds, nodes, children, depth, margins),
         }
+    }
+
+    /// One `display: grid` wrapper for a column of rows `detect_grid`
+    /// accepted, then every row's cells in reading order. Row spacing comes
+    /// from `stack_spacing` like a column's: one `row-gap` when even,
+    /// otherwise a `margin-top` on each cell of the rows that need it.
+    fn add_grid(&mut self, grid: &GridSpec, bounds: egui::Rect, rows: &[LayoutNode], children: &[Layer], depth: usize, margins: Vec<String>) -> anyhow::Result<()> {
+        let row_bounds: Vec<_> = rows.iter().map(LayoutNode::bounds).collect();
+        let row_spacing = stack_spacing(Axis::Column, bounds, &row_bounds);
+        let class = format!("stack-{}", self.next_stack_id);
+        self.next_stack_id += 1;
+
+        let widths = &grid.column_widths;
+        let tracks = if widths.iter().all(|&w| w == widths[0]) {
+            format!("repeat({}, {})", widths.len(), px(widths[0]))
+        } else {
+            widths.iter().map(|&w| px(w)).collect::<Vec<_>>().join(" ")
+        };
+        let mut declarations = vec!["display: grid;".to_string(), format!("grid-template-columns: {tracks};"), format!("column-gap: {};", px(grid.column_gap))];
+        if let Some(gap) = row_spacing.gap {
+            declarations.push(format!("row-gap: {};", px(gap)));
+        }
+        declarations.extend(["align-items: start;".to_string(), "justify-items: start;".to_string()]);
+        declarations.extend(margins);
+        self.push_rule(&class, "grid", &declarations);
+
+        let indent = " ".repeat(depth);
+        self.body.push_str(&format!("{indent}<div class=\"{class}\">\n"));
+        for (r, row) in rows.iter().enumerate() {
+            let LayoutNode::Stack { children: cells, .. } = row else { continue };
+            for cell in cells {
+                let cell_margins = margin_declarations(Axis::Column, row_spacing.main_margins[r], 0.0);
+                self.add_flow_node(cell, children, depth + 1, cell_margins)?;
+            }
+        }
+        self.body.push_str(&format!("{indent}</div>\n"));
+        Ok(())
     }
 
     /// One wrapper `<div>` for an inferred row or column, then its nodes.

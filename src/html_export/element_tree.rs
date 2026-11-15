@@ -266,6 +266,15 @@ mod tests {
     }
 
     #[test]
+    fn flexbox_mode_turns_two_by_two_cards_into_a_grid() {
+        let card = |name: &str, x: f32, y: f32| Layer::new(name, frame(x, y, 100.0, 60.0), LayerKind::Rectangle { corner_radius: CornerRadii::ZERO });
+        let root = artboard(vec![card("A", 10.0, 10.0), card("B", 130.0, 10.0), card("C", 10.0, 90.0), card("D", 130.0, 90.0)]);
+        let site = build_site(&root, std::slice::from_ref(&root), LayoutMode::Flexbox).unwrap();
+        assert!(site.css.contains("  display: grid;\n  grid-template-columns: repeat(2, 100px);\n  column-gap: 20px;\n  row-gap: 20px;"), "{}", site.css);
+        assert!(site.html.contains("<div class=\"stack-0\">\n    <div class=\"layer-1\"></div>\n    <div class=\"layer-2\"></div>\n    <div class=\"layer-3\"></div>\n    <div class=\"layer-4\"></div>\n   </div>"), "{}", site.html);
+    }
+
+    #[test]
     fn hidden_children_are_skipped() {
         let mut rect = Layer::new("Ghost", frame(0.0, 0.0, 5.0, 5.0), LayerKind::Oval);
         rect.visible = false;

@@ -10,6 +10,7 @@ use egui::{Pos2, Vec2};
 use uuid::Uuid;
 
 use simple_design::io;
+use simple_design::templates;
 use simple_design::ipc::{self, ops};
 use simple_design::ipc::protocol::{
     AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
@@ -29,10 +30,14 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
-    /// Create a brand-new, empty document at `<file>` — errors if it already exists.
+    /// Create a brand-new document at `<file>` — errors if it already exists.
+    /// Empty unless `--template` names one; an unknown name lists the available ones.
     Init {
         #[arg(long)]
         name: Option<String>,
+        /// Start from this template (built-in or saved via File > Save as Template).
+        #[arg(long)]
+        template: Option<String>,
     },
     /// Check whether a running instance has this file open.
     Ping,
@@ -496,7 +501,7 @@ fn to_value(args: impl serde::Serialize) -> serde_json::Value {
 
 fn build_request(command: Command) -> (&'static str, serde_json::Value) {
     match command {
-        Command::Init { name } => ("init", to_value(InitArgs { name })),
+        Command::Init { name, template } => ("init", to_value(InitArgs { name, template })),
         Command::Ping => ("ping", serde_json::Value::Null),
         Command::GetDocument => ("get_document", serde_json::Value::Null),
         Command::ListPages => ("list_pages", serde_json::Value::Null),
@@ -592,7 +597,16 @@ fn run_headless(file: &PathBuf, op: &str, args: serde_json::Value) -> anyhow::Re
             return Ok(ipc::Response::err(1, format!("{} already exists", file.display())));
         }
         let args: InitArgs = serde_json::from_value(args)?;
-        let mut document = Document::new();
+        let mut document = match args.template {
+            None => Document::new(),
+            Some(name) => match templates::find_template(&name) {
+                Some(template) => template.instantiate()?,
+                None => {
+                    let available: Vec<String> = templates::all_templates().into_iter().map(|t| t.name).collect();
+                    return Ok(ipc::Response::err(1, format!("no template named {name:?} — available: {}", available.join(", "))));
+                }
+            },
+        };
         if let Some(name) = args.name {
             document.name = name;
         }

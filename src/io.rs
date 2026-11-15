@@ -10,6 +10,17 @@ pub fn save_dialog(default_name: &str) -> Option<PathBuf> {
         .save_file()
 }
 
+/// File picker for "Save as Template" — starts in `dir`, the user templates
+/// folder; a file saved anywhere else won't show up under New from Template.
+pub fn save_template_dialog(dir: &std::path::Path, default_name: &str) -> Option<PathBuf> {
+    rfd::FileDialog::new()
+        .set_title("Save as Template")
+        .set_directory(dir)
+        .set_file_name(default_name)
+        .add_filter("Simple Design document", &["sdesign"])
+        .save_file()
+}
+
 /// File picker for "Open" — a `.sdesign` document.
 pub fn open_dialog() -> Option<PathBuf> {
     rfd::FileDialog::new()
