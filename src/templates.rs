@@ -41,6 +41,16 @@ const BUILT_IN: &[(&str, &str)] = &[
     ("Invitation - Brutalist", include_str!("../templates/invitation-brutalist.sdesign")),
     ("Invitation - Ocean", include_str!("../templates/invitation-ocean.sdesign")),
     ("Invitation - Sunset", include_str!("../templates/invitation-sunset.sdesign")),
+    ("Menu - Minimal Mono", include_str!("../templates/menu-minimal-mono.sdesign")),
+    ("Menu - Neon Night", include_str!("../templates/menu-neon-night.sdesign")),
+    ("Menu - Pastel", include_str!("../templates/menu-pastel.sdesign")),
+    ("Menu - Corporate Navy", include_str!("../templates/menu-corporate-navy.sdesign")),
+    ("Menu - Earthy", include_str!("../templates/menu-earthy.sdesign")),
+    ("Menu - Retro 70s", include_str!("../templates/menu-retro-70s.sdesign")),
+    ("Menu - Dark Luxe Gold", include_str!("../templates/menu-dark-luxe.sdesign")),
+    ("Menu - Brutalist", include_str!("../templates/menu-brutalist.sdesign")),
+    ("Menu - Ocean", include_str!("../templates/menu-ocean.sdesign")),
+    ("Menu - Sunset", include_str!("../templates/menu-sunset.sdesign")),
 ];
 
 #[derive(Clone)]
