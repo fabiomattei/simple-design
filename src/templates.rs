@@ -111,6 +111,16 @@ const BUILT_IN: &[(&str, &str)] = &[
     ("Event Ticket - Brutalist", include_str!("../templates/ticket-brutalist.sdesign")),
     ("Event Ticket - Ocean", include_str!("../templates/ticket-ocean.sdesign")),
     ("Event Ticket - Sunset", include_str!("../templates/ticket-sunset.sdesign")),
+    ("Onboarding Screen - Minimal Mono", include_str!("../templates/onboarding-minimal-mono.sdesign")),
+    ("Onboarding Screen - Neon Night", include_str!("../templates/onboarding-neon-night.sdesign")),
+    ("Onboarding Screen - Pastel", include_str!("../templates/onboarding-pastel.sdesign")),
+    ("Onboarding Screen - Corporate Navy", include_str!("../templates/onboarding-corporate-navy.sdesign")),
+    ("Onboarding Screen - Earthy", include_str!("../templates/onboarding-earthy.sdesign")),
+    ("Onboarding Screen - Retro 70s", include_str!("../templates/onboarding-retro-70s.sdesign")),
+    ("Onboarding Screen - Dark Luxe Gold", include_str!("../templates/onboarding-dark-luxe.sdesign")),
+    ("Onboarding Screen - Brutalist", include_str!("../templates/onboarding-brutalist.sdesign")),
+    ("Onboarding Screen - Ocean", include_str!("../templates/onboarding-ocean.sdesign")),
+    ("Onboarding Screen - Sunset", include_str!("../templates/onboarding-sunset.sdesign")),
 ];
 
 #[derive(Clone)]
