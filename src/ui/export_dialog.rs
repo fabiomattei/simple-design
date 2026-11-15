@@ -1,6 +1,7 @@
 use egui::Vec2;
 
 use crate::export::{ExportFormat, ExportSettings, PngCompression};
+use crate::html_export::LayoutMode;
 use crate::model::LayerId;
 
 /// The export dialog's state. `layer_id`/`layer_name`/`layer_size` are
@@ -10,6 +11,8 @@ use crate::model::LayerId;
 pub struct ExportDialogState {
     pub open: bool,
     pub settings: ExportSettings,
+    /// Layout for "Export as HTML..."; persists across opens like `settings`.
+    pub html_layout: LayoutMode,
     pub layer_id: Option<LayerId>,
     pub layer_name: String,
     /// The layer's rotated bounds in document units, for the pixel-size
@@ -51,6 +54,12 @@ pub fn ui(ctx: &egui::Context, state: &mut ExportDialogState) -> Option<ExportDi
             action = Some(ExportDialogAction::Export);
         }
         ui.separator();
+        ui.horizontal(|ui| {
+            ui.label("HTML layout:");
+            for layout in LayoutMode::ALL {
+                ui.selectable_value(&mut state.html_layout, layout, layout.label());
+            }
+        });
         if ui.button("Export as HTML...").clicked() {
             action = Some(ExportDialogAction::ExportHtml);
         }

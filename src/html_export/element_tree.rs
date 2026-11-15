@@ -2,17 +2,21 @@
 //! files they reference — pure, nothing touches the disk here (see
 //! `html_export::export_html` for that).
 //!
-//! Every layer becomes one absolutely-positioned element nested like the
-//! layer tree, so each element's `left`/`top` stay parent-relative exactly
-//! as `Layer::frame.pos` is. Layers CSS can't describe become `<img>`s of
+//! Every layer becomes one element nested like the layer tree. In
+//! `LayoutMode::Absolute` each is absolutely positioned, so its `left`/`top`
+//! stay parent-relative exactly as `Layer::frame.pos` is. In
+//! `LayoutMode::Flexbox` a container's children are laid out by inferred
+//! rows and columns instead (see `flex_children`). Layers CSS can't describe become `<img>`s of
 //! their rasterized rendering (see `raster_fallback`). Rich-text runs become
 //! `<span>`s, and every bundled font a text uses ships in `fonts/`.
 
 use egui::Rect;
 
+use super::LayoutMode;
+use super::flex_children::plan_children;
 use super::font_files::bundled_font_file;
 use super::raster_fallback::{is_css_expressible, rasterize};
-use crate::css_rules::{layer_declarations, run_declarations};
+use crate::css_rules::{flow_layer_declarations, layer_declarations, run_declarations};
 use crate::model::text_runs::TextRun;
 use crate::model::{Layer, LayerKind, TextFont, TextResize};
 
@@ -27,12 +31,21 @@ pub struct ExportedSite {
 /// Builds the site for `layer` and its descendants. `roots` is the page's
 /// top-level layers, needed to rasterize path-attached text. Fails if
 /// `layer` is hidden or a fallback rendering fails.
-pub fn build_site(layer: &Layer, roots: &[Layer]) -> anyhow::Result<ExportedSite> {
+pub fn build_site(layer: &Layer, roots: &[Layer], layout: LayoutMode) -> anyhow::Result<ExportedSite> {
     if !layer.visible {
         anyhow::bail!("layer \"{}\" is hidden", layer.name);
     }
-    let mut builder = SiteBuilder { roots, next_id: 0, body: String::new(), rules: String::new(), assets: Vec::new(), used_fonts: Vec::new() };
-    let bounds = builder.add_layer(layer, 2)?;
+    let mut builder = SiteBuilder {
+        roots,
+        layout,
+        next_id: 0,
+        next_stack_id: 0,
+        body: String::new(),
+        rules: String::new(),
+        assets: Vec::new(),
+        used_fonts: Vec::new(),
+    };
+    let bounds = builder.add_layer(layer, 2, Placement::Absolute, None)?;
     let mut font_faces = String::new();
     for (font, bold) in &builder.used_fonts {
         if let Some(file) = bundled_font_file(font, *bold) {
@@ -46,10 +59,16 @@ pub fn build_site(layer: &Layer, roots: &[Layer]) -> anyhow::Result<ExportedSite
         escape_html(&layer.name),
         builder.body
     );
+    // In flexbox mode every element states its own `position`, and the reset
+    // has zero specificity (`:where`) so per-element margins override it.
+    let element_reset = match layout {
+        LayoutMode::Absolute => ".page div, .page img { position: absolute; box-sizing: border-box; margin: 0; }",
+        LayoutMode::Flexbox => ":where(.page div, .page img) { box-sizing: border-box; margin: 0; flex-shrink: 0; }",
+    };
     // `.origin` shifts the exported layer's own page position back to the
     // top-left corner of `.page`, which is sized to its visual footprint.
     let css = format!(
-        "{font_faces}body {{ margin: 0; }}\n.page {{ position: relative; width: {}; height: {}; overflow: hidden; }}\n.origin {{ position: absolute; left: {}; top: {}; }}\n.page div, .page img {{ position: absolute; box-sizing: border-box; margin: 0; }}\n\n{}",
+        "{font_faces}body {{ margin: 0; }}\n.page {{ position: relative; width: {}; height: {}; overflow: hidden; }}\n.origin {{ position: absolute; left: {}; top: {}; }}\n{element_reset}\n\n{}",
         px(bounds.width()),
         px(bounds.height()),
         px(-bounds.min.x),
@@ -59,20 +78,33 @@ pub fn build_site(layer: &Layer, roots: &[Layer]) -> anyhow::Result<ExportedSite
     Ok(ExportedSite { html, css, assets: builder.assets })
 }
 
-struct SiteBuilder<'a> {
-    roots: &'a [Layer],
-    next_id: usize,
-    body: String,
-    rules: String,
-    assets: Vec<(String, Vec<u8>)>,
+/// How an element is placed inside its parent element.
+pub(super) enum Placement {
+    /// By `left`/`top` from the layer's frame.
+    Absolute,
+    /// By a flex row or column; `margins` come from that stack's spacing.
+    InFlow { margins: Vec<String> },
+}
+
+/// Fields are `pub(super)` for `flex_children`, which adds its own
+/// `impl SiteBuilder` block for the flexbox mode.
+pub(super) struct SiteBuilder<'a> {
+    pub(super) roots: &'a [Layer],
+    pub(super) layout: LayoutMode,
+    pub(super) next_id: usize,
+    pub(super) next_stack_id: usize,
+    pub(super) body: String,
+    pub(super) rules: String,
+    pub(super) assets: Vec<(String, Vec<u8>)>,
     /// `(font, bold)` pairs any exported text uses, in first-use order.
-    used_fonts: Vec<(TextFont, bool)>,
+    pub(super) used_fonts: Vec<(TextFont, bool)>,
 }
 
 impl SiteBuilder<'_> {
     /// Appends `layer`'s element (indented by `depth`) and CSS rule, and
-    /// returns the area it covers in its parent's space.
-    fn add_layer(&mut self, layer: &Layer, depth: usize) -> anyhow::Result<Rect> {
+    /// returns the area it covers in its parent's space. `z_index` is the
+    /// layer's order among its siblings, needed only in flexbox mode.
+    pub(super) fn add_layer(&mut self, layer: &Layer, depth: usize, placement: Placement, z_index: Option<usize>) -> anyhow::Result<Rect> {
         let class = format!("layer-{}", self.next_id);
         self.next_id += 1;
         let indent = " ".repeat(depth);
@@ -82,16 +114,28 @@ impl SiteBuilder<'_> {
             let src = format!("images/{class}.png");
             self.body.push_str(&format!("{indent}<img class=\"{class}\" src=\"{src}\" alt=\"{}\">\n", escape_html(&layer.name)));
             let b = raster.bounds;
-            let declarations = vec![format!("left: {};", px(b.min.x)), format!("top: {};", px(b.min.y)), format!("width: {};", px(b.width())), format!("height: {};", px(b.height()))];
+            let mut declarations = vec![format!("left: {};", px(b.min.x)), format!("top: {};", px(b.min.y)), format!("width: {};", px(b.width())), format!("height: {};", px(b.height()))];
+            declarations.extend(self.position_declarations(placement, z_index));
             self.push_rule(&class, &layer.name, &declarations);
             self.assets.push((src, raster.png));
             return Ok(b);
         }
 
-        let mut declarations = layer_declarations(layer);
+        let mut declarations = match placement {
+            Placement::Absolute => layer_declarations(layer),
+            Placement::InFlow { .. } => flow_layer_declarations(layer),
+        };
         if let LayerKind::Text { resize, .. } = &layer.kind {
             let wrap = if *resize == TextResize::Auto { "pre" } else { "pre-wrap" };
             declarations.push(format!("white-space: {wrap};"));
+        }
+        declarations.extend(self.position_declarations(placement, z_index));
+        let child_plan = match (&layer.kind, self.layout) {
+            (LayerKind::Artboard { children, .. } | LayerKind::Group { children }, LayoutMode::Flexbox) => Some(plan_children(children)),
+            _ => None,
+        };
+        if let Some(plan) = &child_plan {
+            declarations.extend(plan.container_declarations());
         }
         self.push_rule(&class, &layer.name, &declarations);
         match &layer.kind {
@@ -107,8 +151,13 @@ impl SiteBuilder<'_> {
             }
             LayerKind::Artboard { children, .. } | LayerKind::Group { children } => {
                 self.body.push_str(&format!("{indent}<div class=\"{class}\">\n"));
-                for child in children.iter().filter(|child| child.visible) {
-                    self.add_layer(child, depth + 1)?;
+                match &child_plan {
+                    Some(plan) => self.add_planned_children(plan, children, depth + 1)?,
+                    None => {
+                        for child in children.iter().filter(|child| child.visible) {
+                            self.add_layer(child, depth + 1, Placement::Absolute, None)?;
+                        }
+                    }
                 }
                 self.body.push_str(&format!("{indent}</div>\n"));
             }
@@ -133,6 +182,23 @@ impl SiteBuilder<'_> {
         html
     }
 
+    /// Absolute mode: nothing (the stylesheet's element reset positions
+    /// everything). Flexbox mode: the element's own `position`, its stack
+    /// margins, and `z-index` (see `flex_children`'s module doc).
+    fn position_declarations(&self, placement: Placement, z_index: Option<usize>) -> Vec<String> {
+        if self.layout == LayoutMode::Absolute {
+            return Vec::new();
+        }
+        let mut declarations = match placement {
+            Placement::Absolute => vec!["position: absolute;".to_string()],
+            Placement::InFlow { margins } => std::iter::once("position: relative;".to_string()).chain(margins).collect(),
+        };
+        if let Some(z) = z_index {
+            declarations.push(format!("z-index: {z};"));
+        }
+        declarations
+    }
+
     fn use_font(&mut self, font: &TextFont, bold: bool) {
         let entry = (font.clone(), bold);
         if !self.used_fonts.contains(&entry) {
@@ -140,7 +206,7 @@ impl SiteBuilder<'_> {
         }
     }
 
-    fn push_rule(&mut self, class: &str, name: &str, declarations: &[String]) {
+    pub(super) fn push_rule(&mut self, class: &str, name: &str, declarations: &[String]) {
         self.rules.push_str(&format!("/* {} */\n.{class} {{\n", name.replace("*/", "* /")));
         for declaration in declarations {
             self.rules.push_str(&format!("  {declaration}\n"));
@@ -176,7 +242,7 @@ mod tests {
     fn nests_children_and_shifts_the_root_to_the_page_corner() {
         let rect = Layer::new("Card", frame(10.0, 20.0, 50.0, 40.0), LayerKind::Rectangle { corner_radius: CornerRadii::ZERO });
         let root = artboard(vec![rect]);
-        let site = build_site(&root, std::slice::from_ref(&root)).unwrap();
+        let site = build_site(&root, std::slice::from_ref(&root), LayoutMode::Absolute).unwrap();
         assert!(site.html.contains("<title>Home &lt;page&gt;</title>"), "{}", site.html);
         assert!(site.html.contains("  <div class=\"layer-0\">\n   <div class=\"layer-1\"></div>\n  </div>"), "{}", site.html);
         assert!(site.css.contains(".page { position: relative; width: 300px; height: 200px;"), "{}", site.css);
@@ -186,11 +252,25 @@ mod tests {
     }
 
     #[test]
+    fn flexbox_mode_stacks_children_in_a_column_with_a_gap() {
+        let top = Layer::new("Top", frame(20.0, 30.0, 100.0, 40.0), LayerKind::Rectangle { corner_radius: CornerRadii::ZERO });
+        let bottom = Layer::new("Bottom", frame(20.0, 90.0, 100.0, 40.0), LayerKind::Rectangle { corner_radius: CornerRadii::ZERO });
+        let root = artboard(vec![bottom, top]);
+        let site = build_site(&root, std::slice::from_ref(&root), LayoutMode::Flexbox).unwrap();
+        assert!(site.css.contains("  display: flex;\n  align-items: flex-start;\n  padding: 30px 0 0 20px;"), "{}", site.css);
+        assert!(site.css.contains(".stack-0 {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  gap: 20px;\n}"), "{}", site.css);
+        // Visual order (Top first) in the DOM, layer order kept by z-index.
+        assert!(site.html.contains("<div class=\"stack-0\">\n    <div class=\"layer-1\"></div>\n    <div class=\"layer-2\"></div>"), "{}", site.html);
+        assert!(site.css.contains("/* Top */\n.layer-1 {\n  width: 100px;"), "{}", site.css);
+        assert!(site.css.contains("position: relative;\n  z-index: 1;"), "{}", site.css);
+    }
+
+    #[test]
     fn hidden_children_are_skipped() {
         let mut rect = Layer::new("Ghost", frame(0.0, 0.0, 5.0, 5.0), LayerKind::Oval);
         rect.visible = false;
         let root = artboard(vec![rect]);
-        let site = build_site(&root, std::slice::from_ref(&root)).unwrap();
+        let site = build_site(&root, std::slice::from_ref(&root), LayoutMode::Absolute).unwrap();
         assert!(!site.css.contains("Ghost"), "{}", site.css);
     }
 
@@ -198,7 +278,7 @@ mod tests {
     fn star_becomes_a_rasterized_image() {
         let star = Layer::new("Star", frame(10.0, 10.0, 30.0, 30.0), LayerKind::Star { points: 5, inner_ratio: 0.5 });
         let root = artboard(vec![star]);
-        let site = build_site(&root, std::slice::from_ref(&root)).unwrap();
+        let site = build_site(&root, std::slice::from_ref(&root), LayoutMode::Absolute).unwrap();
         assert!(site.html.contains("<img class=\"layer-1\" src=\"images/layer-1.png\" alt=\"Star\">"), "{}", site.html);
         assert_eq!(site.assets.len(), 1);
         assert_eq!(site.assets[0].0, "images/layer-1.png");
@@ -234,7 +314,7 @@ mod tests {
             },
         );
         let root = artboard(vec![text]);
-        let site = build_site(&root, std::slice::from_ref(&root)).unwrap();
+        let site = build_site(&root, std::slice::from_ref(&root), LayoutMode::Absolute).unwrap();
         assert!(site.html.contains("<div class=\"layer-1\"><span class=\"layer-1-run-0\">Hi </span><span class=\"layer-1-run-1\">&lt;you&gt;</span></div>"), "{}", site.html);
         assert!(site.css.contains(".layer-1-run-1 {\n  font-family: \"Merriweather\", serif;"), "{}", site.css);
         let font_paths: Vec<&str> = site.assets.iter().map(|(path, _)| path.as_str()).collect();
@@ -246,6 +326,6 @@ mod tests {
     fn hidden_root_is_an_error() {
         let mut root = artboard(Vec::new());
         root.visible = false;
-        assert!(build_site(&root, std::slice::from_ref(&root)).is_err());
+        assert!(build_site(&root, std::slice::from_ref(&root), LayoutMode::Absolute).is_err());
     }
 }

@@ -14,7 +14,7 @@
 use egui::{Color32, Vec2};
 
 use crate::model::text_runs::RunStyle;
-use crate::model::{GradientKind, Layer, LayerKind, Paint, Shadow, TextAlign, TextFont, TextTransform};
+use crate::model::{GradientKind, Layer, LayerKind, Paint, Shadow, TextAlign, TextFont, TextResize, TextTransform};
 
 /// Returns `layer`'s declarations as one CSS block, headed by a comment with
 /// the layer's name. Pure: no side effects.
@@ -27,8 +27,22 @@ pub fn layer_css(layer: &Layer) -> String {
 /// `layer`'s declarations (and any `/* ... */` notes), one per entry, with
 /// no header — the body of a CSS rule. Pure: no side effects.
 pub fn layer_declarations(layer: &Layer) -> Vec<String> {
+    declarations(layer, false)
+}
+
+/// Same as `layer_declarations`, for an element placed by a flex row or
+/// column instead of `left`/`top`: those two are omitted, and text that
+/// grows with its content (`TextResize::Auto`/`AutoHeight`) gets
+/// `min-height` instead of `height`, so longer browser text pushes the
+/// elements after it down instead of overlapping them. Not meant for
+/// rotated layers or lines, which stay absolutely positioned. Pure.
+pub fn flow_layer_declarations(layer: &Layer) -> Vec<String> {
+    declarations(layer, true)
+}
+
+fn declarations(layer: &Layer, in_flow: bool) -> Vec<String> {
     let mut lines = Vec::new();
-    box_rules(layer, &mut lines);
+    box_rules(layer, in_flow, &mut lines);
     match &layer.kind {
         LayerKind::Artboard { background, .. } => lines.push(format!("background: {};", color(*background, 1.0))),
         LayerKind::Group { .. } | LayerKind::Image { .. } => {}
@@ -38,7 +52,7 @@ pub fn layer_declarations(layer: &Layer) -> Vec<String> {
     lines
 }
 
-fn box_rules(layer: &Layer, lines: &mut Vec<String>) {
+fn box_rules(layer: &Layer, in_flow: bool, lines: &mut Vec<String>) {
     let frame = &layer.frame;
     if matches!(layer.kind, LayerKind::Line | LayerKind::Arrow { .. }) {
         // A line is drawn as a zero-height box rotated about its start point.
@@ -51,10 +65,14 @@ fn box_rules(layer: &Layer, lines: &mut Vec<String>) {
         lines.push(format!("transform: rotate({}deg);", round(direction.y.atan2(direction.x).to_degrees())));
     } else {
         let bounds = frame.bounds();
-        lines.push(format!("left: {};", px(bounds.min.x)));
-        lines.push(format!("top: {};", px(bounds.min.y)));
+        if !in_flow {
+            lines.push(format!("left: {};", px(bounds.min.x)));
+            lines.push(format!("top: {};", px(bounds.min.y)));
+        }
         lines.push(format!("width: {};", px(bounds.width())));
-        lines.push(format!("height: {};", px(bounds.height())));
+        let grows = matches!(layer.kind, LayerKind::Text { resize: TextResize::Auto | TextResize::AutoHeight, .. });
+        let height_property = if in_flow && grows { "min-height" } else { "height" };
+        lines.push(format!("{height_property}: {};", px(bounds.height())));
         if frame.rotation != 0.0 {
             lines.push(format!("transform: rotate({}deg);", round(frame.rotation)));
         }
@@ -383,6 +401,18 @@ mod tests {
             assert!(css.contains(expected), "missing `{expected}` in:\n{css}");
         }
         assert!(!css.contains("background"), "{css}");
+    }
+
+    #[test]
+    fn flow_declarations_drop_position_and_let_growing_text_grow() {
+        let mut text = text_layer();
+        if let LayerKind::Text { resize, .. } = &mut text.kind {
+            *resize = TextResize::AutoHeight;
+        }
+        let lines = flow_layer_declarations(&text);
+        assert!(!lines.iter().any(|line| line.starts_with("left:") || line.starts_with("top:")), "{lines:?}");
+        assert!(lines.contains(&"min-height: 50px;".to_string()), "{lines:?}");
+        assert!(layer_declarations(&text).contains(&"height: 50px;".to_string()));
     }
 
     #[test]

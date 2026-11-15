@@ -670,7 +670,7 @@ impl App {
         let Some(parent_dir) = io::export_html_dialog() else {
             return;
         };
-        match crate::html_export::export_html(layer, &page.layers, &parent_dir) {
+        match crate::html_export::export_html(layer, &page.layers, &parent_dir, dialog.html_layout) {
             Ok(_) => dialog.open = false,
             Err(error) => dialog.error = Some(format!("HTML export failed: {error}")),
         }
@@ -690,7 +690,7 @@ impl App {
         let Some(parent_dir) = io::export_html_dialog() else {
             return;
         };
-        if let Err(error) = crate::html_export::export_html(layer, &page.layers, &parent_dir) {
+        if let Err(error) = crate::html_export::export_html(layer, &page.layers, &parent_dir, self.export_dialog.html_layout) {
             io::show_error("HTML export failed", &error.to_string());
         }
     }
