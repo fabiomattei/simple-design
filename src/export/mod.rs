@@ -226,7 +226,7 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], of
 }
 
 /// Draws one parent's `children` (an `Artboard`/`Group`'s, already offset to
-/// that parent's coordinate space), applying `Layer::is_mask`/`ignore_mask`
+/// that parent's coordinate space), applying `Layer::mask`
 /// via `masking::partition_mask_runs` — see that function's doc comment for
 /// the masked-run semantics. Deliberately shadow-free (plain `draw_layer`)
 /// — this is what `render_layer_plain`'s silhouette rendering recurses

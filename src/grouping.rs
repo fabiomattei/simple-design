@@ -157,7 +157,7 @@ pub fn group_layers(page: &mut Page, ids: &[LayerId]) -> Option<LayerId> {
 pub fn group_as_mask(page: &mut Page, ids: &[LayerId]) -> Option<LayerId> {
     let group_id = group_layers(page, ids)?;
     let topmost = page.find_mut(group_id)?.kind.children_mut()?.last_mut()?;
-    topmost.is_mask = true;
+    topmost.mask.enabled = true;
     Some(group_id)
 }
 
@@ -376,7 +376,7 @@ mod tests {
         // "Background" stays outside the group, so the new mask can't clip it.
         assert_eq!(names(&page), vec!["Background", "Group"]);
         let LayerKind::Group { children } = &page.find(group_id).unwrap().kind else { unreachable!() };
-        assert_eq!(children.iter().map(|l| (l.name.as_str(), l.is_mask)).collect::<Vec<_>>(), vec![("Photo", false), ("Circle", true)]);
+        assert_eq!(children.iter().map(|l| (l.name.as_str(), l.mask.enabled)).collect::<Vec<_>>(), vec![("Photo", false), ("Circle", true)]);
     }
 
     fn names(page: &Page) -> Vec<&str> {

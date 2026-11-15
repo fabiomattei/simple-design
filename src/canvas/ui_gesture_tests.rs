@@ -253,7 +253,7 @@ fn double_clicking_a_mask_over_text_starts_editing_the_masked_text() {
     let text = new_layer_for_tool(Tool::Text, frame).expect("Text tool creates a layer");
     let id = text.id;
     let mut mask = rect_layer("Mask", 90.0, 90.0, 160.0, 54.0);
-    mask.is_mask = true;
+    mask.mask.enabled = true;
     let mask_id = mask.id;
     let mut h = Harness::new(vec![text, mask]);
 

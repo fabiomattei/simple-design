@@ -12,7 +12,7 @@ use crate::model::{CornerRadii, Layer, LayerKind, MaskMode, Paint};
 /// The layer to rasterize for `mask`'s clipping alpha: `mask` itself in
 /// `MaskMode::Alpha`, or an outline copy (`to_outline`) in `MaskMode::Outline`.
 pub fn mask_silhouette(mask: &Layer) -> Cow<'_, Layer> {
-    match mask.mask_mode {
+    match mask.mask.mode {
         MaskMode::Alpha => Cow::Borrowed(mask),
         MaskMode::Outline => {
             let mut outline = mask.clone();
@@ -70,7 +70,7 @@ mod tests {
     #[test]
     fn outline_mode_draws_the_shape_opaque_with_no_stroke_or_transparency() {
         let mut mask = Layer::new("Mask", Frame { pos: Pos2::ZERO, size: Vec2::splat(10.0), rotation: 0.0 }, LayerKind::Oval);
-        mask.mask_mode = MaskMode::Outline;
+        mask.mask.mode = MaskMode::Outline;
         mask.opacity = 0.3;
         mask.style.fill = None;
         mask.style.stroke = Some(Stroke { paint: Paint::Solid(Color32::RED), width: 4.0 });
@@ -84,7 +84,7 @@ mod tests {
     #[test]
     fn outline_mode_keeps_a_lines_stroke_since_it_is_the_shape() {
         let mut line = Layer::new("Line", Frame::from_two_points(Pos2::ZERO, Pos2::new(10.0, 0.0)), LayerKind::Line);
-        line.mask_mode = MaskMode::Outline;
+        line.mask.mode = MaskMode::Outline;
         line.style.stroke = Some(Stroke { paint: Paint::Solid(Color32::RED), width: 4.0 });
 
         let outline = mask_silhouette(&line);

@@ -444,7 +444,7 @@ impl App {
             [id] => {
                 self.history.snapshot();
                 if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
-                    l.is_mask = !l.is_mask;
+                    l.mask.enabled = !l.mask.enabled;
                 }
             }
             _ => {
@@ -1270,22 +1270,22 @@ impl eframe::App for App {
                                     }
                                     LayerAction::ToggleMask(id) => {
                                         if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
-                                            l.is_mask = !l.is_mask;
+                                            l.mask.enabled = !l.mask.enabled;
                                         }
                                     }
                                     LayerAction::ToggleIgnoreMask(id) => {
                                         if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
-                                            l.ignore_mask = !l.ignore_mask;
+                                            l.mask.ignore_underlying = !l.mask.ignore_underlying;
                                         }
                                     }
                                     LayerAction::SetMaskMode(id, mode) => {
                                         if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
-                                            l.mask_mode = mode;
+                                            l.mask.mode = mode;
                                         }
                                     }
                                     LayerAction::ToggleMaskInverted(id) => {
                                         if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
-                                            l.mask_inverted = !l.mask_inverted;
+                                            l.mask.inverted = !l.mask.inverted;
                                         }
                                     }
                                     LayerAction::Move { id, new_parent, index } => {

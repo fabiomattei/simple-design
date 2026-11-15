@@ -238,9 +238,9 @@ pub struct RenameLayerArgs {
     pub name: String,
 }
 
-/// Sets a layer's `is_mask` ("Use as Mask"), `ignore_mask` ("Ignore
-/// Underlying Mask"), `mask_mode` (`mode`) and/or `mask_inverted`
-/// (`inverted`); an omitted field is left unchanged. At least one must be
+/// Sets a layer's `MaskSettings`: `enabled` ("Use as Mask", via `mask`),
+/// `ignore_underlying` ("Ignore Underlying Mask", via `ignore_mask`),
+/// `mode` and/or `inverted`; an omitted field is left unchanged. At least one must be
 /// given. A mask clips the siblings *below* it in its parent, back to the
 /// previous mask — so group the mask with its content first (`group`)
 /// unless it should clip everything beneath it at that level.

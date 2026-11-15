@@ -16,7 +16,7 @@ use super::texture_caches::{
 
 /// Draws one parent's `children` (`Page::layers`, or an `Artboard`/`Group`'s
 /// own children, already shifted to that parent's coordinate space),
-/// applying `Layer::is_mask`/`ignore_mask` via
+/// applying `Layer::mask` via
 /// `masking::partition_mask_runs` — see that function's doc comment for the
 /// masked-run semantics, and `MaskedGroupTextureCache` for how a masked run
 /// actually gets drawn (a cached rasterized texture, since egui's immediate-

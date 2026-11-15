@@ -1,4 +1,4 @@
-//! "Use shape as mask" (see `Layer::is_mask`/`Layer::ignore_mask`
+//! "Use shape as mask" (see `MaskSettings::enabled`/`MaskSettings::ignore_underlying`
 //! in `model/layer.rs`). This module holds the one algorithm both renderers
 //! share — `export/` composites directly with it, `canvas/` uses it to
 //! rasterize a masked run into an offscreen `Pixmap` that gets cached as an
@@ -17,14 +17,14 @@ use tiny_skia::{Mask, MaskType, Pixmap, PixmapPaint, Transform};
 use crate::model::{Layer, LayerId};
 
 /// One drawable unit within a single parent's `children` list, after
-/// resolving `is_mask`/`ignore_mask` — see `partition_mask_runs`.
+/// resolving `mask.enabled`/`mask.ignore_underlying` — see `partition_mask_runs`.
 pub enum RenderUnit<'a> {
     /// Drawn exactly as before masking existed.
     Plain(&'a Layer),
     /// `content` (in original back-to-front order) clipped to `mask`'s own
     /// silhouette; `mask`'s own fill/stroke are never drawn. `segment`
     /// numbers the pieces (from the back, starting at 0) one mask's run is
-    /// split into by interleaved `ignore_mask` layers, so a cache keyed per
+    /// split into by interleaved `mask.ignore_underlying` layers, so a cache keyed per
     /// unit can tell the pieces of the same mask apart.
     Masked { mask: &'a Layer, content: Vec<&'a Layer>, segment: usize },
 }
@@ -32,24 +32,24 @@ pub enum RenderUnit<'a> {
 /// Groups a parent's `children` (already in back-to-front draw order, same
 /// convention as `Page::layers`/`LayerKind::children`) into `RenderUnit`s.
 ///
-/// A layer with `is_mask` masks the run of plain siblings immediately below
+/// A layer with `mask.enabled` masks the run of plain siblings immediately below
 /// it (nearer the start of `children`) back to the previous mask or the
 /// start of the list. A mask with nothing below it to mask is dropped
-/// entirely (an empty mask is invisible). An `is_mask` layer
+/// entirely (an empty mask is invisible). A `mask.enabled` layer
 /// that's also `!visible` has no masking effect at all (falls through to
 /// `pending` like a normal layer, where `draw_layer`'s own `!visible` check
 /// then draws it as nothing) — same "an invisible layer has no effect"
 /// principle already applied everywhere else in this codebase, extended to
 /// masks: hiding a mask via its eye icon reveals its content normally,
-/// rather than hiding the content along with it. `ignore_mask`
+/// rather than hiding the content along with it. `mask.ignore_underlying`
 /// layers opt out and always emit as `Plain` at their exact depth: an
-/// `ignore_mask` layer interleaved inside a mask's run splits that run into
+/// `mask.ignore_underlying` layer interleaved inside a mask's run splits that run into
 /// separately masked pieces below and above it (see `split_run_around_ignored`).
 pub fn partition_mask_runs(children: &[Layer]) -> Vec<RenderUnit<'_>> {
     let mut units = Vec::new();
     let mut pending: Vec<&Layer> = Vec::new();
     for child in children {
-        if child.is_mask && child.visible {
+        if child.mask.enabled && child.visible {
             units.extend(split_run_around_ignored(child, std::mem::take(&mut pending)));
         } else {
             pending.push(child);
@@ -60,7 +60,7 @@ pub fn partition_mask_runs(children: &[Layer]) -> Vec<RenderUnit<'_>> {
 }
 
 /// Turns one mask's `run` (back-to-front) into units: each maximal stretch
-/// of non-`ignore_mask` layers becomes a `Masked` piece, each `ignore_mask`
+/// of non-`mask.ignore_underlying` layers becomes a `Masked` piece, each `mask.ignore_underlying`
 /// layer a `Plain` unit between them. A run with no maskable layer at all
 /// yields only `Plain` units (the mask itself is dropped, as with an empty run).
 fn split_run_around_ignored<'a>(mask: &'a Layer, run: Vec<&'a Layer>) -> Vec<RenderUnit<'a>> {
@@ -68,7 +68,7 @@ fn split_run_around_ignored<'a>(mask: &'a Layer, run: Vec<&'a Layer>) -> Vec<Ren
     let mut content: Vec<&Layer> = Vec::new();
     let mut segment = 0;
     for layer in run {
-        if layer.ignore_mask {
+        if layer.mask.ignore_underlying {
             if !content.is_empty() {
                 units.push(RenderUnit::Masked { mask, content: std::mem::take(&mut content), segment });
                 segment += 1;
@@ -92,7 +92,7 @@ pub fn mask_bounds(mask: &Layer) -> egui::Rect {
 }
 
 /// The parent-space area a masked run can show anything in: `mask_bounds`,
-/// or — for a `mask_inverted` mask, which reveals content *outside* its
+/// or — for a `mask.inverted` mask, which reveals content *outside* its
 /// shape — the union of `content`'s own visual bounds (each layer's
 /// `rotated_bounds()` grown by its stroke width and drop-shadow reach; a
 /// group's children's shadows past the group's frame aren't counted).
@@ -100,7 +100,7 @@ pub fn mask_bounds(mask: &Layer) -> egui::Rect {
 /// `canvas/texture_caches.rs` (to size the cached texture), so both agree
 /// on where a masked run can show anything.
 pub fn masked_area(mask: &Layer, content: &[&Layer]) -> egui::Rect {
-    if !mask.mask_inverted {
+    if !mask.mask.inverted {
         return mask_bounds(mask);
     }
     content
@@ -130,7 +130,7 @@ fn clipping_mask_area_in(layers: &[Layer], id: LayerId, offset: Vec2, clip: Opti
     for unit in partition_mask_runs(layers) {
         let (mask, members) = match unit {
             RenderUnit::Plain(layer) => (None, vec![layer]),
-            RenderUnit::Masked { mask, content, .. } => ((!mask.mask_inverted).then_some(mask), content),
+            RenderUnit::Masked { mask, content, .. } => ((!mask.mask.inverted).then_some(mask), content),
         };
         let Some(layer) = members.into_iter().find(|layer| layer.find(id).is_some()) else { continue };
         let clip = match (mask, clip) {
@@ -149,7 +149,7 @@ fn clipping_mask_area_in(layers: &[Layer], id: LayerId, offset: Vec2, clip: Opti
 
 /// Renders `mask` and `content` into two scratch pixmaps covering only the
 /// run's area (`masked_area`, clipped to `target`), clips the content
-/// scratch to the mask scratch's alpha (inverted for `mask_inverted`), and composites the result onto
+/// scratch to the mask scratch's alpha (inverted for `mask.inverted`), and composites the result onto
 /// `target` at that area. `offset`/`parent_opacity` are forwarded to
 /// `draw_layer` exactly as a normal recursive draw call would (see
 /// `export::draw_layer`'s `offset`/`render_scale` convention), shifted so
@@ -190,7 +190,7 @@ pub fn composite_masked_run(
     let Some(mut mask_scratch) = Pixmap::new(width, height) else { return };
     draw_layer(&mut mask_scratch, &crate::mask_outline::mask_silhouette(mask), scratch_offset, 1.0);
     let mut sk_mask = Mask::from_pixmap(mask_scratch.as_ref(), MaskType::Alpha);
-    if mask.mask_inverted {
+    if mask.mask.inverted {
         sk_mask.invert();
     }
 
@@ -205,7 +205,7 @@ pub fn composite_masked_run(
 
 /// Whether `mask` lets its content show at `point` — an alpha-accurate test
 /// against its silhouette (`mask_outline::mask_silhouette`, so its
-/// `mask_mode` counts), flipped for `mask_inverted` — in the same
+/// `mask.mode` counts), flipped for `mask.inverted` — in the same
 /// parent-relative coordinate space as `point` (matching `mask.frame`'s own
 /// space). Backs `canvas/hit_test.rs`'s hit-testing so a click inside a
 /// masked content layer's bounding box, but where the mask hides it,
@@ -218,7 +218,7 @@ pub fn composite_masked_run(
 /// `composite_masked_run`'s own mask pass) into a scratch pixmap sized to
 /// its bounds, which is cheap enough at click-time cadence.
 pub fn mask_reveals_point(mask: &Layer, point: Pos2) -> bool {
-    mask_covers_point(mask, point) != mask.mask_inverted
+    mask_covers_point(mask, point) != mask.mask.inverted
 }
 
 /// Whether `mask`'s silhouette has any alpha at `point` — see `mask_reveals_point`.
@@ -367,14 +367,14 @@ mod tests {
         let text = rect_layer("Text", Pos2::new(0.0, 0.0), Vec2::new(50.0, 50.0), Color32::BLACK);
         let text_id = text.id;
         let mut inner_mask = rect_layer("Inner", Pos2::new(10.0, 0.0), Vec2::new(100.0, 30.0), Color32::WHITE);
-        inner_mask.is_mask = true;
+        inner_mask.mask.enabled = true;
         let group = Layer::new(
             "Group",
             Frame { pos: Pos2::new(100.0, 100.0), size: Vec2::new(110.0, 50.0), rotation: 0.0 },
             LayerKind::Group { children: vec![text, inner_mask] },
         );
         let mut outer_mask = rect_layer("Outer", Pos2::new(0.0, 0.0), Vec2::new(130.0, 500.0), Color32::WHITE);
-        outer_mask.is_mask = true;
+        outer_mask.mask.enabled = true;
         let loose = rect_layer("Loose", Pos2::ZERO, Vec2::splat(10.0), Color32::BLACK);
         let loose_id = loose.id;
         let page = vec![loose, group, outer_mask];
@@ -405,7 +405,7 @@ mod tests {
         };
 
         assert_eq!(pixel(&render(&mask), 50, 50).alpha(), 0, "alpha mode: no fill reveals nothing inside");
-        mask.mask_mode = crate::model::MaskMode::Outline;
+        mask.mask.mode = crate::model::MaskMode::Outline;
         let outline = render(&mask);
         assert_eq!(pixel(&outline, 50, 50).alpha(), 255, "outline mode: the shape is fully revealed");
         assert_eq!(pixel(&outline, 2, 2).alpha(), 0, "outline mode: still clipped to the oval");
@@ -417,7 +417,7 @@ mod tests {
     fn inverted_mask_reveals_content_outside_its_shape() {
         let square = rect_layer("Square", Pos2::ZERO, Vec2::new(100.0, 100.0), Color32::RED);
         let mut mask = rect_layer("Mask", Pos2::new(25.0, 25.0), Vec2::new(50.0, 50.0), Color32::WHITE);
-        mask.mask_inverted = true;
+        mask.mask.inverted = true;
 
         let mut target = Pixmap::new(100, 100).unwrap();
         composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, 1.0, |px, l, off, op| {
@@ -434,22 +434,22 @@ mod tests {
     #[test]
     fn mask_with_no_preceding_content_is_dropped() {
         let mut mask_layer = oval_layer("Mask", Pos2::ZERO, Vec2::new(10.0, 10.0));
-        mask_layer.is_mask = true;
+        mask_layer.mask.enabled = true;
         let children = vec![mask_layer];
 
         let units = partition_mask_runs(&children);
         assert_eq!(units.len(), 0);
     }
 
-    /// `ignore_mask` opts a layer out of an active mask above it, keeping
+    /// `mask.ignore_underlying` opts a layer out of an active mask above it, keeping
     /// its exact depth (above the masked content it sits above).
     #[test]
     fn ignore_mask_layer_is_not_absorbed_into_the_masked_run() {
         let content = rect_layer("Content", Pos2::ZERO, Vec2::new(10.0, 10.0), Color32::BLUE);
         let mut ignored = rect_layer("Ignored", Pos2::ZERO, Vec2::new(10.0, 10.0), Color32::GREEN);
-        ignored.ignore_mask = true;
+        ignored.mask.ignore_underlying = true;
         let mut mask_layer = oval_layer("Mask", Pos2::ZERO, Vec2::new(10.0, 10.0));
-        mask_layer.is_mask = true;
+        mask_layer.mask.enabled = true;
         let children = vec![content, ignored, mask_layer];
 
         let units = partition_mask_runs(&children);
@@ -458,16 +458,16 @@ mod tests {
         assert!(matches!(units[1], RenderUnit::Plain(l) if l.name == "Ignored"));
     }
 
-    /// An `ignore_mask` layer interleaved in a run splits it into two
+    /// A `mask.ignore_underlying` layer interleaved in a run splits it into two
     /// pieces of the same mask, with the ignored layer drawn between them.
     #[test]
     fn interleaved_ignore_mask_layer_splits_the_run_at_its_exact_depth() {
         let below = rect_layer("Below", Pos2::ZERO, Vec2::new(10.0, 10.0), Color32::BLUE);
         let mut ignored = rect_layer("Ignored", Pos2::ZERO, Vec2::new(10.0, 10.0), Color32::GREEN);
-        ignored.ignore_mask = true;
+        ignored.mask.ignore_underlying = true;
         let above = rect_layer("Above", Pos2::ZERO, Vec2::new(10.0, 10.0), Color32::RED);
         let mut mask_layer = oval_layer("Mask", Pos2::ZERO, Vec2::new(10.0, 10.0));
-        mask_layer.is_mask = true;
+        mask_layer.mask.enabled = true;
         let children = vec![below, ignored, above, mask_layer];
 
         let units = partition_mask_runs(&children);

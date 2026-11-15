@@ -107,9 +107,12 @@ canvas is one. Besides <code>id</code>/<code>name</code>/<code>kind</code>, ever
       <code>stroke_opacity</code>, and stacked <code>shadows</code>/<code>inner_shadows</code>.</li>
   <li><code>visible</code>, <code>locked</code>, and <code>opacity</code> (multiplies into
       descendants' effective opacity when drawn).</li>
-  <li><code>is_mask</code>/<code>ignore_mask</code>/<code>mask_mode</code>/<code>mask_inverted</code>
-      — Sketch-style "use as mask", with Alpha/Outline modes and inversion; see
-      <code>masking.rs</code> and <a href="file-format.html">File Format</a>.</li>
+  <li><code>mask: MaskSettings</code> — Sketch-style "use as mask"
+      (<code>enabled</code>, <code>ignore_underlying</code>, Alpha/Outline <code>mode</code>,
+      <code>inverted</code>); see <code>masking.rs</code>. <code>#[serde(flatten)]</code> with
+      renamed fields, so on disk these are still the top-level keys <code>is_mask</code>/
+      <code>ignore_mask</code>/<code>mask_mode</code>/<code>mask_inverted</code> (see
+      <a href="file-format.html">File Format</a>).</li>
   <li><code>bool_op: BoolOp</code> — meaningful only as a direct child of a
       <code>BooleanGroup</code>, ignored everywhere else.</li>
   <li><code>style_id: Option&lt;Uuid&gt;</code> — links to a <code>Document::layer_styles</code>
@@ -164,6 +167,13 @@ old documents just load with that default. <code>CornerRadii</code> is the one e
 the reference pattern for any future non-additive change: it has a hand-written
 <code>Deserialize</code> accepting either a bare number (pre-per-corner-rounding files, applied
 uniformly to all four corners) or the current four-field object.
+</p>
+<p>
+To group related fields in Rust without changing the file format, use a sub-struct with
+<code>#[serde(flatten)]</code> and <code>#[serde(rename = "…")]</code> on its fields, as
+<code>Layer::mask</code> (<code>MaskSettings</code>) does — its keys stay exactly where older
+files have them. (<code>flatten</code> doesn't combine with <code>deny_unknown_fields</code>,
+which no model type uses.)
 </p>
 
 <h2 id="coordinate-system">Coordinate system convention</h2>

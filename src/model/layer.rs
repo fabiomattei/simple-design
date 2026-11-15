@@ -559,7 +559,7 @@ pub enum LayerKind {
     /// actually drawn/hit-tested is computed live on every call from
     /// `children` — see `boolean_ops::compute_boolean_group` — using this
     /// layer's own `style` for fill/stroke; children's own `style`/
-    /// `is_mask`/`ignore_mask`/`opacity` become inert once inside a
+    /// `mask`/`opacity` become inert once inside a
     /// `BooleanGroup` (only their geometry, their own `visible`, and their
     /// own `bool_op` participate). The bottommost (z-order-first,
     /// `children[0]`) child is always the base its siblings combine onto;
@@ -836,7 +836,36 @@ impl BoolOp {
     }
 }
 
-/// How a mask (`Layer::is_mask`) turns into a clip — see
+/// A layer's masking settings (`Layer::mask`). Grouped in Rust only: the
+/// fields keep their original JSON names (`is_mask`, `ignore_mask`,
+/// `mask_mode`, `mask_inverted`) and `Layer` flattens this struct, so the
+/// `.sdesign` format is unchanged. Each field is `#[serde(default)]`, so
+/// documents saved before it existed load with it off.
+/// `masking::partition_mask_runs` is the single place that interprets
+/// `enabled`/`ignore_underlying` for both `canvas/` and `export/`.
+#[derive(Clone, Copy, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
+pub struct MaskSettings {
+    /// "Use as Mask": when `true`, the layer's own fill/stroke are never
+    /// drawn — instead its silhouette clips the run of sibling layers
+    /// immediately below it (behind it, in the same parent's
+    /// `children`/`Page::layers` list) down to the previous mask or the start
+    /// of the list.
+    #[serde(default, rename = "is_mask")]
+    pub enabled: bool,
+    /// "Ignore Underlying Mask": opts the layer out of being clipped by a
+    /// mask above it, so it always renders normally, at its exact depth.
+    #[serde(default, rename = "ignore_mask")]
+    pub ignore_underlying: bool,
+    /// How the layer clips its content when `enabled` — ignored otherwise.
+    #[serde(default, rename = "mask_mode")]
+    pub mode: MaskMode,
+    /// When `enabled`, reveals its content *outside* the mask's shape
+    /// instead of inside it — ignored otherwise.
+    #[serde(default, rename = "mask_inverted")]
+    pub inverted: bool,
+}
+
+/// How a mask (`MaskSettings::enabled`) turns into a clip — see
 /// `masking::composite_masked_run`.
 #[derive(Clone, Copy, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub enum MaskMode {
@@ -986,31 +1015,14 @@ pub struct Layer {
     /// `draw_layer`), rather than each layer's opacity being independent.
     #[serde(default = "default_opacity")]
     pub opacity: f32,
-    /// "Use as Mask": when `true`, this layer's own fill/stroke
-    /// are never drawn — instead its silhouette clips the run of sibling
-    /// layers immediately below it (behind it, in the same parent's
-    /// `children`/`Page::layers` list) down to the previous mask or the start
-    /// of the list. See `masking::partition_mask_runs`, the single place
-    /// that interprets this field (and `ignore_mask` below) for both
-    /// `canvas/` and `export/`. `#[serde(default)]` so documents saved
-    /// before this field existed load with masking off everywhere.
-    #[serde(default)]
-    pub is_mask: bool,
-    /// "Ignore Underlying Mask": opts this layer out of being
-    /// clipped by a mask above it, so it always renders normally regardless
-    /// of `is_mask` layers elsewhere in the same parent's children.
-    #[serde(default)]
-    pub ignore_mask: bool,
-    /// How this layer clips its content when `is_mask` — ignored otherwise.
-    #[serde(default)]
-    pub mask_mode: MaskMode,
-    /// When `is_mask`, reveals its content *outside* the mask's shape
-    /// instead of inside it — ignored otherwise.
-    #[serde(default)]
-    pub mask_inverted: bool,
+    /// Masking ("Use as Mask" and friends) — see `MaskSettings`. Flattened,
+    /// so its fields sit directly on the layer in the saved JSON, exactly as
+    /// they did before they were grouped here.
+    #[serde(flatten)]
+    pub mask: MaskSettings,
     /// The combine mode this layer contributes when it's a direct child of
     /// a `LayerKind::BooleanGroup` — ignored everywhere else, same "one
-    /// field, many places ignore it" convention as `is_mask`/`ignore_mask`
+    /// field, many places ignore it" convention as `mask`
     /// above. A `BooleanGroup`'s own bottommost (z-order-first) child's
     /// `bool_op` is also ignored — it's always the base the others combine
     /// onto, regardless of what's stored here.
@@ -1038,10 +1050,7 @@ impl Layer {
             visible: true,
             locked: false,
             opacity: 1.0,
-            is_mask: false,
-            ignore_mask: false,
-            mask_mode: MaskMode::default(),
-            mask_inverted: false,
+            mask: MaskSettings::default(),
             bool_op: BoolOp::default(),
             style_id: None,
             kind,
@@ -1168,6 +1177,30 @@ impl Layer {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// `Layer::mask` is a Rust-side grouping only: the saved JSON keeps the
+    /// four original top-level keys (no nested `mask` object), and a layer
+    /// saved before any of them existed still loads, with masking off.
+    #[test]
+    fn mask_settings_keep_the_flat_file_format() {
+        let mut layer = Layer::new("Mask", Frame { pos: Pos2::ZERO, size: Vec2::splat(10.0), rotation: 0.0 }, LayerKind::Oval);
+        layer.mask = MaskSettings { enabled: true, ignore_underlying: false, mode: MaskMode::Outline, inverted: true };
+
+        let json = serde_json::to_value(&layer).unwrap();
+        assert_eq!(json["is_mask"], serde_json::json!(true));
+        assert_eq!(json["ignore_mask"], serde_json::json!(false));
+        assert_eq!(json["mask_mode"], serde_json::json!("Outline"));
+        assert_eq!(json["mask_inverted"], serde_json::json!(true));
+        assert!(json.get("mask").is_none(), "no nested `mask` object on disk");
+        assert_eq!(serde_json::from_value::<Layer>(json.clone()).unwrap(), layer, "round-trips unchanged");
+
+        let mut old = json;
+        for key in ["is_mask", "ignore_mask", "mask_mode", "mask_inverted"] {
+            old.as_object_mut().unwrap().remove(key);
+        }
+        let loaded: Layer = serde_json::from_value(old).unwrap();
+        assert_eq!(loaded.mask, MaskSettings::default());
+    }
 
     /// `t_in_rect` measures in the painted rect's own space: on a 200x100
     /// rect a default radial gradient is a circle of radius 100 (not an

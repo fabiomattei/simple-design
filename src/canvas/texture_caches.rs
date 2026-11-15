@@ -217,7 +217,7 @@ impl MaskedGroupTextureCache {
     /// frame after the document is painted. Unlike the other caches'
     /// `evict_stale` (keyed by layer id alone), this also drops pieces of a
     /// masked run that no longer exist while the mask itself does (e.g. an
-    /// `ignore_mask` layer that split it was removed), and runs that aren't
+    /// `mask.ignore_underlying` layer that split it was removed), and runs that aren't
     /// currently drawn (they rebuild when shown again).
     pub(super) fn evict_unused(&mut self) {
         let used = std::mem::take(&mut self.used);

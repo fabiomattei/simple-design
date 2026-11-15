@@ -279,7 +279,7 @@ mod tests {
             Frame { pos: Pos2::new(0.0, 0.0), size: Vec2::new(100.0, 100.0), rotation: 0.0 },
             LayerKind::Oval,
         );
-        mask.is_mask = true;
+        mask.mask.enabled = true;
         let mask_id = mask.id;
 
         let mut doc = Document::new();
@@ -309,7 +309,7 @@ mod tests {
             Frame { pos: Pos2::new(0.0, 0.0), size: Vec2::new(100.0, 100.0), rotation: 0.0 },
             LayerKind::Oval,
         );
-        mask.is_mask = true;
+        mask.mask.enabled = true;
         let mask_id = mask.id;
         let group = Layer::new(
             "Group",
@@ -393,7 +393,7 @@ mod tests {
             Frame { pos: Pos2::new(0.0, 0.0), size: Vec2::new(30.0, 60.0), rotation: 0.0 },
             LayerKind::Rectangle { corner_radius: CornerRadii::ZERO },
         );
-        mask.is_mask = true;
+        mask.mask.enabled = true;
 
         let mut doc = Document::new();
         doc.active_page_mut().layers.push(group);

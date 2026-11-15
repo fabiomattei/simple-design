@@ -281,23 +281,23 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             }
             let layer = doc.find_mut(args.id).ok_or_else(|| format!("layer not found: {}", args.id))?;
             if let Some(mask) = args.mask {
-                layer.is_mask = mask;
+                layer.mask.enabled = mask;
             }
             if let Some(ignore_mask) = args.ignore_mask {
-                layer.ignore_mask = ignore_mask;
+                layer.mask.ignore_underlying = ignore_mask;
             }
             if let Some(mode) = args.mode {
-                layer.mask_mode = mode;
+                layer.mask.mode = mode;
             }
             if let Some(inverted) = args.inverted {
-                layer.mask_inverted = inverted;
+                layer.mask.inverted = inverted;
             }
             Ok(json!({
                 "id": args.id,
-                "is_mask": layer.is_mask,
-                "ignore_mask": layer.ignore_mask,
-                "mask_mode": layer.mask_mode,
-                "mask_inverted": layer.mask_inverted,
+                "is_mask": layer.mask.enabled,
+                "ignore_mask": layer.mask.ignore_underlying,
+                "mask_mode": layer.mask.mode,
+                "mask_inverted": layer.mask.inverted,
             }))
         }
 
@@ -473,13 +473,13 @@ mod tests {
 
         apply(&mut doc, "set_mask", json!({ "id": id, "mask": true })).expect("set_mask should succeed");
         let layer = doc.find(id).unwrap();
-        assert!(layer.is_mask);
-        assert!(!layer.ignore_mask);
+        assert!(layer.mask.enabled);
+        assert!(!layer.mask.ignore_underlying);
 
         apply(&mut doc, "set_mask", json!({ "id": id, "ignore_mask": true })).expect("set_mask should succeed");
         let layer = doc.find(id).unwrap();
-        assert!(layer.is_mask, "omitted `mask` stays unchanged");
-        assert!(layer.ignore_mask);
+        assert!(layer.mask.enabled, "omitted `mask` stays unchanged");
+        assert!(layer.mask.ignore_underlying);
 
         assert!(apply(&mut doc, "set_mask", json!({ "id": id })).is_err());
     }
@@ -491,9 +491,9 @@ mod tests {
 
         apply(&mut doc, "set_mask", json!({ "id": id, "mode": "Outline", "inverted": true })).expect("set_mask should succeed");
         let layer = doc.find(id).unwrap();
-        assert_eq!(layer.mask_mode, crate::model::MaskMode::Outline);
-        assert!(layer.mask_inverted);
-        assert!(!layer.is_mask, "omitted `mask` stays unchanged");
+        assert_eq!(layer.mask.mode, crate::model::MaskMode::Outline);
+        assert!(layer.mask.inverted);
+        assert!(!layer.mask.enabled, "omitted `mask` stays unchanged");
     }
 
     #[test]

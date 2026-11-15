@@ -110,7 +110,8 @@ depends on the specific <code>LayerKind</code> variant).
 <h3>Masking fields</h3>
 <p>
 Four fields control masking; all are <code>#[serde(default)]</code>, so files saved before any
-of them existed load with masking off.
+of them existed load with masking off. In Rust they're grouped as <code>Layer::mask</code>
+(<code>MaskSettings</code>), flattened, so on disk they stay plain top-level keys.
 </p>
 <table>
   <tr><th>Field</th><th>Meaning</th></tr>

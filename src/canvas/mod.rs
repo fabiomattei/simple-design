@@ -609,12 +609,12 @@ impl CanvasWidget {
     /// starts editing the new label immediately. Returns its id, or `None`
     /// if `shape_id` isn't found or isn't safe to wrap: a mask (its clipping
     /// depends on staying a direct sibling of what it masks — see
-    /// `Layer::is_mask`) or a `BooleanGroup` child (its combine-op geometry
+    /// `MaskSettings::enabled`) or a `BooleanGroup` child (its combine-op geometry
     /// depends on staying a direct child of the group).
     pub fn add_shape_label(&mut self, history: &mut History, shape_id: LayerId) -> Option<LayerId> {
         let page = history.get().active_page();
         let shape = page.find(shape_id)?;
-        if shape.is_mask {
+        if shape.mask.enabled {
             return None;
         }
         if let Some((Some(parent_id), _)) = grouping::parent_and_index(&page.layers, shape_id)

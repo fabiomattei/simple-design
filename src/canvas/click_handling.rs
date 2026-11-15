@@ -223,7 +223,7 @@ impl CanvasWidget {
                 let doc_pos = self.to_doc(origin, mouse);
                 let page = history.get().active_page();
                 if let Some(mask_id) = hit_test(page, doc_pos)
-                    && page.find(mask_id).is_some_and(|l| l.is_mask) {
+                    && page.find(mask_id).is_some_and(|l| l.mask.enabled) {
                         if let Some(content_id) = hit_test_through_mask(page, mask_id, doc_pos) {
                             let is_text = matches!(page.find(content_id).map(|l| &l.kind), Some(LayerKind::Text { .. }));
                             *selection = vec![content_id];

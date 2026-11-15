@@ -18,13 +18,13 @@ pub enum LayerAction {
     Paste,
     PasteOver,
     Rename(LayerId, String),
-    /// Sketch's "Use as Mask" — see `Layer::is_mask`.
+    /// Sketch's "Use as Mask" — see `MaskSettings::enabled`.
     ToggleMask(LayerId),
-    /// Sketch's "Ignore Underlying Mask" — see `Layer::ignore_mask`.
+    /// Sketch's "Ignore Underlying Mask" — see `MaskSettings::ignore_underlying`.
     ToggleIgnoreMask(LayerId),
-    /// A mask's Alpha/Outline mode — see `Layer::mask_mode`.
+    /// A mask's Alpha/Outline mode — see `MaskSettings::mode`.
     SetMaskMode(LayerId, MaskMode),
-    /// "Invert Mask" — see `Layer::mask_inverted`.
+    /// "Invert Mask" — see `MaskSettings::inverted`.
     ToggleMaskInverted(LayerId),
     /// Drag-and-drop reorder/reparent — see `grouping::move_layer` for the
     /// exact semantics of `new_parent`/`index`, which this mirrors exactly
@@ -165,8 +165,8 @@ impl LayersPanel {
                 actions.push(LayerAction::ToggleLocked(layer.id));
             }
             icon_for(ui, &layer.kind);
-            if layer.is_mask {
-                let badge = match (layer.mask_mode, layer.mask_inverted) {
+            if layer.mask.enabled {
+                let badge = match (layer.mask.mode, layer.mask.inverted) {
                     (MaskMode::Alpha, false) => "[Mask]",
                     (MaskMode::Outline, false) => "[Mask: Outline]",
                     (MaskMode::Alpha, true) => "[Mask: Inverted]",
@@ -175,7 +175,7 @@ impl LayersPanel {
                 ui.label(egui::RichText::new(badge).weak().color(egui::Color32::from_rgb(100, 140, 220)))
                     .on_hover_text("Masks the layers below it in this group");
             }
-            if layer.ignore_mask {
+            if layer.mask.ignore_underlying {
                 ui.label(egui::RichText::new("[Ignores Mask]").weak())
                     .on_hover_text("Not clipped by any mask above it");
             }
@@ -273,28 +273,28 @@ impl LayersPanel {
                         ui.close();
                     }
                     ui.separator();
-                    let mut is_mask = layer.is_mask;
+                    let mut is_mask = layer.mask.enabled;
                     if ui.checkbox(&mut is_mask, "Use as Mask").clicked() {
                         actions.push(LayerAction::ToggleMask(layer.id));
                         ui.close();
                     }
-                    if layer.is_mask {
+                    if layer.mask.enabled {
                         ui.horizontal(|ui| {
                             ui.label("Mask Mode:");
                             for mode in [MaskMode::Alpha, MaskMode::Outline] {
-                                if ui.selectable_label(layer.mask_mode == mode, mode.label()).clicked() {
+                                if ui.selectable_label(layer.mask.mode == mode, mode.label()).clicked() {
                                     actions.push(LayerAction::SetMaskMode(layer.id, mode));
                                     ui.close();
                                 }
                             }
                         });
-                        let mut inverted = layer.mask_inverted;
+                        let mut inverted = layer.mask.inverted;
                         if ui.checkbox(&mut inverted, "Invert Mask").clicked() {
                             actions.push(LayerAction::ToggleMaskInverted(layer.id));
                             ui.close();
                         }
                     }
-                    let mut ignore_mask = layer.ignore_mask;
+                    let mut ignore_mask = layer.mask.ignore_underlying;
                     if ui.checkbox(&mut ignore_mask, "Ignore Underlying Mask").clicked() {
                         actions.push(LayerAction::ToggleIgnoreMask(layer.id));
                         ui.close();
