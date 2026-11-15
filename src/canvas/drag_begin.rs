@@ -412,6 +412,8 @@ impl CanvasWidget {
         origin: Pos2,
     ) {
         if !self.try_close_pen_path(doc_pos, origin, history, selection, tool) {
+            // Same reason as the click path in `handle_pen_input`.
+            selection.clear();
             let point_index = {
                 let points = self.pen.get_or_insert_with(Vec::new);
                 points.push(PathPoint {

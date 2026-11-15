@@ -119,6 +119,16 @@ impl CanvasWidget {
             } else if ui.input(|i| i.key_pressed(egui::Key::Escape)) {
                 self.pen = None;
                 self.drag = DragState::None;
+            } else if ui.input(|i| i.key_pressed(egui::Key::Backspace) || i.key_pressed(egui::Key::Delete)) {
+                // Removes the last placed point; removing the only one
+                // cancels the path, same as Escape.
+                if let Some(points) = &mut self.pen {
+                    points.pop();
+                    if points.is_empty() {
+                        self.pen = None;
+                    }
+                }
+                self.drag = DragState::None;
             }
         }
         if *tool == Tool::Pen {
@@ -128,6 +138,9 @@ impl CanvasWidget {
                 let mouse = response.interact_pointer_pos().unwrap_or(origin);
                 let doc_pos = self.to_doc(origin, mouse);
                 if !self.try_close_pen_path(doc_pos, origin, history, selection, tool) {
+                    // Drop the pre-pen selection so app-level shortcuts
+                    // (Delete/Backspace, arrow nudge) can't hit it mid-path.
+                    selection.clear();
                     self.pen.get_or_insert_with(Vec::new).push(PathPoint {
                         anchor: doc_pos,
                         handle_in: None,

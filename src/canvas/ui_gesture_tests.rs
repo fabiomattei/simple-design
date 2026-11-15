@@ -9,7 +9,7 @@
 use egui::{Event, Key, Modifiers, PointerButton, Pos2, Rect, Vec2};
 
 use crate::history::History;
-use crate::model::{CornerRadii, Document, Frame, GuideOrientation, Layer, LayerId, LayerKind};
+use crate::model::{CornerRadii, Document, Frame, GuideOrientation, Layer, LayerId, LayerKind, PointType};
 use crate::tools::Tool;
 
 use super::layer_creation::new_layer_for_tool;
@@ -273,6 +273,66 @@ fn pen_clicks_then_enter_commit_an_open_path() {
     };
     assert_eq!(points.len(), 3);
     assert!(!closed);
+}
+
+#[test]
+fn pen_double_click_commits_without_curving_the_last_anchor() {
+    let mut h = Harness::new(Vec::new());
+    h.tool = Tool::Pen;
+    for doc in [Pos2::new(100.0, 100.0), Pos2::new(200.0, 100.0)] {
+        h.click(doc, Modifiers::NONE);
+        // Let the double-click window lapse between separate clicks.
+        for _ in 0..10 {
+            h.frame(Vec::new());
+        }
+    }
+    h.double_click(Pos2::new(200.0, 200.0));
+    let page = h.history.get().active_page();
+    assert_eq!(page.layers.len(), 1);
+    let LayerKind::Path { points, .. } = &page.layers[0].kind else {
+        panic!("expected a Path layer, got {:?}", page.layers[0].kind);
+    };
+    assert_eq!(points.len(), 3);
+    let last = points[2];
+    assert_eq!(last.point_type, PointType::Straight);
+    assert_eq!((last.handle_in, last.handle_out), (None, None));
+}
+
+#[test]
+fn pen_backspace_removes_the_last_point_then_cancels_the_path() {
+    let mut h = Harness::new(Vec::new());
+    h.tool = Tool::Pen;
+    for doc in [Pos2::new(100.0, 100.0), Pos2::new(200.0, 100.0)] {
+        h.click(doc, Modifiers::NONE);
+        for _ in 0..10 {
+            h.frame(Vec::new());
+        }
+    }
+    h.key(Key::Backspace);
+    let anchors: Vec<Pos2> = h.widget.pen.as_ref().expect("path still in progress").iter().map(|p| p.anchor).collect();
+    assert_eq!(anchors, vec![Pos2::new(100.0, 100.0)]);
+
+    h.key(Key::Backspace);
+    assert!(h.widget.pen.is_none());
+    assert!(h.history.get().active_page().layers.is_empty());
+}
+
+#[test]
+fn pen_click_and_drag_clear_the_previous_selection() {
+    let other = rect_layer("Other", 500.0, 400.0, 50.0, 50.0);
+    let other_id = other.id;
+    let mut h = Harness::new(vec![other]);
+
+    h.selection = vec![other_id];
+    h.tool = Tool::Pen;
+    h.click(Pos2::new(100.0, 100.0), Modifiers::NONE);
+    assert!(h.selection.is_empty());
+
+    h.key(Key::Escape);
+    h.selection = vec![other_id];
+    h.tool = Tool::Pen;
+    h.drag(Pos2::new(100.0, 100.0), Pos2::new(150.0, 100.0));
+    assert!(h.selection.is_empty());
 }
 
 #[test]

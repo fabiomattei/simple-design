@@ -704,9 +704,14 @@ impl CanvasWidget {
         self.handle_dropped_images(ui, history, selection, layout);
         self.scope_point_selection(ui, history, tool, selection);
         self.scope_image_edit(ui, history);
+        // A Pen double-click commits the path and flips `*tool` to Select
+        // within this same frame; the Select-tool double-click handlers
+        // below must not then also act on that same double-click (they'd
+        // curve the path's last anchor, or label a shape under it).
+        let tool_at_frame_start = *tool;
         self.handle_pen_input(ui, &response, history, tool, selection, layout.origin);
-        self.handle_path_point_clicks(ui, &response, history, tool, selection, layout.origin);
-        self.handle_text_double_click(&response, history, tool, selection, layout.origin);
+        self.handle_path_point_clicks(ui, &response, history, &tool_at_frame_start, selection, layout.origin);
+        self.handle_text_double_click(&response, history, &tool_at_frame_start, selection, layout.origin);
         self.handle_scissors_click(&response, history, tool, selection, layout.origin);
 
         self.paint_document(ui, &canvas_painter, history, layout);
