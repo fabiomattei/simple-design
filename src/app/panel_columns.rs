@@ -1,10 +1,10 @@
-//! The dockable side panels (Layers, Palette, Inspector, Minimap): each
+//! The dockable side panels (Layers, Palette, Inspector, CSS, Minimap): each
 //! window side's icon rail (`ui/panel_rail.rs`) plus the column its open
 //! panels stack into, per the persisted `PanelLayout`.
 
 use crate::panel_layout::{DockSide, PanelKind};
 use crate::ui::inspector::{self, InspectorAction};
-use crate::ui::{minimap_panel, palette_panel, panel_rail};
+use crate::ui::{css_panel, minimap_panel, palette_panel, panel_rail};
 
 use super::App;
 
@@ -35,6 +35,7 @@ impl App {
                 (PanelKind::Layers, &mut self.show_layers_panel),
                 (PanelKind::Palette, &mut self.show_palette_panel),
                 (PanelKind::Inspector, &mut self.show_inspector_panel),
+                (PanelKind::Css, &mut self.show_css_panel),
                 (PanelKind::Minimap, &mut self.show_minimap_panel),
             ]
             .into_iter()
@@ -67,6 +68,7 @@ impl App {
                         let action = self.draw_inspector_panel(ui, is_last);
                         self.apply_inspector_action(action);
                     }
+                    PanelKind::Css => self.draw_css_panel(ui, is_last),
                     PanelKind::Minimap => self.draw_minimap_panel(ui),
                 }
             }
@@ -78,6 +80,7 @@ impl App {
             PanelKind::Layers => self.show_layers_panel,
             PanelKind::Palette => self.show_palette_panel,
             PanelKind::Inspector => self.show_inspector_panel,
+            PanelKind::Css => self.show_css_panel,
             PanelKind::Minimap => self.show_minimap_panel,
         }
     }
@@ -114,6 +117,12 @@ impl App {
             });
         });
         action
+    }
+
+    fn draw_css_panel(&mut self, ui: &mut egui::Ui, is_last: bool) {
+        panel_rail::stacked_panel(ui, "css_panel", &mut self.css_panel_height, is_last, |ui| {
+            css_panel::ui(ui, self.history.get(), &self.selection);
+        });
     }
 
     fn apply_inspector_action(&mut self, action: Option<InspectorAction>) {

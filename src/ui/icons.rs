@@ -738,6 +738,25 @@ pub fn draw_inspector_icon(painter: &Painter, rect: Rect, color: Color32) {
     }
 }
 
+/// Draws the panel rail's "CSS" glyph: a pair of curly braces.
+pub fn draw_css_icon(painter: &Painter, rect: Rect, color: Color32) {
+    let s = stroke(color);
+    for (outer, inner) in [(0.30, 0.20), (0.70, 0.80)] {
+        painter.add(Shape::line(
+            vec![
+                p(rect, outer, 0.12),
+                p(rect, (outer + inner) / 2.0, 0.16),
+                p(rect, (outer + inner) / 2.0, 0.44),
+                p(rect, inner, 0.50),
+                p(rect, (outer + inner) / 2.0, 0.56),
+                p(rect, (outer + inner) / 2.0, 0.84),
+                p(rect, outer, 0.88),
+            ],
+            s,
+        ));
+    }
+}
+
 /// Draws the panel rail's "Minimap" glyph: a document frame with the visible-viewport box
 /// inside it, matching what `ui/minimap_panel.rs` actually renders.
 pub fn draw_minimap_icon(painter: &Painter, rect: Rect, color: Color32) {

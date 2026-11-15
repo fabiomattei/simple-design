@@ -1,5 +1,6 @@
 pub mod arrange_icons;
 pub mod color_picker;
+pub mod css_panel;
 pub mod export_dialog;
 pub mod icons;
 pub mod inspector;

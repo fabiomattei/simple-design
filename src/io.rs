@@ -65,6 +65,18 @@ pub fn export_image_dialog(layer_name: &str, format: crate::export::ExportFormat
         .save_file()
 }
 
+/// Folder picker for "Export Selection as HTML" — the export creates its
+/// own subfolder inside the chosen one (see `html_export::export_html`).
+pub fn export_html_dialog() -> Option<PathBuf> {
+    rfd::FileDialog::new().set_title("Export as HTML into folder").pick_folder()
+}
+
+/// Blocking native error alert, for failures with no in-app place to show
+/// them (e.g. a menu action with no dialog of its own).
+pub fn show_error(title: &str, message: &str) {
+    rfd::MessageDialog::new().set_level(rfd::MessageLevel::Error).set_title(title).set_description(message).show();
+}
+
 /// Serializes `document` as pretty-printed JSON and writes it to `path`.
 pub fn save_to(path: &PathBuf, document: &Document) -> anyhow::Result<()> {
     let json = serde_json::to_string_pretty(document)?;

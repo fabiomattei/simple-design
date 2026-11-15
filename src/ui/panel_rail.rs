@@ -39,6 +39,7 @@ fn icon_for(panel: PanelKind) -> fn(&Painter, Rect, Color32) {
         PanelKind::Layers => icons::draw_layers_icon,
         PanelKind::Palette => icons::draw_palette_icon,
         PanelKind::Inspector => icons::draw_inspector_icon,
+        PanelKind::Css => icons::draw_css_icon,
         PanelKind::Minimap => icons::draw_minimap_icon,
     }
 }

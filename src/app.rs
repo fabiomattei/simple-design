@@ -76,7 +76,10 @@ pub struct App {
     /// Aseprite-style bird's-eye view of the active page with a draggable
     /// viewport outline. Same runtime-only convention as `show_palette_panel`.
     show_minimap_panel: bool,
-    /// Which side each of those four panels docks on — persisted across
+    /// View menu toggle for the read-only CSS panel (`ui/css_panel.rs`) —
+    /// same runtime-only convention as `show_palette_panel`.
+    show_css_panel: bool,
+    /// Which side each of those five panels docks on — persisted across
     /// sessions, see `panel_layout.rs`.
     panel_layout: PanelLayout,
     /// Mouse-draggable heights for the stacked right-side panels (see
@@ -85,6 +88,7 @@ pub struct App {
     layers_panel_height: f32,
     palette_panel_height: f32,
     inspector_panel_height: f32,
+    css_panel_height: f32,
     /// Bound to `current_path` whenever it's `Some` (see
     /// `ipc_dispatch::sync_ipc`) — `None` while the document is untitled,
     /// since there's nothing to key a socket on yet.
@@ -120,10 +124,12 @@ impl App {
             show_layers_panel: true,
             show_inspector_panel: true,
             show_minimap_panel: true,
+            show_css_panel: false,
             panel_layout: PanelLayout::load(),
             layers_panel_height: 260.0,
             palette_panel_height: 220.0,
             inspector_panel_height: 300.0,
+            css_panel_height: 220.0,
             ipc: None,
             ipc_tx,
             ipc_rx,
@@ -652,6 +658,25 @@ impl App {
         }
     }
 
+    /// Asks for a folder and exports the single selected layer into it as
+    /// HTML + CSS + images (see `html_export`). Failures are shown in a
+    /// native alert, since this action has no dialog of its own.
+    fn export_selection_as_html(&mut self) {
+        let [id] = self.selection.as_slice() else {
+            return;
+        };
+        let page = self.history.get().active_page();
+        let Some(layer) = page.find(*id) else {
+            return;
+        };
+        let Some(parent_dir) = io::export_html_dialog() else {
+            return;
+        };
+        if let Err(error) = crate::html_export::export_html(layer, &page.layers, &parent_dir) {
+            io::show_error("HTML export failed", &error.to_string());
+        }
+    }
+
     fn handle_shortcuts(&mut self, ctx: &Context) {
         let any_focused = ctx.memory(|m| m.focused().is_some());
         if !any_focused {
@@ -931,6 +956,13 @@ impl eframe::App for App {
                         self.open_export_dialog();
                         ui.close();
                     }
+                    if ui
+                        .add_enabled(self.selection.len() == 1, egui::Button::new("Export Selection as HTML..."))
+                        .clicked()
+                    {
+                        self.export_selection_as_html();
+                        ui.close();
+                    }
                     ui.separator();
                     if ui
                         .button("Reduce File Size")
@@ -1155,6 +1187,9 @@ impl eframe::App for App {
                         ui.close();
                     }
                     if ui.checkbox(&mut self.show_inspector_panel, "Inspector").clicked() {
+                        ui.close();
+                    }
+                    if ui.checkbox(&mut self.show_css_panel, "CSS").clicked() {
                         ui.close();
                     }
                     if ui.checkbox(&mut self.show_minimap_panel, "Minimap").clicked() {

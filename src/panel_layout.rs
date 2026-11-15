@@ -1,4 +1,4 @@
-//! Which window side each dockable panel (Layers, Palette, Inspector,
+//! Which window side each dockable panel (Layers, Palette, Inspector, CSS,
 //! Minimap) is docked on, kept in `panels.json` in the app's config folder
 //! (see `config_dir.rs`) so it survives restarts. Same error policy as
 //! `recent_files.rs`: a missing or unreadable file falls back to the default
@@ -29,18 +29,21 @@ pub enum PanelKind {
     Layers,
     Palette,
     Inspector,
+    Css,
     Minimap,
 }
 
 impl PanelKind {
     /// Top-to-bottom order, both within a side's column and on its icon rail.
-    pub const ALL: [PanelKind; 4] = [Self::Layers, Self::Palette, Self::Inspector, Self::Minimap];
+    /// Minimap must stay last — see `app/panel_columns.rs::draw_minimap_panel`.
+    pub const ALL: [PanelKind; 5] = [Self::Layers, Self::Palette, Self::Inspector, Self::Css, Self::Minimap];
 
     pub fn label(self) -> &'static str {
         match self {
             Self::Layers => "Layers",
             Self::Palette => "Palette",
             Self::Inspector => "Inspector",
+            Self::Css => "CSS",
             Self::Minimap => "Minimap",
         }
     }
@@ -54,12 +57,13 @@ pub struct PanelLayout {
     layers: DockSide,
     palette: DockSide,
     inspector: DockSide,
+    css: DockSide,
     minimap: DockSide,
 }
 
 impl Default for PanelLayout {
     fn default() -> Self {
-        Self { layers: DockSide::Right, palette: DockSide::Right, inspector: DockSide::Right, minimap: DockSide::Right }
+        Self { layers: DockSide::Right, palette: DockSide::Right, inspector: DockSide::Right, css: DockSide::Right, minimap: DockSide::Right }
     }
 }
 
@@ -76,6 +80,7 @@ impl PanelLayout {
             PanelKind::Layers => self.layers,
             PanelKind::Palette => self.palette,
             PanelKind::Inspector => self.inspector,
+            PanelKind::Css => self.css,
             PanelKind::Minimap => self.minimap,
         }
     }
@@ -86,6 +91,7 @@ impl PanelLayout {
             PanelKind::Layers => self.layers = side,
             PanelKind::Palette => self.palette = side,
             PanelKind::Inspector => self.inspector = side,
+            PanelKind::Css => self.css = side,
             PanelKind::Minimap => self.minimap = side,
         }
         self.store();
@@ -122,5 +128,13 @@ mod tests {
         let layout: PanelLayout = serde_json::from_str(r#"{ "layers": "Left" }"#).unwrap();
         assert_eq!(layout.side(PanelKind::Layers), DockSide::Left);
         assert_eq!(layout.side(PanelKind::Inspector), DockSide::Right);
+    }
+
+    #[test]
+    fn a_file_saved_before_the_css_panel_existed_still_loads() {
+        let json = r#"{ "layers": "Left", "palette": "Right", "inspector": "Left", "minimap": "Right" }"#;
+        let layout: PanelLayout = serde_json::from_str(json).unwrap();
+        assert_eq!(layout.side(PanelKind::Inspector), DockSide::Left);
+        assert_eq!(layout.side(PanelKind::Css), DockSide::Right);
     }
 }
