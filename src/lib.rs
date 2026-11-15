@@ -1,4 +1,5 @@
 pub mod alignment;
+pub mod arrange;
 pub mod boolean_ops;
 pub mod canvas;
 pub mod clipboard;

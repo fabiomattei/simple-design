@@ -1,5 +1,6 @@
 use egui::Ui;
 
+use crate::arrange::ArrangeCommand;
 use crate::model::{BoolOp, Layer, LayerId, LayerKind, MaskMode, Page};
 use crate::ui::icons;
 
@@ -32,6 +33,9 @@ pub enum LayerAction {
     /// happens in `app.rs`'s action dispatch, same as every other action
     /// here).
     Move { id: LayerId, new_parent: Option<LayerId>, index: usize },
+    /// Right-click Bring Forward/Send Backward/etc. on this one row's layer —
+    /// see `arrange::arrange`.
+    Arrange(LayerId, ArrangeCommand),
     /// Reassigns a `BooleanGroup` child's combine mode — see `Layer::bool_op`.
     SetChildBoolOp(LayerId, BoolOp),
 }
@@ -148,7 +152,7 @@ impl LayersPanel {
             // so ordinary clicks (select, toggle, rename) would regularly get
             // swallowed into starting a reorder-drag instead.
             ui.dnd_drag_source(drag_id, layer.id, |ui| {
-                ui.label(egui::RichText::new("::").weak())
+                ui.label("::")
                     .on_hover_text("Drag to reorder")
                     .on_hover_cursor(egui::CursorIcon::Grab);
             });
@@ -258,6 +262,13 @@ impl LayersPanel {
                     if ui.button("Delete").clicked() {
                         actions.push(LayerAction::Delete(layer.id));
                         ui.close();
+                    }
+                    ui.separator();
+                    for command in ArrangeCommand::ALL {
+                        if ui.button(command.label()).clicked() {
+                            actions.push(LayerAction::Arrange(layer.id, command));
+                            ui.close();
+                        }
                     }
                     ui.separator();
                     if ui.button("Copy").clicked() {

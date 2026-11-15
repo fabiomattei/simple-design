@@ -3,6 +3,7 @@ use std::path::PathBuf;
 use egui::Context;
 
 use crate::alignment::{self, AlignEdge, DistributeAxis};
+use crate::arrange::{self, ArrangeCommand};
 use crate::boolean_ops;
 use crate::canvas::CanvasWidget;
 use crate::clipboard;
@@ -205,6 +206,15 @@ impl App {
         if let Some(group_id) = grouping::group_layers(self.history.mutate().active_page_mut(), &ids) {
             self.selection = vec![group_id];
         }
+    }
+
+    fn arrange_selection(&mut self, command: ArrangeCommand) {
+        if self.selection.is_empty() {
+            return;
+        }
+        let ids = self.selection.clone();
+        self.history.snapshot();
+        arrange::arrange(self.history.mutate().active_page_mut(), &ids, command);
     }
 
     fn flip_selection(&mut self, axis: FlipAxis) {
@@ -673,6 +683,17 @@ impl App {
         if ctx.input(|i| i.key_pressed(egui::Key::M) && i.modifiers.command && i.modifiers.shift) {
             self.toggle_mask_selection();
         }
+        // ⌘] / ⌘[ step one layer forward/backward; adding ⌥ goes all the way
+        // to the front/back.
+        if !any_focused {
+            let alt = ctx.input(|i| i.modifiers.alt);
+            if ctx.input(|i| i.key_pressed(egui::Key::CloseBracket) && i.modifiers.command) {
+                self.arrange_selection(if alt { ArrangeCommand::BringToFront } else { ArrangeCommand::BringForward });
+            }
+            if ctx.input(|i| i.key_pressed(egui::Key::OpenBracket) && i.modifiers.command) {
+                self.arrange_selection(if alt { ArrangeCommand::SendToBack } else { ArrangeCommand::SendBackward });
+            }
+        }
         if !any_focused
             && ctx.input(|i| i.key_pressed(egui::Key::H) && i.modifiers.shift && !i.modifiers.command)
         {
@@ -1059,6 +1080,17 @@ impl eframe::App for App {
                         ui.close();
                     }
                 });
+                ui.menu_button("Arrange", |ui| {
+                    for command in ArrangeCommand::ALL {
+                        if ui
+                            .add_enabled(!self.selection.is_empty(), egui::Button::new(command.label()))
+                            .clicked()
+                        {
+                            self.arrange_selection(command);
+                            ui.close();
+                        }
+                    }
+                });
                 ui.menu_button("View", |ui| {
                     if ui.checkbox(&mut self.canvas.show_rulers, "Rulers").clicked() {
                         ui.close();
@@ -1290,6 +1322,9 @@ impl eframe::App for App {
                                     }
                                     LayerAction::Move { id, new_parent, index } => {
                                         grouping::move_layer(self.history.mutate().active_page_mut(), id, new_parent, index);
+                                    }
+                                    LayerAction::Arrange(id, command) => {
+                                        arrange::arrange(self.history.mutate().active_page_mut(), &[id], command);
                                     }
                                     LayerAction::SetChildBoolOp(id, op) => {
                                         if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
