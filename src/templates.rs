@@ -21,6 +21,16 @@ const BUILT_IN: &[(&str, &str)] = &[
     ("Dashboard", include_str!("../templates/dashboard.sdesign")),
     ("Video Thumbnail", include_str!("../templates/video-thumbnail.sdesign")),
     ("Email Newsletter", include_str!("../templates/email-newsletter.sdesign")),
+    ("Flyer - Minimal Mono", include_str!("../templates/flyer-minimal-mono.sdesign")),
+    ("Flyer - Neon Night", include_str!("../templates/flyer-neon-night.sdesign")),
+    ("Flyer - Pastel", include_str!("../templates/flyer-pastel.sdesign")),
+    ("Flyer - Corporate Navy", include_str!("../templates/flyer-corporate-navy.sdesign")),
+    ("Flyer - Earthy", include_str!("../templates/flyer-earthy.sdesign")),
+    ("Flyer - Retro 70s", include_str!("../templates/flyer-retro-70s.sdesign")),
+    ("Flyer - Dark Luxe Gold", include_str!("../templates/flyer-dark-luxe.sdesign")),
+    ("Flyer - Brutalist", include_str!("../templates/flyer-brutalist.sdesign")),
+    ("Flyer - Ocean", include_str!("../templates/flyer-ocean.sdesign")),
+    ("Flyer - Sunset", include_str!("../templates/flyer-sunset.sdesign")),
 ];
 
 #[derive(Clone)]
