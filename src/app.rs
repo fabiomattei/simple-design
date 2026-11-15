@@ -1278,6 +1278,16 @@ impl eframe::App for App {
                                             l.ignore_mask = !l.ignore_mask;
                                         }
                                     }
+                                    LayerAction::SetMaskMode(id, mode) => {
+                                        if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
+                                            l.mask_mode = mode;
+                                        }
+                                    }
+                                    LayerAction::ToggleMaskInverted(id) => {
+                                        if let Some(l) = self.history.mutate().active_page_mut().find_mut(id) {
+                                            l.mask_inverted = !l.mask_inverted;
+                                        }
+                                    }
                                     LayerAction::Move { id, new_parent, index } => {
                                         grouping::move_layer(self.history.mutate().active_page_mut(), id, new_parent, index);
                                     }

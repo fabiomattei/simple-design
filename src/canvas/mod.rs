@@ -803,7 +803,7 @@ impl CanvasWidget {
             self.editing_text,
         );
         self.image_cache.evict_stale(&page.all_layer_ids());
-        self.mask_cache.evict_stale(&page.all_layer_ids());
+        self.mask_cache.evict_unused();
         self.noise_cache.evict_stale(&page.all_layer_ids());
         self.halftone_cache.evict_stale(&page.all_layer_ids());
         self.pattern_cache.evict_stale(&page.all_layer_ids());

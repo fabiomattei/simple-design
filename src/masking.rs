@@ -14,7 +14,7 @@
 use egui::{Pos2, Vec2};
 use tiny_skia::{Mask, MaskType, Pixmap, PixmapPaint, Transform};
 
-use crate::model::Layer;
+use crate::model::{Layer, LayerId};
 
 /// One drawable unit within a single parent's `children` list, after
 /// resolving `is_mask`/`ignore_mask` — see `partition_mask_runs`.
@@ -84,51 +84,131 @@ fn split_run_around_ignored<'a>(mask: &'a Layer, run: Vec<&'a Layer>) -> Vec<Ren
     units
 }
 
-/// Renders `mask` and `content` into two scratch pixmaps the same size as
-/// `target`, clips the content scratch to the mask scratch's alpha, and
-/// composites the result onto `target` at `(0, 0)`. `offset`/`parent_opacity`
-/// are forwarded to `draw_layer` exactly as a normal recursive draw call
-/// would (see `export::draw_layer`'s own `offset` accumulation convention) —
-/// callers are responsible for `target`, `offset` and the render scale
-/// their `draw_layer` closure captures all agreeing on the same coordinate
-/// mapping (export/ draws at 1 document unit = 1 pixel;
-/// `canvas/texture_caches.rs`'s texture cache draws at a zoom-dependent
-/// `render_scale` into a pixmap cropped and sized to the mask's own bounds,
-/// with `offset` shifted so the mask's local origin lands at the scratch
-/// pixmaps' `(0, 0)`).
+/// The parent-space area a mask's own shape covers: its `rotated_bounds()`
+/// grown by its stroke width (a mask's stroke reveals content too).
+pub fn mask_bounds(mask: &Layer) -> egui::Rect {
+    let stroke_width = mask.style.stroke.as_ref().map_or(0.0, |stroke| stroke.width);
+    mask.frame.rotated_bounds().expand(stroke_width)
+}
+
+/// The parent-space area a masked run can show anything in: `mask_bounds`,
+/// or — for a `mask_inverted` mask, which reveals content *outside* its
+/// shape — the union of `content`'s own visual bounds (each layer's
+/// `rotated_bounds()` grown by its stroke width and drop-shadow reach; a
+/// group's children's shadows past the group's frame aren't counted).
+/// Shared by `composite_masked_run` (to crop its scratch pixmaps) and
+/// `canvas/texture_caches.rs` (to size the cached texture), so both agree
+/// on where a masked run can show anything.
+pub fn masked_area(mask: &Layer, content: &[&Layer]) -> egui::Rect {
+    if !mask.mask_inverted {
+        return mask_bounds(mask);
+    }
+    content
+        .iter()
+        .map(|layer| {
+            let stroke_width = layer.style.stroke.as_ref().map_or(0.0, |stroke| stroke.width);
+            layer.frame.rotated_bounds().expand(stroke_width + crate::shadow::outer_shadow_extent(&layer.style.shadows))
+        })
+        .reduce(|a, b| a.union(b))
+        .unwrap_or(egui::Rect::NOTHING)
+}
+
+/// Page-space intersection of `mask_bounds` for every mask that clips layer
+/// `id` — a mask over `id` itself or over any of its ancestors. `None` if no
+/// mask clips it (or `id` isn't in `layers`). Backs clipping the in-place
+/// text editor (`canvas/text_edit_overlay.rs`) to the masks over the text
+/// it edits: egui can only clip to rectangles, so this is a bounding box
+/// (exact for rectangular masks). An inverted mask reveals content outside
+/// its shape, which no rectangle describes, so it doesn't narrow the area.
+pub fn clipping_mask_area(layers: &[Layer], id: LayerId) -> Option<egui::Rect> {
+    clipping_mask_area_in(layers, id, Vec2::ZERO, None)
+}
+
+/// `clipping_mask_area`'s recursion: `offset` is `layers`' parent-to-page
+/// offset, `clip` the area accumulated from ancestors' masks so far.
+fn clipping_mask_area_in(layers: &[Layer], id: LayerId, offset: Vec2, clip: Option<egui::Rect>) -> Option<egui::Rect> {
+    for unit in partition_mask_runs(layers) {
+        let (mask, members) = match unit {
+            RenderUnit::Plain(layer) => (None, vec![layer]),
+            RenderUnit::Masked { mask, content, .. } => ((!mask.mask_inverted).then_some(mask), content),
+        };
+        let Some(layer) = members.into_iter().find(|layer| layer.find(id).is_some()) else { continue };
+        let clip = match (mask, clip) {
+            (Some(mask), Some(clip)) => Some(clip.intersect(mask_bounds(mask).translate(offset))),
+            (Some(mask), None) => Some(mask_bounds(mask).translate(offset)),
+            (None, clip) => clip,
+        };
+        if layer.id == id {
+            return clip;
+        }
+        let children = layer.kind.children()?;
+        return clipping_mask_area_in(children, id, offset + layer.frame.pos.to_vec2(), clip);
+    }
+    None
+}
+
+/// Renders `mask` and `content` into two scratch pixmaps covering only the
+/// run's area (`masked_area`, clipped to `target`), clips the content
+/// scratch to the mask scratch's alpha (inverted for `mask_inverted`), and composites the result onto
+/// `target` at that area. `offset`/`parent_opacity` are forwarded to
+/// `draw_layer` exactly as a normal recursive draw call would (see
+/// `export::draw_layer`'s `offset`/`render_scale` convention), shifted so
+/// the area's corner lands at the scratch pixmaps' `(0, 0)`. `render_scale`
+/// must be the same scale the `draw_layer` closure draws at (export/ uses
+/// `1.0`; `canvas/texture_caches.rs` a zoom-dependent scale).
 ///
-/// This is an alpha mask: content shows through in proportion to the
-/// mask's rendered alpha, so the mask's own `opacity`, `fill_opacity`,
-/// gradient stops and missing fill (only its stroke then reveals content)
-/// all affect the result. Ambient `parent_opacity` is *not* applied to the
-/// mask pass (only to `content`), so it isn't counted twice. The mask's own
-/// colors never appear in the output.
+/// In `MaskMode::Alpha` content shows through in proportion to the mask's
+/// rendered alpha, so the mask's own `opacity`, `fill_opacity`, gradient
+/// stops and missing fill (only its stroke then reveals content) all affect
+/// the result; in `MaskMode::Outline` the mask is drawn as its plain
+/// geometry instead (see `mask_outline::mask_silhouette`). Ambient
+/// `parent_opacity` is *not* applied to the mask pass (only to `content`),
+/// so it isn't counted twice. The mask's own colors never appear in the output.
 pub fn composite_masked_run(
     target: &mut Pixmap,
     mask: &Layer,
     content: &[&Layer],
     offset: Vec2,
     parent_opacity: f32,
+    render_scale: f32,
     draw_layer: impl Fn(&mut Pixmap, &Layer, Vec2, f32),
 ) {
-    let (width, height) = (target.width(), target.height());
+    // Cropped rather than target-sized: nothing outside the run's area can
+    // show, and full-size scratch pixmaps made a 2000x2000 export with ten
+    // small masks ~190x slower than without them (measured).
+    let area = masked_area(mask, content).translate(offset);
+    let x0 = (area.min.x * render_scale).floor().max(0.0) as i32;
+    let y0 = (area.min.y * render_scale).floor().max(0.0) as i32;
+    let x1 = (area.max.x * render_scale).ceil().min(target.width() as f32) as i32;
+    let y1 = (area.max.y * render_scale).ceil().min(target.height() as f32) as i32;
+    if x1 <= x0 || y1 <= y0 {
+        return;
+    }
+    let (width, height) = ((x1 - x0) as u32, (y1 - y0) as u32);
+    let scratch_offset = offset - Vec2::new(x0 as f32, y0 as f32) / render_scale;
+
     let Some(mut mask_scratch) = Pixmap::new(width, height) else { return };
-    draw_layer(&mut mask_scratch, mask, offset, 1.0);
-    let sk_mask = Mask::from_pixmap(mask_scratch.as_ref(), MaskType::Alpha);
+    draw_layer(&mut mask_scratch, &crate::mask_outline::mask_silhouette(mask), scratch_offset, 1.0);
+    let mut sk_mask = Mask::from_pixmap(mask_scratch.as_ref(), MaskType::Alpha);
+    if mask.mask_inverted {
+        sk_mask.invert();
+    }
 
     let Some(mut content_scratch) = Pixmap::new(width, height) else { return };
     for layer in content {
-        draw_layer(&mut content_scratch, layer, offset, parent_opacity);
+        draw_layer(&mut content_scratch, layer, scratch_offset, parent_opacity);
     }
     content_scratch.apply_mask(&sk_mask);
 
-    target.draw_pixmap(0, 0, content_scratch.as_ref(), &PixmapPaint::default(), Transform::identity(), None);
+    target.draw_pixmap(x0, y0, content_scratch.as_ref(), &PixmapPaint::default(), Transform::identity(), None);
 }
 
-/// Alpha-accurate point test against `mask`'s own silhouette, in the same
+/// Whether `mask` lets its content show at `point` — an alpha-accurate test
+/// against its silhouette (`mask_outline::mask_silhouette`, so its
+/// `mask_mode` counts), flipped for `mask_inverted` — in the same
 /// parent-relative coordinate space as `point` (matching `mask.frame`'s own
-/// space) — backs `canvas/hit_test.rs`'s hit-testing so a click inside a masked
-/// content layer's bounding box, but outside the mask's actual coverage,
+/// space). Backs `canvas/hit_test.rs`'s hit-testing so a click inside a
+/// masked content layer's bounding box, but where the mask hides it,
 /// doesn't select it.
 ///
 /// Only ever called on an actual click, not per frame — `canvas/texture_caches.rs`'s own
@@ -137,16 +217,22 @@ pub fn composite_masked_run(
 /// re-rasterizes `mask` alone (via `export::draw_layer`, same as
 /// `composite_masked_run`'s own mask pass) into a scratch pixmap sized to
 /// its bounds, which is cheap enough at click-time cadence.
-pub fn mask_covers_point(mask: &Layer, point: Pos2) -> bool {
-    let bounds = mask.frame.rotated_bounds();
+pub fn mask_reveals_point(mask: &Layer, point: Pos2) -> bool {
+    mask_covers_point(mask, point) != mask.mask_inverted
+}
+
+/// Whether `mask`'s silhouette has any alpha at `point` — see `mask_reveals_point`.
+fn mask_covers_point(mask: &Layer, point: Pos2) -> bool {
+    let bounds = mask_bounds(mask);
     if !bounds.contains(point) {
         return false;
     }
+    let silhouette = crate::mask_outline::mask_silhouette(mask);
     let width = bounds.width().round().max(1.0) as u32;
     let height = bounds.height().round().max(1.0) as u32;
     let Some(mut pixmap) = Pixmap::new(width, height) else { return false };
     let render_offset = Vec2::new(-bounds.min.x, -bounds.min.y);
-    crate::export::draw_layer(&mut pixmap, mask, std::slice::from_ref(mask), render_offset, 1.0, 1.0);
+    crate::export::draw_layer(&mut pixmap, &silhouette, std::slice::from_ref(mask), render_offset, 1.0, 1.0);
     let px = ((point.x - bounds.min.x).floor().max(0.0) as u32).min(width.saturating_sub(1));
     let py = ((point.y - bounds.min.y).floor().max(0.0) as u32).min(height.saturating_sub(1));
     pixmap.pixel(px, py).is_some_and(|p| p.alpha() > 0)
@@ -185,7 +271,7 @@ mod tests {
         let mask = oval_layer("Mask", Pos2::new(0.0, 0.0), Vec2::new(100.0, 100.0));
 
         let mut target = Pixmap::new(100, 100).unwrap();
-        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op, 1.0));
+        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op, 1.0));
 
         // Center: inside both the square and the circle -> opaque red.
         let center = pixel(&target, 50, 50);
@@ -249,10 +335,98 @@ mod tests {
         let roots = vec![guide, mask.clone(), text.clone()];
 
         let mut target = Pixmap::new(100, 40).unwrap();
-        composite_masked_run(&mut target, &mask, &[&text], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, &roots, off, op, 1.0));
+        composite_masked_run(&mut target, &mask, &[&text], Vec2::ZERO, 1.0, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, &roots, off, op, 1.0));
 
         let any_opaque = target.pixels().iter().any(|p| p.alpha() > 0);
         assert!(any_opaque, "expected the masked text's on-path glyphs to render using a target outside its own masked content");
+    }
+
+    /// A masked run away from the target's origin is composited at the right
+    /// place from its cropped scratch pixmaps, at render scale 1 and 2.
+    #[test]
+    fn masked_run_away_from_the_origin_lands_at_its_own_position() {
+        let square = rect_layer("Square", Pos2::new(120.0, 120.0), Vec2::new(50.0, 50.0), Color32::RED);
+        let mask = oval_layer("Mask", Pos2::new(120.0, 120.0), Vec2::new(50.0, 50.0));
+        for render_scale in [1.0, 2.0] {
+            let side = (200.0 * render_scale) as u32;
+            let mut target = Pixmap::new(side, side).unwrap();
+            composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, render_scale, |px, l, off, op| {
+                crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op, render_scale)
+            });
+            let at = |x: f32, y: f32| pixel(&target, (x * render_scale) as u32, (y * render_scale) as u32);
+            assert!(at(145.0, 145.0).alpha() > 200, "scale {render_scale}: masked center should be opaque");
+            assert_eq!(at(121.0, 121.0).alpha(), 0, "scale {render_scale}: corner outside the oval stays clear");
+            assert_eq!(at(60.0, 60.0).alpha(), 0, "scale {render_scale}: far from the mask stays clear");
+        }
+    }
+
+    /// `clipping_mask_area` combines masks at every level above a layer, in
+    /// page space, and is `None` for a layer no mask clips.
+    #[test]
+    fn clipping_mask_area_intersects_masks_at_every_level_in_page_space() {
+        let text = rect_layer("Text", Pos2::new(0.0, 0.0), Vec2::new(50.0, 50.0), Color32::BLACK);
+        let text_id = text.id;
+        let mut inner_mask = rect_layer("Inner", Pos2::new(10.0, 0.0), Vec2::new(100.0, 30.0), Color32::WHITE);
+        inner_mask.is_mask = true;
+        let group = Layer::new(
+            "Group",
+            Frame { pos: Pos2::new(100.0, 100.0), size: Vec2::new(110.0, 50.0), rotation: 0.0 },
+            LayerKind::Group { children: vec![text, inner_mask] },
+        );
+        let mut outer_mask = rect_layer("Outer", Pos2::new(0.0, 0.0), Vec2::new(130.0, 500.0), Color32::WHITE);
+        outer_mask.is_mask = true;
+        let loose = rect_layer("Loose", Pos2::ZERO, Vec2::splat(10.0), Color32::BLACK);
+        let loose_id = loose.id;
+        let page = vec![loose, group, outer_mask];
+
+        // Inner mask (110,100)-(210,130) in page space ∩ outer (0,0)-(130,500).
+        let area = clipping_mask_area(&page, text_id).expect("text is masked");
+        assert_eq!(area, egui::Rect::from_min_max(Pos2::new(110.0, 100.0), Pos2::new(130.0, 130.0)));
+        // "Loose" is below the outer mask too, so it's clipped by it alone.
+        assert_eq!(clipping_mask_area(&page, loose_id), Some(egui::Rect::from_min_max(Pos2::ZERO, Pos2::new(130.0, 500.0))));
+        let unmasked = vec![rect_layer("Alone", Pos2::ZERO, Vec2::splat(10.0), Color32::BLACK)];
+        assert_eq!(clipping_mask_area(&unmasked, unmasked[0].id), None);
+    }
+
+    /// `MaskMode::Outline` clips to the mask's shape even with no fill and a
+    /// low opacity, where `MaskMode::Alpha` would reveal almost nothing.
+    #[test]
+    fn outline_mask_reveals_its_shape_regardless_of_fill_and_opacity() {
+        let square = rect_layer("Square", Pos2::ZERO, Vec2::new(100.0, 100.0), Color32::RED);
+        let mut mask = oval_layer("Mask", Pos2::ZERO, Vec2::new(100.0, 100.0));
+        mask.style.fill = None;
+        mask.opacity = 0.3;
+        let render = |mask: &Layer| {
+            let mut target = Pixmap::new(100, 100).unwrap();
+            composite_masked_run(&mut target, mask, &[&square], Vec2::ZERO, 1.0, 1.0, |px, l, off, op| {
+                crate::export::draw_layer(px, l, std::slice::from_ref(mask), off, op, 1.0)
+            });
+            target
+        };
+
+        assert_eq!(pixel(&render(&mask), 50, 50).alpha(), 0, "alpha mode: no fill reveals nothing inside");
+        mask.mask_mode = crate::model::MaskMode::Outline;
+        let outline = render(&mask);
+        assert_eq!(pixel(&outline, 50, 50).alpha(), 255, "outline mode: the shape is fully revealed");
+        assert_eq!(pixel(&outline, 2, 2).alpha(), 0, "outline mode: still clipped to the oval");
+    }
+
+    /// An inverted mask reveals its content outside its shape — including
+    /// beyond the mask's own bounds — and hides it inside; hit-testing agrees.
+    #[test]
+    fn inverted_mask_reveals_content_outside_its_shape() {
+        let square = rect_layer("Square", Pos2::ZERO, Vec2::new(100.0, 100.0), Color32::RED);
+        let mut mask = rect_layer("Mask", Pos2::new(25.0, 25.0), Vec2::new(50.0, 50.0), Color32::WHITE);
+        mask.mask_inverted = true;
+
+        let mut target = Pixmap::new(100, 100).unwrap();
+        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, 1.0, |px, l, off, op| {
+            crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op, 1.0)
+        });
+        assert_eq!(pixel(&target, 50, 50).alpha(), 0, "inside the mask is hidden");
+        assert_eq!(pixel(&target, 5, 5).alpha(), 255, "outside the mask's bounds is revealed");
+        assert!(!mask_reveals_point(&mask, Pos2::new(50.0, 50.0)));
+        assert!(mask_reveals_point(&mask, Pos2::new(5.0, 5.0)));
     }
 
     /// A mask with no content below it in the same parent has nothing to
@@ -312,7 +486,7 @@ mod tests {
         mask.style.fill = Some(Paint::Solid(Color32::from_rgb(0, 255, 0))); // distinct from both Square's red and transparent.
 
         let mut target = Pixmap::new(100, 100).unwrap();
-        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op, 1.0));
+        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op, 1.0));
 
         let center = pixel(&target, 50, 50);
         assert!(center.green() < 50, "mask's own green fill should not appear in the output");

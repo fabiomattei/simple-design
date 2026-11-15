@@ -226,7 +226,7 @@ pub fn multipolygon_to_polygons(mp: &MultiPolygon<f64>) -> Vec<PathPolygon> {
 /// Exact point-in-`MultiPolygon` test backing `canvas/hit_test.rs`'s opaque
 /// `BooleanGroup` hit-testing — `point` must already be in the same
 /// coordinate space `mp` is in (see `compute_boolean_group`'s doc comment).
-/// Uses `geo::Contains` directly rather than `masking::mask_covers_point`'s
+/// Uses `geo::Contains` directly rather than `masking::mask_reveals_point`'s
 /// rasterize-and-sample approach, since a boolean-op result is already a
 /// clean `MultiPolygon` (a mask's coverage is arbitrary rendered alpha,
 /// which isn't).

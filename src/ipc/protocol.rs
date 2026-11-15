@@ -6,7 +6,7 @@ use egui::Color32;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-use crate::model::{BoolOp, Frame, TextAlign, TextFont, VerticalAlign};
+use crate::model::{BoolOp, Frame, MaskMode, TextAlign, TextFont, VerticalAlign};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Request {
@@ -238,9 +238,10 @@ pub struct RenameLayerArgs {
     pub name: String,
 }
 
-/// Sets a layer's `is_mask` ("Use as Mask") and/or `ignore_mask` ("Ignore
-/// Underlying Mask"); an omitted field is left unchanged. At least one must
-/// be given. A mask clips the siblings *below* it in its parent, back to the
+/// Sets a layer's `is_mask` ("Use as Mask"), `ignore_mask` ("Ignore
+/// Underlying Mask"), `mask_mode` (`mode`) and/or `mask_inverted`
+/// (`inverted`); an omitted field is left unchanged. At least one must be
+/// given. A mask clips the siblings *below* it in its parent, back to the
 /// previous mask — so group the mask with its content first (`group`)
 /// unless it should clip everything beneath it at that level.
 #[derive(Serialize, Deserialize)]
@@ -250,6 +251,10 @@ pub struct SetMaskArgs {
     pub mask: Option<bool>,
     #[serde(default)]
     pub ignore_mask: Option<bool>,
+    #[serde(default)]
+    pub mode: Option<MaskMode>,
+    #[serde(default)]
+    pub inverted: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize)]

@@ -71,30 +71,59 @@ impl ImageTextureCache {
 /// wherever content layers overlap. That makes `opacity` part of the key,
 /// so dragging an ancestor's opacity slider rebuilds the texture.
 ///
-/// Rendered at `render_scale` pixels per document unit (see
-/// `mask_render_scale`) so it stays sharp when zoomed in; also part of the key.
+/// Covers `region` (parent space) at `render_scale` pixels per document unit
+/// (see `mask_texture_region`) so it stays sharp when zoomed in; both are
+/// part of the key.
 pub(super) struct CachedMaskTexture {
     mask: Layer,
     content: Vec<Layer>,
     opacity: f32,
+    region: Rect,
     render_scale: f32,
     texture: egui::TextureHandle,
 }
 
-/// Hard cap on a masked-group texture's side length, so a large mask at a
-/// high zoom doesn't allocate an unbounded texture — same rationale as
-/// `NOISE_TEXTURE_MAX`. Past it the texture renders below screen resolution
-/// (slightly soft) rather than failing.
+/// Hard cap on a masked-group texture's side length, so a texture can never
+/// be unbounded — same rationale as `NOISE_TEXTURE_MAX`. With
+/// `mask_texture_region` cropping large masks to the view, it's only reached
+/// on a very large window, where the texture renders slightly below screen
+/// resolution rather than failing.
 pub(super) const MASK_TEXTURE_MAX: f32 = 4096.0;
 
-/// Pixels per document unit to render a masked run at for canvas `zoom`: the
-/// next power of two at or above `zoom`, so the texture is only rebuilt when
-/// zooming crosses a power of two rather than on every zoom frame — lowered
-/// if needed so neither side of `bounds` exceeds `MASK_TEXTURE_MAX`.
-pub(super) fn mask_render_scale(zoom: f32, bounds: Rect) -> f32 {
-    let stepped = 2f32.powf(zoom.max(1e-3).log2().ceil());
-    let longest_side = bounds.width().max(bounds.height()).max(1.0);
-    stepped.min(MASK_TEXTURE_MAX / longest_side)
+/// Texels per grid cell a cropped masked-group texture's area snaps to, so
+/// panning only rebuilds it when the view crosses a grid line.
+const MASK_TEXTURE_TILE: f32 = 256.0;
+
+/// Margin around the view, as a fraction of its size per side, that a
+/// cropped masked-group texture also covers — small pans stay inside it.
+const MASK_TEXTURE_MARGIN: f32 = 0.125;
+
+/// The parent-space area to render a masked run's texture over, and its
+/// pixels per document unit, for `pixels_per_unit` (canvas zoom times the
+/// display's pixels per point). The scale is the next power of two at or
+/// above that, so zooming only rebuilds when it crosses one. If all of
+/// `bounds` (the mask's area) fits within `MASK_TEXTURE_MAX` at that scale,
+/// the area is all of `bounds`, so panning never rebuilds. Otherwise only
+/// the part near `visible` (the view, in parent space) is rendered: grown by
+/// `MASK_TEXTURE_MARGIN`, snapped outward to a `MASK_TEXTURE_TILE` grid,
+/// clipped to `bounds` — full resolution, rebuilt only when panning crosses
+/// a grid line.
+pub(super) fn mask_texture_region(bounds: Rect, visible: Rect, pixels_per_unit: f32) -> (Rect, f32) {
+    let stepped = 2f32.powf(pixels_per_unit.max(1e-3).log2().ceil());
+    let longest_side = |rect: Rect| rect.width().max(rect.height()).max(1.0);
+    let region = if longest_side(bounds) * stepped <= MASK_TEXTURE_MAX {
+        bounds
+    } else {
+        let tile = MASK_TEXTURE_TILE / stepped;
+        let near = visible.expand2(visible.size() * MASK_TEXTURE_MARGIN);
+        let snap = |v: f32, round: fn(f32) -> f32| round(v / tile) * tile;
+        let snapped = Rect::from_min_max(
+            Pos2::new(snap(near.min.x, f32::floor), snap(near.min.y, f32::floor)),
+            Pos2::new(snap(near.max.x, f32::ceil), snap(near.max.y, f32::ceil)),
+        );
+        snapped.intersect(bounds)
+    };
+    (region, stepped.min(MASK_TEXTURE_MAX / longest_side(region)))
 }
 
 /// Whether `layer` or any descendant is a `Text` layer with a
@@ -110,61 +139,89 @@ pub(super) fn contains_path_attached_text(layer: &Layer) -> bool {
 }
 
 #[derive(Default)]
-pub struct MaskedGroupTextureCache(HashMap<(LayerId, usize), CachedMaskTexture>);
+pub struct MaskedGroupTextureCache {
+    textures: HashMap<(LayerId, usize), CachedMaskTexture>,
+    /// Keys `get_or_build` served since the last `evict_unused` — see there.
+    used: std::collections::HashSet<(LayerId, usize)>,
+}
 
 impl MaskedGroupTextureCache {
     /// Returns the cached (or freshly built) texture for this masked run,
-    /// plus the parent-space bounds it should be drawn into on screen: the
-    /// mask's `rotated_bounds()` grown by its stroke width, so a mask's
-    /// stroke (which also reveals content) isn't cropped at its frame. `zoom`
-    /// picks the texture's resolution (see `mask_render_scale`). `page` lets a
+    /// plus the parent-space area it should be drawn into on screen — all of
+    /// `masking::masked_area`, or the part of it near `visible` for a large
+    /// mask at high zoom (see `mask_texture_region`, which `pixels_per_unit`
+    /// and `visible` feed). `None` if no part of the mask is in that area. `page` lets a
     /// path-attached `Text` layer inside `content` resolve its target anywhere on the page, not
     /// just within this masked run's own `mask`/`content` — but since that
     /// means this render can depend on a layer this cache's key (`mask`/
     /// `content` clone-equality) doesn't track, any masked run containing
     /// such a layer always rebuilds rather than risk a stale texture if its
     /// attachment target moves elsewhere on the page.
-    pub(super) fn get_or_build(&mut self, ctx: &egui::Context, mask: &Layer, content: &[&Layer], segment: usize, opacity: f32, zoom: f32, page: &Page) -> Option<(egui::TextureHandle, Rect)> {
+    #[allow(clippy::too_many_arguments)]
+    pub(super) fn get_or_build(
+        &mut self,
+        ctx: &egui::Context,
+        mask: &Layer,
+        content: &[&Layer],
+        segment: usize,
+        opacity: f32,
+        pixels_per_unit: f32,
+        visible: Rect,
+        page: &Page,
+    ) -> Option<(egui::TextureHandle, Rect)> {
         let key = (mask.id, segment);
-        let stroke_width = mask.style.stroke.as_ref().map_or(0.0, |stroke| stroke.width);
-        let bounds = mask.frame.rotated_bounds().expand(stroke_width);
-        let render_scale = mask_render_scale(zoom, bounds);
+        let (region, render_scale) = mask_texture_region(crate::masking::masked_area(mask, content), visible, pixels_per_unit);
+        if !region.is_positive() {
+            return None;
+        }
+        self.used.insert(key);
         let up_to_date = !content.iter().any(|l| contains_path_attached_text(l))
-            && self.0.get(&key).is_some_and(|cached| {
-                cached.mask == *mask && cached.opacity == opacity && cached.render_scale == render_scale && cached.content.len() == content.len() && cached.content.iter().zip(content).all(|(a, b)| a == *b)
+            && self.textures.get(&key).is_some_and(|cached| {
+                cached.mask == *mask
+                    && cached.opacity == opacity
+                    && cached.region == region
+                    && cached.render_scale == render_scale
+                    && cached.content.len() == content.len()
+                    && cached.content.iter().zip(content).all(|(a, b)| a == *b)
             });
         if !up_to_date {
-            let width = (bounds.width() * render_scale).round().max(1.0) as u32;
-            let height = (bounds.height() * render_scale).round().max(1.0) as u32;
+            let width = (region.width() * render_scale).round().max(1.0) as u32;
+            let height = (region.height() * render_scale).round().max(1.0) as u32;
             let mut pixmap = tiny_skia::Pixmap::new(width, height)?;
-            // Shifts parent-space coordinates so `bounds.min` (the mask's
-            // own top-left) lands at the scratch pixmap's `(0, 0)` — same
-            // idea as `export::render_layer`'s `offset` computation (in
-            // document units; `render_scale` is applied by `draw_layer`).
-            let render_offset = Vec2::new(-bounds.min.x, -bounds.min.y);
-            crate::masking::composite_masked_run(&mut pixmap, mask, content, render_offset, opacity, |px, l, off, op| {
+            // Shifts parent-space coordinates so `region.min` lands at the
+            // scratch pixmap's `(0, 0)` — same idea as
+            // `export::render_layer`'s `offset` computation (in document
+            // units; `render_scale` is applied by `draw_layer`).
+            let render_offset = Vec2::new(-region.min.x, -region.min.y);
+            crate::masking::composite_masked_run(&mut pixmap, mask, content, render_offset, opacity, render_scale, |px, l, off, op| {
                 crate::export::draw_layer_with_shadows(px, l, &page.layers, off, op, render_scale)
             });
             let color_image = egui::ColorImage::from_rgba_premultiplied([width as usize, height as usize], pixmap.data());
             let texture = ctx.load_texture(format!("mask-group-{}-{segment}", mask.id), color_image, egui::TextureOptions::LINEAR);
-            self.0.insert(
+            self.textures.insert(
                 key,
                 CachedMaskTexture {
                     mask: mask.clone(),
                     content: content.iter().map(|l| (*l).clone()).collect(),
                     opacity,
+                    region,
                     render_scale,
                     texture,
                 },
             );
         }
-        self.0.get(&key).map(|cached| (cached.texture.clone(), bounds))
+        self.textures.get(&key).map(|cached| (cached.texture.clone(), region))
     }
 
-    /// See `ImageTextureCache::evict_stale` — same rationale, keyed off the
-    /// mask layer's id instead.
-    pub(super) fn evict_stale(&mut self, live_ids: &std::collections::HashSet<LayerId>) {
-        self.0.retain(|(id, _), _| live_ids.contains(id));
+    /// Drops every texture not drawn since the last call — called once per
+    /// frame after the document is painted. Unlike the other caches'
+    /// `evict_stale` (keyed by layer id alone), this also drops pieces of a
+    /// masked run that no longer exist while the mask itself does (e.g. an
+    /// `ignore_mask` layer that split it was removed), and runs that aren't
+    /// currently drawn (they rebuild when shown again).
+    pub(super) fn evict_unused(&mut self) {
+        let used = std::mem::take(&mut self.used);
+        self.textures.retain(|key, _| used.contains(key));
     }
 }
 
@@ -403,16 +460,30 @@ mod tests {
     }
 
     #[test]
-    fn mask_render_scale_steps_up_to_the_next_power_of_two() {
-        assert_eq!(mask_render_scale(1.0, square(100.0)), 1.0);
-        assert_eq!(mask_render_scale(1.5, square(100.0)), 2.0);
-        assert_eq!(mask_render_scale(3.0, square(100.0)), 4.0);
-        assert_eq!(mask_render_scale(0.3, square(100.0)), 0.5);
+    fn mask_texture_region_steps_scale_up_to_the_next_power_of_two() {
+        let view = square(1000.0);
+        assert_eq!(mask_texture_region(square(100.0), view, 1.0), (square(100.0), 1.0));
+        assert_eq!(mask_texture_region(square(100.0), view, 1.5).1, 2.0);
+        assert_eq!(mask_texture_region(square(100.0), view, 3.0).1, 4.0);
+        assert_eq!(mask_texture_region(square(100.0), view, 0.3).1, 0.5);
     }
 
     #[test]
-    fn mask_render_scale_is_capped_by_the_texture_size_limit() {
-        // 1000 units at zoom 8 would be 8000px; the cap keeps it at MASK_TEXTURE_MAX.
-        assert_eq!(mask_render_scale(8.0, square(1000.0)), MASK_TEXTURE_MAX / 1000.0);
+    fn mask_texture_region_crops_a_large_mask_to_the_view_at_full_resolution() {
+        // 1000 units at 8 px/unit would be 8000px: render only near the view instead.
+        let view = Rect::from_min_size(Pos2::new(400.0, 400.0), Vec2::splat(100.0));
+        let (region, render_scale) = mask_texture_region(square(1000.0), view, 8.0);
+        assert_eq!(render_scale, 8.0, "full resolution, not capped down");
+        assert!(region.contains_rect(view), "covers the whole view: {region:?}");
+        assert!(region.width() * render_scale <= MASK_TEXTURE_MAX);
+        // A small pan stays inside the margin and grid, so the area (and the texture) is reused.
+        let panned = mask_texture_region(square(1000.0), view.translate(Vec2::new(5.0, 5.0)), 8.0).0;
+        assert_eq!(panned, region);
+    }
+
+    #[test]
+    fn mask_texture_region_is_empty_when_the_mask_is_off_screen() {
+        let view = Rect::from_min_size(Pos2::new(5000.0, 5000.0), Vec2::splat(100.0));
+        assert!(!mask_texture_region(square(1000.0), view, 8.0).0.is_positive());
     }
 }

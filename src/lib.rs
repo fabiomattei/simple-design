@@ -11,6 +11,7 @@ pub mod history;
 pub mod image_ops;
 pub mod io;
 pub mod ipc;
+pub mod mask_outline;
 pub mod masking;
 pub mod model;
 pub mod noise_fill;

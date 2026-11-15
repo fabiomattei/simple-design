@@ -74,6 +74,10 @@ impl CanvasWidget {
             VerticalAlign::Bottom => (box_height - content_height).max(0.0),
         };
         let screen_pos = self.to_screen(origin, bounds.min) + Vec2::new(0.0, y_offset);
+        // Text inside a mask is edited clipped to the mask's bounding box —
+        // egui can only clip to rectangles (see `masking::clipping_mask_area`).
+        let mask_clip = crate::masking::clipping_mask_area(&history.get().active_page().layers, id)
+            .map(|area| Rect::from_two_pos(self.to_screen(origin, area.min), self.to_screen(origin, area.max)));
 
         // One shared layouter for both uniform-style and rich-text
         // editing (`is_rich` picks between them inside
@@ -103,6 +107,9 @@ impl CanvasWidget {
             .order(egui::Order::Foreground)
             .fixed_pos(screen_pos)
             .show(ui.ctx(), |ui| {
+                if let Some(mask_clip) = mask_clip {
+                    ui.set_clip_rect(ui.clip_rect().intersect(mask_clip));
+                }
                 ui.set_width(width);
                 egui::TextEdit::multiline(&mut buf)
                     .id(text_edit_id)

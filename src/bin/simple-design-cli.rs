@@ -16,7 +16,7 @@ use simple_design::ipc::protocol::{
     GroupArgs, InitArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs,
     SetFrameArgs, SetMaskArgs, UngroupArgs,
 };
-use simple_design::model::{BoolOp, Document, Frame, TextAlign, TextFont, VerticalAlign};
+use simple_design::model::{BoolOp, Document, Frame, MaskMode, TextAlign, TextFont, VerticalAlign};
 
 #[derive(Parser)]
 #[command(name = "simple-design-cli", about = "Drive a running Simple Design instance, or edit a .sdesign file directly when none is open")]
@@ -260,15 +260,21 @@ enum Command {
         id: Uuid,
         name: String,
     },
-    /// Set "Use as Mask" (`--mask true|false`) and/or "Ignore Underlying
-    /// Mask" (`--ignore-mask true|false`) on a layer. A mask clips the
-    /// siblings below it in its parent, so group it with its content first.
+    /// Set "Use as Mask" (`--mask true|false`), "Ignore Underlying Mask"
+    /// (`--ignore-mask true|false`), the mask mode (`--mode alpha|outline`)
+    /// and/or "Invert Mask" (`--inverted true|false`) on a layer. A mask
+    /// clips the siblings below it in its parent, so group it with its
+    /// content first.
     SetMask {
         id: Uuid,
         #[arg(long)]
         mask: Option<bool>,
         #[arg(long)]
         ignore_mask: Option<bool>,
+        #[arg(long, value_enum)]
+        mode: Option<MaskModeArg>,
+        #[arg(long)]
+        inverted: Option<bool>,
     },
     /// Group layers into a new Group layer.
     Group {
@@ -432,6 +438,21 @@ impl AlignEdgeArg {
 }
 
 #[derive(Clone, ValueEnum)]
+enum MaskModeArg {
+    Alpha,
+    Outline,
+}
+
+impl From<MaskModeArg> for MaskMode {
+    fn from(mode: MaskModeArg) -> Self {
+        match mode {
+            MaskModeArg::Alpha => MaskMode::Alpha,
+            MaskModeArg::Outline => MaskMode::Outline,
+        }
+    }
+}
+
+#[derive(Clone, ValueEnum)]
 enum FlipAxisArg {
     Horizontal,
     Vertical,
@@ -521,7 +542,9 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
         Command::NewPage { name } => ("new_page", to_value(NewPageArgs { name })),
         Command::RenamePage { id, name } => ("rename_page", to_value(RenamePageArgs { id, name })),
         Command::RenameLayer { id, name } => ("rename_layer", to_value(RenameLayerArgs { id, name })),
-        Command::SetMask { id, mask, ignore_mask } => ("set_mask", to_value(SetMaskArgs { id, mask, ignore_mask })),
+        Command::SetMask { id, mask, ignore_mask, mode, inverted } => {
+            ("set_mask", to_value(SetMaskArgs { id, mask, ignore_mask, mode: mode.map(Into::into), inverted }))
+        }
         Command::Group { ids, page } => ("group", to_value(GroupArgs { page, ids })),
         Command::Ungroup { id, page } => ("ungroup", to_value(UngroupArgs { page, id })),
         Command::Flip { axis, ids, page } => ("flip", to_value(FlipArgs { page, ids, axis: axis.as_str().to_string() })),

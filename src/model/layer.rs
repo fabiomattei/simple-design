@@ -832,6 +832,29 @@ impl BoolOp {
     }
 }
 
+/// How a mask (`Layer::is_mask`) turns into a clip — see
+/// `masking::composite_masked_run`.
+#[derive(Clone, Copy, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
+pub enum MaskMode {
+    /// Content shows through in proportion to the mask's rendered alpha, so
+    /// its opacity, fill opacity, gradients and missing fill all count.
+    #[default]
+    Alpha,
+    /// Content shows through wherever the mask's geometry is, regardless of
+    /// its fill, stroke or opacity.
+    Outline,
+}
+
+impl MaskMode {
+    /// Human-readable label, as shown in the layers panel's context menu.
+    pub fn label(&self) -> &'static str {
+        match self {
+            MaskMode::Alpha => "Alpha",
+            MaskMode::Outline => "Outline",
+        }
+    }
+}
+
 fn default_list_start() -> i32 {
     1
 }
@@ -974,6 +997,13 @@ pub struct Layer {
     /// of `is_mask` layers elsewhere in the same parent's children.
     #[serde(default)]
     pub ignore_mask: bool,
+    /// How this layer clips its content when `is_mask` — ignored otherwise.
+    #[serde(default)]
+    pub mask_mode: MaskMode,
+    /// When `is_mask`, reveals its content *outside* the mask's shape
+    /// instead of inside it — ignored otherwise.
+    #[serde(default)]
+    pub mask_inverted: bool,
     /// The combine mode this layer contributes when it's a direct child of
     /// a `LayerKind::BooleanGroup` — ignored everywhere else, same "one
     /// field, many places ignore it" convention as `is_mask`/`ignore_mask`
@@ -1006,6 +1036,8 @@ impl Layer {
             opacity: 1.0,
             is_mask: false,
             ignore_mask: false,
+            mask_mode: MaskMode::default(),
+            mask_inverted: false,
             bool_op: BoolOp::default(),
             style_id: None,
             kind,

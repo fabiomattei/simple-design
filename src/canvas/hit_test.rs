@@ -64,7 +64,7 @@ pub(super) fn hit_test_through_mask(page: &Page, mask_id: LayerId, doc_pos: Pos2
         (None, _) => page.layers.as_slice(),
     };
     let local_pos = doc_pos - page.absolute_offset(mask_id)?;
-    if !crate::masking::mask_covers_point(mask, local_pos) {
+    if !crate::masking::mask_reveals_point(mask, local_pos) {
         return None;
     }
     let mut content: Vec<&Layer> = Vec::new();
@@ -177,7 +177,7 @@ pub(super) fn hit_test_layers(layers: &[Layer], doc_pos: Pos2) -> Option<LayerId
         // Tested against the live-computed geometry exactly (`geo::Contains`)
         // rather than a rasterize-and-sample approach, since the combined
         // shape is already a clean `MultiPolygon` (contrast with
-        // `masking::mask_covers_point`, whose rasterize approach exists
+        // `masking::mask_reveals_point`, whose rasterize approach exists
         // specifically because a mask's coverage is arbitrary alpha, not a
         // clean polygon). No rotation handling needed here — a
         // `BooleanGroup`'s own `frame.rotation` is always `0.0`, same
@@ -189,7 +189,7 @@ pub(super) fn hit_test_layers(layers: &[Layer], doc_pos: Pos2) -> Option<LayerId
                 continue;
             }
             if let Some(mask) = mask_for.get(&layer.id)
-                && !crate::masking::mask_covers_point(mask, doc_pos) {
+                && !crate::masking::mask_reveals_point(mask, doc_pos) {
                     continue;
                 }
             return Some(layer.id);
@@ -207,7 +207,7 @@ pub(super) fn hit_test_layers(layers: &[Layer], doc_pos: Pos2) -> Option<LayerId
             continue;
         }
         if let Some(mask) = mask_for.get(&layer.id)
-            && !crate::masking::mask_covers_point(mask, doc_pos) {
+            && !crate::masking::mask_reveals_point(mask, doc_pos) {
                 continue;
             }
         if let Some(children) = layer.kind.children() {

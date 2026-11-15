@@ -80,7 +80,12 @@ pub(super) fn draw_masked_run(
         Some(hidden) if hidden.id == layer.id => hidden,
         _ => layer,
     }).collect();
-    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, &content, segment, opacity, zoom, page) else {
+    // The painter's clip rect (the canvas viewport) mapped into this run's
+    // parent space, so a large mask at high zoom only renders near the view.
+    let to_parent = |p: Pos2| ((p - origin - pan) / zoom - parent_offset).to_pos2();
+    let visible = Rect::from_two_pos(to_parent(painter.clip_rect().min), to_parent(painter.clip_rect().max));
+    let pixels_per_unit = zoom * ctx.pixels_per_point();
+    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, &content, segment, opacity, pixels_per_unit, visible, page) else {
         return;
     };
     let to_screen = |p: Pos2| origin + pan + (p.to_vec2() + parent_offset) * zoom;
