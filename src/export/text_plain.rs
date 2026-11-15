@@ -22,6 +22,7 @@ use super::text_wrap::wrap_line;
 /// is pure string manipulation with no rendering-backend dependency and so
 /// is shared to keep list numbering/text-transform behavior identical
 /// between the two.
+/// `render_scale`: pixmap pixels per document unit, see `glyph_raster::draw_text_glyph`.
 #[allow(clippy::too_many_arguments)]
 pub(super) fn draw_text(
     pixmap: &mut Pixmap,
@@ -44,6 +45,7 @@ pub(super) fn draw_text(
     list: ListType,
     list_start: i32,
     opacity: f32,
+    render_scale: f32,
 ) {
     if content.is_empty() {
         return;
@@ -141,7 +143,7 @@ pub(super) fn draw_text(
             if let Some(p) = prev {
                 cursor_x += scaled.kern(p, id);
             }
-            draw_text_glyph(pixmap, &face, id, scale, cursor_x, baseline_y, color, bold, italic, clip);
+            draw_text_glyph(pixmap, &face, id, scale, cursor_x, baseline_y, color, bold, italic, clip, render_scale);
             cursor_x += scaled.h_advance(id) + letter_spacing;
             if c == ' ' {
                 cursor_x += justify_extra;
@@ -156,7 +158,7 @@ pub(super) fn draw_text(
                     egui::Pos2::new(start_x, y),
                     egui::Vec2::new(cursor_x - start_x, deco_thickness),
                 );
-                draw_decoration_rect(pixmap, rect, clip, to_color(color));
+                draw_decoration_rect(pixmap, rect, clip, to_color(color), render_scale);
             }
             if strikethrough {
                 let y = baseline_y - font_size * 0.3;
@@ -164,7 +166,7 @@ pub(super) fn draw_text(
                     egui::Pos2::new(start_x, y),
                     egui::Vec2::new(cursor_x - start_x, deco_thickness),
                 );
-                draw_decoration_rect(pixmap, rect, clip, to_color(color));
+                draw_decoration_rect(pixmap, rect, clip, to_color(color), render_scale);
             }
         }
     }

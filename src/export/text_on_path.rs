@@ -24,6 +24,7 @@ use super::paint::{to_color, with_opacity};
 /// not reproduced here: a decoration would need its own rotated-quad
 /// composite per glyph run, which isn't worth the complexity for a rarely
 /// combined pair of features (documented v1 limit).
+/// `render_scale`: pixmap pixels per document unit, see `glyph_raster::draw_text_glyph`.
 #[allow(clippy::too_many_arguments)]
 pub(super) fn draw_text_on_path(
     pixmap: &mut Pixmap,
@@ -39,6 +40,7 @@ pub(super) fn draw_text_on_path(
     start: f32,
     flip: bool,
     opacity: f32,
+    render_scale: f32,
 ) {
     if crate::text_path_geometry::polyline_length(path_points, closed) < 1.0 {
         return;
@@ -110,14 +112,14 @@ pub(super) fn draw_text_on_path(
             let color = with_opacity(style.color.unwrap_or(base.color.unwrap_or(egui::Color32::BLACK)), opacity);
             let normal = egui::Vec2::new(-angle.sin(), angle.cos());
             let anchor = point + normal * path_offset;
-            draw_rotated_glyph(pixmap, &faces[face_idx], id, scale, anchor, angle, color, style.bold, style.italic);
+            draw_rotated_glyph(pixmap, &faces[face_idx], id, scale, anchor, angle, color, style.bold, style.italic, render_scale);
             if style.underline || style.strikethrough {
                 let thickness = (style.font_size * 0.06).max(1.0);
                 if style.underline {
-                    draw_rotated_decoration_segment(pixmap, anchor, angle, width - letter_spacing, style.font_size * 0.08, thickness, color);
+                    draw_rotated_decoration_segment(pixmap, anchor, angle, width - letter_spacing, style.font_size * 0.08, thickness, color, render_scale);
                 }
                 if style.strikethrough {
-                    draw_rotated_decoration_segment(pixmap, anchor, angle, width - letter_spacing, -style.font_size * 0.3, thickness, color);
+                    draw_rotated_decoration_segment(pixmap, anchor, angle, width - letter_spacing, -style.font_size * 0.3, thickness, color, render_scale);
                 }
             }
         }
@@ -140,11 +142,15 @@ pub(super) fn draw_text_on_path(
 /// heavier weight via the same double-draw-offset hack `draw_text_glyph`
 /// uses; `italic` applies the same shear `draw_text_glyph` does, just in the
 /// scratch pixmap's own local (pre-rotation) coordinates, so it tilts with
-/// the glyph rather than staying screen-vertical.
+/// the glyph rather than staying screen-vertical. `scale` and `anchor` are in
+/// document units; `render_scale` (see `export::draw_layer`) converts them to
+/// pixmap pixels, so the glyph is rasterized at full resolution.
 #[allow(clippy::too_many_arguments)]
-pub(super) fn draw_rotated_glyph(pixmap: &mut Pixmap, face: &FontRef, id: GlyphId, scale: ab_glyph::PxScale, anchor: egui::Pos2, angle: f32, color: egui::Color32, bold: bool, italic: bool) {
+pub(super) fn draw_rotated_glyph(pixmap: &mut Pixmap, face: &FontRef, id: GlyphId, scale: ab_glyph::PxScale, anchor: egui::Pos2, angle: f32, color: egui::Color32, bold: bool, italic: bool, render_scale: f32) {
     const ITALIC_SHEAR: f32 = 0.22;
-    let x_offsets: &[f32] = if bold { &[0.0, 0.6] } else { &[0.0] };
+    let scale = ab_glyph::PxScale { x: scale.x * render_scale, y: scale.y * render_scale };
+    let anchor = (anchor.to_vec2() * render_scale).to_pos2();
+    let x_offsets: &[f32] = if bold { &[0.0, 0.6 * render_scale] } else { &[0.0] };
     for &dx in x_offsets {
         let glyph = id.with_scale_and_position(scale, ab_glyph::point(dx, 0.0));
         let Some(outlined) = face.outline_glyph(glyph) else { continue };
@@ -180,8 +186,10 @@ pub(super) fn draw_rotated_glyph(pixmap: &mut Pixmap, face: &FontRef, id: GlyphI
 /// `draw_rotated_glyph`. One short straight segment per glyph, chained
 /// along the path, approximates a continuous underline/strikethrough
 /// hugging the curve (each segment is too short for the curve's own bend to
-/// be visible within it at any font size this app supports).
-pub(super) fn draw_rotated_decoration_segment(pixmap: &mut Pixmap, anchor: egui::Pos2, angle: f32, width: f32, local_y: f32, thickness: f32, color: egui::Color32) {
+/// be visible within it at any font size this app supports). Built in
+/// document units, scaled by `render_scale` at draw time.
+#[allow(clippy::too_many_arguments)]
+pub(super) fn draw_rotated_decoration_segment(pixmap: &mut Pixmap, anchor: egui::Pos2, angle: f32, width: f32, local_y: f32, thickness: f32, color: egui::Color32, render_scale: f32) {
     if width <= 0.0 {
         return;
     }
@@ -202,7 +210,7 @@ pub(super) fn draw_rotated_decoration_segment(pixmap: &mut Pixmap, anchor: egui:
     let mut paint = Paint::default();
     paint.set_color(to_color(color));
     paint.anti_alias = true;
-    pixmap.fill_path(&path, &paint, FillRule::Winding, Transform::identity(), None);
+    pixmap.fill_path(&path, &paint, FillRule::Winding, Transform::from_scale(render_scale, render_scale), None);
 }
 
 #[cfg(test)]

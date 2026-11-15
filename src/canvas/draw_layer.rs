@@ -72,7 +72,7 @@ pub(super) fn draw_masked_run(
     zoom: f32,
     opacity: f32,
 ) {
-    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, content, segment, opacity, page) else {
+    let Some((texture, bounds)) = mask_cache.get_or_build(ctx, mask, content, segment, opacity, zoom, page) else {
         return;
     };
     let to_screen = |p: Pos2| origin + pan + (p.to_vec2() + parent_offset) * zoom;

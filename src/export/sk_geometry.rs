@@ -15,15 +15,16 @@ pub(super) fn fill_and_stroke(
     bounds: egui::Rect,
     opacity: f32,
     transform: Transform,
+    render_scale: f32,
 ) {
     if let Some(fill) = layer.style.fill.as_ref() {
         let mut noise_storage = None;
-        let paint = to_sk_paint(fill, bounds, opacity * layer.style.fill_opacity, &mut noise_storage);
+        let paint = to_sk_paint(fill, bounds, opacity * layer.style.fill_opacity, render_scale, &mut noise_storage);
         pixmap.fill_path(path, &paint, fill_rule, transform, None);
     }
     if let Some(stroke) = layer.style.stroke.as_ref() {
         let mut noise_storage = None;
-        let paint = to_sk_paint(&stroke.paint, bounds, opacity * layer.style.stroke_opacity, &mut noise_storage);
+        let paint = to_sk_paint(&stroke.paint, bounds, opacity * layer.style.stroke_opacity, render_scale, &mut noise_storage);
         let sk_stroke = SkStroke {
             width: stroke.width,
             ..Default::default()
@@ -33,18 +34,19 @@ pub(super) fn fill_and_stroke(
 }
 
 /// `tiny_skia::Transform::from_rotate_at` centered on `bounds`'s (already
-/// offset-translated) center — the one place every non-Text/Image shape arm
-/// below builds its rotation transform, so `layer.frame.rotation`'s pivot
-/// convention (`bounds().center()`, per `model/layer.rs`) stays consistent.
-/// `Transform::identity()` at `rotation == 0.0` (the overwhelmingly common
-/// case) avoids the floating-point round-trip through `from_rotate_at` for
-/// unrotated shapes, though the two are mathematically equivalent.
-pub(super) fn rotation_transform(layer: &Layer, bounds: egui::Rect) -> Transform {
-    if layer.frame.rotation == 0.0 {
+/// offset-translated) center, followed by `render_scale` (pixmap pixels
+/// per document unit, see `export::draw_layer`) — the one place every
+/// non-Text/Image shape arm builds its transform, so `layer.frame.rotation`'s
+/// pivot convention (`bounds().center()`, per `model/layer.rs`) stays
+/// consistent. Paths are built in unscaled document-unit space; this
+/// transform scales them (and their strokes and shaders) at draw time.
+pub(super) fn layer_transform(layer: &Layer, bounds: egui::Rect, render_scale: f32) -> Transform {
+    let rotation = if layer.frame.rotation == 0.0 {
         Transform::identity()
     } else {
         Transform::from_rotate_at(layer.frame.rotation, bounds.center().x, bounds.center().y)
-    }
+    };
+    Transform::from_scale(render_scale, render_scale).pre_concat(rotation)
 }
 
 /// Builds a `tiny-skia` path from anchors + bezier handles, offsetting every
@@ -197,14 +199,16 @@ pub(super) fn polygon_ring_path(points: &[egui::Pos2]) -> Option<tiny_skia::Path
     pb.finish()
 }
 
-pub(super) fn fill_rect(pixmap: &mut Pixmap, rect: egui::Rect, color: Color) {
+/// Fills `rect` (document units, scaled by `render_scale` at draw time; pass `1.0`
+/// for a rect already in pixmap pixels).
+pub(super) fn fill_rect(pixmap: &mut Pixmap, rect: egui::Rect, color: Color, render_scale: f32) {
     let Some(sk_rect) = to_sk_rect(rect) else {
         return;
     };
     let mut paint = Paint::default();
     paint.set_color(color);
     paint.anti_alias = true;
-    pixmap.fill_rect(sk_rect, &paint, Transform::identity(), None);
+    pixmap.fill_rect(sk_rect, &paint, Transform::from_scale(render_scale, render_scale), None);
 }
 
 pub(super) fn to_sk_rect(rect: egui::Rect) -> Option<SkRect> {

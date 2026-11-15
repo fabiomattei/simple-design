@@ -1,5 +1,5 @@
 //! Rasterizes `Image` layers: decode, Color Adjust, then a bilinear
-//! scaled (and rotated) draw into the export pixmap.
+//! scaled (and rotated) draw into the export pixmap, at `render_scale`.
 
 use tiny_skia::{Pixmap, Transform};
 
@@ -17,6 +17,7 @@ pub(super) fn draw_image(
     bounds: egui::Rect,
     opacity: f32,
     rotation: f32,
+    render_scale: f32,
 ) {
     let Some(decoded) = crate::image_ops::decode(encoded) else { return };
     let adjusted = crate::image_ops::apply_color_adjust(&decoded, color_adjust);
@@ -33,6 +34,7 @@ pub(super) fn draw_image(
     if rotation != 0.0 {
         transform = transform.post_rotate_at(rotation, bounds.center().x, bounds.center().y);
     }
+    let transform = transform.post_scale(render_scale, render_scale);
     let paint = tiny_skia::PixmapPaint {
         opacity: opacity.clamp(0.0, 1.0),
         blend_mode: tiny_skia::BlendMode::SourceOver,

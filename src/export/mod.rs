@@ -20,7 +20,7 @@ pub(crate) use text_wrap::{wrap_line, wrap_line_rich};
 use image_layer::draw_image;
 use paint::to_color_with_opacity;
 use sk_geometry::{
-    compound_path_to_sk_path, fill_and_stroke, fill_rect, path_to_sk_path, polygon_ring_path, rotation_transform, rounded_rect_path, to_sk_rect,
+    compound_path_to_sk_path, fill_and_stroke, fill_rect, layer_transform, path_to_sk_path, polygon_ring_path, rounded_rect_path, to_sk_rect,
 };
 
 use crate::boolean_ops;
@@ -42,7 +42,7 @@ pub fn render_layer(layer: &Layer) -> Option<Pixmap> {
     let height = (bounds.height() + 2.0 * pad).round().max(1.0) as u32;
     let mut pixmap = Pixmap::new(width, height)?;
     let offset = egui::Vec2::new(-bounds.min.x + pad, -bounds.min.y + pad);
-    draw_layer_with_shadows(&mut pixmap, layer, std::slice::from_ref(layer), offset, 1.0);
+    draw_layer_with_shadows(&mut pixmap, layer, std::slice::from_ref(layer), offset, 1.0, 1.0);
     Some(pixmap)
 }
 
@@ -89,14 +89,29 @@ fn effective_rotated_bounds(layer: &Layer, roots: &[Layer]) -> egui::Rect {
 /// `Text` layer is shaped like its actual attached glyphs, not the plain
 /// unattached layout `std::slice::from_ref(layer)` alone would fall back to
 /// (see `effective_rotated_bounds`, which sizes this render to fit them).
-pub(crate) fn render_layer_plain(layer: &Layer, roots: &[Layer]) -> Option<(Pixmap, egui::Rect)> {
+/// The returned pixmap is `render_scale` pixels per document unit (see
+/// `draw_layer`); the returned bounds stay in document units.
+pub(crate) fn render_layer_plain(layer: &Layer, roots: &[Layer], render_scale: f32) -> Option<(Pixmap, egui::Rect)> {
     let bounds = effective_rotated_bounds(layer, roots);
-    let width = bounds.width().round().max(1.0) as u32;
-    let height = bounds.height().round().max(1.0) as u32;
+    let width = (bounds.width() * render_scale).round().max(1.0) as u32;
+    let height = (bounds.height() * render_scale).round().max(1.0) as u32;
     let mut pixmap = Pixmap::new(width, height)?;
     let offset = egui::Vec2::new(-bounds.min.x, -bounds.min.y);
-    draw_layer(&mut pixmap, layer, roots, offset, 1.0);
+    draw_layer(&mut pixmap, layer, roots, offset, 1.0, render_scale);
     Some((pixmap, bounds))
+}
+
+/// `shadow` with its document-unit lengths (`offset`, `blur`, `spread`)
+/// converted to pixmap pixels — `shadow.rs` works purely in pixels of the
+/// silhouette it's given, which `draw_layer_with_shadows` renders at
+/// `render_scale`.
+fn shadow_in_pixels(shadow: &crate::model::Shadow, render_scale: f32) -> crate::model::Shadow {
+    crate::model::Shadow {
+        offset: shadow.offset * render_scale,
+        blur: shadow.blur * render_scale,
+        spread: shadow.spread * render_scale,
+        ..*shadow
+    }
 }
 
 /// Renders `layer` (and descendants) to a standalone PNG and writes it to `path`.
@@ -117,7 +132,13 @@ pub fn export_layer_to_png(layer: &Layer, path: &std::path::Path) -> anyhow::Res
 /// masked-group texture cache can pass the whole page's top-level layers,
 /// so a masked Text layer can still attach to a target anywhere on the
 /// page, not just within its own masked run.
-pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], offset: egui::Vec2, parent_opacity: f32) {
+///
+/// `offset` is in document units; `render_scale` is how many pixmap pixels one
+/// document unit covers (`1.0` for every PNG export — only
+/// `canvas/texture_caches.rs`'s masked-group cache renders above `1.0`, so
+/// a zoomed-in masked group stays sharp). A layer point `p` lands at pixmap
+/// position `(p + offset) * render_scale`.
+pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], offset: egui::Vec2, parent_opacity: f32, render_scale: f32) {
     if !layer.visible {
         return;
     }
@@ -125,19 +146,19 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], of
     let bounds = layer.frame.bounds().translate(offset);
     match &layer.kind {
         LayerKind::Artboard { children, background } => {
-            fill_rect(pixmap, bounds, to_color_with_opacity(*background, opacity));
+            fill_rect(pixmap, bounds, to_color_with_opacity(*background, opacity), render_scale);
             let child_offset = offset + layer.frame.pos.to_vec2();
-            draw_children(pixmap, children, roots, child_offset, opacity);
+            draw_children(pixmap, children, roots, child_offset, opacity, render_scale);
         }
         LayerKind::Group { children } => {
             let child_offset = offset + layer.frame.pos.to_vec2();
-            draw_children(pixmap, children, roots, child_offset, opacity);
+            draw_children(pixmap, children, roots, child_offset, opacity, render_scale);
         }
         LayerKind::Rectangle { corner_radius } => {
             let Some(path) = rounded_rect_path(bounds, *corner_radius) else {
                 return;
             };
-            fill_and_stroke(pixmap, &path, layer, FillRule::Winding, bounds, opacity, rotation_transform(layer, bounds));
+            fill_and_stroke(pixmap, &path, layer, FillRule::Winding, bounds, opacity, layer_transform(layer, bounds, render_scale), render_scale);
         }
         LayerKind::Oval => {
             let Some(sk_rect) = to_sk_rect(bounds) else {
@@ -148,33 +169,33 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], of
             let Some(path) = pb.finish() else {
                 return;
             };
-            fill_and_stroke(pixmap, &path, layer, FillRule::Winding, bounds, opacity, rotation_transform(layer, bounds));
+            fill_and_stroke(pixmap, &path, layer, FillRule::Winding, bounds, opacity, layer_transform(layer, bounds, render_scale), render_scale);
         }
         LayerKind::Star { points, inner_ratio } => {
             let pts = crate::shapes::star_points(bounds.center(), bounds.width() / 2.0, bounds.height() / 2.0, *points, *inner_ratio);
             let Some(path) = polygon_ring_path(&pts) else {
                 return;
             };
-            fill_and_stroke(pixmap, &path, layer, FillRule::Winding, bounds, opacity, rotation_transform(layer, bounds));
+            fill_and_stroke(pixmap, &path, layer, FillRule::Winding, bounds, opacity, layer_transform(layer, bounds, render_scale), render_scale);
         }
         LayerKind::Polygon { sides } => {
             let pts = crate::shapes::polygon_points(bounds.center(), bounds.width() / 2.0, bounds.height() / 2.0, *sides);
             let Some(path) = polygon_ring_path(&pts) else {
                 return;
             };
-            fill_and_stroke(pixmap, &path, layer, FillRule::Winding, bounds, opacity, rotation_transform(layer, bounds));
+            fill_and_stroke(pixmap, &path, layer, FillRule::Winding, bounds, opacity, layer_transform(layer, bounds, render_scale), render_scale);
         }
         LayerKind::Line => {
-            draw_line(pixmap, layer, offset, bounds, opacity);
+            draw_line(pixmap, layer, offset, bounds, opacity, render_scale);
         }
         LayerKind::Arrow { start_cap, end_cap } => {
-            draw_arrow(pixmap, layer, offset, bounds, opacity, start_cap, end_cap);
+            draw_arrow(pixmap, layer, offset, bounds, opacity, start_cap, end_cap, render_scale);
         }
         LayerKind::Path { points, closed } => {
             let Some(path) = path_to_sk_path(points, *closed, offset + layer.frame.pos.to_vec2()) else {
                 return;
             };
-            fill_and_stroke(pixmap, &path, layer, FillRule::Winding, bounds, opacity, rotation_transform(layer, bounds));
+            fill_and_stroke(pixmap, &path, layer, FillRule::Winding, bounds, opacity, layer_transform(layer, bounds, render_scale), render_scale);
         }
         LayerKind::CompoundPath { polygons } => {
             let Some(path) = compound_path_to_sk_path(polygons, offset + layer.frame.pos.to_vec2()) else {
@@ -182,7 +203,7 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], of
             };
             // Ring winding direction doesn't matter for `EvenOdd` — it only
             // cares about crossing parity, which is what makes holes work.
-            fill_and_stroke(pixmap, &path, layer, FillRule::EvenOdd, bounds, opacity, rotation_transform(layer, bounds));
+            fill_and_stroke(pixmap, &path, layer, FillRule::EvenOdd, bounds, opacity, layer_transform(layer, bounds, render_scale), render_scale);
         }
         LayerKind::BooleanGroup { children } => {
             // No child-recursion here, unlike `Group`/`Artboard` — only the
@@ -193,13 +214,13 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], of
             let Some(path) = compound_path_to_sk_path(&polygons, offset + layer.frame.pos.to_vec2()) else {
                 return;
             };
-            fill_and_stroke(pixmap, &path, layer, FillRule::EvenOdd, bounds, opacity, rotation_transform(layer, bounds));
+            fill_and_stroke(pixmap, &path, layer, FillRule::EvenOdd, bounds, opacity, layer_transform(layer, bounds, render_scale), render_scale);
         }
         LayerKind::Text { .. } => {
-            draw_text_layer(pixmap, layer, roots, offset, bounds, opacity);
+            draw_text_layer(pixmap, layer, roots, offset, bounds, opacity, render_scale);
         }
         LayerKind::Image { encoded, color_adjust, .. } => {
-            draw_image(pixmap, encoded, *color_adjust, bounds, opacity, layer.frame.rotation);
+            draw_image(pixmap, encoded, *color_adjust, bounds, opacity, layer.frame.rotation, render_scale);
         }
     }
 }
@@ -213,13 +234,13 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], of
 /// from its children's *shapes*, not from halos of the children's own
 /// shadows. `draw_children_with_shadows` is the shadow-aware sibling used
 /// for real rendering.
-fn draw_children(pixmap: &mut Pixmap, children: &[Layer], roots: &[Layer], offset: egui::Vec2, opacity: f32) {
+fn draw_children(pixmap: &mut Pixmap, children: &[Layer], roots: &[Layer], offset: egui::Vec2, opacity: f32, render_scale: f32) {
     for unit in crate::masking::partition_mask_runs(children) {
         match unit {
-            crate::masking::RenderUnit::Plain(child) => draw_layer(pixmap, child, roots, offset, opacity),
+            crate::masking::RenderUnit::Plain(child) => draw_layer(pixmap, child, roots, offset, opacity, render_scale),
             crate::masking::RenderUnit::Masked { mask, content, .. } => {
                 crate::masking::composite_masked_run(pixmap, mask, &content, offset, opacity, |px, l, off, op| {
-                    draw_layer(px, l, roots, off, op)
+                    draw_layer(px, l, roots, off, op, render_scale)
                 });
             }
         }
@@ -230,13 +251,13 @@ fn draw_children(pixmap: &mut Pixmap, children: &[Layer], roots: &[Layer], offse
 /// draws every child (plain or masked-run content) through
 /// `draw_layer_with_shadows` instead of plain `draw_layer`, so nested
 /// layers at any depth get their own `Style::shadows`/`inner_shadows`.
-fn draw_children_with_shadows(pixmap: &mut Pixmap, children: &[Layer], roots: &[Layer], offset: egui::Vec2, opacity: f32) {
+fn draw_children_with_shadows(pixmap: &mut Pixmap, children: &[Layer], roots: &[Layer], offset: egui::Vec2, opacity: f32, render_scale: f32) {
     for unit in crate::masking::partition_mask_runs(children) {
         match unit {
-            crate::masking::RenderUnit::Plain(child) => draw_layer_with_shadows(pixmap, child, roots, offset, opacity),
+            crate::masking::RenderUnit::Plain(child) => draw_layer_with_shadows(pixmap, child, roots, offset, opacity, render_scale),
             crate::masking::RenderUnit::Masked { mask, content, .. } => {
                 crate::masking::composite_masked_run(pixmap, mask, &content, offset, opacity, |px, l, off, op| {
-                    draw_layer_with_shadows(px, l, roots, off, op)
+                    draw_layer_with_shadows(px, l, roots, off, op, render_scale)
                 });
             }
         }
@@ -258,19 +279,19 @@ fn draw_children_with_shadows(pixmap: &mut Pixmap, children: &[Layer], roots: &[
 /// callback through `draw_layer`'s signature — `draw_layer` itself must stay
 /// shadow-free (see `draw_children`'s doc comment for why), so it can't just
 /// call back into this function for its own recursion.
-pub(crate) fn draw_layer_with_shadows(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], offset: egui::Vec2, parent_opacity: f32) {
+pub(crate) fn draw_layer_with_shadows(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], offset: egui::Vec2, parent_opacity: f32, render_scale: f32) {
     if !layer.visible {
         return;
     }
     let has_outer = !layer.style.shadows.is_empty();
     let has_inner = !layer.style.inner_shadows.is_empty();
-    let silhouette = if has_outer || has_inner { render_layer_plain(layer, roots) } else { None };
+    let silhouette = if has_outer || has_inner { render_layer_plain(layer, roots, render_scale) } else { None };
 
     if let (true, Some((silhouette, bounds))) = (has_outer, &silhouette) {
-        let silhouette_origin = egui::Vec2::new(bounds.min.x, bounds.min.y) + offset;
+        let silhouette_origin = (egui::Vec2::new(bounds.min.x, bounds.min.y) + offset) * render_scale;
         for shadow in &layer.style.shadows {
             if let Some(crate::shadow::ShadowLayer { pixmap: shadow_px, origin }) =
-                crate::shadow::render_outer_shadow(silhouette, silhouette_origin, shadow)
+                crate::shadow::render_outer_shadow(silhouette, silhouette_origin, &shadow_in_pixels(shadow, render_scale))
             {
                 let paint = PixmapPaint { opacity: parent_opacity, ..Default::default() };
                 pixmap.draw_pixmap(origin.x.round() as i32, origin.y.round() as i32, shadow_px.as_ref(), &paint, Transform::identity(), None);
@@ -282,21 +303,21 @@ pub(crate) fn draw_layer_with_shadows(pixmap: &mut Pixmap, layer: &Layer, roots:
     match &layer.kind {
         LayerKind::Artboard { children, background } => {
             let bounds = layer.frame.bounds().translate(offset);
-            fill_rect(pixmap, bounds, to_color_with_opacity(*background, opacity));
+            fill_rect(pixmap, bounds, to_color_with_opacity(*background, opacity), render_scale);
             let child_offset = offset + layer.frame.pos.to_vec2();
-            draw_children_with_shadows(pixmap, children, roots, child_offset, opacity);
+            draw_children_with_shadows(pixmap, children, roots, child_offset, opacity, render_scale);
         }
         LayerKind::Group { children } => {
             let child_offset = offset + layer.frame.pos.to_vec2();
-            draw_children_with_shadows(pixmap, children, roots, child_offset, opacity);
+            draw_children_with_shadows(pixmap, children, roots, child_offset, opacity, render_scale);
         }
-        _ => draw_layer(pixmap, layer, roots, offset, parent_opacity),
+        _ => draw_layer(pixmap, layer, roots, offset, parent_opacity, render_scale),
     }
 
     if let (true, Some((silhouette, bounds))) = (has_inner, &silhouette) {
-        let draw_at = bounds.min + offset;
+        let draw_at = (bounds.min + offset) * render_scale;
         for shadow in &layer.style.inner_shadows {
-            if let Some(inner_px) = crate::shadow::render_inner_shadow(silhouette, shadow) {
+            if let Some(inner_px) = crate::shadow::render_inner_shadow(silhouette, &shadow_in_pixels(shadow, render_scale)) {
                 let paint = PixmapPaint { opacity: parent_opacity, ..Default::default() };
                 pixmap.draw_pixmap(draw_at.x.round() as i32, draw_at.y.round() as i32, inner_px.as_ref(), &paint, Transform::identity(), None);
             }
@@ -350,6 +371,43 @@ mod tests {
         // The shape's own center is still the plain red fill, unaffected.
         let center = pixmap.pixel((pad + 20) as u32, (pad + 20) as u32).expect("center pixel");
         assert_eq!((center.red(), center.green(), center.blue()), (255, 0, 0));
+    }
+
+    /// Drop and inner shadows drawn at `render_scale` 2 match the same layer
+    /// built at double size (frame and shadow lengths) drawn at 1x.
+    #[test]
+    fn shadows_at_render_scale_two_match_double_size_shadows_at_one() {
+        let shadowed_rect = |size: f32, shadow_scale: f32| {
+            let mut layer = Layer::new(
+                "Rect",
+                Frame::from_two_points(Pos2::ZERO, Pos2::new(size, size)),
+                LayerKind::Rectangle { corner_radius: CornerRadii::ZERO },
+            );
+            layer.style.fill = Some(crate::model::Paint::Solid(Color32::WHITE));
+            layer.style.stroke = None;
+            let shadow = crate::model::Shadow {
+                color: Color32::BLACK,
+                offset: Vec2::new(3.0, 3.0) * shadow_scale,
+                blur: 6.0 * shadow_scale,
+                spread: 1.0 * shadow_scale,
+            };
+            layer.style.shadows = vec![shadow];
+            layer.style.inner_shadows = vec![shadow];
+            layer
+        };
+        let layer = shadowed_rect(40.0, 1.0);
+        let doubled = shadowed_rect(80.0, 2.0);
+
+        let mut scaled = Pixmap::new(200, 200).unwrap();
+        draw_layer_with_shadows(&mut scaled, &layer, std::slice::from_ref(&layer), Vec2::new(20.0, 20.0), 1.0, 2.0);
+        let mut reference = Pixmap::new(200, 200).unwrap();
+        draw_layer_with_shadows(&mut reference, &doubled, std::slice::from_ref(&doubled), Vec2::new(40.0, 40.0), 1.0, 1.0);
+
+        let ratio = opaque_pixel_count(&scaled) as f32 / opaque_pixel_count(&reference).max(1) as f32;
+        assert!((0.95..1.05).contains(&ratio), "expected matching shadow coverage, got {ratio}");
+        // Inside the shape, near its shadowed top-left edge: the inner shadow darkens it equally.
+        let (a, b) = (scaled.pixel(42, 42).unwrap(), reference.pixel(42, 42).unwrap());
+        assert!((a.red() as i32 - b.red() as i32).abs() <= 8, "inner shadow differs: {} vs {}", a.red(), b.red());
     }
 
     #[test]
@@ -454,7 +512,7 @@ mod tests {
         layer.style.fill = None;
 
         let mut pixmap = Pixmap::new(40, 40).unwrap();
-        draw_layer(&mut pixmap, &layer, std::slice::from_ref(&layer), egui::Vec2::ZERO, 1.0);
+        draw_layer(&mut pixmap, &layer, std::slice::from_ref(&layer), egui::Vec2::ZERO, 1.0, 1.0);
         let on_line = pixmap.pixel(20, 20).expect("on-line pixel");
         assert_eq!(on_line.alpha(), 255);
         let off_line = pixmap.pixel(20, 5).expect("off-line pixel");
@@ -472,7 +530,7 @@ mod tests {
         layer.style.fill = None;
 
         let mut pixmap = Pixmap::new(40, 40).unwrap();
-        draw_layer(&mut pixmap, &layer, std::slice::from_ref(&layer), egui::Vec2::ZERO, 1.0);
+        draw_layer(&mut pixmap, &layer, std::slice::from_ref(&layer), egui::Vec2::ZERO, 1.0, 1.0);
         // Well inside the triangle wing (cap size = max(6*3.5, 8) = 21, base
         // at x=19, half-width 7.5 at x=25) but clearly outside the shaft's
         // own stroke half-width (3, so shaft covers y 17..23 only).
@@ -484,11 +542,30 @@ mod tests {
     }
 
     #[test]
+    fn draw_layer_at_scale_two_covers_twice_the_pixels() {
+        let mut layer = Layer::new(
+            "Rect",
+            Frame::from_two_points(Pos2::new(5.0, 5.0), Pos2::new(15.0, 15.0)),
+            LayerKind::Rectangle { corner_radius: CornerRadii::ZERO },
+        );
+        layer.style.fill = Some(crate::model::Paint::Solid(Color32::from_rgb(255, 0, 0)));
+        layer.style.stroke = None;
+
+        let mut pixmap = Pixmap::new(40, 40).unwrap();
+        draw_layer(&mut pixmap, &layer, std::slice::from_ref(&layer), egui::Vec2::ZERO, 1.0, 2.0);
+        // Doc-space (5,5)-(15,15) lands on pixmap (10,10)-(30,30).
+        assert_eq!(pixmap.pixel(11, 11).unwrap().alpha(), 255);
+        assert_eq!(pixmap.pixel(29, 29).unwrap().alpha(), 255);
+        assert_eq!(pixmap.pixel(8, 8).unwrap().alpha(), 0);
+        assert_eq!(pixmap.pixel(31, 31).unwrap().alpha(), 0);
+    }
+
+    #[test]
     fn zero_rotation_rectangle_renders_identically_to_unrotated_path() {
         // Regression lock for the `Rectangle` arm's switch from
         // `painter.rect`-equivalent tiny-skia's native rounded-rect path to
-        // the shared `fill_and_stroke` + `rotation_transform` path: at
-        // `rotation == 0.0`, `rotation_transform` returns `Transform::identity()`
+        // the shared `fill_and_stroke` + `layer_transform` path: at
+        // `rotation == 0.0` and `render_scale` 1.0, `layer_transform` is the identity
         // so this must produce byte-identical output to the pre-rotation code.
         let mut layer = Layer::new(
             "Rect",
@@ -1115,6 +1192,28 @@ mod tests {
             .flat_map(|x| (0..pixmap.height()).map(move |y| (x, y)))
             .filter(|&(x, y)| pixmap.pixel(x, y).map(|p| p.alpha() > 0).unwrap_or(false))
             .count()
+    }
+
+    /// Text drawn at `render_scale` 2 is rasterized at full resolution: it
+    /// matches the same text built at double size (font and frame) drawn at
+    /// 1x, rather than a blurry upscale — for both the direct and the
+    /// rotated (offscreen sub-pixmap) paths.
+    #[test]
+    fn text_at_render_scale_two_matches_double_size_text_at_one() {
+        for rotation in [0.0, 30.0] {
+            let mut layer = text_layer("HH", 32.0, egui::Vec2::new(120.0, 60.0), TextAlign::Left);
+            layer.frame.rotation = rotation;
+            let mut doubled = text_layer("HH", 64.0, egui::Vec2::new(240.0, 120.0), TextAlign::Left);
+            doubled.frame.rotation = rotation;
+
+            let mut scaled = Pixmap::new(400, 400).unwrap();
+            draw_layer(&mut scaled, &layer, std::slice::from_ref(&layer), egui::Vec2::new(40.0, 40.0), 1.0, 2.0);
+            let mut reference = Pixmap::new(400, 400).unwrap();
+            draw_layer(&mut reference, &doubled, std::slice::from_ref(&doubled), egui::Vec2::new(80.0, 80.0), 1.0, 1.0);
+
+            let ratio = opaque_pixel_count(&scaled) as f32 / opaque_pixel_count(&reference).max(1) as f32;
+            assert!((0.95..1.05).contains(&ratio), "rotation {rotation}: expected matching coverage, got {ratio}");
+        }
     }
 
     #[test]

@@ -29,6 +29,7 @@ use super::text_wrap::wrap_line_rich;
 /// the tallest run actually present on that row, so mixing font sizes
 /// looks right; an explicit `line_height` overrides that uniformly for
 /// every row, same as `draw_text`.
+/// `render_scale`: pixmap pixels per document unit, see `glyph_raster::draw_text_glyph`.
 #[allow(clippy::too_many_arguments)]
 pub(super) fn draw_text_rich(
     pixmap: &mut Pixmap,
@@ -46,6 +47,7 @@ pub(super) fn draw_text_rich(
     list: ListType,
     list_start: i32,
     opacity: f32,
+    render_scale: f32,
 ) {
     if content.is_empty() {
         return;
@@ -190,7 +192,7 @@ pub(super) fn draw_text_rich(
             let style = style_of(idx);
             let run_color = with_opacity(style.color.unwrap_or(base.color.unwrap_or(egui::Color32::BLACK)), opacity);
             let x_before = cursor_x;
-            draw_text_glyph(pixmap, &faces[face_idx], id, scale, cursor_x, baseline_y, run_color, false, style.italic, clip);
+            draw_text_glyph(pixmap, &faces[face_idx], id, scale, cursor_x, baseline_y, run_color, false, style.italic, clip, render_scale);
             cursor_x += scaled.h_advance(id) + letter_spacing;
             if c == ' ' {
                 cursor_x += justify_extra;
@@ -222,12 +224,12 @@ pub(super) fn draw_text_rich(
                     if style.underline {
                         let y = baseline_y + style.font_size * 0.08;
                         let rect = egui::Rect::from_min_size(egui::Pos2::new(x0, y), egui::Vec2::new(x1 - x0, deco_thickness));
-                        draw_decoration_rect(pixmap, rect, clip, to_color(deco_color));
+                        draw_decoration_rect(pixmap, rect, clip, to_color(deco_color), render_scale);
                     }
                     if style.strikethrough {
                         let y = baseline_y - style.font_size * 0.3;
                         let rect = egui::Rect::from_min_size(egui::Pos2::new(x0, y), egui::Vec2::new(x1 - x0, deco_thickness));
-                        draw_decoration_rect(pixmap, rect, clip, to_color(deco_color));
+                        draw_decoration_rect(pixmap, rect, clip, to_color(deco_color), render_scale);
                     }
                 }
             }

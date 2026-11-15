@@ -20,6 +20,7 @@ use super::paint::{to_color, with_opacity};
 /// (same as `draw_text_rich`) rather than having a separate uniform-style
 /// path, since an empty `runs` already degenerates to "every char uses
 /// `base`" for free.
+/// `render_scale`: pixmap pixels per document unit, see `glyph_raster::draw_text_glyph`.
 #[allow(clippy::too_many_arguments)]
 pub(super) fn draw_text_in_area(
     pixmap: &mut Pixmap,
@@ -33,6 +34,7 @@ pub(super) fn draw_text_in_area(
     outline: &[egui::Pos2],
     padding: f32,
     opacity: f32,
+    render_scale: f32,
 ) {
     if content.is_empty() {
         return;
@@ -109,7 +111,7 @@ pub(super) fn draw_text_in_area(
             let style = style_of(idx);
             let color = with_opacity(style.color.unwrap_or(base.color.unwrap_or(egui::Color32::BLACK)), opacity);
             let x_before = cursor_x;
-            draw_text_glyph(pixmap, &faces[face_idx], id, scale, cursor_x, baseline_y, color, false, style.italic, None);
+            draw_text_glyph(pixmap, &faces[face_idx], id, scale, cursor_x, baseline_y, color, false, style.italic, None, render_scale);
             cursor_x += scaled.h_advance(id) + letter_spacing;
             extents.push((x_before, cursor_x, idx));
             prev = Some((id, face_idx));
@@ -137,12 +139,12 @@ pub(super) fn draw_text_in_area(
                     if style.underline {
                         let y = baseline_y + style.font_size * 0.08;
                         let rect = egui::Rect::from_min_size(egui::Pos2::new(x0, y), egui::Vec2::new(x1 - x0, deco_thickness));
-                        draw_decoration_rect(pixmap, rect, None, to_color(deco_color));
+                        draw_decoration_rect(pixmap, rect, None, to_color(deco_color), render_scale);
                     }
                     if style.strikethrough {
                         let y = baseline_y - style.font_size * 0.3;
                         let rect = egui::Rect::from_min_size(egui::Pos2::new(x0, y), egui::Vec2::new(x1 - x0, deco_thickness));
-                        draw_decoration_rect(pixmap, rect, None, to_color(deco_color));
+                        draw_decoration_rect(pixmap, rect, None, to_color(deco_color), render_scale);
                     }
                 }
             }

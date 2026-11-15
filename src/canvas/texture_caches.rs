@@ -70,11 +70,31 @@ impl ImageTextureCache {
 /// than built opaque and faded as a whole at draw time — the two differ
 /// wherever content layers overlap. That makes `opacity` part of the key,
 /// so dragging an ancestor's opacity slider rebuilds the texture.
+///
+/// Rendered at `render_scale` pixels per document unit (see
+/// `mask_render_scale`) so it stays sharp when zoomed in; also part of the key.
 pub(super) struct CachedMaskTexture {
     mask: Layer,
     content: Vec<Layer>,
     opacity: f32,
+    render_scale: f32,
     texture: egui::TextureHandle,
+}
+
+/// Hard cap on a masked-group texture's side length, so a large mask at a
+/// high zoom doesn't allocate an unbounded texture — same rationale as
+/// `NOISE_TEXTURE_MAX`. Past it the texture renders below screen resolution
+/// (slightly soft) rather than failing.
+pub(super) const MASK_TEXTURE_MAX: f32 = 4096.0;
+
+/// Pixels per document unit to render a masked run at for canvas `zoom`: the
+/// next power of two at or above `zoom`, so the texture is only rebuilt when
+/// zooming crosses a power of two rather than on every zoom frame — lowered
+/// if needed so neither side of `bounds` exceeds `MASK_TEXTURE_MAX`.
+pub(super) fn mask_render_scale(zoom: f32, bounds: Rect) -> f32 {
+    let stepped = 2f32.powf(zoom.max(1e-3).log2().ceil());
+    let longest_side = bounds.width().max(bounds.height()).max(1.0);
+    stepped.min(MASK_TEXTURE_MAX / longest_side)
 }
 
 /// Whether `layer` or any descendant is a `Text` layer with a
@@ -96,31 +116,34 @@ impl MaskedGroupTextureCache {
     /// Returns the cached (or freshly built) texture for this masked run,
     /// plus the parent-space bounds it should be drawn into on screen: the
     /// mask's `rotated_bounds()` grown by its stroke width, so a mask's
-    /// stroke (which also reveals content) isn't cropped at its frame. `page` lets a path-attached `Text`
-    /// layer inside `content` resolve its target anywhere on the page, not
+    /// stroke (which also reveals content) isn't cropped at its frame. `zoom`
+    /// picks the texture's resolution (see `mask_render_scale`). `page` lets a
+    /// path-attached `Text` layer inside `content` resolve its target anywhere on the page, not
     /// just within this masked run's own `mask`/`content` — but since that
     /// means this render can depend on a layer this cache's key (`mask`/
     /// `content` clone-equality) doesn't track, any masked run containing
     /// such a layer always rebuilds rather than risk a stale texture if its
     /// attachment target moves elsewhere on the page.
-    pub(super) fn get_or_build(&mut self, ctx: &egui::Context, mask: &Layer, content: &[&Layer], segment: usize, opacity: f32, page: &Page) -> Option<(egui::TextureHandle, Rect)> {
+    pub(super) fn get_or_build(&mut self, ctx: &egui::Context, mask: &Layer, content: &[&Layer], segment: usize, opacity: f32, zoom: f32, page: &Page) -> Option<(egui::TextureHandle, Rect)> {
         let key = (mask.id, segment);
         let stroke_width = mask.style.stroke.as_ref().map_or(0.0, |stroke| stroke.width);
         let bounds = mask.frame.rotated_bounds().expand(stroke_width);
+        let render_scale = mask_render_scale(zoom, bounds);
         let up_to_date = !content.iter().any(|l| contains_path_attached_text(l))
             && self.0.get(&key).is_some_and(|cached| {
-                cached.mask == *mask && cached.opacity == opacity && cached.content.len() == content.len() && cached.content.iter().zip(content).all(|(a, b)| a == *b)
+                cached.mask == *mask && cached.opacity == opacity && cached.render_scale == render_scale && cached.content.len() == content.len() && cached.content.iter().zip(content).all(|(a, b)| a == *b)
             });
         if !up_to_date {
-            let width = bounds.width().round().max(1.0) as u32;
-            let height = bounds.height().round().max(1.0) as u32;
+            let width = (bounds.width() * render_scale).round().max(1.0) as u32;
+            let height = (bounds.height() * render_scale).round().max(1.0) as u32;
             let mut pixmap = tiny_skia::Pixmap::new(width, height)?;
             // Shifts parent-space coordinates so `bounds.min` (the mask's
             // own top-left) lands at the scratch pixmap's `(0, 0)` — same
-            // idea as `export::render_layer`'s `offset` computation.
+            // idea as `export::render_layer`'s `offset` computation (in
+            // document units; `render_scale` is applied by `draw_layer`).
             let render_offset = Vec2::new(-bounds.min.x, -bounds.min.y);
             crate::masking::composite_masked_run(&mut pixmap, mask, content, render_offset, opacity, |px, l, off, op| {
-                crate::export::draw_layer_with_shadows(px, l, &page.layers, off, op)
+                crate::export::draw_layer_with_shadows(px, l, &page.layers, off, op, render_scale)
             });
             let color_image = egui::ColorImage::from_rgba_premultiplied([width as usize, height as usize], pixmap.data());
             let texture = ctx.load_texture(format!("mask-group-{}-{segment}", mask.id), color_image, egui::TextureOptions::LINEAR);
@@ -130,6 +153,7 @@ impl MaskedGroupTextureCache {
                     mask: mask.clone(),
                     content: content.iter().map(|l| (*l).clone()).collect(),
                     opacity,
+                    render_scale,
                     texture,
                 },
             );
@@ -337,7 +361,7 @@ impl ShadowTextureCache {
         }
         let up_to_date = !contains_path_attached_text(layer) && self.0.get(&layer.id).is_some_and(|cached| cached.layer == *layer);
         if !up_to_date {
-            let (silhouette, bounds) = crate::export::render_layer_plain(layer, &page.layers)?;
+            let (silhouette, bounds) = crate::export::render_layer_plain(layer, &page.layers, 1.0)?;
             let silhouette_origin = Vec2::new(bounds.min.x, bounds.min.y);
 
             let mut outer = Vec::new();
@@ -367,5 +391,28 @@ impl ShadowTextureCache {
     /// See `ImageTextureCache::evict_stale` — same rationale.
     pub(super) fn evict_stale(&mut self, live_ids: &std::collections::HashSet<LayerId>) {
         self.0.retain(|id, _| live_ids.contains(id));
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn square(side: f32) -> Rect {
+        Rect::from_min_size(Pos2::ZERO, Vec2::splat(side))
+    }
+
+    #[test]
+    fn mask_render_scale_steps_up_to_the_next_power_of_two() {
+        assert_eq!(mask_render_scale(1.0, square(100.0)), 1.0);
+        assert_eq!(mask_render_scale(1.5, square(100.0)), 2.0);
+        assert_eq!(mask_render_scale(3.0, square(100.0)), 4.0);
+        assert_eq!(mask_render_scale(0.3, square(100.0)), 0.5);
+    }
+
+    #[test]
+    fn mask_render_scale_is_capped_by_the_texture_size_limit() {
+        // 1000 units at zoom 8 would be 8000px; the cap keeps it at MASK_TEXTURE_MAX.
+        assert_eq!(mask_render_scale(8.0, square(1000.0)), MASK_TEXTURE_MAX / 1000.0);
     }
 }

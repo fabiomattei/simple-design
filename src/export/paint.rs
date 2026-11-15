@@ -24,14 +24,14 @@ pub(super) fn to_color_with_opacity(c: egui::Color32, opacity: f32) -> Color {
 /// Builds a `tiny-skia` `Paint` for `paint` (solid or gradient), anti-aliased.
 /// `bounds` is the shape's own absolute, *unrotated* bounds within the
 /// pixmap (matching whatever local space the path being filled/stroked was
-/// built in, before `rotation_transform` rotates it at draw time) —
+/// built in, before `layer_transform` rotates and scales it at draw time) —
 /// `Gradient::from`/`to` are normalized `0.0..=1.0` per axis within it, per
 /// `model::Gradient`'s doc comment. Building the shader's control points in
 /// that same unrotated space, rather than pre-rotating them here, is what
 /// lets the gradient rotate along with the shape: `Pixmap::fill_path`
 /// applies its `transform` argument to the shader exactly like it does to
 /// the path (see `tiny-skia`'s `painter.rs::fill_path`), so passing the same
-/// `rotation_transform(layer, bounds)` both places keeps them in sync.
+/// `layer_transform(layer, bounds, render_scale)` both places keeps them in sync.
 /// `noise_storage` exists only so a `Paint::Noise` fill's generated grain
 /// `Pixmap` can outlive this call: `tiny_skia::Pattern`'s shader *borrows*
 /// its source pixmap (unlike `Solid`/`Gradient`, which own their color data
@@ -39,8 +39,11 @@ pub(super) fn to_color_with_opacity(c: egui::Color32, opacity: f32) -> Color {
 /// as the returned `Paint` — declaring `let mut noise_storage = None;`
 /// immediately before the call, in the same scope as the following
 /// `fill_path`/`stroke_path`, does that. Every other `Paint` variant leaves
-/// it `None`.
-pub(super) fn to_sk_paint<'a>(paint: &crate::model::Paint, bounds: egui::Rect, opacity: f32, noise_storage: &'a mut Option<Pixmap>) -> Paint<'a> {
+/// it `None`. `render_scale` is pixmap pixels per document unit (see
+/// `export::draw_layer`): the generated Noise/Halftone pixmaps are built
+/// at that resolution so their grain stays one pixel per pixmap pixel —
+/// `bounds` itself, like the shader transforms here, stays in document units.
+pub(super) fn to_sk_paint<'a>(paint: &crate::model::Paint, bounds: egui::Rect, opacity: f32, render_scale: f32, noise_storage: &'a mut Option<Pixmap>) -> Paint<'a> {
     let mut sk_paint = Paint { anti_alias: true, ..Default::default() };
     match paint {
         crate::model::Paint::Solid(c) => {
@@ -84,17 +87,16 @@ pub(super) fn to_sk_paint<'a>(paint: &crate::model::Paint, bounds: egui::Rect, o
             }
         }
         crate::model::Paint::Noise(n) => {
-            let width = bounds.width().round().max(1.0) as u32;
-            let height = bounds.height().round().max(1.0) as u32;
+            let width = (bounds.width() * render_scale).round().max(1.0) as u32;
+            let height = (bounds.height() * render_scale).round().max(1.0) as u32;
             if let Some(mut pixmap) = Pixmap::new(width, height) {
                 for j in 0..height {
                     for i in 0..width {
-                        // Zero-based, one pixel per document unit — export
-                        // renders unscaled (1:1), so this is directly the
-                        // same local-bounds coordinate space
-                        // `canvas/texture_caches.rs::NoiseTextureCache` samples, just at
-                        // full resolution instead of a quantized texture.
-                        let local_point = egui::Pos2::new(i as f32 + 0.5, j as f32 + 0.5);
+                        // Pixel center mapped back to the same local-bounds
+                        // document-unit space
+                        // `canvas/texture_caches.rs::NoiseTextureCache` samples,
+                        // one sample per pixmap pixel at `render_scale`.
+                        let local_point = egui::Pos2::new((i as f32 + 0.5) / render_scale, (j as f32 + 0.5) / render_scale);
                         let color = crate::noise_fill::sample(n, local_point, opacity);
                         if let Some(px) = premultiplied(color) {
                             pixmap.pixels_mut()[(j * width + i) as usize] = px;
@@ -106,9 +108,10 @@ pub(super) fn to_sk_paint<'a>(paint: &crate::model::Paint, bounds: egui::Rect, o
                 // Translates the pattern pixmap's own (0,0)-(width,height)
                 // origin onto `bounds`' unrotated absolute position — same
                 // role `to_abs` plays for the gradient shader above, and
-                // subject to the same `rotation_transform` composition this
-                // function's doc comment describes.
-                let transform = Transform::from_translate(bounds.min.x, bounds.min.y);
+                // subject to the same `layer_transform` composition this
+                // function's doc comment describes. `1 / render_scale` maps the
+                // pixmap's scaled-resolution pixels back to document units.
+                let transform = Transform::from_translate(bounds.min.x, bounds.min.y).pre_scale(1.0 / render_scale, 1.0 / render_scale);
                 sk_paint.shader = tiny_skia::Pattern::new(pixmap_ref, tiny_skia::SpreadMode::Pad, tiny_skia::FilterQuality::Nearest, 1.0, transform);
             }
         }
@@ -116,12 +119,12 @@ pub(super) fn to_sk_paint<'a>(paint: &crate::model::Paint, bounds: egui::Rect, o
             // Same shape as the `Paint::Noise` arm above — generated
             // directly at full `bounds` resolution (not tiled from a
             // smaller source), so `SpreadMode::Pad` like Noise, not Repeat.
-            let width = bounds.width().round().max(1.0) as u32;
-            let height = bounds.height().round().max(1.0) as u32;
+            let width = (bounds.width() * render_scale).round().max(1.0) as u32;
+            let height = (bounds.height() * render_scale).round().max(1.0) as u32;
             if let Some(mut pixmap) = Pixmap::new(width, height) {
                 for j in 0..height {
                     for i in 0..width {
-                        let local_point = egui::Pos2::new(i as f32 + 0.5, j as f32 + 0.5);
+                        let local_point = egui::Pos2::new((i as f32 + 0.5) / render_scale, (j as f32 + 0.5) / render_scale);
                         let color = crate::halftone_fill::sample(h, local_point, opacity);
                         if let Some(px) = premultiplied(color) {
                             pixmap.pixels_mut()[(j * width + i) as usize] = px;
@@ -130,7 +133,7 @@ pub(super) fn to_sk_paint<'a>(paint: &crate::model::Paint, bounds: egui::Rect, o
                 }
                 *noise_storage = Some(pixmap);
                 let pixmap_ref = noise_storage.as_ref().expect("just assigned").as_ref();
-                let transform = Transform::from_translate(bounds.min.x, bounds.min.y);
+                let transform = Transform::from_translate(bounds.min.x, bounds.min.y).pre_scale(1.0 / render_scale, 1.0 / render_scale);
                 sk_paint.shader = tiny_skia::Pattern::new(pixmap_ref, tiny_skia::SpreadMode::Pad, tiny_skia::FilterQuality::Nearest, 1.0, transform);
             }
         }

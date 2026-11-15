@@ -11,7 +11,10 @@ use super::sk_geometry::fill_rect;
 /// per-scanline horizontal shear around the baseline) since neither is
 /// available as a real font variant for the two bundled `TextFont`s — same
 /// technique `canvas/draw_layer.rs`'s Text arm uses for bold. `clip`, if set
-/// (`TextResize::Fixed`), drops any pixel outside it.
+/// (`TextResize::Fixed`), drops any pixel outside it. `scale`, `x`,
+/// `baseline_y` and `clip` are in document units; `render_scale` (pixmap
+/// pixels per document unit, see `export::draw_layer`) converts them to
+/// pixmap pixels here, so the glyph is rasterized at full resolution.
 #[allow(clippy::too_many_arguments)]
 pub(super) fn draw_text_glyph(
     pixmap: &mut Pixmap,
@@ -24,9 +27,13 @@ pub(super) fn draw_text_glyph(
     bold: bool,
     italic: bool,
     clip: Option<egui::Rect>,
+    render_scale: f32,
 ) {
     const ITALIC_SHEAR: f32 = 0.22;
-    let x_offsets: &[f32] = if bold { &[0.0, 0.6] } else { &[0.0] };
+    let scale = ab_glyph::PxScale { x: scale.x * render_scale, y: scale.y * render_scale };
+    let (x, baseline_y) = (x * render_scale, baseline_y * render_scale);
+    let clip = clip.map(|clip| egui::Rect::from_min_max((clip.min.to_vec2() * render_scale).to_pos2(), (clip.max.to_vec2() * render_scale).to_pos2()));
+    let x_offsets: &[f32] = if bold { &[0.0, 0.6 * render_scale] } else { &[0.0] };
     for dx in x_offsets {
         let glyph = id.with_scale_and_position(scale, ab_glyph::point(x + dx, baseline_y));
         let Some(outlined) = face.outline_glyph(glyph) else { continue };
@@ -54,14 +61,15 @@ pub(super) fn draw_text_glyph(
 }
 
 /// Fills an underline/strikethrough bar, intersected with `clip` (set for
-/// `TextResize::Fixed`) so decorations don't spill past a clipped box.
-pub(super) fn draw_decoration_rect(pixmap: &mut Pixmap, rect: egui::Rect, clip: Option<egui::Rect>, color: Color) {
+/// `TextResize::Fixed`) so decorations don't spill past a clipped box. `rect`
+/// and `clip` are in document units, scaled by `render_scale` at draw time.
+pub(super) fn draw_decoration_rect(pixmap: &mut Pixmap, rect: egui::Rect, clip: Option<egui::Rect>, color: Color, render_scale: f32) {
     let rect = match clip {
         Some(clip) => rect.intersect(clip),
         None => rect,
     };
     if rect.width() > 0.0 && rect.height() > 0.0 {
-        fill_rect(pixmap, rect, color);
+        fill_rect(pixmap, rect, color, render_scale);
     }
 }
 

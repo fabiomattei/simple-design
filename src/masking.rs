@@ -89,11 +89,13 @@ fn split_run_around_ignored<'a>(mask: &'a Layer, run: Vec<&'a Layer>) -> Vec<Ren
 /// composites the result onto `target` at `(0, 0)`. `offset`/`parent_opacity`
 /// are forwarded to `draw_layer` exactly as a normal recursive draw call
 /// would (see `export::draw_layer`'s own `offset` accumulation convention) —
-/// callers are responsible for `target`, `offset` and scale all agreeing on
-/// the same coordinate mapping (export/ draws at 1 document unit = 1
-/// pixel; `canvas/texture_caches.rs`'s texture cache draws into a pixmap cropped and sized to
-/// the mask's own bounds, with `offset` shifted so the mask's local origin
-/// lands at the scratch pixmaps' `(0, 0)`).
+/// callers are responsible for `target`, `offset` and the render scale
+/// their `draw_layer` closure captures all agreeing on the same coordinate
+/// mapping (export/ draws at 1 document unit = 1 pixel;
+/// `canvas/texture_caches.rs`'s texture cache draws at a zoom-dependent
+/// `render_scale` into a pixmap cropped and sized to the mask's own bounds,
+/// with `offset` shifted so the mask's local origin lands at the scratch
+/// pixmaps' `(0, 0)`).
 ///
 /// This is an alpha mask: content shows through in proportion to the
 /// mask's rendered alpha, so the mask's own `opacity`, `fill_opacity`,
@@ -144,7 +146,7 @@ pub fn mask_covers_point(mask: &Layer, point: Pos2) -> bool {
     let height = bounds.height().round().max(1.0) as u32;
     let Some(mut pixmap) = Pixmap::new(width, height) else { return false };
     let render_offset = Vec2::new(-bounds.min.x, -bounds.min.y);
-    crate::export::draw_layer(&mut pixmap, mask, std::slice::from_ref(mask), render_offset, 1.0);
+    crate::export::draw_layer(&mut pixmap, mask, std::slice::from_ref(mask), render_offset, 1.0, 1.0);
     let px = ((point.x - bounds.min.x).floor().max(0.0) as u32).min(width.saturating_sub(1));
     let py = ((point.y - bounds.min.y).floor().max(0.0) as u32).min(height.saturating_sub(1));
     pixmap.pixel(px, py).is_some_and(|p| p.alpha() > 0)
@@ -183,7 +185,7 @@ mod tests {
         let mask = oval_layer("Mask", Pos2::new(0.0, 0.0), Vec2::new(100.0, 100.0));
 
         let mut target = Pixmap::new(100, 100).unwrap();
-        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op));
+        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op, 1.0));
 
         // Center: inside both the square and the circle -> opaque red.
         let center = pixel(&target, 50, 50);
@@ -247,7 +249,7 @@ mod tests {
         let roots = vec![guide, mask.clone(), text.clone()];
 
         let mut target = Pixmap::new(100, 40).unwrap();
-        composite_masked_run(&mut target, &mask, &[&text], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, &roots, off, op));
+        composite_masked_run(&mut target, &mask, &[&text], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, &roots, off, op, 1.0));
 
         let any_opaque = target.pixels().iter().any(|p| p.alpha() > 0);
         assert!(any_opaque, "expected the masked text's on-path glyphs to render using a target outside its own masked content");
@@ -310,7 +312,7 @@ mod tests {
         mask.style.fill = Some(Paint::Solid(Color32::from_rgb(0, 255, 0))); // distinct from both Square's red and transparent.
 
         let mut target = Pixmap::new(100, 100).unwrap();
-        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op));
+        composite_masked_run(&mut target, &mask, &[&square], Vec2::ZERO, 1.0, |px, l, off, op| crate::export::draw_layer(px, l, std::slice::from_ref(&mask), off, op, 1.0));
 
         let center = pixel(&target, 50, 50);
         assert!(center.green() < 50, "mask's own green fill should not appear in the output");

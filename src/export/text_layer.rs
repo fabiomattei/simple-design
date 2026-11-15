@@ -13,7 +13,9 @@ use super::text_plain::draw_text;
 use super::text_rich::draw_text_rich;
 
 /// Draws `layer` (a `Text` layer; any other kind draws nothing) into
-/// `pixmap`. `bounds` is its frame already translated by `offset`.
+/// `pixmap`. `bounds` is its frame already translated by `offset`, in
+/// document units; `render_scale` is pixmap pixels per document unit (see
+/// `export::draw_layer`).
 pub(super) fn draw_text_layer(
     pixmap: &mut Pixmap,
     layer: &Layer,
@@ -21,12 +23,13 @@ pub(super) fn draw_text_layer(
     offset: egui::Vec2,
     bounds: egui::Rect,
     opacity: f32,
+    render_scale: f32,
 ) {
-    if draw_attached_text(pixmap, layer, roots, offset, opacity) {
+    if draw_attached_text(pixmap, layer, roots, offset, opacity, render_scale) {
         return;
     }
     if layer.frame.rotation == 0.0 {
-        render_text(pixmap, layer, bounds, opacity);
+        render_text(pixmap, layer, bounds, opacity, render_scale);
     } else {
         // Glyph rasterization writes pixels directly (`ab_glyph`'s
         // `outlined.draw` callback in `glyph_raster.rs`), bypassing `tiny_skia::Path`/
@@ -38,18 +41,24 @@ pub(super) fn draw_text_layer(
         // transform, mirroring `draw_image`'s existing
         // `PixmapPaint`+`Transform` composite pattern. `draw_text`/
         // `draw_text_rich` themselves are called completely unmodified.
-        let w = bounds.width().round().max(1.0) as u32;
-        let h = bounds.height().round().max(1.0) as u32;
+        // The sub-pixmap is `render_scale` pixels per document unit like
+        // `pixmap`, so the composite maps it back to document units
+        // (`1 / render_scale`), rotates there, then re-applies `render_scale`.
+        let w = (bounds.width() * render_scale).round().max(1.0) as u32;
+        let h = (bounds.height() * render_scale).round().max(1.0) as u32;
         if let Some(mut sub) = Pixmap::new(w, h) {
-            let local_bounds = egui::Rect::from_min_size(egui::Pos2::ZERO, egui::Vec2::new(w as f32, h as f32));
-            render_text(&mut sub, layer, local_bounds, 1.0);
+            let local_size = egui::Vec2::new(w as f32, h as f32) / render_scale;
+            let local_bounds = egui::Rect::from_min_size(egui::Pos2::ZERO, local_size);
+            render_text(&mut sub, layer, local_bounds, 1.0, render_scale);
             let paint = tiny_skia::PixmapPaint {
                 opacity: opacity.clamp(0.0, 1.0),
                 blend_mode: tiny_skia::BlendMode::SourceOver,
                 quality: tiny_skia::FilterQuality::Bilinear,
             };
             let composite_transform = Transform::from_translate(bounds.min.x, bounds.min.y)
-                .post_rotate_at(layer.frame.rotation, bounds.center().x, bounds.center().y);
+                .pre_scale(1.0 / render_scale, 1.0 / render_scale)
+                .post_rotate_at(layer.frame.rotation, bounds.center().x, bounds.center().y)
+                .post_scale(render_scale, render_scale);
             pixmap.draw_pixmap(0, 0, sub.as_ref(), &paint, composite_transform, None);
         }
     }
@@ -59,7 +68,7 @@ pub(super) fn draw_text_layer(
 /// returns `true`; returns `false` (drawing nothing) when it has no
 /// attachment or the target can't be resolved, so the caller renders it as
 /// ordinary text instead.
-fn draw_attached_text(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], offset: egui::Vec2, opacity: f32) -> bool {
+fn draw_attached_text(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], offset: egui::Vec2, opacity: f32, render_scale: f32) -> bool {
     let LayerKind::Text {
         content,
         font_size,
@@ -119,6 +128,7 @@ fn draw_attached_text(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], offse
                     attachment.start,
                     attachment.flip,
                     opacity * layer.style.fill_opacity,
+                    render_scale,
                 );
                 return true;
             }
@@ -144,6 +154,7 @@ fn draw_attached_text(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], offse
                     &outline,
                     attachment.offset,
                     opacity * layer.style.fill_opacity,
+                    render_scale,
                 );
                 return true;
             }
@@ -156,7 +167,7 @@ fn draw_attached_text(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], offse
 /// `LayerKind::Text::runs`'s doc comment) — `draw_text` below is
 /// untouched from before that feature existed, reached only for
 /// the uniform-style case, so it can't regress.
-fn render_text(target: &mut Pixmap, layer: &Layer, target_bounds: egui::Rect, target_opacity: f32) {
+fn render_text(target: &mut Pixmap, layer: &Layer, target_bounds: egui::Rect, target_opacity: f32, render_scale: f32) {
     let LayerKind::Text {
         content,
         font_size,
@@ -202,6 +213,7 @@ fn render_text(target: &mut Pixmap, layer: &Layer, target_bounds: egui::Rect, ta
             *list,
             *list_start,
             target_opacity,
+            render_scale,
         );
     } else {
         let Some(fill) = layer.style.fill.as_ref() else { return };
@@ -235,6 +247,7 @@ fn render_text(target: &mut Pixmap, layer: &Layer, target_bounds: egui::Rect, ta
             // rather than read inside it, unlike `draw_text`
             // just above (which does take `layer`).
             target_opacity * layer.style.fill_opacity,
+            render_scale,
         );
     }
 }

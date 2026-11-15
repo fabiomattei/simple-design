@@ -6,9 +6,9 @@ use tiny_skia::{FillRule, PathBuilder, Pixmap, Stroke as SkStroke};
 use crate::model::{ArrowCap, Layer};
 
 use super::paint::to_sk_paint;
-use super::sk_geometry::{arrow_cap_size, arrow_cap_wings, polygon_ring_path, rotation_transform, to_sk_rect};
+use super::sk_geometry::{arrow_cap_size, arrow_cap_wings, polygon_ring_path, layer_transform, to_sk_rect};
 
-pub(super) fn draw_line(pixmap: &mut Pixmap, layer: &Layer, offset: egui::Vec2, bounds: egui::Rect, opacity: f32) {
+pub(super) fn draw_line(pixmap: &mut Pixmap, layer: &Layer, offset: egui::Vec2, bounds: egui::Rect, opacity: f32, render_scale: f32) {
     let Some(stroke) = layer.style.stroke.as_ref() else {
         return;
     };
@@ -21,13 +21,13 @@ pub(super) fn draw_line(pixmap: &mut Pixmap, layer: &Layer, offset: egui::Vec2, 
         return;
     };
     let mut noise_storage = None;
-    let paint = to_sk_paint(&stroke.paint, bounds, opacity * layer.style.stroke_opacity, &mut noise_storage);
+    let paint = to_sk_paint(&stroke.paint, bounds, opacity * layer.style.stroke_opacity, render_scale, &mut noise_storage);
     let sk_stroke = SkStroke {
         width: stroke.width.max(0.5),
         line_cap: tiny_skia::LineCap::Round,
         ..Default::default()
     };
-    pixmap.stroke_path(&path, &paint, &sk_stroke, rotation_transform(layer, bounds), None);
+    pixmap.stroke_path(&path, &paint, &sk_stroke, layer_transform(layer, bounds, render_scale), None);
 }
 
 pub(super) fn draw_arrow(
@@ -38,20 +38,21 @@ pub(super) fn draw_arrow(
     opacity: f32,
     start_cap: &ArrowCap,
     end_cap: &ArrowCap,
+    render_scale: f32,
 ) {
     let Some(stroke) = layer.style.stroke.as_ref() else {
         return;
     };
     let a = layer.frame.start() + offset;
     let b = layer.frame.end() + offset;
-    let transform = rotation_transform(layer, bounds);
+    let transform = layer_transform(layer, bounds, render_scale);
     let sk_stroke = SkStroke {
         width: stroke.width.max(0.5),
         line_cap: tiny_skia::LineCap::Round,
         ..Default::default()
     };
     let mut noise_storage = None;
-    let paint = to_sk_paint(&stroke.paint, bounds, opacity * layer.style.stroke_opacity, &mut noise_storage);
+    let paint = to_sk_paint(&stroke.paint, bounds, opacity * layer.style.stroke_opacity, render_scale, &mut noise_storage);
 
     // Shaft + any `Line`-style chevron caps share one stroked path.
     let mut pb = PathBuilder::new();
