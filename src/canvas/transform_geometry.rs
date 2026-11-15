@@ -46,7 +46,7 @@ pub(crate) fn collect_rotatable_leaves(layer: &Layer, parent_offset: Vec2, out: 
 
 /// Applies a `delta_deg` rigid rotation about `pivot` (absolute page-space)
 /// to every leaf in `layers`, writing the result into `page`. Standalone
-/// (not inlined in `CanvasWidget::ui`'s `dragged()` match) so it's directly
+/// (not inlined in `CanvasWidget::continue_drag`'s match) so it's directly
 /// unit-testable without simulating pointer events — see the `tests` module.
 /// Every point (frame center, path anchors, compound-path ring points)
 /// rotates about the SAME shared `pivot` — for a single selected leaf this
@@ -113,7 +113,7 @@ pub(crate) fn apply_rotation_delta(page: &mut Page, pivot: Pos2, delta_deg: f32,
 /// (whose `frame` *is* its own geometry), a container's `frame` is never
 /// otherwise touched by a rotate, so it goes stale relative to its
 /// now-rotated descendants — both the selection outline/handles (which read
-/// the container's own `frame.bounds()`, see `CanvasWidget::ui`) and, for a
+/// the container's own `frame.bounds()`, see `CanvasWidget::paint_selection_outlines`) and, for a
 /// `BooleanGroup`, the render offset for its live-computed geometry (see
 /// `compute_boolean_group`'s doc comment) would otherwise stay anchored to
 /// the pre-rotation bounds while the actual (rotated) content moves away
@@ -156,7 +156,7 @@ pub(crate) fn refit_container_to_children(page: &mut Page, id: LayerId) {
 /// rotated, yet `rotated_bounds()` still reports a bigger box the more it's
 /// rotated toward 45°. Harmless for a single rotated leaf (its own outline
 /// is drawn as a *tilted* rectangle exactly matching the frame, not this
-/// AABB — see the "rotated bbox" handling in `CanvasWidget::ui`), but for a
+/// AABB — see `CanvasWidget::paint_selection_outlines`), but for a
 /// rotated `BooleanGroup`/`Group`/`Artboard`'s children — aggregated here
 /// via `children_local_bbox` and `refit_container_to_children`, both of
 /// which only ever draw/store a plain axis-aligned box, never a tilted one
@@ -296,7 +296,7 @@ pub(super) fn collect_resizable_leaves(layer: &Layer, parent_offset: Vec2, out: 
 /// Applies one resize-drag frame's `transform` (an axis-aligned
 /// scale+translate, `scale`/`uniform_scale` its per-axis and averaged
 /// factors) to every leaf in `layers`, writing the result into `page`.
-/// Standalone (not inlined in `CanvasWidget::ui`'s `dragged()` match) so
+/// Standalone (not inlined in `CanvasWidget::continue_drag`'s match) so
 /// it's directly unit-testable, same rationale as `apply_rotation_delta`.
 /// Recomputed from each `ResizeLayerInfo`'s untouched `original_kind`/
 /// `abs_bounds` every call, never from the layer's own live state — see

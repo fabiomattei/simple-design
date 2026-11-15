@@ -744,7 +744,7 @@ impl App {
         // Enter/Return exits Scale mode if active (`⏎`/"Finish"),
         // else starts in-place canvas editing on a single selected `Text`
         // layer (`↵`/`⌘↵` — double-click is the other entry point,
-        // handled directly in `CanvasWidget::ui`).
+        // handled directly in `CanvasWidget::handle_text_double_click`).
         if !any_focused && self.tool == Tool::Select && ctx.input(|i| i.key_pressed(egui::Key::Enter)) {
             if self.canvas.scaling.is_some() {
                 self.canvas.scaling = None;

@@ -143,7 +143,7 @@ impl CanvasWidget {
 /// inspector (`CanvasWidget::begin_image_edit`); while active, canvas
 /// clicks/drags are captured for selection instead of the normal
 /// move/resize/marquee behavior (see the `image_edit`-gated branch in
-/// `CanvasWidget::ui`'s drag handling).
+/// `CanvasWidget::begin_drag`).
 pub(super) struct ImageEditState {
     pub(super) layer_id: LayerId,
     /// Magic Wand color-distance tolerance, `0..=100` (see

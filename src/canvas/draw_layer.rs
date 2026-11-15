@@ -362,8 +362,8 @@ pub(super) fn draw_layer(
             ..
         } => {
             // While this layer is being edited in place, the floating
-            // `egui::TextEdit` overlay (see `CanvasWidget::ui`'s
-            // post-tree-draw block) is the only visible copy of its text.
+            // `egui::TextEdit` overlay (see
+            // `CanvasWidget::show_text_edit_overlay`) is the only visible copy of its text.
             if editing_text != Some(layer.id) {
                 let bounds = layer.frame.bounds();
                 let style = TextStyleParams {
