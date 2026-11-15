@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 use egui::Ui;
 
 use crate::arrange::ArrangeCommand;
@@ -55,6 +57,10 @@ pub struct LayersPanel {
     /// Left untouched by shift-click itself, so repeated shift-clicks keep
     /// extending/shrinking the same range rather than re-anchoring each time.
     range_anchor: Option<LayerId>,
+    /// Container layers (artboards/groups/boolean groups) whose children are
+    /// hidden in the panel. Panel-only view state, not saved with the
+    /// document; everything starts expanded.
+    collapsed: HashSet<LayerId>,
 }
 
 impl LayersPanel {
@@ -77,7 +83,7 @@ impl LayersPanel {
             actions.push(LayerAction::Close);
         }
         let mut order = Vec::new();
-        visual_order(&page.layers, &mut order);
+        visual_order(&page.layers, &self.collapsed, &mut order);
         egui::ScrollArea::vertical().show(ui, |ui| {
             // Rows are separated only by the 4px drop gaps, so adjacent selected rows'
             // highlights (expanded 2px each way) meet without seams.
@@ -145,6 +151,7 @@ impl LayersPanel {
         let row_bg = ui.painter().add(egui::Shape::Noop);
         let row = ui.horizontal(|ui| {
             ui.add_space(depth as f32 * 14.0);
+            self.disclosure_toggle(ui, layer);
             // Only this handle senses drag — the rest of the row (label,
             // buttons, combo box) stays plain-click-only. Wrapping the whole
             // row in `dnd_drag_source` used to make its `Sense::drag()` hit
@@ -324,9 +331,29 @@ impl LayersPanel {
             let rect = egui::Rect::from_x_y_ranges(ui.max_rect().x_range(), row.response.rect.y_range()).expand2(egui::vec2(0.0, 2.0));
             ui.painter().set(row_bg, egui::Shape::rect_filled(rect, 4.0, ui.visuals().selection.bg_fill));
         }
-        if let Some(children) = layer.kind.children() {
+        if let Some(children) = layer.kind.children().filter(|_| !self.collapsed.contains(&layer.id)) {
             let child_in_boolean_group = matches!(layer.kind, LayerKind::BooleanGroup { .. });
             self.show_children(ui, children, Some(layer.id), depth + 1, child_in_boolean_group, selection, order, actions);
+        }
+    }
+
+    /// The open/closed triangle in front of a container row; non-container
+    /// rows get an equal-width blank so every row's controls stay aligned.
+    fn disclosure_toggle(&mut self, ui: &mut Ui, layer: &Layer) {
+        let size = egui::Vec2::splat(14.0);
+        if layer.kind.children().is_none() {
+            ui.add_space(size.x);
+            return;
+        }
+        let is_open = !self.collapsed.contains(&layer.id);
+        let (_, response) = ui.allocate_exact_size(size, egui::Sense::click());
+        egui::collapsing_header::paint_default_icon(ui, if is_open { 1.0 } else { 0.0 }, &response);
+        if response.on_hover_text(if is_open { "Collapse" } else { "Expand" }).clicked() {
+            if is_open {
+                self.collapsed.insert(layer.id);
+            } else {
+                self.collapsed.remove(&layer.id);
+            }
         }
     }
 }
@@ -357,12 +384,13 @@ fn drop_gap(ui: &mut Ui, parent: Option<LayerId>, index: usize, depth: usize, ac
 /// Flattens `children` into the same front-to-back, depth-first order the
 /// panel renders rows in (`show_children`/`show_layer`'s own recursion), so
 /// shift-click range-select operates on visual row order rather than the
-/// underlying back-to-front array order.
-fn visual_order(children: &[Layer], out: &mut Vec<LayerId>) {
+/// underlying back-to-front array order. Children of `collapsed` containers
+/// aren't rendered, so they're skipped here too.
+fn visual_order(children: &[Layer], collapsed: &HashSet<LayerId>, out: &mut Vec<LayerId>) {
     for layer in children.iter().rev() {
         out.push(layer.id);
-        if let Some(kids) = layer.kind.children() {
-            visual_order(kids, out);
+        if let Some(kids) = layer.kind.children().filter(|_| !collapsed.contains(&layer.id)) {
+            visual_order(kids, collapsed, out);
         }
     }
 }
