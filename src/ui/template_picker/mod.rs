@@ -12,7 +12,7 @@ mod section_heading;
 mod template_thumbnails;
 mod template_tile;
 
-use egui::{Frame, Margin, Popup, RichText, ScrollArea, Ui};
+use egui::{Frame, Margin, Popup, Rect, RichText, ScrollArea, Ui, vec2};
 
 use crate::templates::{self, Template, TemplateSource};
 use grid_navigation::grid_columns;
@@ -20,7 +20,7 @@ use picker_header::{filter_field, filter_id, title_row};
 use picker_keys::{DIGITS, handle_keys};
 use section_heading::section_heading;
 use template_thumbnails::TemplateThumbnails;
-use template_tile::{TILE_WIDTH, TileClick, TileLook, template_tile};
+use template_tile::{TILE_HEIGHT, TILE_WIDTH, TileClick, TileLook, template_tile};
 
 const MARGIN: i8 = 24;
 const HEADER_GAP: f32 = 16.0;
@@ -158,11 +158,15 @@ fn show_sections(ui: &mut Ui, state: &mut TemplatePickerState, sections: &[Secti
     for section in sections {
         section_heading(ui, section.title, section.templates.len());
         for row in section.templates.chunks(columns) {
+            // Previews render on first use, so only rows scrolled into view pay for them;
+            // rendering every one up front froze the picker on open.
+            let row_rect = Rect::from_min_size(ui.cursor().min, vec2(ui.available_width(), TILE_HEIGHT));
+            let row_visible = ui.is_rect_visible(row_rect);
             ui.horizontal(|ui| {
                 ui.spacing_mut().item_spacing.x = gap;
                 for &index in row {
                     let template = &state.templates[index];
-                    let thumbnail = state.thumbnails.get(ui.ctx(), index, template);
+                    let thumbnail = if row_visible { state.thumbnails.get(ui.ctx(), index, template) } else { None };
                     let selected = state.selected == Some(index);
                     let look = TileLook {
                         thumbnail: thumbnail.as_ref(),

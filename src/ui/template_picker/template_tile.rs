@@ -19,6 +19,8 @@ const NAME_GAP: f32 = 8.0;
 const NAME_HEIGHT: f32 = 34.0;
 const NAME_SIZE: f32 = 13.0;
 const NAME_ROWS: usize = 2;
+/// A whole tile's height: the card plus the name below it.
+pub const TILE_HEIGHT: f32 = CARD_HEIGHT + NAME_GAP + NAME_HEIGHT;
 const LETTERS_SIZE: f32 = 34.0;
 /// How far the card rises, and its shadow drops, when fully lifted.
 const LIFT_HEIGHT: f32 = 3.0;
@@ -49,7 +51,7 @@ pub enum TileClick {
 /// Draws the tile for the template `name` at the next place in `ui`; returns what was
 /// clicked this frame.
 pub fn template_tile(ui: &mut Ui, name: &str, look: TileLook) -> Option<TileClick> {
-    let size = vec2(TILE_WIDTH, CARD_HEIGHT + NAME_GAP + NAME_HEIGHT);
+    let size = vec2(TILE_WIDTH, TILE_HEIGHT);
     let (rect, response) = ui.allocate_exact_size(size, Sense::click());
     if look.reveal {
         response.scroll_to_me(None);
