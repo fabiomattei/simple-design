@@ -1,31 +1,29 @@
-use tiny_skia::{FillRule, PathBuilder, Pixmap, PixmapPaint, Stroke as SkStroke, Transform};
+use tiny_skia::{FillRule, PathBuilder, Pixmap, PixmapPaint, Transform};
 
 mod glyph_raster;
 mod image_layer;
+mod line_arrow;
 mod paint;
 mod sk_geometry;
 mod text_in_area;
+mod text_layer;
 mod text_on_path;
 mod text_plain;
 mod text_rich;
 mod text_wrap;
 
-use text_in_area::draw_text_in_area;
-use text_on_path::draw_text_on_path;
-use text_plain::draw_text;
-use text_rich::draw_text_rich;
+use line_arrow::{draw_arrow, draw_line};
+use text_layer::draw_text_layer;
 
 pub(crate) use text_wrap::{wrap_line, wrap_line_rich};
 
 use image_layer::draw_image;
-use paint::{to_color_with_opacity, to_sk_paint};
+use paint::to_color_with_opacity;
 use sk_geometry::{
-    arrow_cap_size, arrow_cap_wings, compound_path_to_sk_path, fill_and_stroke, fill_rect, path_to_sk_path,
-    polygon_ring_path, rotation_transform, rounded_rect_path, to_sk_rect,
+    compound_path_to_sk_path, fill_and_stroke, fill_rect, path_to_sk_path, polygon_ring_path, rotation_transform, rounded_rect_path, to_sk_rect,
 };
 
 use crate::boolean_ops;
-use crate::model::text_runs::RunStyle;
 use crate::model::{Layer, LayerKind};
 
 /// Renders a single layer (and its descendants, if it's a container) to a
@@ -167,81 +165,10 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], of
             fill_and_stroke(pixmap, &path, layer, FillRule::Winding, bounds, opacity, rotation_transform(layer, bounds));
         }
         LayerKind::Line => {
-            let Some(stroke) = layer.style.stroke.as_ref() else {
-                return;
-            };
-            let a = layer.frame.start() + offset;
-            let b = layer.frame.end() + offset;
-            let mut pb = PathBuilder::new();
-            pb.move_to(a.x, a.y);
-            pb.line_to(b.x, b.y);
-            let Some(path) = pb.finish() else {
-                return;
-            };
-            let mut noise_storage = None;
-            let paint = to_sk_paint(&stroke.paint, bounds, opacity * layer.style.stroke_opacity, &mut noise_storage);
-            let sk_stroke = SkStroke {
-                width: stroke.width.max(0.5),
-                line_cap: tiny_skia::LineCap::Round,
-                ..Default::default()
-            };
-            pixmap.stroke_path(&path, &paint, &sk_stroke, rotation_transform(layer, bounds), None);
+            draw_line(pixmap, layer, offset, bounds, opacity);
         }
         LayerKind::Arrow { start_cap, end_cap } => {
-            let Some(stroke) = layer.style.stroke.as_ref() else {
-                return;
-            };
-            let a = layer.frame.start() + offset;
-            let b = layer.frame.end() + offset;
-            let transform = rotation_transform(layer, bounds);
-            let sk_stroke = SkStroke {
-                width: stroke.width.max(0.5),
-                line_cap: tiny_skia::LineCap::Round,
-                ..Default::default()
-            };
-            let mut noise_storage = None;
-            let paint = to_sk_paint(&stroke.paint, bounds, opacity * layer.style.stroke_opacity, &mut noise_storage);
-
-            // Shaft + any `Line`-style chevron caps share one stroked path.
-            let mut pb = PathBuilder::new();
-            pb.move_to(a.x, a.y);
-            pb.line_to(b.x, b.y);
-            for (tip, outward, cap) in [(a, a - b, *start_cap), (b, b - a, *end_cap)] {
-                if cap == crate::model::ArrowCap::Line
-                    && let Some((p1, p2)) = arrow_cap_wings(tip, outward, stroke.width) {
-                        pb.move_to(p1.x, p1.y);
-                        pb.line_to(tip.x, tip.y);
-                        pb.line_to(p2.x, p2.y);
-                    }
-            }
-            if let Some(path) = pb.finish() {
-                pixmap.stroke_path(&path, &paint, &sk_stroke, transform, None);
-            }
-
-            // Filled caps (Triangle/Disc) as separate fill paths, same color.
-            for (tip, outward, cap) in [(a, a - b, *start_cap), (b, b - a, *end_cap)] {
-                let fill_path = match cap {
-                    crate::model::ArrowCap::Triangle => arrow_cap_wings(tip, outward, stroke.width)
-                        .and_then(|(p1, p2)| polygon_ring_path(&[tip, p1, p2])),
-                    crate::model::ArrowCap::Disc => {
-                        let size = arrow_cap_size(stroke.width);
-                        let dir = if outward.length() > 1e-3 { outward.normalized() } else { egui::Vec2::ZERO };
-                        let center = tip - dir * size * 0.4;
-                        let radius = size * 0.4;
-                        to_sk_rect(egui::Rect::from_center_size(center, egui::Vec2::splat(radius * 2.0))).and_then(
-                            |r| {
-                                let mut pb = PathBuilder::new();
-                                pb.push_oval(r);
-                                pb.finish()
-                            },
-                        )
-                    }
-                    crate::model::ArrowCap::None | crate::model::ArrowCap::Line => None,
-                };
-                if let Some(path) = fill_path {
-                    pixmap.fill_path(&path, &paint, FillRule::Winding, transform, None);
-                }
-            }
+            draw_arrow(pixmap, layer, offset, bounds, opacity, start_cap, end_cap);
         }
         LayerKind::Path { points, closed } => {
             let Some(path) = path_to_sk_path(points, *closed, offset + layer.frame.pos.to_vec2()) else {
@@ -268,188 +195,8 @@ pub(crate) fn draw_layer(pixmap: &mut Pixmap, layer: &Layer, roots: &[Layer], of
             };
             fill_and_stroke(pixmap, &path, layer, FillRule::EvenOdd, bounds, opacity, rotation_transform(layer, bounds));
         }
-        LayerKind::Text {
-            content,
-            font_size,
-            font,
-            align,
-            vertical_align,
-            resize,
-            line_height,
-            letter_spacing,
-            paragraph_spacing,
-            bold,
-            italic,
-            underline,
-            strikethrough,
-            transform,
-            list,
-            list_start,
-            runs,
-            path_attachment,
-            ..
-        } => {
-            let attached = path_attachment.as_ref().and_then(|attachment| {
-                let (outline, closed) = crate::text_path_geometry::resolve_target_outline(roots, attachment.target)?;
-                // `resolve_target_outline` returns points relative to `roots`
-                // itself (offset `0` at `roots`'s own top level) — converting
-                // that into whatever pixmap-space `offset` this call happens
-                // to be accumulating needs this layer's own position in that
-                // same space, which `absolute_offset_of` gives without
-                // threading a second offset accumulator through every draw
-                // function alongside `roots` (see that function's doc comment).
-                let self_root_offset = crate::text_path_geometry::absolute_offset_of(roots, layer.id).unwrap_or(egui::Vec2::ZERO);
-                let pixmap_shift = offset - self_root_offset;
-                let absolute_outline: Vec<egui::Pos2> = outline.iter().map(|&p| p + pixmap_shift).collect();
-                Some((attachment, absolute_outline, closed))
-            });
-            if let Some((attachment, outline, closed)) = attached {
-                match attachment.mode {
-                    crate::model::TextPathMode::OnPath => {
-                        let base = RunStyle {
-                            font: font.clone(),
-                            font_size: *font_size,
-                            color: layer.style.fill.as_ref().map(|p| p.to_color32()),
-                            bold: *bold,
-                            italic: *italic,
-                            underline: *underline,
-                            strikethrough: *strikethrough,
-                        };
-                        draw_text_on_path(
-                            pixmap,
-                            content,
-                            runs,
-                            &base,
-                            *align,
-                            *letter_spacing,
-                            *transform,
-                            &outline,
-                            closed,
-                            attachment.offset,
-                            attachment.start,
-                            attachment.flip,
-                            opacity * layer.style.fill_opacity,
-                        );
-                        return;
-                    }
-                    crate::model::TextPathMode::AreaInside => {
-                        let base = RunStyle {
-                            font: font.clone(),
-                            font_size: *font_size,
-                            color: layer.style.fill.as_ref().map(|p| p.to_color32()),
-                            bold: *bold,
-                            italic: *italic,
-                            underline: *underline,
-                            strikethrough: *strikethrough,
-                        };
-                        draw_text_in_area(
-                            pixmap,
-                            content,
-                            runs,
-                            &base,
-                            *align,
-                            *line_height,
-                            *letter_spacing,
-                            *transform,
-                            &outline,
-                            attachment.offset,
-                            opacity * layer.style.fill_opacity,
-                        );
-                        return;
-                    }
-                }
-            }
-            // `runs` non-empty is the rich-text path (see
-            // `LayerKind::Text::runs`'s doc comment) — `draw_text` below is
-            // untouched from before that feature existed, reached only for
-            // the uniform-style case, so it can't regress.
-            let render = |target: &mut Pixmap, target_bounds: egui::Rect, target_opacity: f32| {
-                if runs.is_empty() {
-                    draw_text(
-                        target,
-                        layer,
-                        target_bounds,
-                        content,
-                        *font_size,
-                        font,
-                        *align,
-                        *vertical_align,
-                        *resize,
-                        *line_height,
-                        *letter_spacing,
-                        *paragraph_spacing,
-                        *bold,
-                        *italic,
-                        *underline,
-                        *strikethrough,
-                        *transform,
-                        *list,
-                        *list_start,
-                        target_opacity,
-                    );
-                } else {
-                    let Some(fill) = layer.style.fill.as_ref() else { return };
-                    let base = RunStyle {
-                        font: font.clone(),
-                        font_size: *font_size,
-                        color: Some(fill.to_color32()),
-                        bold: *bold,
-                        italic: *italic,
-                        underline: *underline,
-                        strikethrough: *strikethrough,
-                    };
-                    draw_text_rich(
-                        target,
-                        target_bounds,
-                        content,
-                        runs,
-                        &base,
-                        *align,
-                        *vertical_align,
-                        *resize,
-                        *line_height,
-                        *letter_spacing,
-                        *paragraph_spacing,
-                        *transform,
-                        *list,
-                        *list_start,
-                        // `draw_text_rich` takes a `RunStyle`, not a whole
-                        // `Layer`, so `fill_opacity` (a `Style` field) has
-                        // to be folded into the opacity passed in here
-                        // rather than read inside it, unlike `draw_text`
-                        // just above (which does take `layer`).
-                        target_opacity * layer.style.fill_opacity,
-                    );
-                }
-            };
-            if layer.frame.rotation == 0.0 {
-                render(pixmap, bounds, opacity);
-            } else {
-                // Glyph rasterization writes pixels directly (`ab_glyph`'s
-                // `outlined.draw` callback below), bypassing `tiny_skia::Path`/
-                // `Transform` entirely — so rotation can't be passed through
-                // the same way as the vector shapes above. Instead: render at
-                // full opacity into an unrotated offscreen sub-pixmap sized to
-                // `bounds`, then composite that sub-pixmap onto the real
-                // destination via `draw_pixmap` with a rotate-about-center
-                // transform, mirroring `draw_image`'s existing
-                // `PixmapPaint`+`Transform` composite pattern. `draw_text`/
-                // `draw_text_rich` themselves are called completely unmodified.
-                let w = bounds.width().round().max(1.0) as u32;
-                let h = bounds.height().round().max(1.0) as u32;
-                if let Some(mut sub) = Pixmap::new(w, h) {
-                    let local_bounds = egui::Rect::from_min_size(egui::Pos2::ZERO, egui::Vec2::new(w as f32, h as f32));
-                    render(&mut sub, local_bounds, 1.0);
-                    let paint = tiny_skia::PixmapPaint {
-                        opacity: opacity.clamp(0.0, 1.0),
-                        blend_mode: tiny_skia::BlendMode::SourceOver,
-                        quality: tiny_skia::FilterQuality::Bilinear,
-                    };
-                    let composite_transform = Transform::from_translate(bounds.min.x, bounds.min.y)
-                        .post_rotate_at(layer.frame.rotation, bounds.center().x, bounds.center().y);
-                    pixmap.draw_pixmap(0, 0, sub.as_ref(), &paint, composite_transform, None);
-                }
-            }
+        LayerKind::Text { .. } => {
+            draw_text_layer(pixmap, layer, roots, offset, bounds, opacity);
         }
         LayerKind::Image { encoded, color_adjust, .. } => {
             draw_image(pixmap, encoded, *color_adjust, bounds, opacity, layer.frame.rotation);
@@ -561,7 +308,7 @@ pub(crate) fn draw_layer_with_shadows(pixmap: &mut Pixmap, layer: &Layer, roots:
 mod tests {
     use super::*;
     use crate::boolean_ops::apply_boolean_op;
-    use crate::model::text_runs::TextRun;
+    use crate::model::text_runs::{RunStyle, TextRun};
     use crate::model::{
         ArrowCap, BoolOp, CornerRadii, Frame, ListType, Page, PathPoint, PointType, TextAlign, TextFont, TextResize,
         TextTransform, VerticalAlign,
