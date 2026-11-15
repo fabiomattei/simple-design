@@ -51,6 +51,32 @@ pub(super) fn hit_test(page: &Page, doc_pos: Pos2) -> Option<LayerId> {
     hit_test_layers(&page.layers, doc_pos)
 }
 
+/// The topmost layer that mask `mask_id` actually reveals at `doc_pos`
+/// (page space), or `None` if the mask reveals nothing there. A plain click
+/// on a mask selects the mask itself (it sits on top of what it clips, see
+/// `hit_test_layers`); this is the double-click "enter the masked content"
+/// path. Searches every masked run `mask_id` heads in its parent, front to
+/// back, with the same per-layer test `hit_test_layers` uses.
+pub(super) fn hit_test_through_mask(page: &Page, mask_id: LayerId, doc_pos: Pos2) -> Option<LayerId> {
+    let mask = page.find(mask_id)?;
+    let siblings = match crate::grouping::parent_and_index(&page.layers, mask_id)? {
+        (Some(parent_id), _) => page.find(parent_id)?.kind.children()?,
+        (None, _) => page.layers.as_slice(),
+    };
+    let local_pos = doc_pos - page.absolute_offset(mask_id)?;
+    if !crate::masking::mask_covers_point(mask, local_pos) {
+        return None;
+    }
+    let mut content: Vec<&Layer> = Vec::new();
+    for unit in crate::masking::partition_mask_runs(siblings) {
+        if let crate::masking::RenderUnit::Masked { mask, content: run, .. } = unit
+            && mask.id == mask_id {
+                content.extend(run);
+            }
+    }
+    content.iter().rev().find_map(|layer| hit_test_layers(std::slice::from_ref(*layer), local_pos))
+}
+
 /// Every layer under `doc_pos`, front-to-back, for the Shift+right-click
 /// "pick among overlapping layers" menu. Bounding-box based (via
 /// `rotated_bounds()`) rather than `hit_test_layers`'s pixel-accurate/
@@ -125,7 +151,8 @@ pub(super) fn hit_test_layers(layers: &[Layer], doc_pos: Pos2) -> Option<LayerId
     // no longer clickable in the clipped-away part. The mask layer *itself*
     // keeps the normal plain bounding-box test (unchanged) — it's still a
     // real, selectable layer sitting on top like any other, this only
-    // changes what's reachable *through* it. Built fresh per call (only
+    // changes what's reachable *through* it (double-click reaches the
+    // content itself, via `hit_test_through_mask`). Built fresh per call (only
     // ever invoked on an actual click, not per frame) rather than threaded
     // through from the caller, so this stays a self-contained,
     // easy-to-reason-about function like it was before masking existed.
@@ -269,6 +296,38 @@ mod tests {
         // mask clips it away completely at this point — now it correctly
         // finds nothing.
         assert_eq!(hit_test(page, Pos2::new(-20.0, -20.0)), None);
+    }
+
+    #[test]
+    fn hit_test_through_mask_finds_revealed_content_inside_a_group() {
+        let back = rect_layer("Back", 0.0, 0.0, 100.0, 100.0);
+        let back_id = back.id;
+        let front = rect_layer("Front", 50.0, 0.0, 50.0, 100.0);
+        let front_id = front.id;
+        let mut mask = Layer::new(
+            "Mask",
+            Frame { pos: Pos2::new(0.0, 0.0), size: Vec2::new(100.0, 100.0), rotation: 0.0 },
+            LayerKind::Oval,
+        );
+        mask.is_mask = true;
+        let mask_id = mask.id;
+        let group = Layer::new(
+            "Group",
+            Frame { pos: Pos2::new(200.0, 200.0), size: Vec2::new(100.0, 100.0), rotation: 0.0 },
+            LayerKind::Group { children: vec![back, front, mask] },
+        );
+
+        let mut doc = Document::new();
+        doc.active_page_mut().layers.push(group);
+        let page = doc.active_page();
+
+        // A single click still lands on the mask (topmost in the group).
+        assert_eq!(hit_test(page, Pos2::new(220.0, 250.0)), Some(mask_id));
+        // Through the mask: left half reveals only Back, right half Front (on top).
+        assert_eq!(hit_test_through_mask(page, mask_id, Pos2::new(220.0, 250.0)), Some(back_id));
+        assert_eq!(hit_test_through_mask(page, mask_id, Pos2::new(280.0, 250.0)), Some(front_id));
+        // Inside the mask's bbox but outside the oval: nothing is revealed.
+        assert_eq!(hit_test_through_mask(page, mask_id, Pos2::new(202.0, 202.0)), None);
     }
 
     #[test]

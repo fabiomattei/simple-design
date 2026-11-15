@@ -11,7 +11,7 @@ use crate::model::{
 };
 use crate::tools::Tool;
 
-use super::hit_test::hit_test;
+use super::hit_test::{hit_test, hit_test_through_mask};
 use super::layer_creation::insert_layer;
 use super::{
     CanvasLayout, CanvasWidget, DragState, HoverState, PathPart, SelectionView,
@@ -205,7 +205,10 @@ impl CanvasWidget {
     /// falls out naturally since this always re-targets `editing_text`.
     /// Double-clicking a bare `Rectangle`/`Oval` instead gives it a
     /// inline text label (see `add_shape_label`) and starts
-    /// editing that immediately.
+    /// editing that immediately. Double-clicking a mask (which a single
+    /// click selects, since it sits on top of what it clips) instead
+    /// selects the content layer it reveals under the pointer — see
+    /// `hit_test_through_mask`.
     pub(super) fn handle_text_double_click(
         &mut self,
         response: &Response,
@@ -217,6 +220,14 @@ impl CanvasWidget {
         if *tool == Tool::Select && response.double_clicked()
             && let Some(mouse) = response.interact_pointer_pos() {
                 let doc_pos = self.to_doc(origin, mouse);
+                let page = history.get().active_page();
+                if let Some(mask_id) = hit_test(page, doc_pos)
+                    && page.find(mask_id).is_some_and(|l| l.is_mask) {
+                        if let Some(content_id) = hit_test_through_mask(page, mask_id, doc_pos) {
+                            *selection = vec![content_id];
+                        }
+                        return;
+                    }
                 if let Some(id) = hit_test(history.get().active_page(), doc_pos) {
                     let is_text =
                         matches!(history.get().active_page().find(id).map(|l| &l.kind), Some(LayerKind::Text { .. }));
