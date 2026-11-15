@@ -133,6 +133,16 @@ missing it fails to load outright rather than silently.
   siblings *below* it in its parent back to the previous mask, so `group` it
   with its content first — the GUI's ⇧⌘M does that automatically for a
   multi-selection, the CLI doesn't.
+- **Artboards and nesting**: `add-artboard` (size from `--preset` — any
+  `SCREEN_PRESETS`/`PAPER_PRESETS` name, case-insensitive — and/or `--w`/`--h`,
+  which override the preset per dimension) is the only way to create a
+  container from the CLI. `add-rect`/`add-ellipse`/`add-text`/`add-image`
+  take `--parent <id>` to land inside an Artboard/Group, with the frame
+  *relative* to that parent; without it they go to the page's top level, even
+  when their frame lies inside an artboard (unlike drawing in the GUI). A
+  `--parent` with no `--page` is searched across all pages.
+- `init --template <name>` starts from a template instead of an empty
+  document — see "Templates" below.
 - **Prefer `list-layers --recursive` / `find-layer <query>` over `get-document`
   for locating a layer.** `get-document` dumps the *entire* document —
   every field (`style`, `runs`, `letter_spacing`, ...) for every layer — which
@@ -142,3 +152,22 @@ missing it fails to load outright rather than silently.
   level) both return the same lightweight summary instead: `id`/`name`/`kind`/
   `frame`/`depth`. Reach for `get-layer <id>`/`get-document` only when you
   actually need a layer's full style/content, not just its id.
+
+## Templates (`src/templates.rs`, `templates/`)
+
+A template is an ordinary `.sdesign` document — no placeholder syntax. Two
+sources, listed together by `templates::all_templates()` (File > New from
+Template, CLI `init --template`):
+
+- **Built-in**: `templates/*.sdesign`, compiled in via `include_str!` and
+  listed in `templates::BUILT_IN`. To add one, drop the file there and add a
+  `(name, include_str!(...))` entry; `every_built_in_template_parses_into_a_document`
+  then guards that it still loads. Build them with the CLI (`add-artboard` +
+  `--parent`) so they're valid by construction, and check them with
+  `export-png` on each artboard.
+- **User**: any `.sdesign` in `<config_dir>/templates/` (`config_dir.rs`),
+  named by file stem — File > Save as Template writes there.
+
+Instantiating parses the template and renames the document "Untitled"; layer
+and page ids are kept as-is (documents are independent, and paste already
+regenerates ids).

@@ -20,6 +20,25 @@ overwriting one that already exists):
 simple-design-cli new-project.sdesign init --name "My Project"
 ```
 
+…or start from a template — a built-in one (Landing Page, Mobile App Screen,
+Social Post, Poster & Business Card, Presentation, Story, Resume, Dashboard,
+Video Thumbnail, Email Newsletter) or one you saved with File > Save as
+Template. Names are case-insensitive; an unknown one lists what's available:
+
+```
+simple-design-cli new-project.sdesign init --template "landing page"
+```
+
+Artboards and nesting: `add-artboard` creates one, sized by `--preset`
+(desktop, web, tablet, phone, a3–a6) and/or `--w`/`--h`. Pass its id as
+`--parent` to `add-rect`/`add-ellipse`/`add-text`/`add-image` to put layers
+inside it, with `--x`/`--y` relative to the artboard:
+
+```
+simple-design-cli f.sdesign add-artboard --x 0 --y 0 --preset phone --background f3f4f6
+simple-design-cli f.sdesign add-text "Hello" --x 24 --y 64 --w 300 --h 40 --parent <artboard-id>
+```
+
 Open a specific file at startup so the CLI has something to talk to:
 
 ```

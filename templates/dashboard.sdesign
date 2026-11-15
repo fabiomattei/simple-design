@@ -1,0 +1,4544 @@
+{
+  "name": "Dashboard",
+  "generator": "simple-design (companion CLI: simple-design-cli --help)",
+  "pages": [
+    {
+      "id": "d418c644-a241-473a-9263-10ed305167a2",
+      "name": "Page 1",
+      "layers": [
+        {
+          "id": "79be87ca-9153-4276-a0dc-db3a7b91ea65",
+          "name": "Dashboard",
+          "frame": {
+            "pos": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "size": {
+              "x": 1440.0,
+              "y": 900.0
+            },
+            "rotation": 0.0
+          },
+          "style": {
+            "fill": null,
+            "stroke": null,
+            "fill_opacity": 1.0,
+            "stroke_opacity": 1.0,
+            "shadows": [],
+            "inner_shadows": []
+          },
+          "visible": true,
+          "locked": false,
+          "opacity": 1.0,
+          "is_mask": false,
+          "ignore_mask": false,
+          "mask_mode": "Alpha",
+          "mask_inverted": false,
+          "bool_op": "Union",
+          "style_id": null,
+          "resizing": {
+            "pin_left": false,
+            "pin_right": false,
+            "pin_top": false,
+            "pin_bottom": false,
+            "fixed_width": false,
+            "fixed_height": false
+          },
+          "kind": {
+            "Artboard": {
+              "children": [
+                {
+                  "id": "0cffd227-a830-4aa2-96a8-68d8997d722a",
+                  "name": "Sidebar / Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 240.0,
+                      "y": 900.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "5c2ab089-189d-4e68-9b80-05e9efc7ffd8",
+                  "name": "Sidebar / Logo",
+                  "frame": {
+                    "pos": {
+                      "x": 32.0,
+                      "y": 32.0
+                    },
+                    "size": {
+                      "x": 180.0,
+                      "y": 32.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Analytics",
+                      "font_size": 22.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 9,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 22.0,
+                            "color": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "aeff6649-fab1-454f-876c-067c1a638976",
+                  "name": "Sidebar / Active item",
+                  "frame": {
+                    "pos": {
+                      "x": 16.0,
+                      "y": 112.0
+                    },
+                    "size": {
+                      "x": 208.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      31,
+                      41,
+                      55,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 8.0,
+                        "top_right": 8.0,
+                        "bottom_right": 8.0,
+                        "bottom_left": 8.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "24439a6a-fe62-49ff-a532-03c99574c7a7",
+                  "name": "Sidebar / Overview",
+                  "frame": {
+                    "pos": {
+                      "x": 32.0,
+                      "y": 112.0
+                    },
+                    "size": {
+                      "x": 180.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Overview",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "9db821e2-b343-4c8c-bfec-77979f0be115",
+                  "name": "Sidebar / Reports",
+                  "frame": {
+                    "pos": {
+                      "x": 32.0,
+                      "y": 160.0
+                    },
+                    "size": {
+                      "x": 180.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      156,
+                      163,
+                      175,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Reports",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "5fe3aa9e-6224-47f7-b385-1de401e0eb3e",
+                  "name": "Sidebar / Customers",
+                  "frame": {
+                    "pos": {
+                      "x": 32.0,
+                      "y": 208.0
+                    },
+                    "size": {
+                      "x": 180.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      156,
+                      163,
+                      175,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Customers",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "ffdc7ca0-626d-4126-831c-2509b7d8d262",
+                  "name": "Sidebar / Settings",
+                  "frame": {
+                    "pos": {
+                      "x": 32.0,
+                      "y": 256.0
+                    },
+                    "size": {
+                      "x": 180.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      156,
+                      163,
+                      175,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Settings",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "f2463938-29f9-4d63-92ce-7e5d5298c772",
+                  "name": "Header / Title",
+                  "frame": {
+                    "pos": {
+                      "x": 288.0,
+                      "y": 40.0
+                    },
+                    "size": {
+                      "x": 600.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Overview",
+                      "font_size": 32.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 8,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 32.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "53a48a1b-4f20-416e-895f-2bdaf8fc00c3",
+                  "name": "Header / Search",
+                  "frame": {
+                    "pos": {
+                      "x": 1032.0,
+                      "y": 40.0
+                    },
+                    "size": {
+                      "x": 300.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 10.0,
+                        "top_right": 10.0,
+                        "bottom_right": 10.0,
+                        "bottom_left": 10.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "9270e015-32ee-4461-b1de-762d47eb9f8e",
+                  "name": "Header / Search placeholder",
+                  "frame": {
+                    "pos": {
+                      "x": 1052.0,
+                      "y": 40.0
+                    },
+                    "size": {
+                      "x": 200.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      156,
+                      163,
+                      175,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Search",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "d1dbd4a9-0fd7-4c75-84ac-cf0e758ef0eb",
+                  "name": "Header / Avatar",
+                  "frame": {
+                    "pos": {
+                      "x": 1352.0,
+                      "y": 42.0
+                    },
+                    "size": {
+                      "x": 40.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "b873e2c5-4981-4291-a452-6bec1b498fd3",
+                  "name": "KPI Revenue / Card",
+                  "frame": {
+                    "pos": {
+                      "x": 288.0,
+                      "y": 120.0
+                    },
+                    "size": {
+                      "x": 258.0,
+                      "y": 132.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 16.0,
+                        "top_right": 16.0,
+                        "bottom_right": 16.0,
+                        "bottom_left": 16.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "1a7d71cd-6005-4211-a30c-22b0ebb34b1e",
+                  "name": "KPI Revenue / Label",
+                  "frame": {
+                    "pos": {
+                      "x": 312.0,
+                      "y": 144.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Revenue",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "1632ac34-e78b-4775-bd75-cd550cd5adb9",
+                  "name": "KPI Revenue / Value",
+                  "frame": {
+                    "pos": {
+                      "x": 312.0,
+                      "y": 168.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "$48.2k",
+                      "font_size": 32.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 6,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 32.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "b5205566-6cef-47d8-a2b2-c67777a98696",
+                  "name": "KPI Revenue / Delta",
+                  "frame": {
+                    "pos": {
+                      "x": 312.0,
+                      "y": 216.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      22,
+                      163,
+                      74,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "+12.5% vs last month",
+                      "font_size": 13.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "607ea760-746c-4917-a80a-0c769844dca9",
+                  "name": "KPI Users / Card",
+                  "frame": {
+                    "pos": {
+                      "x": 570.0,
+                      "y": 120.0
+                    },
+                    "size": {
+                      "x": 258.0,
+                      "y": 132.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 16.0,
+                        "top_right": 16.0,
+                        "bottom_right": 16.0,
+                        "bottom_left": 16.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "cd6785dd-eff1-40ed-b17a-339c1fa25527",
+                  "name": "KPI Users / Label",
+                  "frame": {
+                    "pos": {
+                      "x": 594.0,
+                      "y": 144.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Users",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "0b76880e-8f6a-4443-8b8a-f059fcb76e7c",
+                  "name": "KPI Users / Value",
+                  "frame": {
+                    "pos": {
+                      "x": 594.0,
+                      "y": 168.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "12,480",
+                      "font_size": 32.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 6,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 32.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "a66584c3-638d-41d0-93dd-4edd5857fcf6",
+                  "name": "KPI Users / Delta",
+                  "frame": {
+                    "pos": {
+                      "x": 594.0,
+                      "y": 216.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      22,
+                      163,
+                      74,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "+12.5% vs last month",
+                      "font_size": 13.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "efafdb5f-7e1f-4343-b02d-46ec771a78fc",
+                  "name": "KPI Orders / Card",
+                  "frame": {
+                    "pos": {
+                      "x": 852.0,
+                      "y": 120.0
+                    },
+                    "size": {
+                      "x": 258.0,
+                      "y": 132.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 16.0,
+                        "top_right": 16.0,
+                        "bottom_right": 16.0,
+                        "bottom_left": 16.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "7890d451-8fc6-4d11-9047-9c22749938d5",
+                  "name": "KPI Orders / Label",
+                  "frame": {
+                    "pos": {
+                      "x": 876.0,
+                      "y": 144.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Orders",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "44210415-0d14-48c7-9bc6-1b423aea0065",
+                  "name": "KPI Orders / Value",
+                  "frame": {
+                    "pos": {
+                      "x": 876.0,
+                      "y": 168.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "1,932",
+                      "font_size": 32.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 5,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 32.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "f94e448a-c173-4d46-afa7-a4163f960bdc",
+                  "name": "KPI Orders / Delta",
+                  "frame": {
+                    "pos": {
+                      "x": 876.0,
+                      "y": 216.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      22,
+                      163,
+                      74,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "+12.5% vs last month",
+                      "font_size": 13.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "992ef760-acdf-47bf-b0f6-c9af3b93c84d",
+                  "name": "KPI Conversion / Card",
+                  "frame": {
+                    "pos": {
+                      "x": 1134.0,
+                      "y": 120.0
+                    },
+                    "size": {
+                      "x": 258.0,
+                      "y": 132.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 16.0,
+                        "top_right": 16.0,
+                        "bottom_right": 16.0,
+                        "bottom_left": 16.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "cb356d9a-4405-4135-8911-2401dfa0be3b",
+                  "name": "KPI Conversion / Label",
+                  "frame": {
+                    "pos": {
+                      "x": 1158.0,
+                      "y": 144.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Conversion",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "cc97810f-8cd0-4cd8-9c1a-6c07779673ca",
+                  "name": "KPI Conversion / Value",
+                  "frame": {
+                    "pos": {
+                      "x": 1158.0,
+                      "y": 168.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "3.4%",
+                      "font_size": 32.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 32.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "7a69aa66-82ba-4802-ac64-0df5e89e0e6c",
+                  "name": "KPI Conversion / Delta",
+                  "frame": {
+                    "pos": {
+                      "x": 1158.0,
+                      "y": 216.0
+                    },
+                    "size": {
+                      "x": 210.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      22,
+                      163,
+                      74,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "+12.5% vs last month",
+                      "font_size": 13.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "cccf04f5-87cf-440a-944d-8b108f4ef304",
+                  "name": "Chart / Card",
+                  "frame": {
+                    "pos": {
+                      "x": 288.0,
+                      "y": 276.0
+                    },
+                    "size": {
+                      "x": 720.0,
+                      "y": 576.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 16.0,
+                        "top_right": 16.0,
+                        "bottom_right": 16.0,
+                        "bottom_left": 16.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "0ecf4755-dbbd-45a3-b077-551ead431b95",
+                  "name": "Chart / Title",
+                  "frame": {
+                    "pos": {
+                      "x": 312.0,
+                      "y": 300.0
+                    },
+                    "size": {
+                      "x": 400.0,
+                      "y": 26.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Revenue over time",
+                      "font_size": 18.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 17,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 18.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "e83ea6d6-2b89-4352-a942-1afb3eb3fc04",
+                  "name": "Chart / Bar 1",
+                  "frame": {
+                    "pos": {
+                      "x": 330.0,
+                      "y": 700.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 120.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "f517e9f4-6b65-4fb4-b695-8eada2ab5ead",
+                  "name": "Chart / Bar 2",
+                  "frame": {
+                    "pos": {
+                      "x": 386.0,
+                      "y": 640.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 180.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "d3a5568a-f7d5-4a51-b4a2-2d941e7ac135",
+                  "name": "Chart / Bar 3",
+                  "frame": {
+                    "pos": {
+                      "x": 442.0,
+                      "y": 670.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 150.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "57484a28-cf5e-44e9-9ff1-dbb97b028488",
+                  "name": "Chart / Bar 4",
+                  "frame": {
+                    "pos": {
+                      "x": 498.0,
+                      "y": 600.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 220.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "25491e07-f6d1-411c-a311-9690676d8266",
+                  "name": "Chart / Bar 5",
+                  "frame": {
+                    "pos": {
+                      "x": 554.0,
+                      "y": 560.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 260.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "86d0e98a-9fb1-45b0-8d49-ca13ce59c24f",
+                  "name": "Chart / Bar 6",
+                  "frame": {
+                    "pos": {
+                      "x": 610.0,
+                      "y": 620.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 200.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "0442de2e-086d-44dd-ab26-c2af8b60af6d",
+                  "name": "Chart / Bar 7",
+                  "frame": {
+                    "pos": {
+                      "x": 666.0,
+                      "y": 540.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 280.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "d89effcd-4b90-4ab2-8473-f3149b30c647",
+                  "name": "Chart / Bar 8",
+                  "frame": {
+                    "pos": {
+                      "x": 722.0,
+                      "y": 500.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 320.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "66609f32-a44d-445f-9bde-ac156401954e",
+                  "name": "Chart / Bar 9",
+                  "frame": {
+                    "pos": {
+                      "x": 778.0,
+                      "y": 520.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 300.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "928eed59-5634-4e7b-bc19-73c1b6752c9a",
+                  "name": "Chart / Bar 10",
+                  "frame": {
+                    "pos": {
+                      "x": 834.0,
+                      "y": 460.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 360.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "1e45abfb-3195-4f30-b1a5-55b2717b116c",
+                  "name": "Chart / Bar 11",
+                  "frame": {
+                    "pos": {
+                      "x": 890.0,
+                      "y": 480.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 340.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      199,
+                      210,
+                      254,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "6989f344-1564-4ff3-8bac-4c0fd4184de8",
+                  "name": "Chart / Bar 12",
+                  "frame": {
+                    "pos": {
+                      "x": 946.0,
+                      "y": 420.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 400.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      79,
+                      70,
+                      229,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "09415c67-e1db-4246-b03d-1ae1513b08aa",
+                  "name": "Customers / Card",
+                  "frame": {
+                    "pos": {
+                      "x": 1032.0,
+                      "y": 276.0
+                    },
+                    "size": {
+                      "x": 360.0,
+                      "y": 576.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 16.0,
+                        "top_right": 16.0,
+                        "bottom_right": 16.0,
+                        "bottom_left": 16.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "87b20486-7ba2-4a25-9e2d-d9edacd5bd19",
+                  "name": "Customers / Title",
+                  "frame": {
+                    "pos": {
+                      "x": 1056.0,
+                      "y": 300.0
+                    },
+                    "size": {
+                      "x": 300.0,
+                      "y": 26.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Top customers",
+                      "font_size": 18.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 13,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 18.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "f8be96bd-b50a-4942-b927-bd54b8f3003c",
+                  "name": "Customer 1 / Avatar",
+                  "frame": {
+                    "pos": {
+                      "x": 1056.0,
+                      "y": 352.0
+                    },
+                    "size": {
+                      "x": 40.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      224,
+                      231,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "a411fdcd-12b2-4f3b-90a3-608c517c13fb",
+                  "name": "Customer 1 / Name",
+                  "frame": {
+                    "pos": {
+                      "x": 1108.0,
+                      "y": 352.0
+                    },
+                    "size": {
+                      "x": 170.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Customer name",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 13,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "69b307f2-3596-4cae-939b-fd4624b8b75f",
+                  "name": "Customer 1 / Email",
+                  "frame": {
+                    "pos": {
+                      "x": 1108.0,
+                      "y": 372.0
+                    },
+                    "size": {
+                      "x": 170.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "name@example.com",
+                      "font_size": 13.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "3d5c4631-c729-4f14-82fc-74ffb94a8a8f",
+                  "name": "Customer 1 / Amount",
+                  "frame": {
+                    "pos": {
+                      "x": 1280.0,
+                      "y": 352.0
+                    },
+                    "size": {
+                      "x": 88.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "$2,400",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Right",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 6,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "05782c99-fd52-4f7c-b717-89d01b0eb5b0",
+                  "name": "Customer 2 / Avatar",
+                  "frame": {
+                    "pos": {
+                      "x": 1056.0,
+                      "y": 440.0
+                    },
+                    "size": {
+                      "x": 40.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      224,
+                      231,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "6625ef9a-570c-48c2-ada7-00822807f78f",
+                  "name": "Customer 2 / Name",
+                  "frame": {
+                    "pos": {
+                      "x": 1108.0,
+                      "y": 440.0
+                    },
+                    "size": {
+                      "x": 170.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Customer name",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 13,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "babfa749-a1fb-4bd6-a653-4fea1353f8ee",
+                  "name": "Customer 2 / Email",
+                  "frame": {
+                    "pos": {
+                      "x": 1108.0,
+                      "y": 460.0
+                    },
+                    "size": {
+                      "x": 170.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "name@example.com",
+                      "font_size": 13.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "658549ee-abf4-436f-9711-e31040347e66",
+                  "name": "Customer 2 / Amount",
+                  "frame": {
+                    "pos": {
+                      "x": 1280.0,
+                      "y": 440.0
+                    },
+                    "size": {
+                      "x": 88.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "$2,400",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Right",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 6,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "8ae55b54-fd97-4f1c-9ebe-507776a383ee",
+                  "name": "Customer 3 / Avatar",
+                  "frame": {
+                    "pos": {
+                      "x": 1056.0,
+                      "y": 528.0
+                    },
+                    "size": {
+                      "x": 40.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      224,
+                      231,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "b1b95207-ae90-450b-b355-7d3e22c1361a",
+                  "name": "Customer 3 / Name",
+                  "frame": {
+                    "pos": {
+                      "x": 1108.0,
+                      "y": 528.0
+                    },
+                    "size": {
+                      "x": 170.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Customer name",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 13,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "b4ad6c49-b93c-4031-8946-22fe82cb9a90",
+                  "name": "Customer 3 / Email",
+                  "frame": {
+                    "pos": {
+                      "x": 1108.0,
+                      "y": 548.0
+                    },
+                    "size": {
+                      "x": 170.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "name@example.com",
+                      "font_size": 13.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "bb3698ac-6cf0-4857-bb76-d6d40e96e9a4",
+                  "name": "Customer 3 / Amount",
+                  "frame": {
+                    "pos": {
+                      "x": 1280.0,
+                      "y": 528.0
+                    },
+                    "size": {
+                      "x": 88.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "$2,400",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Right",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 6,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "ed176bc9-cdaa-420f-a1c5-1b4726aa9a2c",
+                  "name": "Customer 4 / Avatar",
+                  "frame": {
+                    "pos": {
+                      "x": 1056.0,
+                      "y": 616.0
+                    },
+                    "size": {
+                      "x": 40.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      224,
+                      231,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "4038a000-f28c-4429-a192-027e740e9c22",
+                  "name": "Customer 4 / Name",
+                  "frame": {
+                    "pos": {
+                      "x": 1108.0,
+                      "y": 616.0
+                    },
+                    "size": {
+                      "x": 170.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Customer name",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 13,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "3df0e833-3c94-4604-9b64-8c93e3c23f50",
+                  "name": "Customer 4 / Email",
+                  "frame": {
+                    "pos": {
+                      "x": 1108.0,
+                      "y": 636.0
+                    },
+                    "size": {
+                      "x": 170.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "name@example.com",
+                      "font_size": 13.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "3d8e7f40-8246-42de-9f6d-4242c6663cd8",
+                  "name": "Customer 4 / Amount",
+                  "frame": {
+                    "pos": {
+                      "x": 1280.0,
+                      "y": 616.0
+                    },
+                    "size": {
+                      "x": 88.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "$2,400",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Right",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 6,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "35f8dbd2-86eb-477e-8dcd-1a8902a10dde",
+                  "name": "Customer 5 / Avatar",
+                  "frame": {
+                    "pos": {
+                      "x": 1056.0,
+                      "y": 704.0
+                    },
+                    "size": {
+                      "x": 40.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      224,
+                      231,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "d25127df-1068-4b34-9fd1-290f1d95428d",
+                  "name": "Customer 5 / Name",
+                  "frame": {
+                    "pos": {
+                      "x": 1108.0,
+                      "y": 704.0
+                    },
+                    "size": {
+                      "x": 170.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Customer name",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 13,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "ca6222ee-2df9-4c47-963c-6a4d166d9159",
+                  "name": "Customer 5 / Email",
+                  "frame": {
+                    "pos": {
+                      "x": 1108.0,
+                      "y": 724.0
+                    },
+                    "size": {
+                      "x": 170.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      114,
+                      128,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "name@example.com",
+                      "font_size": 13.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "d6da1498-3391-4010-b4e2-2a2d2920bc0a",
+                  "name": "Customer 5 / Amount",
+                  "frame": {
+                    "pos": {
+                      "x": 1280.0,
+                      "y": 704.0
+                    },
+                    "size": {
+                      "x": 88.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      24,
+                      39,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "$2,400",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Right",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 6,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              17,
+                              24,
+                              39,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                }
+              ],
+              "background": [
+                243,
+                244,
+                246,
+                255
+              ],
+              "adjust_content_on_resize": false
+            }
+          }
+        }
+      ],
+      "guides": []
+    }
+  ],
+  "active_page": 0,
+  "text_styles": [],
+  "layer_styles": [],
+  "palette": [
+    {
+      "color": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        34,
+        32,
+        52,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        69,
+        40,
+        60,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        102,
+        57,
+        49,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        143,
+        86,
+        59,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        223,
+        113,
+        38,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        217,
+        160,
+        102,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        238,
+        195,
+        154,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        251,
+        242,
+        54,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        153,
+        229,
+        80,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        106,
+        190,
+        48,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        55,
+        148,
+        110,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        75,
+        105,
+        47,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        82,
+        75,
+        36,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        50,
+        60,
+        57,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        63,
+        63,
+        116,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        48,
+        96,
+        130,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        91,
+        110,
+        225,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        99,
+        155,
+        255,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        95,
+        205,
+        228,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        203,
+        219,
+        252,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        155,
+        173,
+        183,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        132,
+        126,
+        135,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        105,
+        106,
+        106,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        89,
+        86,
+        82,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        118,
+        66,
+        138,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        172,
+        50,
+        50,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        217,
+        87,
+        99,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        215,
+        123,
+        186,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        143,
+        151,
+        74,
+        255
+      ],
+      "name": ""
+    },
+    {
+      "color": [
+        138,
+        111,
+        48,
+        255
+      ],
+      "name": ""
+    }
+  ]
+}

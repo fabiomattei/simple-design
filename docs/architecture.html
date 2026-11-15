@@ -74,6 +74,7 @@
   <tr><td><code>history.rs</code></td><td>Undo/redo. Whole-<code>Document</code> snapshot cloning, not a command pattern.</td></tr>
   <tr><td><code>tools.rs</code></td><td>The <code>Tool</code> enum and keyboard shortcut mapping.</td></tr>
   <tr><td><code>io.rs</code></td><td>File dialogs (<code>rfd</code>) and JSON load/save for <code>.sdesign</code> documents.</td></tr>
+  <tr><td><code>templates.rs</code></td><td>File &gt; New from Template / Save as Template: lists the built-in templates (<code>templates/*.sdesign</code>, compiled in) plus user ones in <code>&lt;config_dir&gt;/templates/</code>, and turns one into a fresh unsaved <code>Document</code>.</td></tr>
   <tr><td><code>ui/layers_panel.rs</code>, <code>ui/inspector/</code>, <code>ui/toolbar.rs</code>, <code>ui/pages_bar.rs</code>, <code>ui/palette_panel.rs</code></td><td>Each returns an action enum describing <em>what the user asked for</em> rather than mutating <code>Document</code>/<code>History</code> directly.</td></tr>
   <tr><td><code>ui/color_picker.rs</code></td><td>The palette swatch button widget and color-picker popup, shared between <code>ui/palette_panel.rs</code> and the Inspector's fill/stroke editors.</td></tr>
   <tr><td><code>ui/rename_all.rs</code></td><td>Batch layer renaming (case, find/replace, numeric sequencing) over the current selection.</td></tr>

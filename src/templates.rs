@@ -15,6 +15,12 @@ const BUILT_IN: &[(&str, &str)] = &[
     ("Mobile App Screen", include_str!("../templates/mobile-app-screen.sdesign")),
     ("Social Post", include_str!("../templates/social-post.sdesign")),
     ("Poster & Business Card", include_str!("../templates/poster-and-business-card.sdesign")),
+    ("Presentation", include_str!("../templates/presentation.sdesign")),
+    ("Story", include_str!("../templates/story.sdesign")),
+    ("Resume", include_str!("../templates/resume.sdesign")),
+    ("Dashboard", include_str!("../templates/dashboard.sdesign")),
+    ("Video Thumbnail", include_str!("../templates/video-thumbnail.sdesign")),
+    ("Email Newsletter", include_str!("../templates/email-newsletter.sdesign")),
 ];
 
 pub enum TemplateSource {
