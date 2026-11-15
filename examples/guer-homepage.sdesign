@@ -8,7 +8,7 @@
       "layers": [
         {
           "id": "c8a56c36-8193-4a06-9686-577cc5ee986d",
-          "name": "Group",
+          "name": "Guer Homepage",
           "frame": {
             "pos": {
               "x": 0.0,
@@ -21,21 +21,8 @@
             "rotation": 0.0
           },
           "style": {
-            "fill": [
-              216,
-              216,
-              216,
-              255
-            ],
-            "stroke": {
-              "paint": [
-                30,
-                30,
-                30,
-                255
-              ],
-              "width": 1.0
-            },
+            "fill": null,
+            "stroke": null,
             "fill_opacity": 1.0,
             "stroke_opacity": 1.0,
             "shadows": [],
@@ -49,53 +36,8 @@
           "bool_op": "Union",
           "style_id": null,
           "kind": {
-            "Group": {
+            "Artboard": {
               "children": [
-                {
-                  "id": "095758ff-504e-4068-8e63-53d3ac5ade40",
-                  "name": "Background",
-                  "frame": {
-                    "pos": {
-                      "x": 0.0,
-                      "y": 0.0
-                    },
-                    "size": {
-                      "x": 958.0,
-                      "y": 2005.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      207,
-                      232,
-                      199,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
                 {
                   "id": "c9b3e12d-872d-462b-a467-45daaf448d53",
                   "name": "Content Card",
@@ -7887,6 +7829,12 @@
                     }
                   }
                 }
+              ],
+              "background": [
+                207,
+                232,
+                199,
+                255
               ]
             }
           }

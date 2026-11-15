@@ -21,21 +21,8 @@
             "rotation": 0.0
           },
           "style": {
-            "fill": [
-              216,
-              216,
-              216,
-              255
-            ],
-            "stroke": {
-              "paint": [
-                30,
-                30,
-                30,
-                255
-              ],
-              "width": 1.0
-            },
+            "fill": null,
+            "stroke": null,
             "fill_opacity": 1.0,
             "stroke_opacity": 1.0,
             "shadows": [],
@@ -49,53 +36,8 @@
           "bool_op": "Union",
           "style_id": null,
           "kind": {
-            "Group": {
+            "Artboard": {
               "children": [
-                {
-                  "id": "5e1e6372-8d01-4c6a-8cc7-d295d5f6802d",
-                  "name": "Background",
-                  "frame": {
-                    "pos": {
-                      "x": 0.0,
-                      "y": 0.0
-                    },
-                    "size": {
-                      "x": 924.0,
-                      "y": 906.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      210,
-                      227,
-                      254,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
                 {
                   "id": "d020218e-633a-44a4-9c60-03242826d435",
                   "name": "Card",
@@ -2422,6 +2364,12 @@
                     }
                   }
                 }
+              ],
+              "background": [
+                210,
+                227,
+                254,
+                255
               ]
             }
           }
