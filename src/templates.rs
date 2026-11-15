@@ -51,6 +51,16 @@ const BUILT_IN: &[(&str, &str)] = &[
     ("Menu - Brutalist", include_str!("../templates/menu-brutalist.sdesign")),
     ("Menu - Ocean", include_str!("../templates/menu-ocean.sdesign")),
     ("Menu - Sunset", include_str!("../templates/menu-sunset.sdesign")),
+    ("Certificate - Minimal Mono", include_str!("../templates/certificate-minimal-mono.sdesign")),
+    ("Certificate - Neon Night", include_str!("../templates/certificate-neon-night.sdesign")),
+    ("Certificate - Pastel", include_str!("../templates/certificate-pastel.sdesign")),
+    ("Certificate - Corporate Navy", include_str!("../templates/certificate-corporate-navy.sdesign")),
+    ("Certificate - Earthy", include_str!("../templates/certificate-earthy.sdesign")),
+    ("Certificate - Retro 70s", include_str!("../templates/certificate-retro-70s.sdesign")),
+    ("Certificate - Dark Luxe Gold", include_str!("../templates/certificate-dark-luxe.sdesign")),
+    ("Certificate - Brutalist", include_str!("../templates/certificate-brutalist.sdesign")),
+    ("Certificate - Ocean", include_str!("../templates/certificate-ocean.sdesign")),
+    ("Certificate - Sunset", include_str!("../templates/certificate-sunset.sdesign")),
 ];
 
 #[derive(Clone)]
