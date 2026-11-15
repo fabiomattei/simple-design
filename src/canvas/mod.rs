@@ -24,6 +24,8 @@ mod rulers_guides;
 mod snapping;
 mod texture_caches;
 mod transform_geometry;
+#[cfg(test)]
+mod ui_gesture_tests;
 
 use draw_layer::draw_children;
 use hit_test::{collect_marquee_hits, distribution_order, gap_handle_positions, hit_test, layers_at_point};
