@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "b4375e89-c3b8-4837-b1bc-edc47289e28e",
+      "id": "f74e4c4c-ff46-49b5-8dda-fe26ea2921cd",
       "name": "Page 1",
       "layers": [
         {
-          "id": "f2d0733e-6401-43ee-9d41-e7f5c4a5cf9e",
+          "id": "ca4adf3a-62ac-4208-82f1-90c183681808",
           "name": "Certificate",
           "frame": {
             "pos": {
@@ -49,8 +49,88 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "167efafd-663f-4871-b59b-b12703aa7591",
-                  "name": "Decoration / Frame",
+                  "id": "cfa6d156-8635-47e6-b097-01e98502b93c",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1400.0,
+                      "y": 1000.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            28,
+                            27,
+                            25,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            14,
+                            14,
+                            14,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "463b2bf7-00f3-481f-8845-9c0410892ddc",
+                  "name": "Pattern / Frame",
                   "frame": {
                     "pos": {
                       "x": 35.0,
@@ -107,8 +187,8 @@
                   }
                 },
                 {
-                  "id": "bc64b12b-a1d5-4fab-b1ba-d6b36ba81946",
-                  "name": "Decoration / Frame Inner",
+                  "id": "ae9b49ea-1c69-43e4-a329-edad6c58151e",
+                  "name": "Pattern / Frame Inner",
                   "frame": {
                     "pos": {
                       "x": 43.0,
@@ -124,10 +204,10 @@
                     "fill": null,
                     "stroke": {
                       "paint": [
-                        92,
-                        78,
-                        49,
-                        255
+                        80,
+                        66,
+                        37,
+                        102
                       ],
                       "width": 1.0
                     },
@@ -165,8 +245,591 @@
                   }
                 },
                 {
-                  "id": "32f27d4c-090d-4f00-a29b-11504c1d502a",
-                  "name": "Header / Kicker",
+                  "id": "bc48fbc1-64e1-4af0-8f84-a54dbd02c16d",
+                  "name": "Pattern / Corner 1",
+                  "frame": {
+                    "pos": {
+                      "x": 26.0,
+                      "y": 26.0
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "f1c1c5b7-f1db-4a21-9603-32d68da1950a",
+                  "name": "Pattern / Corner 2",
+                  "frame": {
+                    "pos": {
+                      "x": 1356.0,
+                      "y": 26.0
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "7c7dbeb0-fe00-46a0-ae05-6357fd000ca1",
+                  "name": "Pattern / Corner 3",
+                  "frame": {
+                    "pos": {
+                      "x": 26.0,
+                      "y": 956.0
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "a5c44033-0e06-4653-9571-7d582e287e79",
+                  "name": "Pattern / Corner 4",
+                  "frame": {
+                    "pos": {
+                      "x": 1356.0,
+                      "y": 956.0
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "60d27aa7-0ca5-4566-9d29-d94854960a63",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 697.0,
+                      "y": -120.0
+                    },
+                    "size": {
+                      "x": 6.0,
+                      "y": 240.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "b7ddc747-95ee-4ea6-8947-3e0c82594c61",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 570.1602,
+                      "y": -119.7659
+                    },
+                    "size": {
+                      "x": 240.07117,
+                      "y": 247.52737
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "CompoundPath": {
+                      "polygons": [
+                        {
+                          "exterior": [
+                            {
+                              "x": 0.11633301,
+                              "y": 135.28433
+                            },
+                            {
+                              "x": 0.0,
+                              "y": 129.28546
+                            },
+                            {
+                              "x": 109.23352,
+                              "y": 127.16687
+                            },
+                            {
+                              "x": 1.5726929,
+                              "y": 94.93535
+                            },
+                            {
+                              "x": 3.293518,
+                              "y": 89.187416
+                            },
+                            {
+                              "x": 107.95776,
+                              "y": 120.52182
+                            },
+                            {
+                              "x": 15.279114,
+                              "y": 56.957775
+                            },
+                            {
+                              "x": 18.67279,
+                              "y": 52.009727
+                            },
+                            {
+                              "x": 108.77203,
+                              "y": 113.80468
+                            },
+                            {
+                              "x": 39.926697,
+                              "y": 24.978645
+                            },
+                            {
+                              "x": 44.669006,
+                              "y": 21.303047
+                            },
+                            {
+                              "x": 111.59802,
+                              "y": 107.65661
+                            },
+                            {
+                              "x": 73.16113,
+                              "y": 2.052124
+                            },
+                            {
+                              "x": 78.79932,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 123.63635,
+                              "y": 123.18881
+                            },
+                            {
+                              "x": 124.97772,
+                              "y": 124.91941
+                            },
+                            {
+                              "x": 126.78339,
+                              "y": 126.15784
+                            },
+                            {
+                              "x": 128.88092,
+                              "y": 126.78581
+                            },
+                            {
+                              "x": 131.07013,
+                              "y": 126.743355
+                            },
+                            {
+                              "x": 133.1416,
+                              "y": 126.03458
+                            },
+                            {
+                              "x": 134.89795,
+                              "y": 124.72701
+                            },
+                            {
+                              "x": 136.1712,
+                              "y": 122.945656
+                            },
+                            {
+                              "x": 170.09131,
+                              "y": 17.155914
+                            },
+                            {
+                              "x": 175.80481,
+                              "y": 18.987877
+                            },
+                            {
+                              "x": 147.5982,
+                              "y": 106.958405
+                            },
+                            {
+                              "x": 199.49872,
+                              "y": 34.34561
+                            },
+                            {
+                              "x": 204.38007,
+                              "y": 37.834564
+                            },
+                            {
+                              "x": 150.6607,
+                              "y": 112.99211
+                            },
+                            {
+                              "x": 222.25336,
+                              "y": 59.69332
+                            },
+                            {
+                              "x": 225.83636,
+                              "y": 64.50606
+                            },
+                            {
+                              "x": 151.73456,
+                              "y": 119.67281
+                            },
+                            {
+                              "x": 236.18225,
+                              "y": 90.77821
+                            },
+                            {
+                              "x": 238.12463,
+                              "y": 96.45509
+                            },
+                            {
+                              "x": 150.71753,
+                              "y": 126.36229
+                            },
+                            {
+                              "x": 239.95483,
+                              "y": 124.63153
+                            },
+                            {
+                              "x": 240.07117,
+                              "y": 130.6304
+                            },
+                            {
+                              "x": 147.70654,
+                              "y": 132.42181
+                            },
+                            {
+                              "x": 233.211,
+                              "y": 158.02017
+                            },
+                            {
+                              "x": 231.49017,
+                              "y": 163.7681
+                            },
+                            {
+                              "x": 142.98914,
+                              "y": 137.27264
+                            },
+                            {
+                              "x": 216.59479,
+                              "y": 187.7554
+                            },
+                            {
+                              "x": 213.20111,
+                              "y": 192.70343
+                            },
+                            {
+                              "x": 137.01599,
+                              "y": 140.45155
+                            },
+                            {
+                              "x": 191.69305,
+                              "y": 210.99731
+                            },
+                            {
+                              "x": 186.95074,
+                              "y": 214.67291
+                            },
+                            {
+                              "x": 134.6836,
+                              "y": 147.23645
+                            },
+                            {
+                              "x": 133.60889,
+                              "y": 150.58812
+                            },
+                            {
+                              "x": 160.88416,
+                              "y": 225.52623
+                            },
+                            {
+                              "x": 155.24597,
+                              "y": 227.57835
+                            },
+                            {
+                              "x": 130.61847,
+                              "y": 159.91478
+                            },
+                            {
+                              "x": 102.52661,
+                              "y": 247.52737
+                            },
+                            {
+                              "x": 96.81311,
+                              "y": 245.6954
+                            },
+                            {
+                              "x": 127.268555,
+                              "y": 150.71112
+                            },
+                            {
+                              "x": 126.06476,
+                              "y": 147.40367
+                            },
+                            {
+                              "x": 64.82196,
+                              "y": 233.08707
+                            },
+                            {
+                              "x": 59.940613,
+                              "y": 229.59811
+                            },
+                            {
+                              "x": 123.47095,
+                              "y": 140.71432
+                            },
+                            {
+                              "x": 33.326843,
+                              "y": 207.82413
+                            },
+                            {
+                              "x": 29.743835,
+                              "y": 203.01138
+                            },
+                            {
+                              "x": 117.37903,
+                              "y": 137.7694
+                            },
+                            {
+                              "x": 11.049072,
+                              "y": 174.15123
+                            },
+                            {
+                              "x": 9.106689,
+                              "y": 168.47435
+                            },
+                            {
+                              "x": 112.477234,
+                              "y": 133.10509
+                            }
+                          ],
+                          "holes": []
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "ed4e8e37-7314-4bb2-a470-a11feccb2c3b",
+                  "name": "Header / Kind",
                   "frame": {
                     "pos": {
                       "x": 150.0,
@@ -174,7 +837,7 @@
                     },
                     "size": {
                       "x": 1100.0,
-                      "y": 43.0
+                      "y": 40.0
                     },
                     "rotation": 0.0
                   },
@@ -210,8 +873,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "CERTIFICATE OF ACHIEVEMENT",
-                      "font_size": 26.0,
+                      "content": "EMPLOYEE OF THE YEAR",
+                      "font_size": 24.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -219,7 +882,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -227,21 +890,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 20,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 24.0,
+                            "color": [
+                              201,
+                              165,
+                              92,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "19fe0b50-2365-49ab-915d-24dd98afb22b",
+                  "id": "32fec103-fb9b-4a00-9d5f-c8d30f6d1fb3",
                   "name": "Body / Presented",
                   "frame": {
                     "pos": {
                       "x": 150.0,
-                      "y": 260.0
+                      "y": 240.0
                     },
                     "size": {
                       "x": 1100.0,
-                      "y": 43.0
+                      "y": 40.0
                     },
                     "rotation": 0.0
                   },
@@ -278,214 +960,6 @@
                   "kind": {
                     "Text": {
                       "content": "This certificate is proudly presented to",
-                      "font_size": 26.0,
-                      "font": "Serif",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "72e388bc-2b63-4ea5-b9f1-ec6d49b33776",
-                  "name": "Body / Recipient",
-                  "frame": {
-                    "pos": {
-                      "x": 150.0,
-                      "y": 330.0
-                    },
-                    "size": {
-                      "x": 1100.0,
-                      "y": 148.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Alexandra Chen",
-                      "font_size": 96.0,
-                      "font": "Serif",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 14,
-                          "style": {
-                            "font": "Serif",
-                            "font_size": 96.0,
-                            "color": [
-                              241,
-                              233,
-                              216,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "91f17282-eb9e-4f3c-8b5b-bb7dc068169d",
-                  "name": "Body / Underline",
-                  "frame": {
-                    "pos": {
-                      "x": 400.0,
-                      "y": 480.0
-                    },
-                    "size": {
-                      "x": 600.0,
-                      "y": 2.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      201,
-                      165,
-                      92,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "55162221-89ed-4c54-ad61-42214777e0e0",
-                  "name": "Body / Reason",
-                  "frame": {
-                    "pos": {
-                      "x": 200.0,
-                      "y": 520.0
-                    },
-                    "size": {
-                      "x": 1000.0,
-                      "y": 76.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      163,
-                      154,
-                      136,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "for outstanding completion of the Advanced Product Design program,\ndemonstrating exceptional craft, curiosity and leadership.",
                       "font_size": 24.0,
                       "font": "Serif",
                       "align": "Center",
@@ -507,16 +981,16 @@
                   }
                 },
                 {
-                  "id": "1cf003e3-320c-4298-b495-17d170d0e5bf",
-                  "name": "Signature / Date Value",
+                  "id": "b5064568-581c-4fd8-acf7-84d829ad3e6d",
+                  "name": "Body / Recipient",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 760.0
+                      "x": 150.0,
+                      "y": 300.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 46.0
+                      "x": 1100.0,
+                      "y": 133.0
                     },
                     "rotation": 0.0
                   },
@@ -552,8 +1026,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "March 3, 2027",
-                      "font_size": 28.0,
+                      "content": "Marcus Bell",
+                      "font_size": 86.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -571,10 +1045,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 13,
+                          "len": 11,
                           "style": {
                             "font": "Serif",
-                            "font_size": 28.0,
+                            "font_size": 86.0,
                             "color": [
                               241,
                               233,
@@ -593,346 +1067,16 @@
                   }
                 },
                 {
-                  "id": "37912e72-d74e-4846-94de-eed28506407e",
-                  "name": "Signature / Date Line",
+                  "id": "7b5a4b5f-e41d-44f0-bfd9-bcace75fa24c",
+                  "name": "Body / Underline",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 810.0
+                      "x": 440.0,
+                      "y": 440.0
                     },
                     "size": {
-                      "x": 360.0,
+                      "x": 520.0,
                       "y": 2.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "e690c36c-2d8b-446f-9103-aae853820622",
-                  "name": "Signature / Date Label",
-                  "frame": {
-                    "pos": {
-                      "x": 200.0,
-                      "y": 826.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 28.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      163,
-                      154,
-                      136,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "DATE",
-                      "font_size": 16.0,
-                      "font": "Serif",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "b56e58a0-27f5-407e-bbbc-602b376dbfc1",
-                  "name": "Signature / Director Value",
-                  "frame": {
-                    "pos": {
-                      "x": 840.0,
-                      "y": 760.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 46.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Samuel Ortiz",
-                      "font_size": 28.0,
-                      "font": "Serif",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 12,
-                          "style": {
-                            "font": "Serif",
-                            "font_size": 28.0,
-                            "color": [
-                              241,
-                              233,
-                              216,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "039d3dfc-489d-4681-a659-9d200d22993d",
-                  "name": "Signature / Director Line",
-                  "frame": {
-                    "pos": {
-                      "x": 840.0,
-                      "y": 810.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 2.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "038da034-09e9-4a69-92a7-c1fadf993273",
-                  "name": "Signature / Director Label",
-                  "frame": {
-                    "pos": {
-                      "x": 840.0,
-                      "y": 826.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 28.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      163,
-                      154,
-                      136,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "DIRECTOR",
-                      "font_size": 16.0,
-                      "font": "Serif",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "37d15667-b9c0-4d9a-853c-0b3f0437f399",
-                  "name": "Seal",
-                  "frame": {
-                    "pos": {
-                      "x": 640.0,
-                      "y": 700.0
-                    },
-                    "size": {
-                      "x": 120.0,
-                      "y": 120.0
                     },
                     "rotation": 0.0
                   },
@@ -943,15 +1087,558 @@
                       92,
                       255
                     ],
-                    "stroke": {
-                      "paint": [
-                        201,
-                        165,
-                        92,
-                        255
-                      ],
-                      "width": 1.0
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "2c117df0-fd04-43c8-8fdc-253b57a715b8",
+                  "name": "Body / Reason",
+                  "frame": {
+                    "pos": {
+                      "x": 190.0,
+                      "y": 480.0
                     },
+                    "size": {
+                      "x": 1020.0,
+                      "y": 70.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      163,
+                      154,
+                      136,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "in recognition of a year of dedication, generosity and results\nthat lifted the whole team.",
+                      "font_size": 22.0,
+                      "font": "Serif",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "21990301-3eb7-4c66-aa0d-2bfa4ef6d0bb",
+                  "name": "Signature / Presented Script",
+                  "frame": {
+                    "pos": {
+                      "x": 190.0,
+                      "y": 700.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 49.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "December 15, 2027",
+                      "font_size": 30.0,
+                      "font": "Handwriting",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "cd7cb444-f451-41c3-9e5d-f41494dce9b5",
+                  "name": "Signature / Presented Line",
+                  "frame": {
+                    "pos": {
+                      "x": 190.0,
+                      "y": 760.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 2.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "0501e883-ec1d-408f-8986-f8613108e014",
+                  "name": "Signature / Presented Label",
+                  "frame": {
+                    "pos": {
+                      "x": 190.0,
+                      "y": 776.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 26.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      163,
+                      154,
+                      136,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "PRESENTED",
+                      "font_size": 15.0,
+                      "font": "Serif",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "d93bb3ef-dfd4-4b56-a621-42f5a5d536ff",
+                  "name": "Signature / Ceo Script",
+                  "frame": {
+                    "pos": {
+                      "x": 890.0,
+                      "y": 700.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 49.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Hannah Lee",
+                      "font_size": 30.0,
+                      "font": "Handwriting",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "0a8694a7-7b63-4d47-85aa-7db285b28229",
+                  "name": "Signature / Ceo Line",
+                  "frame": {
+                    "pos": {
+                      "x": 890.0,
+                      "y": 760.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 2.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "2efa6e39-3375-4c18-98bd-3a301709e645",
+                  "name": "Signature / Ceo Label",
+                  "frame": {
+                    "pos": {
+                      "x": 890.0,
+                      "y": 776.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 26.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      163,
+                      154,
+                      136,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "CEO",
+                      "font_size": 15.0,
+                      "font": "Serif",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "0e56cc38-d904-4b75-aaec-223830cf903b",
+                  "name": "Seal / Rosette",
+                  "frame": {
+                    "pos": {
+                      "x": 625.0,
+                      "y": 650.0
+                    },
+                    "size": {
+                      "x": 150.0,
+                      "y": 150.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 20,
+                      "inner_ratio": 0.86
+                    }
+                  }
+                },
+                {
+                  "id": "6d35dc01-9529-4d79-85df-56c9cbddd2cd",
+                  "name": "Seal / Disc",
+                  "frame": {
+                    "pos": {
+                      "x": 645.0,
+                      "y": 670.0
+                    },
+                    "size": {
+                      "x": 110.0,
+                      "y": 110.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      31,
+                      30,
+                      28,
+                      255
+                    ],
+                    "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -977,24 +1664,24 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "44e051a5-fc57-44fc-9b6c-7544f0eece37",
+                  "id": "9170d7d8-c0a4-49c7-86a0-b2437959ca92",
                   "name": "Seal / Label",
                   "frame": {
                     "pos": {
-                      "x": 640.0,
-                      "y": 700.0
+                      "x": 645.0,
+                      "y": 670.0
                     },
                     "size": {
-                      "x": 120.0,
-                      "y": 120.0
+                      "x": 110.0,
+                      "y": 110.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      20,
-                      20,
-                      20,
+                      241,
+                      233,
+                      216,
                       255
                     ],
                     "stroke": null,
@@ -1022,8 +1709,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "2027",
-                      "font_size": 26.0,
+                      "content": "#1",
+                      "font_size": 28.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -1041,14 +1728,14 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 4,
+                          "len": 2,
                           "style": {
                             "font": "Serif",
-                            "font_size": 26.0,
+                            "font_size": 28.0,
                             "color": [
-                              20,
-                              20,
-                              20,
+                              241,
+                              233,
+                              216,
                               255
                             ],
                             "bold": true,

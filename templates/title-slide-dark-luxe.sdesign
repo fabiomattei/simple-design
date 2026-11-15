@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "5591d57b-97dd-497d-8d48-d4109a1532c7",
+      "id": "f42afc23-2fe8-4d81-b7d5-4c59226f8520",
       "name": "Page 1",
       "layers": [
         {
-          "id": "635aa7c0-95d9-43b4-8b0a-88d2d812c87f",
+          "id": "24616ee2-4ab4-4d3d-a894-411aebbedb4a",
           "name": "Title Slide 16:9",
           "frame": {
             "pos": {
@@ -49,8 +49,88 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "cbb2fdd9-4011-4c0e-8df9-c1cae01ca7a6",
-                  "name": "Decoration / Frame",
+                  "id": "2fcaa51f-357a-429b-84fc-2deaf2fec51c",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1920.0,
+                      "y": 1080.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            28,
+                            27,
+                            25,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            14,
+                            14,
+                            14,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "2680d486-4382-4b6d-ac59-dacc356e70af",
+                  "name": "Pattern / Frame",
                   "frame": {
                     "pos": {
                       "x": 37.8,
@@ -107,8 +187,8 @@
                   }
                 },
                 {
-                  "id": "4a769cd8-772c-47e4-add3-51603b2435dd",
-                  "name": "Decoration / Frame Inner",
+                  "id": "0a526e47-e609-4703-8e79-bde1ca052062",
+                  "name": "Pattern / Frame Inner",
                   "frame": {
                     "pos": {
                       "x": 45.8,
@@ -124,10 +204,10 @@
                     "fill": null,
                     "stroke": {
                       "paint": [
-                        92,
-                        78,
-                        49,
-                        255
+                        80,
+                        66,
+                        37,
+                        102
                       ],
                       "width": 1.0
                     },
@@ -165,312 +245,18 @@
                   }
                 },
                 {
-                  "id": "bd21cf80-9fc2-44d9-b429-68f2c24b186c",
-                  "name": "Meta / Event",
+                  "id": "e2b36142-ba82-4816-abbe-0ceb4f6d3d8e",
+                  "name": "Pattern / Corner 1",
                   "frame": {
                     "pos": {
-                      "x": 160.0,
-                      "y": 260.0
+                      "x": 28.8,
+                      "y": 28.8
                     },
                     "size": {
-                      "x": 340.0,
-                      "y": 52.0
+                      "x": 18.0,
+                      "y": 18.0
                     },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      58,
-                      53,
-                      44,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "6bf782b9-ee71-474c-b809-5bf4707285f2",
-                  "name": "Meta / Event Label",
-                  "frame": {
-                    "pos": {
-                      "x": 160.0,
-                      "y": 260.0
-                    },
-                    "size": {
-                      "x": 340.0,
-                      "y": 52.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Q4 PLANNING · 2027",
-                      "font_size": 22.0,
-                      "font": "Serif",
-                      "align": "Center",
-                      "vertical_align": "Middle",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 18,
-                          "style": {
-                            "font": "Serif",
-                            "font_size": 22.0,
-                            "color": [
-                              241,
-                              233,
-                              216,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "dcd0d307-e744-49eb-ae75-b49482d738ea",
-                  "name": "Title",
-                  "frame": {
-                    "pos": {
-                      "x": 160.0,
-                      "y": 360.0
-                    },
-                    "size": {
-                      "x": 1100.0,
-                      "y": 364.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Building what\ncomes next",
-                      "font_size": 120.0,
-                      "font": "Serif",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 24,
-                          "style": {
-                            "font": "Serif",
-                            "font_size": 120.0,
-                            "color": [
-                              241,
-                              233,
-                              216,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "24143384-8e6d-4261-ad68-8c37e5a62035",
-                  "name": "Subtitle",
-                  "frame": {
-                    "pos": {
-                      "x": 160.0,
-                      "y": 760.0
-                    },
-                    "size": {
-                      "x": 1100.0,
-                      "y": 58.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      163,
-                      154,
-                      136,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Strategy, roadmap and priorities for the year ahead",
-                      "font_size": 36.0,
-                      "font": "Serif",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "265a06db-d9a2-4446-9a79-99c2b3188468",
-                  "name": "Rule",
-                  "frame": {
-                    "pos": {
-                      "x": 160.0,
-                      "y": 860.0
-                    },
-                    "size": {
-                      "x": 120.0,
-                      "y": 6.0
-                    },
-                    "rotation": 0.0
+                    "rotation": 45.0
                   },
                   "style": {
                     "fill": [
@@ -514,16 +300,1039 @@
                   }
                 },
                 {
-                  "id": "46524e1c-eec3-49a4-9b37-7e21c79c917e",
-                  "name": "Presenter / Name",
+                  "id": "59b21b28-3131-46be-b6a9-fdd743ac1cb8",
+                  "name": "Pattern / Corner 2",
+                  "frame": {
+                    "pos": {
+                      "x": 1873.2,
+                      "y": 28.8
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "c15601df-f015-47f7-bac6-eeae3a738f77",
+                  "name": "Pattern / Corner 3",
+                  "frame": {
+                    "pos": {
+                      "x": 28.8,
+                      "y": 1033.2
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "00dccaec-3e7d-4111-b058-97ae7e1109bd",
+                  "name": "Pattern / Corner 4",
+                  "frame": {
+                    "pos": {
+                      "x": 1873.2,
+                      "y": 1033.2
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "d339da3c-f342-415a-92f9-829b2e14b4fe",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 956.76,
+                      "y": -129.6
+                    },
+                    "size": {
+                      "x": 6.48,
+                      "y": 259.2
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "fed3208d-aeda-4b25-879b-2fd8f0ceac36",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 820.5574,
+                      "y": -128.86905
+                    },
+                    "size": {
+                      "x": 259.27686,
+                      "y": 265.84537
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "CompoundPath": {
+                      "polygons": [
+                        {
+                          "exterior": [
+                            {
+                              "x": 0.12561035,
+                              "y": 144.81358
+                            },
+                            {
+                              "x": 0.0,
+                              "y": 138.33482
+                            },
+                            {
+                              "x": 117.297485,
+                              "y": 136.05983
+                            },
+                            {
+                              "x": 1.9099731,
+                              "y": 101.51509
+                            },
+                            {
+                              "x": 3.7684937,
+                              "y": 95.30734
+                            },
+                            {
+                              "x": 116.15936,
+                              "y": 128.95496
+                            },
+                            {
+                              "x": 16.829346,
+                              "y": 60.829002
+                            },
+                            {
+                              "x": 20.494507,
+                              "y": 55.48513
+                            },
+                            {
+                              "x": 117.24512,
+                              "y": 121.84197
+                            },
+                            {
+                              "x": 43.458862,
+                              "y": 26.641037
+                            },
+                            {
+                              "x": 48.580566,
+                              "y": 22.671402
+                            },
+                            {
+                              "x": 120.4505,
+                              "y": 115.39986
+                            },
+                            {
+                              "x": 79.255066,
+                              "y": 2.2162857
+                            },
+                            {
+                              "x": 85.3443,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 133.4519,
+                              "y": 132.1746
+                            },
+                            {
+                              "x": 134.74725,
+                              "y": 133.84589
+                            },
+                            {
+                              "x": 136.49097,
+                              "y": 135.04184
+                            },
+                            {
+                              "x": 138.51666,
+                              "y": 135.64828
+                            },
+                            {
+                              "x": 140.6308,
+                              "y": 135.60728
+                            },
+                            {
+                              "x": 142.63123,
+                              "y": 134.9228
+                            },
+                            {
+                              "x": 144.3274,
+                              "y": 133.66008
+                            },
+                            {
+                              "x": 145.557,
+                              "y": 131.93973
+                            },
+                            {
+                              "x": 182.39679,
+                              "y": 17.044205
+                            },
+                            {
+                              "x": 188.56732,
+                              "y": 19.022713
+                            },
+                            {
+                              "x": 157.89807,
+                              "y": 114.67364
+                            },
+                            {
+                              "x": 214.48865,
+                              "y": 35.499107
+                            },
+                            {
+                              "x": 219.7605,
+                              "y": 39.26716
+                            },
+                            {
+                              "x": 161.35107,
+                              "y": 120.98643
+                            },
+                            {
+                              "x": 239.41333,
+                              "y": 62.87124
+                            },
+                            {
+                              "x": 243.28296,
+                              "y": 68.068985
+                            },
+                            {
+                              "x": 162.71161,
+                              "y": 128.05211
+                            },
+                            {
+                              "x": 254.7904,
+                              "y": 96.54645
+                            },
+                            {
+                              "x": 256.88818,
+                              "y": 102.67747
+                            },
+                            {
+                              "x": 161.84991,
+                              "y": 135.19574
+                            },
+                            {
+                              "x": 259.15125,
+                              "y": 133.30858
+                            },
+                            {
+                              "x": 259.27686,
+                              "y": 139.78734
+                            },
+                            {
+                              "x": 158.8482,
+                              "y": 141.73515
+                            },
+                            {
+                              "x": 252.07935,
+                              "y": 169.64671
+                            },
+                            {
+                              "x": 250.22083,
+                              "y": 175.85446
+                            },
+                            {
+                              "x": 153.99323,
+                              "y": 147.04582
+                            },
+                            {
+                              "x": 234.25024,
+                              "y": 202.09045
+                            },
+                            {
+                              "x": 230.58508,
+                              "y": 207.43433
+                            },
+                            {
+                              "x": 147.7486,
+                              "y": 150.62056
+                            },
+                            {
+                              "x": 207.36658,
+                              "y": 227.54121
+                            },
+                            {
+                              "x": 202.24487,
+                              "y": 231.51085
+                            },
+                            {
+                              "x": 144.37585,
+                              "y": 156.84671
+                            },
+                            {
+                              "x": 143.46533,
+                              "y": 159.68631
+                            },
+                            {
+                              "x": 173.99591,
+                              "y": 243.56836
+                            },
+                            {
+                              "x": 167.90668,
+                              "y": 245.78464
+                            },
+                            {
+                              "x": 140.23566,
+                              "y": 169.7591
+                            },
+                            {
+                              "x": 109.42682,
+                              "y": 265.84537
+                            },
+                            {
+                              "x": 103.25629,
+                              "y": 263.86688
+                            },
+                            {
+                              "x": 136.6178,
+                              "y": 159.81921
+                            },
+                            {
+                              "x": 135.5979,
+                              "y": 157.01704
+                            },
+                            {
+                              "x": 69.03772,
+                              "y": 250.13986
+                            },
+                            {
+                              "x": 63.76587,
+                              "y": 246.37183
+                            },
+                            {
+                              "x": 131.9862,
+                              "y": 150.92632
+                            },
+                            {
+                              "x": 35.37256,
+                              "y": 222.85251
+                            },
+                            {
+                              "x": 31.50293,
+                              "y": 217.65475
+                            },
+                            {
+                              "x": 125.607666,
+                              "y": 147.59639
+                            },
+                            {
+                              "x": 11.646606,
+                              "y": 186.5893
+                            },
+                            {
+                              "x": 9.548828,
+                              "y": 180.45828
+                            },
+                            {
+                              "x": 120.55054,
+                              "y": 142.47794
+                            }
+                          ],
+                          "holes": []
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "13de6179-c9a3-40bb-9117-1f8d983eea92",
+                  "name": "Art",
+                  "frame": {
+                    "pos": {
+                      "x": 1060.0,
+                      "y": 140.0
+                    },
+                    "size": {
+                      "x": 840.0,
+                      "y": 1056.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "10d8d288-7841-4048-bc27-cb9db3246d6f",
+                          "name": "Art / Sky",
+                          "frame": {
+                            "pos": {
+                              "x": 120.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 600.0,
+                              "y": 800.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": {
+                              "kind": "Linear",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    58,
+                                    53,
+                                    44,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    31,
+                                    30,
+                                    28,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.5,
+                                "y": 0.0
+                              },
+                              "to": {
+                                "x": 0.5,
+                                "y": 1.0
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "282378cf-71ee-496a-aa1c-a7af054f1819",
+                          "name": "Art / Sun",
+                          "frame": {
+                            "pos": {
+                              "x": 492.0,
+                              "y": 112.0
+                            },
+                            "size": {
+                              "x": 168.0,
+                              "y": 168.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              140,
+                              116,
+                              64,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "ee83dee3-52eb-413e-a35f-2649f4e26daf",
+                          "name": "Art / Far Peak",
+                          "frame": {
+                            "pos": {
+                              "x": 60.0,
+                              "y": 280.0
+                            },
+                            "size": {
+                              "x": 450.0,
+                              "y": 640.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              90,
+                              78,
+                              54,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Polygon": {
+                              "sides": 3
+                            }
+                          }
+                        },
+                        {
+                          "id": "1166d56e-29fa-41e1-b31d-4389049eb8c4",
+                          "name": "Art / Near Peak",
+                          "frame": {
+                            "pos": {
+                              "x": 330.0,
+                              "y": 360.0
+                            },
+                            "size": {
+                              "x": 480.0,
+                              "y": 600.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              201,
+                              165,
+                              92,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Polygon": {
+                              "sides": 3
+                            }
+                          }
+                        },
+                        {
+                          "id": "2b176388-5475-41e1-8572-d69fa1d32dc4",
+                          "name": "Art / Ground",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 656.0
+                            },
+                            "size": {
+                              "x": 840.0,
+                              "y": 400.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              140,
+                              116,
+                              64,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "c3e2f703-4f1f-44af-a680-b46590687890",
+                          "name": "Art / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 120.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 600.0,
+                              "y": 800.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "a503893c-ba9e-404a-be23-cfba98b69063",
+                  "name": "Art / Outline",
+                  "frame": {
+                    "pos": {
+                      "x": 1190.0,
+                      "y": 150.0
+                    },
+                    "size": {
+                      "x": 580.0,
+                      "y": 780.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        201,
+                        165,
+                        92,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "d77adcea-690a-4a7a-ae76-6825ffbd1e20",
+                  "name": "Header / Logo / Mark",
                   "frame": {
                     "pos": {
                       "x": 160.0,
-                      "y": 900.0
+                      "y": 120.0
                     },
                     "size": {
-                      "x": 600.0,
-                      "y": 52.0
+                      "x": 40.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 6,
+                      "inner_ratio": 0.55
+                    }
+                  }
+                },
+                {
+                  "id": "6e5f9827-fd58-4339-bd3c-f2ff37207955",
+                  "name": "Header / Logo / Word",
+                  "frame": {
+                    "pos": {
+                      "x": 214.0,
+                      "y": 120.0
+                    },
+                    "size": {
+                      "x": 400.0,
+                      "y": 40.0
                     },
                     "rotation": 0.0
                   },
@@ -559,11 +1368,11 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Jordan Lee",
+                      "content": "Lumen",
                       "font_size": 32.0,
                       "font": "Serif",
                       "align": "Left",
-                      "vertical_align": "Top",
+                      "vertical_align": "Middle",
                       "resize": "Fixed",
                       "line_height": null,
                       "letter_spacing": 0.0,
@@ -578,7 +1387,7 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 10,
+                          "len": 5,
                           "style": {
                             "font": "Serif",
                             "font_size": 32.0,
@@ -600,16 +1409,243 @@
                   }
                 },
                 {
-                  "id": "19911de4-04d6-4807-886c-ea0ecbe33def",
-                  "name": "Presenter / Role",
+                  "id": "687bec09-8076-477f-9d5b-82180d42ad0b",
+                  "name": "Meta / Event",
                   "frame": {
                     "pos": {
                       "x": 160.0,
-                      "y": 952.0
+                      "y": 300.0
                     },
                     "size": {
-                      "x": 600.0,
-                      "y": 40.0
+                      "x": 400.0,
+                      "y": 50.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      30,
+                      25,
+                      14,
+                      38
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "84a0dcad-bf5a-4848-819b-2ef040b93863",
+                  "name": "Meta / Event Label",
+                  "frame": {
+                    "pos": {
+                      "x": 160.0,
+                      "y": 300.0
+                    },
+                    "size": {
+                      "x": 400.0,
+                      "y": 50.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "ALL-HANDS · NOVEMBER",
+                      "font_size": 20.0,
+                      "font": "Serif",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 20,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 20.0,
+                            "color": [
+                              201,
+                              165,
+                              92,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "d7531745-c319-41a3-8ff4-6ee0ff447145",
+                  "name": "Title",
+                  "frame": {
+                    "pos": {
+                      "x": 160.0,
+                      "y": 390.0
+                    },
+                    "size": {
+                      "x": 960.0,
+                      "y": 334.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "A year of\nquiet wins",
+                      "font_size": 110.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 20,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 110.0,
+                            "color": [
+                              241,
+                              233,
+                              216,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "ab535357-5868-42d4-89e6-0c0c07a4505a",
+                  "name": "Subtitle",
+                  "frame": {
+                    "pos": {
+                      "x": 160.0,
+                      "y": 760.0
+                    },
+                    "size": {
+                      "x": 960.0,
+                      "y": 52.0
                     },
                     "rotation": 0.0
                   },
@@ -645,8 +1681,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "VP Product",
-                      "font_size": 24.0,
+                      "content": "What we shipped, what we learned, what's next",
+                      "font_size": 32.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -667,16 +1703,421 @@
                   }
                 },
                 {
-                  "id": "6b5df855-40cf-41e2-af36-a60ce194f2e6",
+                  "id": "7dffa6b2-a28c-44ec-8e50-21ef75ec51cc",
+                  "name": "Presenter / Avatar",
+                  "frame": {
+                    "pos": {
+                      "x": 160.0,
+                      "y": 860.0
+                    },
+                    "size": {
+                      "x": 90.0,
+                      "y": 117.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "82959c9d-6baa-4ffa-b42d-453ecf52a0a2",
+                          "name": "Presenter / Avatar / Back",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 90.0,
+                              "y": 90.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              67,
+                              59,
+                              40,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "ab285f45-bf3c-4dda-923a-f5e95035b4c5",
+                          "name": "Presenter / Avatar / Head",
+                          "frame": {
+                            "pos": {
+                              "x": 28.800003,
+                              "y": 16.200012
+                            },
+                            "size": {
+                              "x": 32.4,
+                              "y": 32.4
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              140,
+                              116,
+                              64,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "85ce3f18-a6c9-4ce9-aae1-9f04cecfdf4a",
+                          "name": "Presenter / Avatar / Body",
+                          "frame": {
+                            "pos": {
+                              "x": 12.600006,
+                              "y": 54.0
+                            },
+                            "size": {
+                              "x": 64.8,
+                              "y": 63.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              140,
+                              116,
+                              64,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "0c557977-2a87-4f7b-b8a4-20f78ab3bb80",
+                          "name": "Presenter / Avatar / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 90.0,
+                              "y": 90.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 45.0,
+                                "top_right": 45.0,
+                                "bottom_right": 45.0,
+                                "bottom_left": 45.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "e2749694-1877-4fc3-bfe2-8781486ef750",
+                  "name": "Presenter / Name",
+                  "frame": {
+                    "pos": {
+                      "x": 276.0,
+                      "y": 870.0
+                    },
+                    "size": {
+                      "x": 600.0,
+                      "y": 49.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Maya Robinson",
+                      "font_size": 30.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 13,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 30.0,
+                            "color": [
+                              241,
+                              233,
+                              216,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "8bab97de-52e8-4738-95b6-55b48fde8ce3",
+                  "name": "Presenter / Role",
+                  "frame": {
+                    "pos": {
+                      "x": 276.0,
+                      "y": 914.0
+                    },
+                    "size": {
+                      "x": 600.0,
+                      "y": 37.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      163,
+                      154,
+                      136,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "CEO",
+                      "font_size": 22.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "b59b4763-d8f3-4758-a2f8-9f3c30556ba1",
                   "name": "Footer / Page",
                   "frame": {
                     "pos": {
-                      "x": 1640.0,
-                      "y": 960.0
+                      "x": 1680.0,
+                      "y": 980.0
                     },
                     "size": {
                       "x": 120.0,
-                      "y": 40.0
+                      "y": 37.0
                     },
                     "rotation": 0.0
                   },
@@ -713,7 +2154,7 @@
                   "kind": {
                     "Text": {
                       "content": "01",
-                      "font_size": 24.0,
+                      "font_size": 22.0,
                       "font": "Serif",
                       "align": "Right",
                       "vertical_align": "Top",
@@ -721,7 +2162,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -729,6 +2170,25 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 2,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 22.0,
+                            "color": [
+                              163,
+                              154,
+                              136,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }

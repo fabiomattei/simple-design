@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "a0de96dc-5637-44e6-b02f-d0e3b280d355",
+      "id": "77676eac-0540-4ad0-8fc3-7750dd47fa0d",
       "name": "Page 1",
       "layers": [
         {
-          "id": "cdb5cf04-80aa-4712-86f1-9dd2059c3ff7",
+          "id": "3e5215a8-0488-4bf7-a043-d8576f763e6d",
           "name": "Newsletter Header",
           "frame": {
             "pos": {
@@ -49,8 +49,88 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "e391623e-0d06-4c09-be1b-17fce136a316",
-                  "name": "Decoration / Frame",
+                  "id": "9530f18e-3a0b-4e49-b952-1ad803f3f9c6",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1200.0,
+                      "y": 630.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            28,
+                            27,
+                            25,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            14,
+                            14,
+                            14,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "789b1ba9-9aeb-4649-b65b-d7f62e0eb366",
+                  "name": "Pattern / Frame",
                   "frame": {
                     "pos": {
                       "x": 22.05,
@@ -107,8 +187,8 @@
                   }
                 },
                 {
-                  "id": "37d4d95d-263c-4623-bbd6-8899ba324afe",
-                  "name": "Decoration / Frame Inner",
+                  "id": "9251459c-8d90-4500-b727-ae92aa76372e",
+                  "name": "Pattern / Frame Inner",
                   "frame": {
                     "pos": {
                       "x": 30.05,
@@ -124,10 +204,10 @@
                     "fill": null,
                     "stroke": {
                       "paint": [
-                        92,
-                        78,
-                        49,
-                        255
+                        80,
+                        66,
+                        37,
+                        102
                       ],
                       "width": 1.0
                     },
@@ -165,16 +245,721 @@
                   }
                 },
                 {
-                  "id": "c69d0627-7fbf-4052-bf17-532e362a51da",
-                  "name": "Masthead / Name",
+                  "id": "615d04aa-3fa9-49ae-a2a8-ff0631a99ae2",
+                  "name": "Pattern / Corner 1",
+                  "frame": {
+                    "pos": {
+                      "x": 13.05,
+                      "y": 13.05
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "5b647f6c-48f8-4968-bed7-0fb495421cbf",
+                  "name": "Pattern / Corner 2",
+                  "frame": {
+                    "pos": {
+                      "x": 1168.95,
+                      "y": 13.05
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "d05e87cb-a9c8-43c7-96c9-ce10ccda1bdb",
+                  "name": "Pattern / Corner 3",
+                  "frame": {
+                    "pos": {
+                      "x": 13.05,
+                      "y": 598.95
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "0235df53-cfc1-4ac6-ba21-02b27c54c9b8",
+                  "name": "Pattern / Corner 4",
+                  "frame": {
+                    "pos": {
+                      "x": 1168.95,
+                      "y": 598.95
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "e1af632b-9f60-4283-86d8-665399a5ed9c",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 598.11,
+                      "y": -75.6
+                    },
+                    "size": {
+                      "x": 3.78,
+                      "y": 151.2
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "3cac4362-1c26-406d-aa3f-1b02781a64f1",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 514.57336,
+                      "y": -77.66391
+                    },
+                    "size": {
+                      "x": 151.3432,
+                      "y": 162.80666
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "CompoundPath": {
+                      "polygons": [
+                        {
+                          "exterior": [
+                            {
+                              "x": 0.07324219,
+                              "y": 91.211586
+                            },
+                            {
+                              "x": 0.0,
+                              "y": 87.43227
+                            },
+                            {
+                              "x": 71.937805,
+                              "y": 86.03703
+                            },
+                            {
+                              "x": 0.012634277,
+                              "y": 64.50407
+                            },
+                            {
+                              "x": 1.0967407,
+                              "y": 60.88284
+                            },
+                            {
+                              "x": 70.02533,
+                              "y": 81.51869
+                            },
+                            {
+                              "x": 8.109375,
+                              "y": 39.053356
+                            },
+                            {
+                              "x": 10.247437,
+                              "y": 35.93606
+                            },
+                            {
+                              "x": 69.58392,
+                              "y": 76.63227
+                            },
+                            {
+                              "x": 23.590332,
+                              "y": 17.29012
+                            },
+                            {
+                              "x": 26.578003,
+                              "y": 14.974468
+                            },
+                            {
+                              "x": 70.65527,
+                              "y": 71.84414
+                            },
+                            {
+                              "x": 44.976685,
+                              "y": 1.2928467
+                            },
+                            {
+                              "x": 48.52881,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 78.23956,
+                              "y": 81.629616
+                            },
+                            {
+                              "x": 79.79358,
+                              "y": 83.634605
+                            },
+                            {
+                              "x": 81.88556,
+                              "y": 85.06942
+                            },
+                            {
+                              "x": 84.315735,
+                              "y": 85.79697
+                            },
+                            {
+                              "x": 86.85205,
+                              "y": 85.74777
+                            },
+                            {
+                              "x": 89.252075,
+                              "y": 84.92658
+                            },
+                            {
+                              "x": 91.28699,
+                              "y": 83.41162
+                            },
+                            {
+                              "x": 92.762024,
+                              "y": 81.34794
+                            },
+                            {
+                              "x": 113.17871,
+                              "y": 17.672638
+                            },
+                            {
+                              "x": 116.7782,
+                              "y": 18.826782
+                            },
+                            {
+                              "x": 99.96106,
+                              "y": 71.27601
+                            },
+                            {
+                              "x": 130.17041,
+                              "y": 29.010784
+                            },
+                            {
+                              "x": 133.2456,
+                              "y": 31.208843
+                            },
+                            {
+                              "x": 101.21741,
+                              "y": 76.0187
+                            },
+                            {
+                              "x": 142.8888,
+                              "y": 44.995514
+                            },
+                            {
+                              "x": 145.14612,
+                              "y": 48.02756
+                            },
+                            {
+                              "x": 100.96576,
+                              "y": 80.91863
+                            },
+                            {
+                              "x": 150.11945,
+                              "y": 64.10022
+                            },
+                            {
+                              "x": 151.3432,
+                              "y": 67.67668
+                            },
+                            {
+                              "x": 99.23004,
+                              "y": 85.507706
+                            },
+                            {
+                              "x": 151.17163,
+                              "y": 84.5003
+                            },
+                            {
+                              "x": 151.24487,
+                              "y": 88.27962
+                            },
+                            {
+                              "x": 96.175964,
+                              "y": 89.34767
+                            },
+                            {
+                              "x": 145.94476,
+                              "y": 104.247475
+                            },
+                            {
+                              "x": 144.86066,
+                              "y": 107.8687
+                            },
+                            {
+                              "x": 93.18823,
+                              "y": 92.398994
+                            },
+                            {
+                              "x": 93.07721,
+                              "y": 92.74525
+                            },
+                            {
+                              "x": 134.93823,
+                              "y": 121.455826
+                            },
+                            {
+                              "x": 132.80017,
+                              "y": 124.57312
+                            },
+                            {
+                              "x": 91.87244,
+                              "y": 96.50265
+                            },
+                            {
+                              "x": 91.25635,
+                              "y": 98.42416
+                            },
+                            {
+                              "x": 119.203125,
+                              "y": 134.48186
+                            },
+                            {
+                              "x": 116.215454,
+                              "y": 136.7975
+                            },
+                            {
+                              "x": 89.85681,
+                              "y": 102.78891
+                            },
+                            {
+                              "x": 88.02283,
+                              "y": 108.5088
+                            },
+                            {
+                              "x": 100.24231,
+                              "y": 142.08153
+                            },
+                            {
+                              "x": 96.690186,
+                              "y": 143.37437
+                            },
+                            {
+                              "x": 86.138794,
+                              "y": 114.38469
+                            },
+                            {
+                              "x": 70.612915,
+                              "y": 162.80666
+                            },
+                            {
+                              "x": 67.01343,
+                              "y": 161.65251
+                            },
+                            {
+                              "x": 84.02838,
+                              "y": 108.58641
+                            },
+                            {
+                              "x": 81.97394,
+                              "y": 102.94183
+                            },
+                            {
+                              "x": 45.323975,
+                              "y": 154.21791
+                            },
+                            {
+                              "x": 42.24878,
+                              "y": 152.01987
+                            },
+                            {
+                              "x": 80.40625,
+                              "y": 98.63466
+                            },
+                            {
+                              "x": 79.716064,
+                              "y": 96.738434
+                            },
+                            {
+                              "x": 23.865112,
+                              "y": 138.31795
+                            },
+                            {
+                              "x": 21.607788,
+                              "y": 135.28589
+                            },
+                            {
+                              "x": 78.366516,
+                              "y": 93.03058
+                            },
+                            {
+                              "x": 78.24219,
+                              "y": 92.68892
+                            },
+                            {
+                              "x": 8.2855835,
+                              "y": 116.625244
+                            },
+                            {
+                              "x": 7.0618286,
+                              "y": 113.04878
+                            },
+                            {
+                              "x": 75.13843,
+                              "y": 89.7557
+                            }
+                          ],
+                          "holes": [
+                            [
+                              {
+                                "x": 82.8811,
+                                "y": 94.38213
+                              },
+                              {
+                                "x": 83.071655,
+                                "y": 94.905556
+                              },
+                              {
+                                "x": 83.39557,
+                                "y": 94.45239
+                              },
+                              {
+                                "x": 83.17279,
+                                "y": 94.16499
+                              }
+                            ],
+                            [
+                              {
+                                "x": 84.63934,
+                                "y": 99.21273
+                              },
+                              {
+                                "x": 85.912415,
+                                "y": 102.71051
+                              },
+                              {
+                                "x": 87.04889,
+                                "y": 99.166046
+                              },
+                              {
+                                "x": 85.81268,
+                                "y": 97.57108
+                              }
+                            ],
+                            [
+                              {
+                                "x": 88.10712,
+                                "y": 94.36099
+                              },
+                              {
+                                "x": 88.448425,
+                                "y": 94.8013
+                              },
+                              {
+                                "x": 88.61847,
+                                "y": 94.2709
+                              },
+                              {
+                                "x": 88.31854,
+                                "y": 94.0652
+                              }
+                            ]
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "181ee6eb-4b24-4f10-a6ea-0d2912bc5208",
+                  "name": "Masthead / Name / Mark",
                   "frame": {
                     "pos": {
                       "x": 80.0,
-                      "y": 80.0
+                      "y": 70.0
                     },
                     "size": {
-                      "x": 700.0,
-                      "y": 55.0
+                      "x": 34.0,
+                      "y": 34.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 6,
+                      "inner_ratio": 0.55
+                    }
+                  }
+                },
+                {
+                  "id": "c56df683-88a8-4615-bc27-e1880c520a4d",
+                  "name": "Masthead / Name / Word",
+                  "frame": {
+                    "pos": {
+                      "x": 125.9,
+                      "y": 70.0
+                    },
+                    "size": {
+                      "x": 400.0,
+                      "y": 34.0
                     },
                     "rotation": 0.0
                   },
@@ -210,11 +995,11 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "The Weekly Brief",
-                      "font_size": 34.0,
+                      "content": "Field Notes",
+                      "font_size": 27.2,
                       "font": "Serif",
                       "align": "Left",
-                      "vertical_align": "Top",
+                      "vertical_align": "Middle",
                       "resize": "Fixed",
                       "line_height": null,
                       "letter_spacing": 0.0,
@@ -229,10 +1014,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 16,
+                          "len": 11,
                           "style": {
                             "font": "Serif",
-                            "font_size": 34.0,
+                            "font_size": 27.2,
                             "color": [
                               241,
                               233,
@@ -251,16 +1036,16 @@
                   }
                 },
                 {
-                  "id": "66e5acc8-778d-41b9-a0d0-aa8f0072685d",
+                  "id": "d4021e22-c0a1-4b74-ab5b-ad2fae4596e7",
                   "name": "Masthead / Issue",
                   "frame": {
                     "pos": {
                       "x": 780.0,
-                      "y": 92.0
+                      "y": 78.0
                     },
                     "size": {
                       "x": 340.0,
-                      "y": 31.0
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -296,8 +1081,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "ISSUE #128 · NOV 15",
-                      "font_size": 18.0,
+                      "content": "ISSUE #126 · NOV 15",
+                      "font_size": 16.0,
                       "font": "Serif",
                       "align": "Right",
                       "vertical_align": "Top",
@@ -305,7 +1090,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -313,17 +1098,36 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 19,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 16.0,
+                            "color": [
+                              201,
+                              165,
+                              92,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "595dba48-6500-425d-8469-62a2b96999dc",
+                  "id": "b6d0737b-2b3d-4392-a755-97abb05b3fb7",
                   "name": "Masthead / Rule",
                   "frame": {
                     "pos": {
                       "x": 80.0,
-                      "y": 150.0
+                      "y": 136.0
                     },
                     "size": {
                       "x": 1040.0,
@@ -373,27 +1177,35 @@
                   }
                 },
                 {
-                  "id": "d08f9587-4443-4c66-ae22-bef3b7183246",
-                  "name": "Lead / Headline",
+                  "id": "b3a8a3fc-4d12-491f-82a9-1a0ba6513957",
+                  "name": "Lead / Art",
                   "frame": {
                     "pos": {
-                      "x": 80.0,
-                      "y": 210.0
+                      "x": 760.0,
+                      "y": 180.0
                     },
                     "size": {
-                      "x": 640.0,
-                      "y": 160.0
+                      "x": 360.0,
+                      "y": 487.59998
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      241,
-                      233,
+                      216,
+                      216,
                       216,
                       255
                     ],
-                    "stroke": null,
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -417,69 +1229,310 @@
                     "fixed_height": false
                   },
                   "kind": {
-                    "Text": {
-                      "content": "Five ideas shaping\nhow we work in 2028",
-                      "font_size": 52.0,
-                      "font": "Serif",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
+                    "Group": {
+                      "children": [
                         {
-                          "len": 38,
+                          "id": "5c1a20fa-9c6e-41aa-bfb5-daf6bc99a7f3",
+                          "name": "Lead / Art / Backdrop",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 360.0,
+                              "y": 380.0
+                            },
+                            "rotation": 0.0
+                          },
                           "style": {
-                            "font": "Serif",
-                            "font_size": 52.0,
-                            "color": [
-                              241,
-                              233,
-                              216,
+                            "fill": {
+                              "kind": "Radial",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    58,
+                                    53,
+                                    44,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    31,
+                                    30,
+                                    28,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.5,
+                                "y": 0.5
+                              },
+                              "to": {
+                                "x": 1.0,
+                                "y": 0.5
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "20c9086c-d950-41d8-8033-a0263f0916a5",
+                          "name": "Lead / Art / Halo",
+                          "frame": {
+                            "pos": {
+                              "x": 50.400024,
+                              "y": 45.600006
+                            },
+                            "size": {
+                              "x": 259.2,
+                              "y": 259.2
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              51,
+                              51,
+                              51,
+                              51
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "de822432-7293-4d2c-a9d0-0a9565932778",
+                          "name": "Lead / Art / Head",
+                          "frame": {
+                            "pos": {
+                              "x": 122.400024,
+                              "y": 91.20001
+                            },
+                            "size": {
+                              "x": 115.2,
+                              "y": 129.6
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              201,
+                              165,
+                              92,
                               255
                             ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "5f2d52ed-643c-4d74-99d3-2b6367e675a9",
+                          "name": "Lead / Art / Shoulders",
+                          "frame": {
+                            "pos": {
+                              "x": 28.799988,
+                              "y": 235.6
+                            },
+                            "size": {
+                              "x": 302.4,
+                              "y": 252.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              201,
+                              165,
+                              92,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "e87cbbee-45fc-4a85-af24-436e33d90e0e",
+                          "name": "Lead / Art / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 360.0,
+                              "y": 380.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
                           }
                         }
-                      ],
-                      "path_attachment": null
+                      ]
                     }
                   }
                 },
                 {
-                  "id": "8699f879-1179-49b6-85e0-8035fff5c81d",
-                  "name": "Lead / Summary",
+                  "id": "1222cfbd-c70c-43be-a653-154110825238",
+                  "name": "Lead / Art / Outline",
                   "frame": {
                     "pos": {
-                      "x": 80.0,
-                      "y": 390.0
+                      "x": 770.0,
+                      "y": 190.0
                     },
                     "size": {
-                      "x": 640.0,
-                      "y": 64.0
+                      "x": 340.0,
+                      "y": 360.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      163,
-                      154,
-                      136,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        201,
+                        165,
+                        92,
+                        255
+                      ],
+                      "width": 1.0
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -503,48 +1556,36 @@
                     "fixed_height": false
                   },
                   "kind": {
-                    "Text": {
-                      "content": "Remote rituals, quieter tools and the return of\nthe long-form memo — plus this week's reading list.",
-                      "font_size": 20.0,
-                      "font": "Serif",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
                     }
                   }
                 },
                 {
-                  "id": "c96be5bc-2ea3-4338-911d-2e4e3d80c032",
-                  "name": "Lead / CTA",
+                  "id": "2124d2f3-c8b0-4545-a2e0-a8e6426eb55c",
+                  "name": "Lead / Tag",
                   "frame": {
                     "pos": {
                       "x": 80.0,
-                      "y": 490.0
+                      "y": 190.0
                     },
                     "size": {
-                      "x": 240.0,
-                      "y": 56.0
+                      "x": 110.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      201,
-                      165,
-                      92,
-                      255
+                      30,
+                      25,
+                      14,
+                      38
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -581,16 +1622,344 @@
                   }
                 },
                 {
-                  "id": "7993a9fc-14b3-4a2a-92f1-63450786122b",
+                  "id": "63bd4a76-31a2-43c4-ba75-bff32d4ccc1d",
+                  "name": "Lead / Tag Label",
+                  "frame": {
+                    "pos": {
+                      "x": 80.0,
+                      "y": 190.0
+                    },
+                    "size": {
+                      "x": 110.0,
+                      "y": 30.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "SURVEY",
+                      "font_size": 13.0,
+                      "font": "Serif",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 6,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 13.0,
+                            "color": [
+                              201,
+                              165,
+                              92,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "df52284e-0fb9-40a9-84c5-4ba94cd4fbe1",
+                  "name": "Lead / Headline",
+                  "frame": {
+                    "pos": {
+                      "x": 80.0,
+                      "y": 240.0
+                    },
+                    "size": {
+                      "x": 620.0,
+                      "y": 142.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "What 100 founders\nlearned this year",
+                      "font_size": 46.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 35,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 46.0,
+                            "color": [
+                              241,
+                              233,
+                              216,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "2b0d1926-d82e-47fa-948b-53e180524d4c",
+                  "name": "Lead / Summary",
+                  "frame": {
+                    "pos": {
+                      "x": 80.0,
+                      "y": 390.0
+                    },
+                    "size": {
+                      "x": 600.0,
+                      "y": 58.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      163,
+                      154,
+                      136,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Hiring, burnout, pricing — the honest answers\nfrom our annual survey.",
+                      "font_size": 18.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "66f648fe-4f19-4630-a922-a88af485bfc8",
+                  "name": "Lead / CTA",
+                  "frame": {
+                    "pos": {
+                      "x": 80.0,
+                      "y": 480.0
+                    },
+                    "size": {
+                      "x": 220.0,
+                      "y": 54.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            227,
+                            200,
+                            138,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 0.5,
+                          "color": [
+                            201,
+                            165,
+                            92,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            140,
+                            116,
+                            64,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.0,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "0a70d4d4-5baa-408b-a106-72dbffd9b7a0",
                   "name": "Lead / CTA Label",
                   "frame": {
                     "pos": {
                       "x": 80.0,
-                      "y": 490.0
+                      "y": 480.0
                     },
                     "size": {
-                      "x": 240.0,
-                      "y": 56.0
+                      "x": 220.0,
+                      "y": 54.0
                     },
                     "rotation": 0.0
                   },
@@ -627,7 +1996,7 @@
                   "kind": {
                     "Text": {
                       "content": "Read the issue",
-                      "font_size": 18.0,
+                      "font_size": 16.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -648,7 +2017,7 @@
                           "len": 14,
                           "style": {
                             "font": "Serif",
-                            "font_size": 18.0,
+                            "font_size": 16.0,
                             "color": [
                               20,
                               20,
@@ -667,24 +2036,24 @@
                   }
                 },
                 {
-                  "id": "63fec316-1d8b-4c62-bd53-35985a031058",
-                  "name": "Lead / Image",
+                  "id": "f13c0c44-66d8-4782-93b3-e302c08b0997",
+                  "name": "Lead / Time",
                   "frame": {
                     "pos": {
-                      "x": 780.0,
-                      "y": 200.0
+                      "x": 324.0,
+                      "y": 496.0
                     },
                     "size": {
-                      "x": 340.0,
-                      "y": 346.0
+                      "x": 140.0,
+                      "y": 26.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      58,
-                      53,
-                      44,
+                      163,
+                      154,
+                      136,
                       255
                     ],
                     "stroke": null,
@@ -711,153 +2080,46 @@
                     "fixed_height": false
                   },
                   "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
+                    "Text": {
+                      "content": "6 min read",
+                      "font_size": 15.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 10,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 15.0,
+                            "color": [
+                              163,
+                              154,
+                              136,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
                     }
                   }
-                },
-                {
-                  "id": "01cdd69f-06c7-4efd-a5ca-ba7369d9c760",
-                  "name": "Lead / Image / Sun",
-                  "frame": {
-                    "pos": {
-                      "x": 1011.2,
-                      "y": 255.36
-                    },
-                    "size": {
-                      "x": 68.0,
-                      "y": 68.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      140,
-                      116,
-                      64,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "2b8d8237-093d-4126-a5ef-eab6cd27e054",
-                  "name": "Lead / Image / Hill",
-                  "frame": {
-                    "pos": {
-                      "x": 807.2,
-                      "y": 390.3
-                    },
-                    "size": {
-                      "x": 204.0,
-                      "y": 155.7
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      172,
-                      143,
-                      82,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "983142b5-5c76-4f49-ba7f-654f19ee746f",
-                  "name": "Lead / Image / Hill 2",
-                  "frame": {
-                    "pos": {
-                      "x": 922.8,
-                      "y": 424.9
-                    },
-                    "size": {
-                      "x": 170.0,
-                      "y": 121.1
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      124,
-                      103,
-                      60,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
                 }
               ],
               "background": [

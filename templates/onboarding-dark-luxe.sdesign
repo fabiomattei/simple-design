@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "815b4516-3f66-4997-90bd-9d28fa67dd87",
+      "id": "6ab398a2-c290-4f0a-9a74-8324ebc5d4ce",
       "name": "Page 1",
       "layers": [
         {
-          "id": "a4c0f64b-d72e-40a3-ba7c-2d178c46eef6",
+          "id": "27a69ffd-af68-4d0e-ba8a-333bf70cc64b",
           "name": "Onboarding iPhone",
           "frame": {
             "pos": {
@@ -49,8 +49,88 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "a235063d-3239-4e7f-b801-801003c53a20",
-                  "name": "Decoration / Frame",
+                  "id": "64b7b4aa-30d9-4b99-b3d6-7e690abec3ea",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 390.0,
+                      "y": 844.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            28,
+                            27,
+                            25,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            14,
+                            14,
+                            14,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "6eb5738b-ff4f-49ee-80ae-8079d2f6af52",
+                  "name": "Pattern / Frame",
                   "frame": {
                     "pos": {
                       "x": 13.65,
@@ -107,8 +187,8 @@
                   }
                 },
                 {
-                  "id": "9975d28a-5236-4a5a-95fc-ca5f9c274efe",
-                  "name": "Decoration / Frame Inner",
+                  "id": "fdaccc27-4618-4f1f-817f-c17e5b308a3f",
+                  "name": "Pattern / Frame Inner",
                   "frame": {
                     "pos": {
                       "x": 21.65,
@@ -124,9 +204,2312 @@
                     "fill": null,
                     "stroke": {
                       "paint": [
+                        80,
+                        66,
+                        37,
+                        102
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "2f3bc20f-e51b-4798-aeeb-7c2eb6e0e184",
+                  "name": "Pattern / Corner 1",
+                  "frame": {
+                    "pos": {
+                      "x": 4.65,
+                      "y": 4.65
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "f5421cc1-562a-42c5-a22f-69e0546aca96",
+                  "name": "Pattern / Corner 2",
+                  "frame": {
+                    "pos": {
+                      "x": 367.35,
+                      "y": 4.65
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "88e56ef2-d223-431d-bd1b-025bc39c297e",
+                  "name": "Pattern / Corner 3",
+                  "frame": {
+                    "pos": {
+                      "x": 4.65,
+                      "y": 821.35
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "05014ab0-b72b-4d51-8b1b-7bb8e848a2f9",
+                  "name": "Pattern / Corner 4",
+                  "frame": {
+                    "pos": {
+                      "x": 367.35,
+                      "y": 821.35
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "11390738-a7a6-4381-928c-f2e64b810213",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 193.83,
+                      "y": -46.8
+                    },
+                    "size": {
+                      "x": 2.34,
+                      "y": 93.6
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "eb495ad6-4dd9-4779-8ad7-984c456e2ec0",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 137.38261,
+                      "y": -50.3545
+                    },
+                    "size": {
+                      "x": 96.05174,
+                      "y": 107.85267
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "CompoundPath": {
+                      "polygons": [
+                        {
+                          "exterior": [
+                            {
+                              "x": 48.745407,
+                              "y": 59.358234
+                            },
+                            {
+                              "x": 0.0,
+                              "y": 44.764824
+                            },
+                            {
+                              "x": 0.67111206,
+                              "y": 42.523132
+                            },
+                            {
+                              "x": 46.419983,
+                              "y": 56.21944
+                            },
+                            {
+                              "x": 4.458023,
+                              "y": 27.439642
+                            },
+                            {
+                              "x": 5.78154,
+                              "y": 25.509905
+                            },
+                            {
+                              "x": 45.16394,
+                              "y": 52.5205
+                            },
+                            {
+                              "x": 13.992996,
+                              "y": 12.302937
+                            },
+                            {
+                              "x": 15.842514,
+                              "y": 10.869457
+                            },
+                            {
+                              "x": 45.097305,
+                              "y": 48.614742
+                            },
+                            {
+                              "x": 27.694275,
+                              "y": 0.8003235
+                            },
+                            {
+                              "x": 29.893158,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 49.792236,
+                              "y": 54.672276
+                            },
+                            {
+                              "x": 51.48419,
+                              "y": 56.85527
+                            },
+                            {
+                              "x": 53.761948,
+                              "y": 58.41748
+                            },
+                            {
+                              "x": 56.407883,
+                              "y": 59.209618
+                            },
+                            {
+                              "x": 59.169327,
+                              "y": 59.15606
+                            },
+                            {
+                              "x": 61.782608,
+                              "y": 58.261898
+                            },
+                            {
+                              "x": 63.998,
+                              "y": 56.6126
+                            },
+                            {
+                              "x": 65.60408,
+                              "y": 54.365585
+                            },
+                            {
+                              "x": 77.261734,
+                              "y": 18.007805
+                            },
+                            {
+                              "x": 79.490005,
+                              "y": 18.722267
+                            },
+                            {
+                              "x": 70.06062,
+                              "y": 48.130543
+                            },
+                            {
+                              "x": 86.19997,
+                              "y": 25.550362
+                            },
+                            {
+                              "x": 88.10368,
+                              "y": 26.911049
+                            },
+                            {
+                              "x": 70.14543,
+                              "y": 52.036007
+                            },
+                            {
+                              "x": 92.40845,
+                              "y": 35.46181
+                            },
+                            {
+                              "x": 93.805786,
+                              "y": 37.338776
+                            },
+                            {
+                              "x": 69.0338,
+                              "y": 55.780834
+                            },
+                            {
+                              "x": 95.294205,
+                              "y": 46.795578
+                            },
+                            {
+                              "x": 96.05174,
+                              "y": 49.009563
+                            },
+                            {
+                              "x": 66.83182,
+                              "y": 59.007446
+                            },
+                            {
+                              "x": 94.58168,
+                              "y": 58.46924
+                            },
+                            {
+                              "x": 94.62706,
+                              "y": 60.808792
+                            },
+                            {
+                              "x": 65.81633,
+                              "y": 61.367577
+                            },
+                            {
+                              "x": 65.62361,
+                              "y": 61.968628
+                            },
+                            {
+                              "x": 90.33893,
+                              "y": 69.367905
+                            },
+                            {
+                              "x": 89.667816,
+                              "y": 71.6096
+                            },
+                            {
+                              "x": 64.90901,
+                              "y": 64.1973
+                            },
+                            {
+                              "x": 64.41872,
+                              "y": 65.72647
+                            },
+                            {
+                              "x": 82.971115,
+                              "y": 78.450714
+                            },
+                            {
+                              "x": 81.6476,
+                              "y": 80.380455
+                            },
+                            {
+                              "x": 63.672913,
+                              "y": 68.05244
+                            },
+                            {
+                              "x": 62.64569,
+                              "y": 71.256134
+                            },
+                            {
+                              "x": 73.1819,
+                              "y": 84.85022
+                            },
+                            {
+                              "x": 71.33238,
+                              "y": 86.28369
+                            },
+                            {
+                              "x": 61.779343,
+                              "y": 73.958115
+                            },
+                            {
+                              "x": 59.452744,
+                              "y": 81.21428
+                            },
+                            {
+                              "x": 61.90625,
+                              "y": 87.95523
+                            },
+                            {
+                              "x": 59.707367,
+                              "y": 88.755554
+                            },
+                            {
+                              "x": 58.28647,
+                              "y": 84.851654
+                            },
+                            {
+                              "x": 50.911484,
+                              "y": 107.85267
+                            },
+                            {
+                              "x": 48.683212,
+                              "y": 107.13821
+                            },
+                            {
+                              "x": 56.98001,
+                              "y": 81.26222
+                            },
+                            {
+                              "x": 54.37381,
+                              "y": 74.10172
+                            },
+                            {
+                              "x": 33.67601,
+                              "y": 103.059525
+                            },
+                            {
+                              "x": 31.772293,
+                              "y": 101.69884
+                            },
+                            {
+                              "x": 53.403336,
+                              "y": 71.43536
+                            },
+                            {
+                              "x": 52.25267,
+                              "y": 68.273926
+                            },
+                            {
+                              "x": 18.72705,
+                              "y": 93.23282
+                            },
+                            {
+                              "x": 17.329712,
+                              "y": 91.35586
+                            },
+                            {
+                              "x": 51.417236,
+                              "y": 65.97863
+                            },
+                            {
+                              "x": 50.86801,
+                              "y": 64.46962
+                            },
+                            {
+                              "x": 7.492264,
+                              "y": 79.31106
+                            },
+                            {
+                              "x": 6.734726,
+                              "y": 77.09708
+                            },
+                            {
+                              "x": 50.067535,
+                              "y": 62.27033
+                            },
+                            {
+                              "x": 49.851654,
+                              "y": 61.677216
+                            },
+                            {
+                              "x": 1.0446625,
+                              "y": 62.623825
+                            },
+                            {
+                              "x": 0.99928284,
+                              "y": 60.28427
+                            }
+                          ],
+                          "holes": [
+                            [
+                              {
+                                "x": 53.082413,
+                                "y": 63.71194
+                              },
+                              {
+                                "x": 53.376526,
+                                "y": 64.520004
+                              },
+                              {
+                                "x": 54.06627,
+                                "y": 64.00651
+                              },
+                              {
+                                "x": 53.679596,
+                                "y": 63.50761
+                              }
+                            ],
+                            [
+                              {
+                                "x": 54.211945,
+                                "y": 66.8153
+                              },
+                              {
+                                "x": 55.0533,
+                                "y": 69.12692
+                              },
+                              {
+                                "x": 56.48375,
+                                "y": 67.12561
+                              },
+                              {
+                                "x": 55.500015,
+                                "y": 65.85637
+                              }
+                            ],
+                            [
+                              {
+                                "x": 56.02379,
+                                "y": 71.79328
+                              },
+                              {
+                                "x": 58.1463,
+                                "y": 77.62484
+                              },
+                              {
+                                "x": 60.041092,
+                                "y": 71.71538
+                              },
+                              {
+                                "x": 57.980103,
+                                "y": 69.056244
+                              }
+                            ],
+                            [
+                              {
+                                "x": 57.377335,
+                                "y": 64.458755
+                              },
+                              {
+                                "x": 57.904114,
+                                "y": 65.13842
+                              },
+                              {
+                                "x": 58.404144,
+                                "y": 64.438835
+                              },
+                              {
+                                "x": 57.883636,
+                                "y": 64.08183
+                              }
+                            ],
+                            [
+                              {
+                                "x": 59.400467,
+                                "y": 67.069046
+                              },
+                              {
+                                "x": 60.90744,
+                                "y": 69.0134
+                              },
+                              {
+                                "x": 61.65854,
+                                "y": 66.67087
+                              },
+                              {
+                                "x": 60.33426,
+                                "y": 65.7626
+                              }
+                            ],
+                            [
+                              {
+                                "x": 61.695206,
+                                "y": 63.858536
+                              },
+                              {
+                                "x": 62.404343,
+                                "y": 64.3449
+                              },
+                              {
+                                "x": 62.666885,
+                                "y": 63.526054
+                              },
+                              {
+                                "x": 62.062225,
+                                "y": 63.34503
+                              }
+                            ]
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "247bd5a3-40df-4a8a-a19b-5d656581c1d6",
+                  "name": "Status / Time",
+                  "frame": {
+                    "pos": {
+                      "x": 28.0,
+                      "y": 16.0
+                    },
+                    "size": {
+                      "x": 80.0,
+                      "y": 26.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "9:41",
+                      "font_size": 15.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 15.0,
+                            "color": [
+                              241,
+                              233,
+                              216,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "e8d8c1a4-3659-4e1f-9cf7-726242e05ae8",
+                  "name": "Header / Skip",
+                  "frame": {
+                    "pos": {
+                      "x": 290.0,
+                      "y": 60.0
+                    },
+                    "size": {
+                      "x": 72.0,
+                      "y": 28.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      163,
+                      154,
+                      136,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Skip",
+                      "font_size": 16.0,
+                      "font": "Serif",
+                      "align": "Right",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 16.0,
+                            "color": [
+                              163,
+                              154,
+                              136,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "da7ac82e-3363-421c-95f4-a6642eae3e25",
+                  "name": "Illustration",
+                  "frame": {
+                    "pos": {
+                      "x": 32.0,
+                      "y": 110.0
+                    },
+                    "size": {
+                      "x": 355.45,
+                      "y": 340.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "399ecf13-b4eb-47a2-b08a-4e62da633c3c",
+                          "name": "Illustration / Sky",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 326.0,
+                              "y": 340.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": {
+                              "kind": "Linear",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    58,
+                                    53,
+                                    44,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    31,
+                                    30,
+                                    28,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.5,
+                                "y": 0.0
+                              },
+                              "to": {
+                                "x": 0.5,
+                                "y": 1.0
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "6eb418c6-53ec-4d52-8e4a-a262c907d766",
+                          "name": "Illustration / Tower 1",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 111.3
+                            },
+                            "size": {
+                              "x": 34.76,
+                              "y": 228.7
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              125,
+                              105,
+                              59,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "7e1cccd8-191d-43fb-a9bd-2c24fd3648f0",
+                          "name": "Illustration / Tower 2",
+                          "frame": {
+                            "pos": {
+                              "x": 38.019997,
+                              "y": 180.51999
+                            },
+                            "size": {
+                              "x": 38.0,
+                              "y": 159.48
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              178,
+                              147,
+                              83,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "e977ac89-64df-4479-af0b-c271e918680d",
+                          "name": "Illustration / Tower 3",
+                          "frame": {
+                            "pos": {
+                              "x": 79.27,
+                              "y": 197.73999
+                            },
+                            "size": {
+                              "x": 45.44,
+                              "y": 142.26
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              125,
+                              105,
+                              59,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "d295189b-8614-4347-9e07-748e040aa499",
+                          "name": "Illustration / Tower 4",
+                          "frame": {
+                            "pos": {
+                              "x": 127.97,
+                              "y": 149.59
+                            },
+                            "size": {
+                              "x": 44.7,
+                              "y": 190.41
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              178,
+                              147,
+                              83,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "ae4691cb-eea5-4bfd-8190-195783fa8955",
+                          "name": "Illustration / Tower 5",
+                          "frame": {
+                            "pos": {
+                              "x": 175.93,
+                              "y": 101.770004
+                            },
+                            "size": {
+                              "x": 49.59,
+                              "y": 238.23
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              125,
+                              105,
+                              59,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "47549827-c953-47b2-9497-96cfe81b0b13",
+                          "name": "Illustration / Tower 6",
+                          "frame": {
+                            "pos": {
+                              "x": 228.79001,
+                              "y": 142.68
+                            },
+                            "size": {
+                              "x": 30.56,
+                              "y": 197.32
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              178,
+                              147,
+                              83,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "4092d6a4-2fa0-4d92-a09d-8a6856c597a0",
+                          "name": "Illustration / Tower 7",
+                          "frame": {
+                            "pos": {
+                              "x": 262.6,
+                              "y": 216.79999
+                            },
+                            "size": {
+                              "x": 47.05,
+                              "y": 123.2
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              125,
+                              105,
+                              59,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "91de95e9-8cd0-4c52-850b-019bfe45232b",
+                          "name": "Illustration / Tower 8",
+                          "frame": {
+                            "pos": {
+                              "x": 312.92,
+                              "y": 121.17999
+                            },
+                            "size": {
+                              "x": 42.53,
+                              "y": 218.82
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              178,
+                              147,
+                              83,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "0e02c428-3358-4ad2-ba8f-038c12900029",
+                          "name": "Illustration / Windows",
+                          "frame": {
+                            "pos": {
+                              "x": 10.43,
+                              "y": 115.369995
+                            },
+                            "size": {
+                              "x": 332.25003,
+                              "y": 206.83002
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              136,
+                              136,
+                              136,
+                              136
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "CompoundPath": {
+                              "polygons": [
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 0.0,
+                                      "y": 19.729996
+                                    },
+                                    {
+                                      "x": 0.0,
+                                      "y": 9.529999
+                                    },
+                                    {
+                                      "x": 13.900002,
+                                      "y": 9.529999
+                                    },
+                                    {
+                                      "x": 13.900002,
+                                      "y": 19.729996
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 0.0,
+                                      "y": 46.930023
+                                    },
+                                    {
+                                      "x": 0.0,
+                                      "y": 36.73001
+                                    },
+                                    {
+                                      "x": 13.900002,
+                                      "y": 36.73001
+                                    },
+                                    {
+                                      "x": 13.900002,
+                                      "y": 46.930023
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 0.0,
+                                      "y": 74.130005
+                                    },
+                                    {
+                                      "x": 0.0,
+                                      "y": 63.929993
+                                    },
+                                    {
+                                      "x": 13.900002,
+                                      "y": 63.929993
+                                    },
+                                    {
+                                      "x": 13.900002,
+                                      "y": 74.130005
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 0.0,
+                                      "y": 101.33002
+                                    },
+                                    {
+                                      "x": 0.0,
+                                      "y": 91.130005
+                                    },
+                                    {
+                                      "x": 13.900002,
+                                      "y": 91.130005
+                                    },
+                                    {
+                                      "x": 13.900002,
+                                      "y": 101.33002
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 38.989998,
+                                      "y": 88.95001
+                                    },
+                                    {
+                                      "x": 38.989998,
+                                      "y": 78.75
+                                    },
+                                    {
+                                      "x": 54.189995,
+                                      "y": 78.75
+                                    },
+                                    {
+                                      "x": 54.189995,
+                                      "y": 88.95001
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 38.989998,
+                                      "y": 116.150024
+                                    },
+                                    {
+                                      "x": 38.989998,
+                                      "y": 105.95001
+                                    },
+                                    {
+                                      "x": 54.189995,
+                                      "y": 105.95001
+                                    },
+                                    {
+                                      "x": 54.189995,
+                                      "y": 116.150024
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 38.989998,
+                                      "y": 143.35
+                                    },
+                                    {
+                                      "x": 38.989998,
+                                      "y": 133.15
+                                    },
+                                    {
+                                      "x": 54.189995,
+                                      "y": 133.15
+                                    },
+                                    {
+                                      "x": 54.189995,
+                                      "y": 143.35
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 38.989998,
+                                      "y": 170.55002
+                                    },
+                                    {
+                                      "x": 38.989998,
+                                      "y": 160.35
+                                    },
+                                    {
+                                      "x": 54.189995,
+                                      "y": 160.35
+                                    },
+                                    {
+                                      "x": 54.189995,
+                                      "y": 170.55002
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 82.48,
+                                      "y": 106.17001
+                                    },
+                                    {
+                                      "x": 82.48,
+                                      "y": 95.97
+                                    },
+                                    {
+                                      "x": 100.659996,
+                                      "y": 95.97
+                                    },
+                                    {
+                                      "x": 100.659996,
+                                      "y": 106.17001
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 82.48,
+                                      "y": 133.37003
+                                    },
+                                    {
+                                      "x": 82.48,
+                                      "y": 123.17001
+                                    },
+                                    {
+                                      "x": 100.659996,
+                                      "y": 123.17001
+                                    },
+                                    {
+                                      "x": 100.659996,
+                                      "y": 133.37003
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 82.48,
+                                      "y": 160.57
+                                    },
+                                    {
+                                      "x": 82.48,
+                                      "y": 150.37
+                                    },
+                                    {
+                                      "x": 100.659996,
+                                      "y": 150.37
+                                    },
+                                    {
+                                      "x": 100.659996,
+                                      "y": 160.57
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 82.48,
+                                      "y": 187.77002
+                                    },
+                                    {
+                                      "x": 82.48,
+                                      "y": 177.57
+                                    },
+                                    {
+                                      "x": 100.659996,
+                                      "y": 177.57
+                                    },
+                                    {
+                                      "x": 100.659996,
+                                      "y": 187.77002
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 130.95001,
+                                      "y": 58.02002
+                                    },
+                                    {
+                                      "x": 130.95001,
+                                      "y": 47.820007
+                                    },
+                                    {
+                                      "x": 148.83002,
+                                      "y": 47.820007
+                                    },
+                                    {
+                                      "x": 148.83002,
+                                      "y": 58.02002
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 130.95001,
+                                      "y": 85.22003
+                                    },
+                                    {
+                                      "x": 130.95001,
+                                      "y": 75.02002
+                                    },
+                                    {
+                                      "x": 148.83002,
+                                      "y": 75.02002
+                                    },
+                                    {
+                                      "x": 148.83002,
+                                      "y": 85.22003
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 130.95001,
+                                      "y": 112.42001
+                                    },
+                                    {
+                                      "x": 130.95001,
+                                      "y": 102.22
+                                    },
+                                    {
+                                      "x": 148.83002,
+                                      "y": 102.22
+                                    },
+                                    {
+                                      "x": 148.83002,
+                                      "y": 112.42001
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 130.95001,
+                                      "y": 139.62003
+                                    },
+                                    {
+                                      "x": 130.95001,
+                                      "y": 129.42001
+                                    },
+                                    {
+                                      "x": 148.83002,
+                                      "y": 129.42001
+                                    },
+                                    {
+                                      "x": 148.83002,
+                                      "y": 139.62003
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 180.38,
+                                      "y": 10.199997
+                                    },
+                                    {
+                                      "x": 180.38,
+                                      "y": 0.0
+                                    },
+                                    {
+                                      "x": 200.22,
+                                      "y": 0.0
+                                    },
+                                    {
+                                      "x": 200.22,
+                                      "y": 10.199997
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 180.38,
+                                      "y": 37.400024
+                                    },
+                                    {
+                                      "x": 180.38,
+                                      "y": 27.200012
+                                    },
+                                    {
+                                      "x": 200.22,
+                                      "y": 27.200012
+                                    },
+                                    {
+                                      "x": 200.22,
+                                      "y": 37.400024
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 180.38,
+                                      "y": 64.600006
+                                    },
+                                    {
+                                      "x": 180.38,
+                                      "y": 54.399994
+                                    },
+                                    {
+                                      "x": 200.22,
+                                      "y": 54.399994
+                                    },
+                                    {
+                                      "x": 200.22,
+                                      "y": 64.600006
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 180.38,
+                                      "y": 91.80002
+                                    },
+                                    {
+                                      "x": 180.38,
+                                      "y": 81.600006
+                                    },
+                                    {
+                                      "x": 200.22,
+                                      "y": 81.600006
+                                    },
+                                    {
+                                      "x": 200.22,
+                                      "y": 91.80002
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 227.52002,
+                                      "y": 51.110016
+                                    },
+                                    {
+                                      "x": 227.52002,
+                                      "y": 40.910004
+                                    },
+                                    {
+                                      "x": 239.74002,
+                                      "y": 40.910004
+                                    },
+                                    {
+                                      "x": 239.74002,
+                                      "y": 51.110016
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 227.52002,
+                                      "y": 78.31003
+                                    },
+                                    {
+                                      "x": 227.52002,
+                                      "y": 68.110016
+                                    },
+                                    {
+                                      "x": 239.74002,
+                                      "y": 68.110016
+                                    },
+                                    {
+                                      "x": 239.74002,
+                                      "y": 78.31003
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 227.52002,
+                                      "y": 105.51001
+                                    },
+                                    {
+                                      "x": 227.52002,
+                                      "y": 95.31
+                                    },
+                                    {
+                                      "x": 239.74002,
+                                      "y": 95.31
+                                    },
+                                    {
+                                      "x": 239.74002,
+                                      "y": 105.51001
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 227.52002,
+                                      "y": 132.71002
+                                    },
+                                    {
+                                      "x": 227.52002,
+                                      "y": 122.51001
+                                    },
+                                    {
+                                      "x": 239.74002,
+                                      "y": 122.51001
+                                    },
+                                    {
+                                      "x": 239.74002,
+                                      "y": 132.71002
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 266.29,
+                                      "y": 125.23001
+                                    },
+                                    {
+                                      "x": 266.29,
+                                      "y": 115.03
+                                    },
+                                    {
+                                      "x": 285.11002,
+                                      "y": 115.03
+                                    },
+                                    {
+                                      "x": 285.11002,
+                                      "y": 125.23001
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 266.29,
+                                      "y": 152.43002
+                                    },
+                                    {
+                                      "x": 266.29,
+                                      "y": 142.23001
+                                    },
+                                    {
+                                      "x": 285.11002,
+                                      "y": 142.23001
+                                    },
+                                    {
+                                      "x": 285.11002,
+                                      "y": 152.43002
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 266.29,
+                                      "y": 179.63
+                                    },
+                                    {
+                                      "x": 266.29,
+                                      "y": 169.43
+                                    },
+                                    {
+                                      "x": 285.11002,
+                                      "y": 169.43
+                                    },
+                                    {
+                                      "x": 285.11002,
+                                      "y": 179.63
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 266.29,
+                                      "y": 206.83002
+                                    },
+                                    {
+                                      "x": 266.29,
+                                      "y": 196.63
+                                    },
+                                    {
+                                      "x": 285.11002,
+                                      "y": 196.63
+                                    },
+                                    {
+                                      "x": 285.11002,
+                                      "y": 206.83002
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 315.24002,
+                                      "y": 29.61
+                                    },
+                                    {
+                                      "x": 315.24002,
+                                      "y": 19.410004
+                                    },
+                                    {
+                                      "x": 332.25003,
+                                      "y": 19.410004
+                                    },
+                                    {
+                                      "x": 332.25003,
+                                      "y": 29.61
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 315.24002,
+                                      "y": 56.810028
+                                    },
+                                    {
+                                      "x": 315.24002,
+                                      "y": 46.610016
+                                    },
+                                    {
+                                      "x": 332.25003,
+                                      "y": 46.610016
+                                    },
+                                    {
+                                      "x": 332.25003,
+                                      "y": 56.810028
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 315.24002,
+                                      "y": 84.01001
+                                    },
+                                    {
+                                      "x": 315.24002,
+                                      "y": 73.81
+                                    },
+                                    {
+                                      "x": 332.25003,
+                                      "y": 73.81
+                                    },
+                                    {
+                                      "x": 332.25003,
+                                      "y": 84.01001
+                                    }
+                                  ],
+                                  "holes": []
+                                },
+                                {
+                                  "exterior": [
+                                    {
+                                      "x": 315.24002,
+                                      "y": 111.21002
+                                    },
+                                    {
+                                      "x": 315.24002,
+                                      "y": 101.01001
+                                    },
+                                    {
+                                      "x": 332.25003,
+                                      "y": 101.01001
+                                    },
+                                    {
+                                      "x": 332.25003,
+                                      "y": 111.21002
+                                    }
+                                  ],
+                                  "holes": []
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "id": "4d79e97d-2105-4163-96a4-e521b0efbfc1",
+                          "name": "Illustration / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 326.0,
+                              "y": 340.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "9b5e6967-b369-481a-9ea1-fa51097a17d2",
+                  "name": "Illustration / Outline",
+                  "frame": {
+                    "pos": {
+                      "x": 42.0,
+                      "y": 120.0
+                    },
+                    "size": {
+                      "x": 306.0,
+                      "y": 320.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        201,
+                        165,
                         92,
-                        78,
-                        49,
                         255
                       ],
                       "width": 1.0
@@ -165,161 +2548,35 @@
                   }
                 },
                 {
-                  "id": "355131db-8b8b-4afb-9bb9-c047160d4430",
-                  "name": "Status / Time",
+                  "id": "d546aa3d-6e22-45a1-b7d2-4f3e0d1159d8",
+                  "name": "Chip 1",
                   "frame": {
                     "pos": {
-                      "x": 28.0,
-                      "y": 16.0
+                      "x": 250.0,
+                      "y": 400.0
                     },
                     "size": {
-                      "x": 80.0,
-                      "y": 28.0
+                      "x": 110.0,
+                      "y": 44.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      241,
-                      233,
-                      216,
+                      31,
+                      30,
+                      28,
                       255
                     ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "9:41",
-                      "font_size": 16.0,
-                      "font": "Serif",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "c6a6c396-1821-4b26-bd71-f5e38ada6bd8",
-                  "name": "Header / Skip",
-                  "frame": {
-                    "pos": {
-                      "x": 290.0,
-                      "y": 64.0
+                    "stroke": {
+                      "paint": [
+                        201,
+                        165,
+                        92,
+                        255
+                      ],
+                      "width": 1.0
                     },
-                    "size": {
-                      "x": 72.0,
-                      "y": 30.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      163,
-                      154,
-                      136,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Skip",
-                      "font_size": 17.0,
-                      "font": "Serif",
-                      "align": "Right",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "0065eb28-4b03-4575-a338-f800d112ee4c",
-                  "name": "Illustration",
-                  "frame": {
-                    "pos": {
-                      "x": 32.0,
-                      "y": 130.0
-                    },
-                    "size": {
-                      "x": 326.0,
-                      "y": 326.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      58,
-                      53,
-                      44,
-                      255
-                    ],
-                    "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -354,27 +2611,30 @@
                   }
                 },
                 {
-                  "id": "15efc149-78be-4b32-813d-d2ae80518f52",
-                  "name": "Illustration / Sun",
+                  "id": "d2e6de12-2e8e-419e-8b95-8ea1a7ace83e",
+                  "name": "Chip 1 Icon / Short",
                   "frame": {
                     "pos": {
-                      "x": 253.68,
-                      "y": 182.16
+                      "x": 264.0,
+                      "y": 422.0
                     },
                     "size": {
-                      "x": 65.2,
-                      "y": 65.2
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      140,
-                      116,
-                      64,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        201,
+                        165,
+                        92,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -397,30 +2657,33 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "137e70ec-c9b9-4bc9-bc03-ee4923e1c814",
-                  "name": "Illustration / Hill",
+                  "id": "a7e70b36-5655-4afb-8b65-7d3d904b73d9",
+                  "name": "Chip 1 Icon / Long",
                   "frame": {
                     "pos": {
-                      "x": 58.08,
-                      "y": 309.3
+                      "x": 270.0,
+                      "y": 428.0
                     },
                     "size": {
-                      "x": 195.6,
-                      "y": 146.7
+                      "x": 10.0,
+                      "y": -13.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      172,
-                      143,
-                      82,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        201,
+                        165,
+                        92,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -443,65 +2706,19 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "27693a31-4ae5-4d31-8661-1616dbc49e0a",
-                  "name": "Illustration / Hill 2",
+                  "id": "5085dc1d-acad-4011-adf4-5c162ba362d6",
+                  "name": "Chip 1 Text",
                   "frame": {
                     "pos": {
-                      "x": 168.92,
-                      "y": 341.9
+                      "x": 288.0,
+                      "y": 412.0
                     },
                     "size": {
-                      "x": 163.0,
-                      "y": 114.1
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      124,
-                      103,
-                      60,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "cc801165-e16c-4881-9563-ce5d992e099e",
-                  "name": "Copy / Title",
-                  "frame": {
-                    "pos": {
-                      "x": 32.0,
-                      "y": 500.0
-                    },
-                    "size": {
-                      "x": 326.0,
-                      "y": 106.0
+                      "x": 70.0,
+                      "y": 25.0
                     },
                     "rotation": 0.0
                   },
@@ -537,10 +2754,10 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Track habits\nthat stick",
-                      "font_size": 34.0,
+                      "content": "Day 12",
+                      "font_size": 14.0,
                       "font": "Serif",
-                      "align": "Center",
+                      "align": "Left",
                       "vertical_align": "Top",
                       "resize": "Fixed",
                       "line_height": null,
@@ -556,10 +2773,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 23,
+                          "len": 6,
                           "style": {
                             "font": "Serif",
-                            "font_size": 34.0,
+                            "font_size": 14.0,
                             "color": [
                               241,
                               233,
@@ -578,16 +2795,302 @@
                   }
                 },
                 {
-                  "id": "42b0491b-0c0e-4680-ae4a-3a4267ae53f9",
-                  "name": "Copy / Body",
+                  "id": "c412d89f-5374-4ada-b618-61ce4601d38b",
+                  "name": "Chip 2",
+                  "frame": {
+                    "pos": {
+                      "x": 30.0,
+                      "y": 150.0
+                    },
+                    "size": {
+                      "x": 110.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      31,
+                      30,
+                      28,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        201,
+                        165,
+                        92,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "f277c19c-06c3-4a5e-8bda-694014227d32",
+                  "name": "Chip 2 Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 42.0,
+                      "y": 162.0
+                    },
+                    "size": {
+                      "x": 20.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "f843ecb6-c30b-44dd-b6c3-dd594dc5f764",
+                  "name": "Chip 2 Text",
+                  "frame": {
+                    "pos": {
+                      "x": 68.0,
+                      "y": 162.0
+                    },
+                    "size": {
+                      "x": 70.0,
+                      "y": 25.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "4.9 / 5",
+                      "font_size": 14.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 7,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 14.0,
+                            "color": [
+                              241,
+                              233,
+                              216,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "5244cec8-19cb-4f77-94de-6ab2551d2fde",
+                  "name": "Copy / Title",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 610.0
+                      "y": 490.0
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 52.0
+                      "y": 100.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Plan trips\nyou'll love",
+                      "font_size": 32.0,
+                      "font": "Serif",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 22,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 32.0,
+                            "color": [
+                              241,
+                              233,
+                              216,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "57293472-aaed-4b0d-a9e8-552d5f520e8c",
+                  "name": "Copy / Body",
+                  "frame": {
+                    "pos": {
+                      "x": 24.0,
+                      "y": 606.0
+                    },
+                    "size": {
+                      "x": 342.0,
+                      "y": 46.0
                     },
                     "rotation": 0.0
                   },
@@ -623,8 +3126,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Small daily steps add up. Set a goal,\ncheck in, and watch your streak grow.",
-                      "font_size": 16.0,
+                      "content": "Save places, build itineraries and share them\nwith friends in one tap.",
+                      "font_size": 14.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -645,12 +3148,12 @@
                   }
                 },
                 {
-                  "id": "c91d3ce1-c6c0-4d6a-81a0-89693cb8c690",
+                  "id": "c85a4480-dbbc-491e-ace9-fe37e91c63d7",
                   "name": "Pager / Dot 1",
                   "frame": {
                     "pos": {
-                      "x": 159.0,
-                      "y": 680.0
+                      "x": 141.0,
+                      "y": 690.0
                     },
                     "size": {
                       "x": 32.0,
@@ -700,12 +3203,12 @@
                   }
                 },
                 {
-                  "id": "89de1b96-5a44-4338-b8e9-d82d8f73ef5e",
+                  "id": "91f2f592-3438-4460-b5b1-fe7d4abddd49",
                   "name": "Pager / Dot 2",
                   "frame": {
                     "pos": {
-                      "x": 197.0,
-                      "y": 680.0
+                      "x": 181.0,
+                      "y": 690.0
                     },
                     "size": {
                       "x": 12.0,
@@ -715,10 +3218,10 @@
                   },
                   "style": {
                     "fill": [
-                      77,
-                      74,
-                      66,
-                      255
+                      54,
+                      51,
+                      45,
+                      85
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -755,12 +3258,12 @@
                   }
                 },
                 {
-                  "id": "fb3c4091-50db-4179-bc5d-4a2f142851ef",
+                  "id": "077de902-b026-47e3-bcaa-75a35e7837fe",
                   "name": "Pager / Dot 3",
                   "frame": {
                     "pos": {
-                      "x": 223.0,
-                      "y": 680.0
+                      "x": 215.0,
+                      "y": 690.0
                     },
                     "size": {
                       "x": 12.0,
@@ -770,10 +3273,10 @@
                   },
                   "style": {
                     "fill": [
-                      77,
-                      74,
-                      66,
-                      255
+                      54,
+                      51,
+                      45,
+                      85
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -810,12 +3313,12 @@
                   }
                 },
                 {
-                  "id": "c8bb51e0-71eb-4606-a11e-1566d171601c",
+                  "id": "cbe30d5f-fe86-4ab3-8770-4d044f60d464",
                   "name": "CTA / Continue",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 724.0
+                      "y": 726.0
                     },
                     "size": {
                       "x": 326.0,
@@ -824,12 +3327,46 @@
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      201,
-                      165,
-                      92,
-                      255
-                    ],
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            227,
+                            200,
+                            138,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 0.5,
+                          "color": [
+                            201,
+                            165,
+                            92,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            140,
+                            116,
+                            64,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.0,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 1.0
+                      }
+                    },
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
@@ -865,12 +3402,12 @@
                   }
                 },
                 {
-                  "id": "a0922994-88f2-4269-918d-b4b4ca5d5065",
+                  "id": "e5c549fe-e4ee-43de-905b-0ee5e7649a1c",
                   "name": "CTA / Continue Label",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 724.0
+                      "y": 726.0
                     },
                     "size": {
                       "x": 326.0,
@@ -910,8 +3447,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Get started",
-                      "font_size": 18.0,
+                      "content": "Explore",
+                      "font_size": 17.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -929,10 +3466,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 11,
+                          "len": 7,
                           "style": {
                             "font": "Serif",
-                            "font_size": 18.0,
+                            "font_size": 17.0,
                             "color": [
                               20,
                               20,
@@ -951,7 +3488,7 @@
                   }
                 },
                 {
-                  "id": "f8a15fc2-b412-4c0f-bcd7-6d2554ba3512",
+                  "id": "6416b34f-6a39-4137-b717-83e9d3f7ad9c",
                   "name": "CTA / Sign In",
                   "frame": {
                     "pos": {
@@ -960,7 +3497,7 @@
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 26.0
+                      "y": 25.0
                     },
                     "rotation": 0.0
                   },
@@ -997,7 +3534,7 @@
                   "kind": {
                     "Text": {
                       "content": "I already have an account",
-                      "font_size": 15.0,
+                      "font_size": 14.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Top",

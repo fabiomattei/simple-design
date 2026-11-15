@@ -24,10 +24,11 @@ use crate::model::{
 use crate::transform_ops::{self, FlipAxis};
 
 use super::protocol::{
-    AddArtboardArgs, AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
-    GroupArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFrameArgs, SetMaskArgs, SetResizingArgs,
-    UngroupArgs,
+    AddArtboardArgs, AddFigureArgs, AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs,
+    GetLayerArgs, GroupArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFillArgs, SetFrameArgs, SetMaskArgs,
+    SetResizingArgs, SetShadowArgs, UngroupArgs,
 };
+use super::style_ops;
 
 /// Ops that mutate `doc` — the CLI's headless mode only needs to re-save
 /// the file after one of these; the rest are read-only queries or reach
@@ -53,6 +54,9 @@ pub fn mutates(op: &str) -> bool {
             | "ungroup"
             | "flip"
             | "rotate_copies"
+            | "set_fill"
+            | "set_shadow"
+            | "add_shape"
     )
 }
 
@@ -392,6 +396,32 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             let page = resolve_page_mut(doc, args.page)?;
             let ids = transform_ops::rotate_copies(page, &args.ids, args.count, args.total_degrees);
             Ok(json!({ "ids": ids }))
+        }
+
+        "set_fill" => {
+            let args: SetFillArgs = parse(args)?;
+            let paint = style_ops::fill_paint(&args)?;
+            let layer = doc.find_mut(args.id).ok_or_else(|| format!("layer not found: {}", args.id))?;
+            layer.style.fill = Some(paint);
+            Ok(json!({ "id": args.id }))
+        }
+
+        "set_shadow" => {
+            let args: SetShadowArgs = parse(args)?;
+            let layer = doc.find_mut(args.id).ok_or_else(|| format!("layer not found: {}", args.id))?;
+            style_ops::set_shadow(layer, &args);
+            Ok(json!({ "id": args.id }))
+        }
+
+        "add_shape" => {
+            let args: AddFigureArgs = parse(args)?;
+            let (kind, default_name) = style_ops::figure_kind(&args)?;
+            let name = args.shape.name.clone().unwrap_or_else(|| default_name.to_string());
+            let mut layer = Layer::new(name, args.shape.frame, kind);
+            apply_shape_style(&mut layer, &args.shape);
+            let id = layer.id;
+            push_layer(doc, args.shape.page, args.shape.parent, layer)?;
+            Ok(json!({ "id": id }))
         }
 
         other => Err(format!("unknown op: {other}")),

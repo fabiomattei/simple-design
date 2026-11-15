@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "d295e3d5-1a95-4513-b0c3-135f8452b9b9",
+      "id": "3f866b70-c57a-4a4f-b21f-9cdb03df8b0b",
       "name": "Page 1",
       "layers": [
         {
-          "id": "9b8c4c4c-ad75-43f1-83fe-11981c062499",
+          "id": "172e69aa-8d2f-4d3d-8f95-dea3bd79c316",
           "name": "Event Ticket",
           "frame": {
             "pos": {
@@ -49,8 +49,727 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "f2686c59-79f7-4d54-86cf-4290d468ff78",
-                  "name": "Decoration / Sun Ring 1",
+                  "id": "9944282d-4e62-4e9e-9086-09e02715e08b",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1400.0,
+                      "y": 560.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            43,
+                            27,
+                            61,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 0.5,
+                          "color": [
+                            90,
+                            35,
+                            80,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            140,
+                            58,
+                            78,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "fc0d4ae9-83db-44f9-9ef3-d1f0a04ae872",
+                  "name": "Pattern / Ray",
+                  "frame": {
+                    "pos": {
+                      "x": 868.0,
+                      "y": 53.2
+                    },
+                    "size": {
+                      "x": 560.0,
+                      "y": 5.6
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      64,
+                      48,
+                      17,
+                      64
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "c2a9ed44-42c6-470a-836a-0d9d917d67a7",
+                  "name": "Pattern / Rays",
+                  "frame": {
+                    "pos": {
+                      "x": 858.0,
+                      "y": -214.0
+                    },
+                    "size": {
+                      "x": 573.0231,
+                      "y": 560.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      64,
+                      48,
+                      17,
+                      64
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "CompoundPath": {
+                      "polygons": [
+                        {
+                          "exterior": [
+                            {
+                              "x": 0.0,
+                              "y": 262.8
+                            },
+                            {
+                              "x": 0.0,
+                              "y": 257.19998
+                            },
+                            {
+                              "x": 160.03937,
+                              "y": 257.19998
+                            },
+                            {
+                              "x": 22.690796,
+                              "y": 229.87967
+                            },
+                            {
+                              "x": 23.783325,
+                              "y": 224.38727
+                            },
+                            {
+                              "x": 188.74402,
+                              "y": 257.19998
+                            },
+                            {
+                              "x": 225.65002,
+                              "y": 257.19998
+                            },
+                            {
+                              "x": 35.654175,
+                              "y": 178.50111
+                            },
+                            {
+                              "x": 37.79724,
+                              "y": 173.3274
+                            },
+                            {
+                              "x": 240.28357,
+                              "y": 257.2
+                            },
+                            {
+                              "x": 247.80408,
+                              "y": 257.2
+                            },
+                            {
+                              "x": 58.391907,
+                              "y": 130.63885
+                            },
+                            {
+                              "x": 61.503113,
+                              "y": 125.98262
+                            },
+                            {
+                              "x": 257.8838,
+                              "y": 257.2
+                            },
+                            {
+                              "x": 259.09814,
+                              "y": 257.2
+                            },
+                            {
+                              "x": 90.03021,
+                              "y": 88.13213
+                            },
+                            {
+                              "x": 93.99005,
+                              "y": 84.17233
+                            },
+                            {
+                              "x": 264.11,
+                              "y": 254.2923
+                            },
+                            {
+                              "x": 129.35315,
+                              "y": 52.614502
+                            },
+                            {
+                              "x": 134.0094,
+                              "y": 49.50331
+                            },
+                            {
+                              "x": 267.67188,
+                              "y": 249.54323
+                            },
+                            {
+                              "x": 174.84973,
+                              "y": 25.450897
+                            },
+                            {
+                              "x": 180.02356,
+                              "y": 23.307861
+                            },
+                            {
+                              "x": 272.09192,
+                              "y": 245.58044
+                            },
+                            {
+                              "x": 224.7716,
+                              "y": 7.685135
+                            },
+                            {
+                              "x": 230.26404,
+                              "y": 6.592636
+                            },
+                            {
+                              "x": 277.19995,
+                              "y": 242.55559
+                            },
+                            {
+                              "x": 277.19995,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 282.80005,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 282.80005,
+                              "y": 240.58566
+                            },
+                            {
+                              "x": 330.12024,
+                              "y": 2.6908264
+                            },
+                            {
+                              "x": 335.61267,
+                              "y": 3.7833252
+                            },
+                            {
+                              "x": 288.67664,
+                              "y": 239.74696
+                            },
+                            {
+                              "x": 381.4989,
+                              "y": 15.65416
+                            },
+                            {
+                              "x": 386.67273,
+                              "y": 17.797195
+                            },
+                            {
+                              "x": 294.6045,
+                              "y": 240.06956
+                            },
+                            {
+                              "x": 429.3612,
+                              "y": 38.391876
+                            },
+                            {
+                              "x": 434.01746,
+                              "y": 41.503082
+                            },
+                            {
+                              "x": 300.35498,
+                              "y": 241.54315
+                            },
+                            {
+                              "x": 471.86792,
+                              "y": 70.0302
+                            },
+                            {
+                              "x": 475.82764,
+                              "y": 73.990005
+                            },
+                            {
+                              "x": 305.70752,
+                              "y": 244.11023
+                            },
+                            {
+                              "x": 507.38562,
+                              "y": 109.35324
+                            },
+                            {
+                              "x": 510.4967,
+                              "y": 114.009476
+                            },
+                            {
+                              "x": 310.45654,
+                              "y": 247.67203
+                            },
+                            {
+                              "x": 534.5492,
+                              "y": 154.84981
+                            },
+                            {
+                              "x": 536.69226,
+                              "y": 160.02353
+                            },
+                            {
+                              "x": 314.41968,
+                              "y": 252.09184
+                            },
+                            {
+                              "x": 552.3148,
+                              "y": 204.77156
+                            },
+                            {
+                              "x": 553.40735,
+                              "y": 210.26396
+                            },
+                            {
+                              "x": 317.44397,
+                              "y": 257.2
+                            },
+                            {
+                              "x": 560.0,
+                              "y": 257.2
+                            },
+                            {
+                              "x": 560.0,
+                              "y": 262.80002
+                            },
+                            {
+                              "x": 289.2909,
+                              "y": 262.8
+                            },
+                            {
+                              "x": 287.90002,
+                              "y": 263.07666
+                            },
+                            {
+                              "x": 286.58936,
+                              "y": 263.61954
+                            },
+                            {
+                              "x": 285.4104,
+                              "y": 264.40735
+                            },
+                            {
+                              "x": 284.4076,
+                              "y": 265.41016
+                            },
+                            {
+                              "x": 283.61963,
+                              "y": 266.58932
+                            },
+                            {
+                              "x": 283.07654,
+                              "y": 267.9005
+                            },
+                            {
+                              "x": 282.80005,
+                              "y": 269.29053
+                            },
+                            {
+                              "x": 282.80005,
+                              "y": 270.7092
+                            },
+                            {
+                              "x": 283.07678,
+                              "y": 272.10022
+                            },
+                            {
+                              "x": 283.6195,
+                              "y": 273.41068
+                            },
+                            {
+                              "x": 284.40735,
+                              "y": 274.58966
+                            },
+                            {
+                              "x": 285.41028,
+                              "y": 275.59256
+                            },
+                            {
+                              "x": 286.58948,
+                              "y": 276.38052
+                            },
+                            {
+                              "x": 287.8999,
+                              "y": 276.92334
+                            },
+                            {
+                              "x": 573.0231,
+                              "y": 333.63785
+                            },
+                            {
+                              "x": 571.93054,
+                              "y": 339.13025
+                            },
+                            {
+                              "x": 314.41956,
+                              "y": 287.90814
+                            },
+                            {
+                              "x": 555.1698,
+                              "y": 387.63013
+                            },
+                            {
+                              "x": 553.02673,
+                              "y": 392.80383
+                            },
+                            {
+                              "x": 310.45654,
+                              "y": 292.328
+                            },
+                            {
+                              "x": 527.1261,
+                              "y": 437.10193
+                            },
+                            {
+                              "x": 524.015,
+                              "y": 441.75818
+                            },
+                            {
+                              "x": 305.7074,
+                              "y": 295.8897
+                            },
+                            {
+                              "x": 489.96973,
+                              "y": 480.15213
+                            },
+                            {
+                              "x": 486.01,
+                              "y": 484.1119
+                            },
+                            {
+                              "x": 300.35474,
+                              "y": 298.45663
+                            },
+                            {
+                              "x": 445.12878,
+                              "y": 515.1263
+                            },
+                            {
+                              "x": 440.47253,
+                              "y": 518.2375
+                            },
+                            {
+                              "x": 294.60437,
+                              "y": 299.9304
+                            },
+                            {
+                              "x": 394.3263,
+                              "y": 540.6804
+                            },
+                            {
+                              "x": 389.15247,
+                              "y": 542.82336
+                            },
+                            {
+                              "x": 288.67688,
+                              "y": 300.25378
+                            },
+                            {
+                              "x": 339.51453,
+                              "y": 555.8324
+                            },
+                            {
+                              "x": 334.0221,
+                              "y": 556.9249
+                            },
+                            {
+                              "x": 282.80005,
+                              "y": 299.41406
+                            },
+                            {
+                              "x": 282.80005,
+                              "y": 560.0
+                            },
+                            {
+                              "x": 277.19995,
+                              "y": 560.0
+                            },
+                            {
+                              "x": 277.19995,
+                              "y": 297.44415
+                            },
+                            {
+                              "x": 226.36218,
+                              "y": 553.0231
+                            },
+                            {
+                              "x": 220.86975,
+                              "y": 551.93054
+                            },
+                            {
+                              "x": 272.09167,
+                              "y": 294.4203
+                            },
+                            {
+                              "x": 172.37,
+                              "y": 535.16974
+                            },
+                            {
+                              "x": 167.19617,
+                              "y": 533.02673
+                            },
+                            {
+                              "x": 267.67188,
+                              "y": 290.4568
+                            },
+                            {
+                              "x": 122.89813,
+                              "y": 507.1261
+                            },
+                            {
+                              "x": 118.24188,
+                              "y": 504.0149
+                            },
+                            {
+                              "x": 264.11023,
+                              "y": 285.70752
+                            },
+                            {
+                              "x": 79.84796,
+                              "y": 469.9698
+                            },
+                            {
+                              "x": 75.88812,
+                              "y": 466.01
+                            },
+                            {
+                              "x": 261.54333,
+                              "y": 280.35477
+                            },
+                            {
+                              "x": 44.87372,
+                              "y": 425.12878
+                            },
+                            {
+                              "x": 41.762512,
+                              "y": 420.47253
+                            },
+                            {
+                              "x": 257.1947,
+                              "y": 276.5254
+                            },
+                            {
+                              "x": 256.00378,
+                              "y": 276.2885
+                            },
+                            {
+                              "x": 19.319702,
+                              "y": 374.3263
+                            },
+                            {
+                              "x": 17.176636,
+                              "y": 369.15253
+                            },
+                            {
+                              "x": 246.11768,
+                              "y": 274.32205
+                            },
+                            {
+                              "x": 238.7417,
+                              "y": 272.85486
+                            },
+                            {
+                              "x": 4.1676025,
+                              "y": 319.51453
+                            },
+                            {
+                              "x": 3.0750732,
+                              "y": 314.02216
+                            },
+                            {
+                              "x": 224.38928,
+                              "y": 270.0
+                            },
+                            {
+                              "x": 188.1925,
+                              "y": 262.8
+                            }
+                          ],
+                          "holes": [
+                            [
+                              {
+                                "x": 216.8971,
+                                "y": 262.8
+                              },
+                              {
+                                "x": 238.7417,
+                                "y": 267.14514
+                              },
+                              {
+                                "x": 246.11768,
+                                "y": 265.67795
+                              },
+                              {
+                                "x": 239.16968,
+                                "y": 262.8
+                              }
+                            ],
+                            [
+                              {
+                                "x": 253.094,
+                                "y": 270.0
+                              },
+                              {
+                                "x": 255.43018,
+                                "y": 270.4647
+                              },
+                              {
+                                "x": 256.552,
+                                "y": 270.0
+                              },
+                              {
+                                "x": 255.43018,
+                                "y": 269.5353
+                              }
+                            ],
+                            [
+                              {
+                                "x": 253.80322,
+                                "y": 262.8
+                              },
+                              {
+                                "x": 256.00378,
+                                "y": 263.7115
+                              },
+                              {
+                                "x": 257.1947,
+                                "y": 263.4746
+                              },
+                              {
+                                "x": 256.18506,
+                                "y": 262.8
+                              }
+                            ]
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "14663153-e59e-4e0f-b034-2ead47d128cc",
+                  "name": "Pattern / Sun Ring 1",
                   "frame": {
                     "pos": {
                       "x": 974.4,
@@ -64,10 +783,10 @@
                   },
                   "style": {
                     "fill": [
-                      80,
-                      37,
-                      77,
-                      255
+                      45,
+                      16,
+                      28,
+                      51
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -95,8 +814,8 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "0b85211e-d39f-4b8e-ab65-418be6943602",
-                  "name": "Decoration / Sun Ring 2",
+                  "id": "240276b3-e5c4-4f43-82b3-cc2c0c3897a4",
+                  "name": "Pattern / Sun Ring 2",
                   "frame": {
                     "pos": {
                       "x": 1024.8,
@@ -110,10 +829,10 @@
                   },
                   "style": {
                     "fill": [
-                      114,
-                      59,
-                      70,
-                      255
+                      85,
+                      41,
+                      30,
+                      85
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -141,8 +860,8 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "12e1cc7f-b2b6-4383-b83a-22aa70ddb6a6",
-                  "name": "Decoration / Sun Ring 3",
+                  "id": "6dca8fda-40dc-425a-ad62-1182240a4f34",
+                  "name": "Pattern / Sun Ring 3",
                   "frame": {
                     "pos": {
                       "x": 1075.2,
@@ -155,12 +874,37 @@
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      184,
-                      138,
-                      66,
-                      255
-                    ],
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            255,
+                            193,
+                            69,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            255,
+                            122,
+                            89,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
@@ -187,7 +931,7 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "11bfd912-6bd9-49ba-a316-2b15a03f5dea",
+                  "id": "f3c11c6f-9cc4-41ba-8f82-a18941271417",
                   "name": "Ticket / Body",
                   "frame": {
                     "pos": {
@@ -210,7 +954,22 @@
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
-                    "shadows": [],
+                    "shadows": [
+                      {
+                        "color": [
+                          85,
+                          41,
+                          30,
+                          85
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 0.0
+                        },
+                        "blur": 28.0,
+                        "spread": 0.0
+                      }
+                    ],
                     "inner_shadows": []
                   },
                   "visible": true,
@@ -242,7 +1001,492 @@
                   }
                 },
                 {
-                  "id": "8b93d400-6126-41ea-875b-994f55c77b0a",
+                  "id": "95a12927-27f1-4dfc-8d90-28af4e9efcf1",
+                  "name": "Ticket / Art",
+                  "frame": {
+                    "pos": {
+                      "x": 80.0,
+                      "y": 80.0
+                    },
+                    "size": {
+                      "x": 260.0,
+                      "y": 400.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "692ad52f-676f-4fab-b604-db9ce2ac3923",
+                          "name": "Ticket / Art / Studio",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 260.0,
+                              "y": 400.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": {
+                              "kind": "Radial",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    226,
+                                    78,
+                                    140,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    255,
+                                    193,
+                                    69,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.5,
+                                "y": 0.4
+                              },
+                              "to": {
+                                "x": 1.1,
+                                "y": 0.4
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "4e5fd82c-b5ca-40fe-bb81-24369ad7f16a",
+                          "name": "Ticket / Art / Shadow",
+                          "frame": {
+                            "pos": {
+                              "x": 65.0,
+                              "y": 312.0
+                            },
+                            "size": {
+                              "x": 130.0,
+                              "y": 40.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              0,
+                              0,
+                              0,
+                              48
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "54e6b2c0-ae1b-4c99-9c00-d7cf3d7cab7d",
+                          "name": "Ticket / Art / Pedestal",
+                          "frame": {
+                            "pos": {
+                              "x": 72.8,
+                              "y": 280.0
+                            },
+                            "size": {
+                              "x": 114.4,
+                              "y": 56.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              87,
+                              60,
+                              84,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 6.0,
+                                "top_right": 6.0,
+                                "bottom_right": 6.0,
+                                "bottom_left": 6.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "63d8def9-93ea-4ae5-82d6-f0e0f1f6c499",
+                          "name": "Ticket / Art / Object",
+                          "frame": {
+                            "pos": {
+                              "x": 98.8,
+                              "y": 112.0
+                            },
+                            "size": {
+                              "x": 62.4,
+                              "y": 176.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": {
+                              "kind": "Linear",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    255,
+                                    122,
+                                    89,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    191,
+                                    91,
+                                    67,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.0,
+                                "y": 0.5
+                              },
+                              "to": {
+                                "x": 1.0,
+                                "y": 0.5
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 31.2,
+                                "top_right": 31.2,
+                                "bottom_right": 31.2,
+                                "bottom_left": 31.2
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "f2b7583d-3ca8-432f-a14f-ccbce9dc3355",
+                          "name": "Ticket / Art / Cap",
+                          "frame": {
+                            "pos": {
+                              "x": 114.399994,
+                              "y": 80.0
+                            },
+                            "size": {
+                              "x": 31.2,
+                              "y": 40.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              226,
+                              78,
+                              140,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 4.0,
+                                "top_right": 4.0,
+                                "bottom_right": 4.0,
+                                "bottom_left": 4.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "3b0ce522-4d98-46d4-a605-c9c5fe86fdfc",
+                          "name": "Ticket / Art / Label",
+                          "frame": {
+                            "pos": {
+                              "x": 104.0,
+                              "y": 168.0
+                            },
+                            "size": {
+                              "x": 52.0,
+                              "y": 48.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              204,
+                              204,
+                              204,
+                              204
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 3.0,
+                                "top_right": 3.0,
+                                "bottom_right": 3.0,
+                                "bottom_left": 3.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "a744d97e-8c6d-489d-b4d8-a49985470d8b",
+                          "name": "Ticket / Art / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 260.0,
+                              "y": 400.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 18.0,
+                                "top_right": 18.0,
+                                "bottom_right": 18.0,
+                                "bottom_left": 18.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "7bd66b92-1a73-4c03-bed0-c05154b45271",
                   "name": "Ticket / Stub",
                   "frame": {
                     "pos": {
@@ -256,12 +1500,37 @@
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      255,
-                      122,
-                      89,
-                      255
-                    ],
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            255,
+                            122,
+                            89,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            202,
+                            97,
+                            71,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.0,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 1.0
+                      }
+                    },
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
@@ -297,7 +1566,7 @@
                   }
                 },
                 {
-                  "id": "208a8ebe-a5f2-49db-9ae7-d437197664b7",
+                  "id": "128f6c46-3401-47a7-b480-d1111b6e01a1",
                   "name": "Ticket / Perforation 1",
                   "frame": {
                     "pos": {
@@ -343,7 +1612,7 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "08f1ed7d-2ec5-4cb3-bc0a-794225807bfa",
+                  "id": "9328031e-8776-4447-8f9f-15102ef0dc64",
                   "name": "Ticket / Perforation 2",
                   "frame": {
                     "pos": {
@@ -389,7 +1658,7 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "ac6d911a-e697-4589-9164-ed6c6ea41fa2",
+                  "id": "c38fce30-96c5-4828-a1a2-35bcb291b21d",
                   "name": "Ticket / Perforation 3",
                   "frame": {
                     "pos": {
@@ -435,7 +1704,7 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "039eb45d-d08c-475b-b404-a742ecfe5f72",
+                  "id": "c19cf353-3cf7-4d4e-8ef0-4d794825fbb0",
                   "name": "Ticket / Perforation 4",
                   "frame": {
                     "pos": {
@@ -481,7 +1750,7 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "12d02d2f-f871-413d-b0bd-dd59f131d040",
+                  "id": "98dd7326-1548-48f1-b385-8fe7b927690e",
                   "name": "Ticket / Perforation 5",
                   "frame": {
                     "pos": {
@@ -527,7 +1796,7 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "9b9f798d-084f-4ce7-b22e-e5ddf84b3b71",
+                  "id": "8f112c61-693d-45c6-9c15-3820878925ee",
                   "name": "Ticket / Perforation 6",
                   "frame": {
                     "pos": {
@@ -573,7 +1842,7 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "6ae55102-f327-463a-a981-667c08a7f007",
+                  "id": "b0b0e2e1-ceca-4a3f-9b8e-069ae41fc6be",
                   "name": "Ticket / Perforation 7",
                   "frame": {
                     "pos": {
@@ -619,7 +1888,7 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "68e684d6-b3b7-45c0-bc4f-bfc5966a2c21",
+                  "id": "6e4a78fc-74f7-4cc8-9db1-3ca7b2fe36f4",
                   "name": "Ticket / Perforation 8",
                   "frame": {
                     "pos": {
@@ -665,7 +1934,7 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "acafb731-b2a4-4f23-a0ad-34a145f15b5f",
+                  "id": "414effe2-a718-42b5-b1d6-639f9d51d087",
                   "name": "Ticket / Perforation 9",
                   "frame": {
                     "pos": {
@@ -711,25 +1980,117 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "b34c6ba4-e776-4438-9a26-5ebe7df40c6d",
+                  "id": "88556230-08c3-444c-b4e7-2861f64c192c",
+                  "name": "Ticket / Notch 1",
+                  "frame": {
+                    "pos": {
+                      "x": 984.0,
+                      "y": 44.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 32.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      43,
+                      27,
+                      61,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "5df05311-0f8e-4ccb-8092-fc1c67aeda05",
+                  "name": "Ticket / Notch 2",
+                  "frame": {
+                    "pos": {
+                      "x": 984.0,
+                      "y": 484.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 32.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      43,
+                      27,
+                      61,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "4cda40b6-d9ed-4ebb-a6f3-75e6562d37d8",
                   "name": "Event / Tag",
                   "frame": {
                     "pos": {
-                      "x": 110.0,
+                      "x": 380.0,
                       "y": 110.0
                     },
                     "size": {
-                      "x": 160.0,
+                      "x": 230.0,
                       "y": 34.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      255,
-                      193,
-                      69,
-                      255
+                      38,
+                      18,
+                      13,
+                      38
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -766,15 +2127,15 @@
                   }
                 },
                 {
-                  "id": "b10d392d-110c-4e11-acb4-af3f14ce34cf",
+                  "id": "7afa635a-3220-474d-977d-163a6f2b812e",
                   "name": "Event / Tag Label",
                   "frame": {
                     "pos": {
-                      "x": 110.0,
+                      "x": 380.0,
                       "y": 110.0
                     },
                     "size": {
-                      "x": 160.0,
+                      "x": 230.0,
                       "y": 34.0
                     },
                     "rotation": 0.0
@@ -782,8 +2143,8 @@
                   "style": {
                     "fill": [
                       255,
-                      241,
-                      230,
+                      122,
+                      89,
                       255
                     ],
                     "stroke": null,
@@ -811,7 +2172,7 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "ADMIT ONE",
+                      "content": "MATINEE",
                       "font_size": 14.0,
                       "font": "Proportional",
                       "align": "Center",
@@ -830,14 +2191,14 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 9,
+                          "len": 7,
                           "style": {
                             "font": "Proportional",
                             "font_size": 14.0,
                             "color": [
                               255,
-                              241,
-                              230,
+                              122,
+                              89,
                               255
                             ],
                             "bold": true,
@@ -852,16 +2213,16 @@
                   }
                 },
                 {
-                  "id": "95954a01-34ab-4595-8078-b4792ddf0f51",
+                  "id": "d22ecdf3-9a89-4f8e-b1a4-aa64cd0c6324",
                   "name": "Event / Name",
                   "frame": {
                     "pos": {
-                      "x": 110.0,
-                      "y": 168.0
+                      "x": 380.0,
+                      "y": 166.0
                     },
                     "size": {
-                      "x": 840.0,
-                      "y": 148.0
+                      "x": 580.0,
+                      "y": 123.0
                     },
                     "rotation": 0.0
                   },
@@ -897,8 +2258,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Design Futures\nConference 2027",
-                      "font_size": 48.0,
+                      "content": "The Glass\nMenagerie",
+                      "font_size": 39.6,
                       "font": "Display",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -916,10 +2277,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 30,
+                          "len": 19,
                           "style": {
                             "font": "Display",
-                            "font_size": 48.0,
+                            "font_size": 39.6,
                             "color": [
                               255,
                               241,
@@ -938,16 +2299,16 @@
                   }
                 },
                 {
-                  "id": "8a620e84-2275-46c3-b2ff-c3a4dff490ee",
+                  "id": "356e7153-719b-4e50-9123-d2a20957fbd7",
                   "name": "Details / Date Label",
                   "frame": {
                     "pos": {
-                      "x": 110.0,
-                      "y": 370.0
+                      "x": 380.0,
+                      "y": 360.0
                     },
                     "size": {
-                      "x": 260.0,
-                      "y": 26.0
+                      "x": 190.0,
+                      "y": 25.0
                     },
                     "rotation": 0.0
                   },
@@ -984,7 +2345,7 @@
                   "kind": {
                     "Text": {
                       "content": "DATE",
-                      "font_size": 15.0,
+                      "font_size": 14.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -992,7 +2353,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -1000,21 +2361,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 14.0,
+                            "color": [
+                              255,
+                              122,
+                              89,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "dade6d76-d410-4aca-9f24-c21a1d48a2f4",
+                  "id": "2781636d-be89-43af-8fd7-3fb7fc6fa972",
                   "name": "Details / Date Value",
                   "frame": {
                     "pos": {
-                      "x": 110.0,
-                      "y": 398.0
+                      "x": 380.0,
+                      "y": 386.0
                     },
                     "size": {
-                      "x": 260.0,
-                      "y": 36.0
+                      "x": 190.0,
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -1050,8 +2430,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Oct 8, 2027",
-                      "font_size": 21.0,
+                      "content": "Feb 14, 2027",
+                      "font_size": 16.3,
                       "font": "Display",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1069,10 +2449,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 11,
+                          "len": 12,
                           "style": {
                             "font": "Display",
-                            "font_size": 21.0,
+                            "font_size": 16.3,
                             "color": [
                               255,
                               241,
@@ -1091,16 +2471,16 @@
                   }
                 },
                 {
-                  "id": "a51251c0-7d2e-46bd-963e-55404f25b6c8",
-                  "name": "Details / Time Label",
+                  "id": "1544795f-ce42-4eca-b4cc-e9ebe06eb04f",
+                  "name": "Details / Curtain Label",
                   "frame": {
                     "pos": {
-                      "x": 390.0,
-                      "y": 370.0
+                      "x": 580.0,
+                      "y": 360.0
                     },
                     "size": {
-                      "x": 260.0,
-                      "y": 26.0
+                      "x": 190.0,
+                      "y": 25.0
                     },
                     "rotation": 0.0
                   },
@@ -1136,8 +2516,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "TIME",
-                      "font_size": 15.0,
+                      "content": "CURTAIN",
+                      "font_size": 14.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1145,7 +2525,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -1153,21 +2533,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 7,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 14.0,
+                            "color": [
+                              255,
+                              122,
+                              89,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "a45351eb-1bdc-48d5-ac4d-4d1662b26414",
-                  "name": "Details / Time Value",
+                  "id": "664d4e92-1770-4946-bf08-57e333976499",
+                  "name": "Details / Curtain Value",
                   "frame": {
                     "pos": {
-                      "x": 390.0,
-                      "y": 398.0
+                      "x": 580.0,
+                      "y": 386.0
                     },
                     "size": {
-                      "x": 260.0,
-                      "y": 36.0
+                      "x": 190.0,
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -1203,8 +2602,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "9:00 AM",
-                      "font_size": 21.0,
+                      "content": "2:30 PM",
+                      "font_size": 16.3,
                       "font": "Display",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1225,7 +2624,7 @@
                           "len": 7,
                           "style": {
                             "font": "Display",
-                            "font_size": 21.0,
+                            "font_size": 16.3,
                             "color": [
                               255,
                               241,
@@ -1244,16 +2643,16 @@
                   }
                 },
                 {
-                  "id": "d02a9cc9-99d2-49b1-a888-9a1d2bf8ddcf",
-                  "name": "Details / Venue Label",
+                  "id": "681982ad-342d-465c-9a06-ae29a0d8e12f",
+                  "name": "Details / Theatre Label",
                   "frame": {
                     "pos": {
-                      "x": 670.0,
-                      "y": 370.0
+                      "x": 780.0,
+                      "y": 360.0
                     },
                     "size": {
-                      "x": 260.0,
-                      "y": 26.0
+                      "x": 190.0,
+                      "y": 25.0
                     },
                     "rotation": 0.0
                   },
@@ -1289,8 +2688,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "VENUE",
-                      "font_size": 15.0,
+                      "content": "THEATRE",
+                      "font_size": 14.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1298,7 +2697,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -1306,21 +2705,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 7,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 14.0,
+                            "color": [
+                              255,
+                              122,
+                              89,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "9c4c66a6-9f41-448b-bd49-814c6d189960",
-                  "name": "Details / Venue Value",
+                  "id": "f6483d41-eabe-4d28-b090-0de870eb03a4",
+                  "name": "Details / Theatre Value",
                   "frame": {
                     "pos": {
-                      "x": 670.0,
-                      "y": 398.0
+                      "x": 780.0,
+                      "y": 386.0
                     },
                     "size": {
-                      "x": 260.0,
-                      "y": 36.0
+                      "x": 190.0,
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -1356,8 +2774,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Hall B, Lisbon",
-                      "font_size": 21.0,
+                      "content": "The Rex",
+                      "font_size": 16.3,
                       "font": "Display",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1375,10 +2793,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 14,
+                          "len": 7,
                           "style": {
                             "font": "Display",
-                            "font_size": 21.0,
+                            "font_size": 16.3,
                             "color": [
                               255,
                               241,
@@ -1397,12 +2815,12 @@
                   }
                 },
                 {
-                  "id": "e4fc89a8-2ff5-42a7-a445-f5b532ea97c6",
+                  "id": "1528140a-0bf9-4b37-8d7a-6b1615cfe79e",
                   "name": "Stub / Seat Label",
                   "frame": {
                     "pos": {
                       "x": 1040.0,
-                      "y": 110.0
+                      "y": 100.0
                     },
                     "size": {
                       "x": 260.0,
@@ -1451,7 +2869,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -1459,21 +2877,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 18.0,
+                            "color": [
+                              43,
+                              27,
+                              61,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "61816ef6-ea3e-4b5e-98e9-a4e1f666be7d",
+                  "id": "3488c7b3-d736-4bfe-892c-7748d70fb3a5",
                   "name": "Stub / Seat",
                   "frame": {
                     "pos": {
                       "x": 1040.0,
-                      "y": 140.0
+                      "y": 130.0
                     },
                     "size": {
                       "x": 260.0,
-                      "y": 112.0
+                      "y": 97.0
                     },
                     "rotation": 0.0
                   },
@@ -1509,8 +2946,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "C-14",
-                      "font_size": 72.0,
+                      "content": "D-22",
+                      "font_size": 61.9,
                       "font": "Display",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -1531,7 +2968,7 @@
                           "len": 4,
                           "style": {
                             "font": "Display",
-                            "font_size": 72.0,
+                            "font_size": 61.9,
                             "color": [
                               43,
                               27,
@@ -1550,24 +2987,24 @@
                   }
                 },
                 {
-                  "id": "91b950c1-b48a-4906-80de-34216b643760",
-                  "name": "Stub / Barcode 1",
+                  "id": "194c04a6-8464-47fe-b4a5-f44ffa514445",
+                  "name": "Stub / QR / Back",
                   "frame": {
                     "pos": {
-                      "x": 1070.0,
-                      "y": 300.0
+                      "x": 1105.0,
+                      "y": 270.0
                     },
                     "size": {
-                      "x": 9.0,
-                      "y": 120.0
+                      "x": 130.0,
+                      "y": 130.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      43,
-                      27,
-                      61,
+                      255,
+                      255,
+                      255,
                       255
                     ],
                     "stroke": null,
@@ -1605,27 +3042,30 @@
                   }
                 },
                 {
-                  "id": "b8591baa-d55f-4a10-b2a0-81c7688704c2",
-                  "name": "Stub / Barcode 2",
+                  "id": "c6fe2036-0e39-40b0-8b06-3078c1b00c62",
+                  "name": "Stub / QR / Finder",
                   "frame": {
                     "pos": {
-                      "x": 1085.0,
-                      "y": 300.0
+                      "x": 1115.4,
+                      "y": 280.4
                     },
                     "size": {
-                      "x": 4.0,
-                      "y": 120.0
+                      "x": 40.95,
+                      "y": 40.95
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        20,
+                        20,
+                        20,
+                        255
+                      ],
+                      "width": 8.19
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -1660,27 +3100,30 @@
                   }
                 },
                 {
-                  "id": "8b20337f-7e12-4272-b36b-9aed1cab3708",
-                  "name": "Stub / Barcode 3",
+                  "id": "784a4a43-a2cc-4c09-84e1-af8a77397256",
+                  "name": "Stub / QR / Finder",
                   "frame": {
                     "pos": {
-                      "x": 1100.0,
-                      "y": 300.0
+                      "x": 1183.65,
+                      "y": 280.4
                     },
                     "size": {
-                      "x": 4.0,
-                      "y": 120.0
+                      "x": 40.95,
+                      "y": 40.95
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        20,
+                        20,
+                        20,
+                        255
+                      ],
+                      "width": 8.19
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -1715,27 +3158,30 @@
                   }
                 },
                 {
-                  "id": "10a6e705-6751-4305-9ab2-cb08a3b6b89b",
-                  "name": "Stub / Barcode 4",
+                  "id": "36aba943-cb9e-4f18-93c6-bd7a26deb06c",
+                  "name": "Stub / QR / Finder",
                   "frame": {
                     "pos": {
-                      "x": 1115.0,
-                      "y": 300.0
+                      "x": 1115.4,
+                      "y": 348.65
                     },
                     "size": {
-                      "x": 9.0,
-                      "y": 120.0
+                      "x": 40.95,
+                      "y": 40.95
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        20,
+                        20,
+                        20,
+                        255
+                      ],
+                      "width": 8.19
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -1770,24 +3216,24 @@
                   }
                 },
                 {
-                  "id": "cf1ff614-20e2-4611-9402-9c8ca47bea1f",
-                  "name": "Stub / Barcode 5",
+                  "id": "33a7b4a6-d40c-4619-885c-e2ae6f85184b",
+                  "name": "Stub / QR / Cells",
                   "frame": {
                     "pos": {
-                      "x": 1130.0,
-                      "y": 300.0
+                      "x": 1115.4,
+                      "y": 280.4
                     },
                     "size": {
-                      "x": 4.0,
-                      "y": 120.0
+                      "x": 95.55005,
+                      "y": 109.20001
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      43,
-                      27,
-                      61,
+                      20,
+                      20,
+                      20,
                       255
                     ],
                     "stroke": null,
@@ -1814,518 +3260,140 @@
                     "fixed_height": false
                   },
                   "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
+                    "CompoundPath": {
+                      "polygons": [
+                        {
+                          "exterior": [
+                            {
+                              "x": 0.0,
+                              "y": 68.25
+                            },
+                            {
+                              "x": 0.0,
+                              "y": 40.950012
+                            },
+                            {
+                              "x": 13.650024,
+                              "y": 40.950012
+                            },
+                            {
+                              "x": 13.650024,
+                              "y": 54.600006
+                            },
+                            {
+                              "x": 40.94995,
+                              "y": 54.600006
+                            },
+                            {
+                              "x": 40.94995,
+                              "y": 68.25
+                            }
+                          ],
+                          "holes": []
+                        },
+                        {
+                          "exterior": [
+                            {
+                              "x": 40.94995,
+                              "y": 27.299988
+                            },
+                            {
+                              "x": 40.94995,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 54.599976,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 54.599976,
+                              "y": 27.299988
+                            }
+                          ],
+                          "holes": []
+                        },
+                        {
+                          "exterior": [
+                            {
+                              "x": 40.94995,
+                              "y": 109.20001
+                            },
+                            {
+                              "x": 40.94995,
+                              "y": 95.55002
+                            },
+                            {
+                              "x": 54.599976,
+                              "y": 95.55002
+                            },
+                            {
+                              "x": 54.599976,
+                              "y": 109.20001
+                            }
+                          ],
+                          "holes": []
+                        },
+                        {
+                          "exterior": [
+                            {
+                              "x": 54.599976,
+                              "y": 95.54999
+                            },
+                            {
+                              "x": 54.599976,
+                              "y": 81.899994
+                            },
+                            {
+                              "x": 68.25,
+                              "y": 81.899994
+                            },
+                            {
+                              "x": 68.25,
+                              "y": 95.54999
+                            }
+                          ],
+                          "holes": []
+                        },
+                        {
+                          "exterior": [
+                            {
+                              "x": 68.25,
+                              "y": 81.899994
+                            },
+                            {
+                              "x": 68.25,
+                              "y": 68.25
+                            },
+                            {
+                              "x": 95.55005,
+                              "y": 68.25
+                            },
+                            {
+                              "x": 95.55005,
+                              "y": 95.54999
+                            },
+                            {
+                              "x": 81.900024,
+                              "y": 95.54999
+                            },
+                            {
+                              "x": 81.900024,
+                              "y": 81.899994
+                            }
+                          ],
+                          "holes": []
+                        }
+                      ]
                     }
                   }
                 },
                 {
-                  "id": "378d32a9-695c-4ec4-93cb-4b0ef5cf9a83",
-                  "name": "Stub / Barcode 6",
-                  "frame": {
-                    "pos": {
-                      "x": 1145.0,
-                      "y": 300.0
-                    },
-                    "size": {
-                      "x": 4.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "cc37dd84-8c17-44d7-a4e5-186e56eea8b8",
-                  "name": "Stub / Barcode 7",
-                  "frame": {
-                    "pos": {
-                      "x": 1160.0,
-                      "y": 300.0
-                    },
-                    "size": {
-                      "x": 9.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "6f5ddbcd-353b-411a-a94c-e944146ef154",
-                  "name": "Stub / Barcode 8",
-                  "frame": {
-                    "pos": {
-                      "x": 1175.0,
-                      "y": 300.0
-                    },
-                    "size": {
-                      "x": 4.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "2594e5cb-fe86-421f-96ac-4760a02547ff",
-                  "name": "Stub / Barcode 9",
-                  "frame": {
-                    "pos": {
-                      "x": 1190.0,
-                      "y": 300.0
-                    },
-                    "size": {
-                      "x": 4.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "7f56aff5-5481-4728-aa3e-f17ac8e664f3",
-                  "name": "Stub / Barcode 10",
-                  "frame": {
-                    "pos": {
-                      "x": 1205.0,
-                      "y": 300.0
-                    },
-                    "size": {
-                      "x": 9.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "19d0450f-d775-417c-8aab-d2c11f777bdb",
-                  "name": "Stub / Barcode 11",
-                  "frame": {
-                    "pos": {
-                      "x": 1220.0,
-                      "y": 300.0
-                    },
-                    "size": {
-                      "x": 4.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "3597cfc2-2706-4952-b92d-6c8088a1fb7a",
-                  "name": "Stub / Barcode 12",
-                  "frame": {
-                    "pos": {
-                      "x": 1235.0,
-                      "y": 300.0
-                    },
-                    "size": {
-                      "x": 4.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "9fe32742-afbe-4073-b2ce-ff981f33a076",
-                  "name": "Stub / Barcode 13",
-                  "frame": {
-                    "pos": {
-                      "x": 1250.0,
-                      "y": 300.0
-                    },
-                    "size": {
-                      "x": 9.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "86e700e0-a11e-4412-8761-3807f3365eb7",
-                  "name": "Stub / Barcode 14",
-                  "frame": {
-                    "pos": {
-                      "x": 1265.0,
-                      "y": 300.0
-                    },
-                    "size": {
-                      "x": 4.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "b0b7407e-dec3-41b6-82c5-33cb42fd3aea",
+                  "id": "b5796f0a-3c81-4cf8-aeea-821e24b0aed0",
                   "name": "Stub / Number",
                   "frame": {
                     "pos": {
                       "x": 1040.0,
-                      "y": 436.0
+                      "y": 430.0
                     },
                     "size": {
                       "x": 260.0,
@@ -2365,7 +3433,7 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "No. 004812",
+                      "content": "No. 004821",
                       "font_size": 16.0,
                       "font": "Proportional",
                       "align": "Center",

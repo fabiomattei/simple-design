@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "55f4b9d2-d93a-4a13-b866-f9bc176ad45e",
+      "id": "421f10c7-c92d-45f0-9288-9ff1cbc1e512",
       "name": "Page 1",
       "layers": [
         {
-          "id": "52ab275f-fbaf-4049-a02b-26f63ffab353",
+          "id": "c9e507c9-1d5b-4bb5-8833-ee5e6f217d8a",
           "name": "Certificate",
           "frame": {
             "pos": {
@@ -49,8 +49,88 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "06a73f39-d145-45e0-9b42-c77991bec165",
-                  "name": "Decoration / Circle Pink",
+                  "id": "e4e14b8a-1121-4703-a2df-648e998c1c7f",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1400.0,
+                      "y": 1000.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            255,
+                            244,
+                            241,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            241,
+                            240,
+                            255,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "010a0702-d4ff-4fc3-af7b-5d4cf50e6b44",
+                  "name": "Pattern / Blob Pink",
                   "frame": {
                     "pos": {
                       "x": 980.0,
@@ -64,10 +144,10 @@
                   },
                   "style": {
                     "fill": [
-                      251,
-                      210,
-                      220,
-                      255
+                      61,
+                      35,
+                      45,
+                      64
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -95,8 +175,8 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "229f61a4-d109-4c38-889c-0631d8271866",
-                  "name": "Decoration / Circle Blue",
+                  "id": "987ab4e3-7629-4e99-a2dc-e63e5b7f3254",
+                  "name": "Pattern / Blob Blue",
                   "frame": {
                     "pos": {
                       "x": -200.0,
@@ -110,9 +190,55 @@
                   },
                   "style": {
                     "fill": [
-                      214,
-                      231,
-                      238,
+                      63,
+                      81,
+                      88,
+                      96
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "033e0852-717c-4d20-851a-fa190ebb11e8",
+                  "name": "Pattern / Confetti Dot",
+                  "frame": {
+                    "pos": {
+                      "x": 163.96,
+                      "y": 481.09
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
                       255
                     ],
                     "stroke": null,
@@ -141,18 +267,120 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "c6450a86-0acd-40a3-b82c-662d631ac5c1",
-                  "name": "Decoration / Circle Yellow",
+                  "id": "43fee969-94f1-4d5f-babc-c99cbe55d597",
+                  "name": "Pattern / Confetti Star",
                   "frame": {
                     "pos": {
-                      "x": 112.0,
-                      "y": 100.0
+                      "x": 1093.85,
+                      "y": 890.59
                     },
                     "size": {
-                      "x": 120.0,
-                      "y": 120.0
+                      "x": 30.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      168,
+                      216,
+                      234,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 4,
+                      "inner_ratio": 0.35
+                    }
+                  }
+                },
+                {
+                  "id": "c5e1b8b1-2b9d-4ba4-a734-2d4876706d9b",
+                  "name": "Pattern / Confetti Star",
+                  "frame": {
+                    "pos": {
+                      "x": 84.21,
+                      "y": 127.81
+                    },
+                    "size": {
+                      "x": 30.0,
+                      "y": 30.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      168,
+                      216,
+                      234,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 4,
+                      "inner_ratio": 0.35
+                    }
+                  }
+                },
+                {
+                  "id": "0f38cfb2-5fba-48c7-8cbc-104947a47f43",
+                  "name": "Pattern / Confetti Bar",
+                  "frame": {
+                    "pos": {
+                      "x": 1270.1,
+                      "y": 389.96
+                    },
+                    "size": {
+                      "x": 35.0,
+                      "y": 10.0
+                    },
+                    "rotation": 38.05
                   },
                   "style": {
                     "fill": [
@@ -184,11 +412,163 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 3.0,
+                        "top_right": 3.0,
+                        "bottom_right": 3.0,
+                        "bottom_left": 3.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "48524957-706d-4152-9d10-bcbdf0e652a8",
+                  "name": "Pattern / Confetti Dot",
+                  "frame": {
+                    "pos": {
+                      "x": 1244.2,
+                      "y": 751.31
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
                   "kind": "Oval"
                 },
                 {
-                  "id": "5472340f-3b63-45f7-9ff8-9214cd4dc7e9",
-                  "name": "Header / Kicker",
+                  "id": "1b5e51ac-762d-4dc0-923c-c2d2f5d3a2ce",
+                  "name": "Pattern / Confetti Dot",
+                  "frame": {
+                    "pos": {
+                      "x": 668.01,
+                      "y": 952.13
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "dc9cbaad-54c0-4d80-a36e-d6b329a59ac1",
+                  "name": "Pattern / Confetti Star",
+                  "frame": {
+                    "pos": {
+                      "x": 1310.56,
+                      "y": 989.96
+                    },
+                    "size": {
+                      "x": 30.0,
+                      "y": 30.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      168,
+                      216,
+                      234,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 4,
+                      "inner_ratio": 0.35
+                    }
+                  }
+                },
+                {
+                  "id": "da7c87c0-205e-4fde-b412-c2c9d22465f3",
+                  "name": "Header / Kind",
                   "frame": {
                     "pos": {
                       "x": 150.0,
@@ -196,7 +576,7 @@
                     },
                     "size": {
                       "x": 1100.0,
-                      "y": 43.0
+                      "y": 40.0
                     },
                     "rotation": 0.0
                   },
@@ -232,8 +612,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "CERTIFICATE OF ACHIEVEMENT",
-                      "font_size": 26.0,
+                      "content": "CERTIFICATE OF COMPLETION",
+                      "font_size": 24.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -241,7 +621,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -249,21 +629,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 25,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 24.0,
+                            "color": [
+                              242,
+                              141,
+                              178,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "6b22b497-5b9d-40d5-853e-98cb1f460a51",
+                  "id": "9a0420ac-89e2-4b98-b7d2-4dad181551b9",
                   "name": "Body / Presented",
                   "frame": {
                     "pos": {
                       "x": 150.0,
-                      "y": 260.0
+                      "y": 240.0
                     },
                     "size": {
                       "x": 1100.0,
-                      "y": 43.0
+                      "y": 40.0
                     },
                     "rotation": 0.0
                   },
@@ -300,214 +699,6 @@
                   "kind": {
                     "Text": {
                       "content": "This certificate is proudly presented to",
-                      "font_size": 26.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "07ae9861-7576-4a64-b273-dcb126aa5b91",
-                  "name": "Body / Recipient",
-                  "frame": {
-                    "pos": {
-                      "x": 150.0,
-                      "y": 330.0
-                    },
-                    "size": {
-                      "x": 1100.0,
-                      "y": 148.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      61,
-                      53,
-                      80,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Alexandra Chen",
-                      "font_size": 96.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 14,
-                          "style": {
-                            "font": "Proportional",
-                            "font_size": 96.0,
-                            "color": [
-                              61,
-                              53,
-                              80,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "57a86158-7a27-4dfa-a381-1dd66a97be3d",
-                  "name": "Body / Underline",
-                  "frame": {
-                    "pos": {
-                      "x": 400.0,
-                      "y": 480.0
-                    },
-                    "size": {
-                      "x": 600.0,
-                      "y": 2.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      242,
-                      141,
-                      178,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "4baa08bc-f786-46f5-be52-856649a6a922",
-                  "name": "Body / Reason",
-                  "frame": {
-                    "pos": {
-                      "x": 200.0,
-                      "y": 520.0
-                    },
-                    "size": {
-                      "x": 1000.0,
-                      "y": 76.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      133,
-                      124,
-                      153,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "for outstanding completion of the Advanced Product Design program,\ndemonstrating exceptional craft, curiosity and leadership.",
                       "font_size": 24.0,
                       "font": "Proportional",
                       "align": "Center",
@@ -529,16 +720,16 @@
                   }
                 },
                 {
-                  "id": "ec695666-a01e-402f-b9e7-18d5c79ee70b",
-                  "name": "Signature / Date Value",
+                  "id": "894e3c38-cf83-483a-a6e4-375def6e57cb",
+                  "name": "Body / Recipient",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 760.0
+                      "x": 150.0,
+                      "y": 300.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 46.0
+                      "x": 1100.0,
+                      "y": 133.0
                     },
                     "rotation": 0.0
                   },
@@ -574,216 +765,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "March 3, 2027",
-                      "font_size": 28.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 13,
-                          "style": {
-                            "font": "Proportional",
-                            "font_size": 28.0,
-                            "color": [
-                              61,
-                              53,
-                              80,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "cebcc3d4-834b-4d1b-9251-b69b54dabbe5",
-                  "name": "Signature / Date Line",
-                  "frame": {
-                    "pos": {
-                      "x": 200.0,
-                      "y": 810.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 2.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      61,
-                      53,
-                      80,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "bf9a44b8-4e52-4b10-b3f2-ea997d8695c2",
-                  "name": "Signature / Date Label",
-                  "frame": {
-                    "pos": {
-                      "x": 200.0,
-                      "y": 826.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 28.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      133,
-                      124,
-                      153,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "DATE",
-                      "font_size": 16.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "268543a4-018c-4f7f-a85e-03c129572278",
-                  "name": "Signature / Director Value",
-                  "frame": {
-                    "pos": {
-                      "x": 840.0,
-                      "y": 760.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 46.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      61,
-                      53,
-                      80,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Samuel Ortiz",
-                      "font_size": 28.0,
+                      "content": "Sofia Marino",
+                      "font_size": 86.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -804,7 +787,7 @@
                           "len": 12,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 28.0,
+                            "font_size": 86.0,
                             "color": [
                               61,
                               53,
@@ -823,15 +806,204 @@
                   }
                 },
                 {
-                  "id": "1687592c-1448-4de0-b0c7-76071691461f",
-                  "name": "Signature / Director Line",
+                  "id": "25f4ea6f-edcb-48b0-8633-c23ca545619c",
+                  "name": "Body / Underline",
                   "frame": {
                     "pos": {
-                      "x": 840.0,
-                      "y": 810.0
+                      "x": 440.0,
+                      "y": 440.0
                     },
                     "size": {
-                      "x": 360.0,
+                      "x": 520.0,
+                      "y": 2.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "9467409a-e922-46e5-a437-e10d889258a5",
+                  "name": "Body / Reason",
+                  "frame": {
+                    "pos": {
+                      "x": 190.0,
+                      "y": 480.0
+                    },
+                    "size": {
+                      "x": 1020.0,
+                      "y": 70.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      133,
+                      124,
+                      153,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "has successfully completed 40 hours of training in\nData Visualization Fundamentals.",
+                      "font_size": 22.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "8489d68d-d253-472f-ae3f-6ea6dcb2e598",
+                  "name": "Signature / Issued Script",
+                  "frame": {
+                    "pos": {
+                      "x": 190.0,
+                      "y": 700.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 49.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      61,
+                      53,
+                      80,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "May 20, 2027",
+                      "font_size": 30.0,
+                      "font": "Handwriting",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "9302d247-84fd-44a2-8033-66579a7ac6c1",
+                  "name": "Signature / Issued Line",
+                  "frame": {
+                    "pos": {
+                      "x": 190.0,
+                      "y": 760.0
+                    },
+                    "size": {
+                      "x": 320.0,
                       "y": 2.0
                     },
                     "rotation": 0.0
@@ -878,16 +1050,16 @@
                   }
                 },
                 {
-                  "id": "642a742a-e8cd-4ea0-b37d-d0f7c8a89624",
-                  "name": "Signature / Director Label",
+                  "id": "71c6bfac-678b-4f27-8b4a-9cb170dcac26",
+                  "name": "Signature / Issued Label",
                   "frame": {
                     "pos": {
-                      "x": 840.0,
-                      "y": 826.0
+                      "x": 190.0,
+                      "y": 776.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 28.0
+                      "x": 320.0,
+                      "y": 26.0
                     },
                     "rotation": 0.0
                   },
@@ -923,8 +1095,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "DIRECTOR",
-                      "font_size": 16.0,
+                      "content": "ISSUED",
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -945,16 +1117,205 @@
                   }
                 },
                 {
-                  "id": "ff394b66-c1eb-4d46-b5b7-52bfa92f28a8",
-                  "name": "Seal",
+                  "id": "65bce032-6a80-490e-bccb-6b80766d24ff",
+                  "name": "Signature / Instructor Script",
                   "frame": {
                     "pos": {
-                      "x": 640.0,
+                      "x": 890.0,
                       "y": 700.0
                     },
                     "size": {
-                      "x": 120.0,
-                      "y": 120.0
+                      "x": 320.0,
+                      "y": 49.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      61,
+                      53,
+                      80,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Dr. Ken Ito",
+                      "font_size": 30.0,
+                      "font": "Handwriting",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "2d6781d2-3eac-4f6a-abee-4ad0cad5393d",
+                  "name": "Signature / Instructor Line",
+                  "frame": {
+                    "pos": {
+                      "x": 890.0,
+                      "y": 760.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 2.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      61,
+                      53,
+                      80,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "cb3c993a-cf78-49b9-92ed-188a553bf4d9",
+                  "name": "Signature / Instructor Label",
+                  "frame": {
+                    "pos": {
+                      "x": 890.0,
+                      "y": 776.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 26.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      133,
+                      124,
+                      153,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "INSTRUCTOR",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "362dbaf9-0ae5-4cdb-92f9-7c4d441686c6",
+                  "name": "Seal / Rosette",
+                  "frame": {
+                    "pos": {
+                      "x": 625.0,
+                      "y": 650.0
+                    },
+                    "size": {
+                      "x": 150.0,
+                      "y": 150.0
                     },
                     "rotation": 0.0
                   },
@@ -963,6 +1324,57 @@
                       242,
                       141,
                       178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 20,
+                      "inner_ratio": 0.86
+                    }
+                  }
+                },
+                {
+                  "id": "f45a0c1e-f491-4354-9662-c015179a5b26",
+                  "name": "Seal / Disc",
+                  "frame": {
+                    "pos": {
+                      "x": 645.0,
+                      "y": 670.0
+                    },
+                    "size": {
+                      "x": 110.0,
+                      "y": 110.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      168,
+                      216,
+                      234,
                       255
                     ],
                     "stroke": null,
@@ -991,24 +1403,24 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "45f64ead-0d71-47ef-acfd-ad466285fbe7",
+                  "id": "1f86b9e6-b21a-4d2f-afc8-d83208c8e9ca",
                   "name": "Seal / Label",
                   "frame": {
                     "pos": {
-                      "x": 640.0,
-                      "y": 700.0
+                      "x": 645.0,
+                      "y": 670.0
                     },
                     "size": {
-                      "x": 120.0,
-                      "y": 120.0
+                      "x": 110.0,
+                      "y": 110.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      255,
-                      255,
-                      255,
+                      61,
+                      53,
+                      80,
                       255
                     ],
                     "stroke": null,
@@ -1036,8 +1448,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "2027",
-                      "font_size": 26.0,
+                      "content": "40H",
+                      "font_size": 28.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -1055,14 +1467,14 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 4,
+                          "len": 3,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 26.0,
+                            "font_size": 28.0,
                             "color": [
-                              255,
-                              255,
-                              255,
+                              61,
+                              53,
+                              80,
                               255
                             ],
                             "bold": true,

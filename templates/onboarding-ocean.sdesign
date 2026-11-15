@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "811945ac-3dbb-4b43-8a28-9e3c3be332db",
+      "id": "48fd8043-16f6-4151-8055-e8c936b1e4af",
       "name": "Page 1",
       "layers": [
         {
-          "id": "4ef10739-8c0f-4326-9dce-5edbe0e21bef",
+          "id": "668671eb-df9a-451a-b1ac-91ead9de715e",
           "name": "Onboarding iPhone",
           "frame": {
             "pos": {
@@ -49,12 +49,92 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "4f02fc78-a9cf-488a-ae65-e9d1fdf820c4",
-                  "name": "Decoration / Wave Back",
+                  "id": "179910dd-9669-4bbc-80b8-d5df78b23974",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 390.0,
+                      "y": 844.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            234,
+                            246,
+                            248,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            211,
+                            238,
+                            242,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "fce3ddfa-5b0f-49b0-b723-7160607e5cf2",
+                  "name": "Pattern / Wave Back",
                   "frame": {
                     "pos": {
                       "x": -78.0,
-                      "y": 812.8
+                      "y": 805.0
                     },
                     "size": {
                       "x": 312.0,
@@ -95,12 +175,12 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "7d9fd865-8664-49da-b2ba-875b46019c9f",
-                  "name": "Decoration / Wave Front",
+                  "id": "d3f8b937-6196-4529-b9dc-44db4868f411",
+                  "name": "Pattern / Wave Front",
                   "frame": {
                     "pos": {
                       "x": 117.0,
-                      "y": 824.5
+                      "y": 820.6
                     },
                     "size": {
                       "x": 351.0,
@@ -110,10 +190,10 @@
                   },
                   "style": {
                     "fill": [
-                      170,
-                      224,
-                      219,
-                      255
+                      76,
+                      125,
+                      119,
+                      153
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -141,7 +221,350 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "126bd32a-fc13-47e2-a501-7af6c96b4835",
+                  "id": "73c8b719-56ea-457a-8ab2-a7931700aa4d",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 326.78,
+                      "y": 115.59
+                    },
+                    "size": {
+                      "x": 5.22,
+                      "y": 5.22
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "b42c2845-abc7-4035-a48c-a680a9e78b60",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 371.11,
+                      "y": 67.86
+                    },
+                    "size": {
+                      "x": 10.69,
+                      "y": 10.69
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "937b31dc-dbc2-4b4b-9dff-f4477f86d47a",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 345.92,
+                      "y": 46.72
+                    },
+                    "size": {
+                      "x": 6.91,
+                      "y": 6.91
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "01ff2428-748c-4af9-b092-337122e52c77",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 368.11,
+                      "y": 76.75
+                    },
+                    "size": {
+                      "x": 4.88,
+                      "y": 4.88
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "6c8fd28b-4e0b-4cd3-b7cf-7cc6d3372186",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 330.71,
+                      "y": 70.52
+                    },
+                    "size": {
+                      "x": 7.55,
+                      "y": 7.55
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "1d8ce0df-f3a9-4d49-beb7-05cd62db38ba",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 356.83,
+                      "y": 15.14
+                    },
+                    "size": {
+                      "x": 8.36,
+                      "y": 8.36
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "4546bb42-1048-4cfc-b782-9f14baf34290",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 373.88,
+                      "y": 24.93
+                    },
+                    "size": {
+                      "x": 10.23,
+                      "y": 10.23
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "38200c88-e6cb-4778-a5f5-40d3e1b1ff6c",
                   "name": "Status / Time",
                   "frame": {
                     "pos": {
@@ -150,7 +573,7 @@
                     },
                     "size": {
                       "x": 80.0,
-                      "y": 28.0
+                      "y": 26.0
                     },
                     "rotation": 0.0
                   },
@@ -187,7 +610,7 @@
                   "kind": {
                     "Text": {
                       "content": "9:41",
-                      "font_size": 16.0,
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -195,7 +618,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -203,21 +626,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              11,
+                              49,
+                              66,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "9be1a40e-4417-4e19-ba5b-36372bdbedb2",
+                  "id": "d2bf06a8-100e-41bf-bf68-93db6b430171",
                   "name": "Header / Skip",
                   "frame": {
                     "pos": {
                       "x": 290.0,
-                      "y": 64.0
+                      "y": 60.0
                     },
                     "size": {
                       "x": 72.0,
-                      "y": 30.0
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -254,7 +696,7 @@
                   "kind": {
                     "Text": {
                       "content": "Skip",
-                      "font_size": 17.0,
+                      "font_size": 16.0,
                       "font": "Proportional",
                       "align": "Right",
                       "vertical_align": "Top",
@@ -262,7 +704,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -270,35 +712,452 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 16.0,
+                            "color": [
+                              79,
+                              116,
+                              130,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "f8656eb8-0cab-4caf-a2bb-08bc15e6fc3b",
+                  "id": "751b591d-bbbe-4d16-b8e7-d245191211e1",
                   "name": "Illustration",
                   "frame": {
                     "pos": {
-                      "x": 32.0,
-                      "y": 130.0
+                      "x": 15.7,
+                      "y": 110.0
                     },
                     "size": {
-                      "x": 326.0,
-                      "y": 326.0
+                      "x": 358.59998,
+                      "y": 340.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      127,
-                      209,
-                      199,
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "61575c00-48c5-4e0f-9783-22039985cf14",
+                          "name": "Illustration / Field",
+                          "frame": {
+                            "pos": {
+                              "x": 16.3,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 326.0,
+                              "y": 340.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": {
+                              "kind": "Linear",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    191,
+                                    230,
+                                    234,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    127,
+                                    209,
+                                    199,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.0,
+                                "y": 0.0
+                              },
+                              "to": {
+                                "x": 1.0,
+                                "y": 1.0
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "b1e4c275-b9c8-4093-9ded-47b7cdf67aef",
+                          "name": "Illustration / Orb 1",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 36.800003
+                            },
+                            "size": {
+                              "x": 163.0,
+                              "y": 163.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              11,
+                              99,
+                              107,
+                              204
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "66e72c9a-8bbe-4ac1-a945-6abce8c4dd2e",
+                          "name": "Illustration / Orb 2",
+                          "frame": {
+                            "pos": {
+                              "x": 97.8,
+                              "y": 104.8
+                            },
+                            "size": {
+                              "x": 163.0,
+                              "y": 163.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              102,
+                              167,
+                              159,
+                              204
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "d3494f3c-4866-4324-9107-68f9569cc51f",
+                          "name": "Illustration / Orb 3",
+                          "frame": {
+                            "pos": {
+                              "x": 195.6,
+                              "y": 36.800003
+                            },
+                            "size": {
+                              "x": 163.0,
+                              "y": 163.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              153,
+                              184,
+                              187,
+                              204
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "18a53c2b-d108-41c1-b542-d265fbb80794",
+                          "name": "Illustration / Spark",
+                          "frame": {
+                            "pos": {
+                              "x": 244.50002,
+                              "y": 34.0
+                            },
+                            "size": {
+                              "x": 58.68,
+                              "y": 58.68
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Star": {
+                              "points": 4,
+                              "inner_ratio": 0.25
+                            }
+                          }
+                        },
+                        {
+                          "id": "47d80244-b7d4-4cf6-a86b-d3c06fd05f23",
+                          "name": "Illustration / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 16.3,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 326.0,
+                              "y": 340.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 20.0,
+                                "top_right": 20.0,
+                                "bottom_right": 20.0,
+                                "bottom_left": 20.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "3e91c03a-0428-4d57-80e6-e8ef552901a3",
+                  "name": "Chip 1",
+                  "frame": {
+                    "pos": {
+                      "x": 250.0,
+                      "y": 400.0
+                    },
+                    "size": {
+                      "x": 110.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
                       255
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
-                    "shadows": [],
+                    "shadows": [
+                      {
+                        "color": [
+                          1,
+                          4,
+                          5,
+                          20
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 6.0
+                        },
+                        "blur": 18.0,
+                        "spread": 0.0
+                      }
+                    ],
                     "inner_shadows": []
                   },
                   "visible": true,
@@ -330,27 +1189,30 @@
                   }
                 },
                 {
-                  "id": "612495c7-8342-4e51-9261-55767b47f53c",
-                  "name": "Illustration / Sun",
+                  "id": "071a5e79-1cdf-4735-bbbb-36895ca65737",
+                  "name": "Chip 1 Icon / Short",
                   "frame": {
                     "pos": {
-                      "x": 253.68,
-                      "y": 182.16
+                      "x": 264.0,
+                      "y": 422.0
                     },
                     "size": {
-                      "x": 65.2,
-                      "y": 65.2
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      191,
-                      230,
-                      234,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        14,
+                        124,
+                        134,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -373,30 +1235,33 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "0f32a7cf-923a-406c-b4a0-07c798da084f",
-                  "name": "Illustration / Hill",
+                  "id": "3fe1d4a7-9ac5-4233-8e5c-7a64ba9c8df9",
+                  "name": "Chip 1 Icon / Long",
                   "frame": {
                     "pos": {
-                      "x": 58.08,
-                      "y": 309.3
+                      "x": 270.0,
+                      "y": 428.0
                     },
                     "size": {
-                      "x": 195.6,
-                      "y": 146.7
+                      "x": 10.0,
+                      "y": -13.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      37,
-                      141,
-                      147,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        14,
+                        124,
+                        134,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -419,65 +1284,19 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "c99c4eaf-01f0-455b-8c37-c497bb2f2ff2",
-                  "name": "Illustration / Hill 2",
+                  "id": "40469d49-c900-4303-a598-a6e61e88ee91",
+                  "name": "Chip 1 Text",
                   "frame": {
                     "pos": {
-                      "x": 168.92,
-                      "y": 341.9
+                      "x": 288.0,
+                      "y": 412.0
                     },
                     "size": {
-                      "x": 163.0,
-                      "y": 114.1
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      178,
-                      226,
-                      227,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "059a44da-e9e1-42ab-96b6-620caed8cab0",
-                  "name": "Copy / Title",
-                  "frame": {
-                    "pos": {
-                      "x": 32.0,
-                      "y": 500.0
-                    },
-                    "size": {
-                      "x": 326.0,
-                      "y": 106.0
+                      "x": 70.0,
+                      "y": 25.0
                     },
                     "rotation": 0.0
                   },
@@ -513,8 +1332,301 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Track habits\nthat stick",
-                      "font_size": 34.0,
+                      "content": "Day 12",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 6,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 14.0,
+                            "color": [
+                              11,
+                              49,
+                              66,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "d7cb0627-b596-41e2-9ebd-463238678048",
+                  "name": "Chip 2",
+                  "frame": {
+                    "pos": {
+                      "x": 30.0,
+                      "y": 150.0
+                    },
+                    "size": {
+                      "x": 110.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [
+                      {
+                        "color": [
+                          1,
+                          4,
+                          5,
+                          20
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 6.0
+                        },
+                        "blur": 18.0,
+                        "spread": 0.0
+                      }
+                    ],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 20.0,
+                        "top_right": 20.0,
+                        "bottom_right": 20.0,
+                        "bottom_left": 20.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "b7f74783-1aea-447c-8523-2c0d2bad1dd1",
+                  "name": "Chip 2 Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 42.0,
+                      "y": 162.0
+                    },
+                    "size": {
+                      "x": 20.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      14,
+                      124,
+                      134,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "774cbf5b-5f24-4bf8-a564-c4eea2c22cd3",
+                  "name": "Chip 2 Text",
+                  "frame": {
+                    "pos": {
+                      "x": 68.0,
+                      "y": 162.0
+                    },
+                    "size": {
+                      "x": 70.0,
+                      "y": 25.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      11,
+                      49,
+                      66,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "4.9 / 5",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 7,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 14.0,
+                            "color": [
+                              11,
+                              49,
+                              66,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "e3898fbe-839c-4f18-93e1-cf216e782e0b",
+                  "name": "Copy / Title",
+                  "frame": {
+                    "pos": {
+                      "x": 32.0,
+                      "y": 490.0
+                    },
+                    "size": {
+                      "x": 326.0,
+                      "y": 100.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      11,
+                      49,
+                      66,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Meet your\nfinance buddy",
+                      "font_size": 32.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -535,7 +1647,7 @@
                           "len": 23,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 34.0,
+                            "font_size": 32.0,
                             "color": [
                               11,
                               49,
@@ -554,16 +1666,16 @@
                   }
                 },
                 {
-                  "id": "bc517adb-b97a-462e-921f-4214089f50d6",
+                  "id": "b50e7404-42b5-4fc7-b779-dd00dfc5a21a",
                   "name": "Copy / Body",
                   "frame": {
                     "pos": {
-                      "x": 32.0,
-                      "y": 610.0
+                      "x": 24.0,
+                      "y": 606.0
                     },
                     "size": {
-                      "x": 326.0,
-                      "y": 52.0
+                      "x": 342.0,
+                      "y": 46.0
                     },
                     "rotation": 0.0
                   },
@@ -599,8 +1711,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Small daily steps add up. Set a goal,\ncheck in, and watch your streak grow.",
-                      "font_size": 16.0,
+                      "content": "See where your money goes and set savings goals\nthat actually happen.",
+                      "font_size": 14.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -621,12 +1733,122 @@
                   }
                 },
                 {
-                  "id": "b3eda18a-c01e-4a70-94cc-266e3c028e41",
+                  "id": "658c1ad5-6546-406e-9f6b-622b88bd0565",
                   "name": "Pager / Dot 1",
                   "frame": {
                     "pos": {
-                      "x": 159.0,
-                      "y": 680.0
+                      "x": 147.0,
+                      "y": 690.0
+                    },
+                    "size": {
+                      "x": 12.0,
+                      "y": 8.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      26,
+                      39,
+                      43,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 4.0,
+                        "top_right": 4.0,
+                        "bottom_right": 4.0,
+                        "bottom_left": 4.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "24de9772-3ab9-4669-81c1-502086386c99",
+                  "name": "Pager / Dot 2",
+                  "frame": {
+                    "pos": {
+                      "x": 181.0,
+                      "y": 690.0
+                    },
+                    "size": {
+                      "x": 12.0,
+                      "y": 8.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      26,
+                      39,
+                      43,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 4.0,
+                        "top_right": 4.0,
+                        "bottom_right": 4.0,
+                        "bottom_left": 4.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "4ae94660-5ebb-45b6-8f97-d2cec67f49f0",
+                  "name": "Pager / Dot 3",
+                  "frame": {
+                    "pos": {
+                      "x": 209.0,
+                      "y": 690.0
                     },
                     "size": {
                       "x": 32.0,
@@ -676,122 +1898,12 @@
                   }
                 },
                 {
-                  "id": "b93e9e31-6132-4ece-9ce9-ef9c6e6d9d60",
-                  "name": "Pager / Dot 2",
-                  "frame": {
-                    "pos": {
-                      "x": 197.0,
-                      "y": 680.0
-                    },
-                    "size": {
-                      "x": 12.0,
-                      "y": 8.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      172,
-                      194,
-                      201,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 4.0,
-                        "top_right": 4.0,
-                        "bottom_right": 4.0,
-                        "bottom_left": 4.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "41a35b66-95e7-4bfb-afaa-0ccc979531b3",
-                  "name": "Pager / Dot 3",
-                  "frame": {
-                    "pos": {
-                      "x": 223.0,
-                      "y": 680.0
-                    },
-                    "size": {
-                      "x": 12.0,
-                      "y": 8.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      172,
-                      194,
-                      201,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 4.0,
-                        "top_right": 4.0,
-                        "bottom_right": 4.0,
-                        "bottom_left": 4.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "af51088d-667d-4b75-8282-0348bb6f682e",
+                  "id": "d92b2d10-2307-4fe4-833e-0ee7fe35c149",
                   "name": "CTA / Continue",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 724.0
+                      "y": 726.0
                     },
                     "size": {
                       "x": 326.0,
@@ -800,16 +1912,56 @@
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      14,
-                      124,
-                      134,
-                      255
-                    ],
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            14,
+                            124,
+                            134,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            191,
+                            230,
+                            234,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 0.5
+                      }
+                    },
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
-                    "shadows": [],
+                    "shadows": [
+                      {
+                        "color": [
+                          5,
+                          41,
+                          45,
+                          85
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 8.0
+                        },
+                        "blur": 20.0,
+                        "spread": 0.0
+                      }
+                    ],
                     "inner_shadows": []
                   },
                   "visible": true,
@@ -841,12 +1993,12 @@
                   }
                 },
                 {
-                  "id": "23bd1bfa-215c-4525-bcaf-1f3e37e6acbd",
+                  "id": "87080533-a5bc-45e6-8d21-822e60b90f79",
                   "name": "CTA / Continue Label",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 724.0
+                      "y": 726.0
                     },
                     "size": {
                       "x": 326.0,
@@ -886,8 +2038,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Get started",
-                      "font_size": 18.0,
+                      "content": "Continue",
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -905,10 +2057,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 11,
+                          "len": 8,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 18.0,
+                            "font_size": 17.0,
                             "color": [
                               255,
                               255,
@@ -927,7 +2079,7 @@
                   }
                 },
                 {
-                  "id": "40845981-20db-4ba3-8f5f-7320182e560e",
+                  "id": "69ecbfdb-8989-4961-9923-b42553c1b516",
                   "name": "CTA / Sign In",
                   "frame": {
                     "pos": {
@@ -936,7 +2088,7 @@
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 26.0
+                      "y": 25.0
                     },
                     "rotation": 0.0
                   },
@@ -973,7 +2125,7 @@
                   "kind": {
                     "Text": {
                       "content": "I already have an account",
-                      "font_size": 15.0,
+                      "font_size": 14.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",

@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "93405f58-9f03-4cbe-a789-af10fe8c6631",
+      "id": "0fe90c97-1141-4c23-b7ec-34d0b2908db4",
       "name": "Page 1",
       "layers": [
         {
-          "id": "8365c59e-a222-41fd-b10b-1ca91cb39f17",
+          "id": "86583be7-bdd0-4be0-a5d8-3c7905eeb64d",
           "name": "Product Card 1080",
           "frame": {
             "pos": {
@@ -49,164 +49,51 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "c082e4f1-45fc-4a3b-aee8-1dc2cb8d96d6",
-                  "name": "Decoration / Circle Pink",
+                  "id": "37539ba4-49fb-45a4-ba6d-ff76c7f49ef2",
+                  "name": "Background",
                   "frame": {
                     "pos": {
-                      "x": 626.4,
-                      "y": -194.4
+                      "x": 0.0,
+                      "y": 0.0
                     },
                     "size": {
-                      "x": 648.0,
-                      "y": 648.0
+                      "x": 1080.0,
+                      "y": 1080.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      251,
-                      210,
-                      220,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "479c9aef-2d14-4046-b4a9-8f0961fde122",
-                  "name": "Decoration / Circle Blue",
-                  "frame": {
-                    "pos": {
-                      "x": -216.0,
-                      "y": 669.6
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            255,
+                            244,
+                            241,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            241,
+                            240,
+                            255,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
                     },
-                    "size": {
-                      "x": 594.0,
-                      "y": 594.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      214,
-                      231,
-                      238,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "43b6f2bf-a163-4ca6-a286-e81347b97b10",
-                  "name": "Decoration / Circle Yellow",
-                  "frame": {
-                    "pos": {
-                      "x": 86.4,
-                      "y": 108.0
-                    },
-                    "size": {
-                      "x": 129.6,
-                      "y": 129.6
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      252,
-                      227,
-                      138,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "65d9dedb-09ae-41ce-991e-199c11fe4652",
-                  "name": "Card",
-                  "frame": {
-                    "pos": {
-                      "x": 140.0,
-                      "y": 110.0
-                    },
-                    "size": {
-                      "x": 800.0,
-                      "y": 860.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      255,
-                      255,
-                      255,
-                      255
-                    ],
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
@@ -233,25 +120,117 @@
                   "kind": {
                     "Rectangle": {
                       "corner_radius": {
-                        "top_left": 24.0,
-                        "top_right": 24.0,
-                        "bottom_right": 24.0,
-                        "bottom_left": 24.0
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
                       }
                     }
                   }
                 },
                 {
-                  "id": "95c8f985-7019-4388-a160-874a4b3a16be",
-                  "name": "Card / Image",
+                  "id": "2ab951f5-adc2-46a2-8805-a4523a88404c",
+                  "name": "Pattern / Blob Pink",
                   "frame": {
                     "pos": {
-                      "x": 180.0,
-                      "y": 150.0
+                      "x": 626.4,
+                      "y": -194.4
                     },
                     "size": {
-                      "x": 720.0,
-                      "y": 480.0
+                      "x": 648.0,
+                      "y": 648.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      61,
+                      35,
+                      45,
+                      64
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "e7337ca2-7990-41e3-b5b2-15691518e526",
+                  "name": "Pattern / Blob Blue",
+                  "frame": {
+                    "pos": {
+                      "x": -216.0,
+                      "y": 669.6
+                    },
+                    "size": {
+                      "x": 594.0,
+                      "y": 594.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      63,
+                      81,
+                      88,
+                      96
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "8a3ab151-7679-4ede-b3ce-62307ae6846f",
+                  "name": "Pattern / Confetti Star",
+                  "frame": {
+                    "pos": {
+                      "x": 104.06,
+                      "y": 950.39
+                    },
+                    "size": {
+                      "x": 32.4,
+                      "y": 32.4
                     },
                     "rotation": 0.0
                   },
@@ -286,29 +265,25 @@
                     "fixed_height": false
                   },
                   "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 24.0,
-                        "top_right": 24.0,
-                        "bottom_right": 24.0,
-                        "bottom_left": 24.0
-                      }
+                    "Star": {
+                      "points": 4,
+                      "inner_ratio": 0.35
                     }
                   }
                 },
                 {
-                  "id": "06f6fb29-bff5-4b75-a9ce-7a61ee559d26",
-                  "name": "Card / Image / Sun",
+                  "id": "00f487c0-8113-4e74-af2c-e113ae1e2cb2",
+                  "name": "Pattern / Confetti Bar",
                   "frame": {
                     "pos": {
-                      "x": 669.6,
-                      "y": 226.8
+                      "x": 27.49,
+                      "y": 337.23
                     },
                     "size": {
-                      "x": 96.0,
-                      "y": 96.0
+                      "x": 37.8,
+                      "y": 10.8
                     },
-                    "rotation": 0.0
+                    "rotation": 102.2
                   },
                   "style": {
                     "fill": [
@@ -340,27 +315,36 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 3.0,
+                        "top_right": 3.0,
+                        "bottom_right": 3.0,
+                        "bottom_left": 3.0
+                      }
+                    }
+                  }
                 },
                 {
-                  "id": "a22d240a-d316-4ad4-9fe2-833a78c30604",
-                  "name": "Card / Image / Hill",
+                  "id": "9a6b727f-9332-4ddf-9069-deef75cd6168",
+                  "name": "Pattern / Confetti Bar",
                   "frame": {
                     "pos": {
-                      "x": 237.6,
-                      "y": 414.0
+                      "x": 9.58,
+                      "y": 60.66
                     },
                     "size": {
-                      "x": 432.0,
-                      "y": 216.0
+                      "x": 37.8,
+                      "y": 10.8
                     },
-                    "rotation": 0.0
+                    "rotation": 174.33
                   },
                   "style": {
                     "fill": [
+                      252,
                       227,
-                      156,
-                      189,
+                      138,
                       255
                     ],
                     "stroke": null,
@@ -386,27 +370,36 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 3.0,
+                        "top_right": 3.0,
+                        "bottom_right": 3.0,
+                        "bottom_left": 3.0
+                      }
+                    }
+                  }
                 },
                 {
-                  "id": "149feeb3-fcd2-40dd-974e-b791bd0f8ec5",
-                  "name": "Card / Image / Hill 2",
+                  "id": "e71244b7-0f16-415f-a87c-c10e10870cc1",
+                  "name": "Pattern / Confetti Dot",
                   "frame": {
                     "pos": {
-                      "x": 482.4,
-                      "y": 462.0
+                      "x": 1031.89,
+                      "y": 484.52
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 168.0
+                      "x": 19.44,
+                      "y": 19.44
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      235,
-                      225,
-                      157,
+                      242,
+                      141,
+                      178,
                       255
                     ],
                     "stroke": null,
@@ -435,18 +428,998 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "a48c9d0e-f406-4bd7-9c77-1eef85671403",
+                  "id": "a122ec2d-7cb8-4d5c-b91a-ed579cb8b791",
+                  "name": "Pattern / Confetti Star",
+                  "frame": {
+                    "pos": {
+                      "x": 284.64,
+                      "y": 968.77
+                    },
+                    "size": {
+                      "x": 32.4,
+                      "y": 32.4
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      168,
+                      216,
+                      234,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 4,
+                      "inner_ratio": 0.35
+                    }
+                  }
+                },
+                {
+                  "id": "4079e259-c5e8-49c8-a5ce-4807b901d851",
+                  "name": "Pattern / Confetti Bar",
+                  "frame": {
+                    "pos": {
+                      "x": 1027.38,
+                      "y": 73.5
+                    },
+                    "size": {
+                      "x": 37.8,
+                      "y": 10.8
+                    },
+                    "rotation": 78.12
+                  },
+                  "style": {
+                    "fill": [
+                      252,
+                      227,
+                      138,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 3.0,
+                        "top_right": 3.0,
+                        "bottom_right": 3.0,
+                        "bottom_left": 3.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "73c4a9b8-a38b-4855-86d7-b71220791acf",
+                  "name": "Card",
+                  "frame": {
+                    "pos": {
+                      "x": 140.0,
+                      "y": 100.0
+                    },
+                    "size": {
+                      "x": 800.0,
+                      "y": 880.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [
+                      {
+                        "color": [
+                          11,
+                          10,
+                          15,
+                          47
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 14.0
+                        },
+                        "blur": 42.0,
+                        "spread": 0.0
+                      }
+                    ],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 24.0,
+                        "top_right": 24.0,
+                        "bottom_right": 24.0,
+                        "bottom_left": 24.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "4dc8aa6c-3101-4211-9cc3-3972e52a3f72",
+                  "name": "Card / Image",
+                  "frame": {
+                    "pos": {
+                      "x": 180.0,
+                      "y": 140.0
+                    },
+                    "size": {
+                      "x": 720.0,
+                      "y": 470.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "f615a5d4-7439-4a3d-a980-675f4d009b72",
+                          "name": "Card / Image / Studio",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 720.0,
+                              "y": 470.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": {
+                              "kind": "Radial",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    252,
+                                    227,
+                                    236,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    168,
+                                    216,
+                                    234,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.5,
+                                "y": 0.4
+                              },
+                              "to": {
+                                "x": 1.1,
+                                "y": 0.4
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "9d8bf22e-6d60-4277-a387-5fe7395bb4d8",
+                          "name": "Card / Image / Shadow",
+                          "frame": {
+                            "pos": {
+                              "x": 180.0,
+                              "y": 366.6
+                            },
+                            "size": {
+                              "x": 360.0,
+                              "y": 47.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              0,
+                              0,
+                              0,
+                              48
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "e711c3ae-d281-4425-b709-2a355aa3c8f3",
+                          "name": "Card / Image / Pedestal",
+                          "frame": {
+                            "pos": {
+                              "x": 201.6,
+                              "y": 329.0
+                            },
+                            "size": {
+                              "x": 316.8,
+                              "y": 65.8
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              243,
+                              250,
+                              252,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 6.0,
+                                "top_right": 6.0,
+                                "bottom_right": 6.0,
+                                "bottom_left": 6.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "0129647b-bc85-4ccf-9336-48f75a6d429e",
+                          "name": "Card / Image / Object",
+                          "frame": {
+                            "pos": {
+                              "x": 273.6,
+                              "y": 131.6
+                            },
+                            "size": {
+                              "x": 172.8,
+                              "y": 206.8
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": {
+                              "kind": "Linear",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    242,
+                                    141,
+                                    178,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    181,
+                                    106,
+                                    133,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.0,
+                                "y": 0.5
+                              },
+                              "to": {
+                                "x": 1.0,
+                                "y": 0.5
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 40.0,
+                                "top_right": 40.0,
+                                "bottom_right": 40.0,
+                                "bottom_left": 40.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "87ece4a6-e726-40de-91f0-3c2c4b4352b7",
+                          "name": "Card / Image / Cap",
+                          "frame": {
+                            "pos": {
+                              "x": 316.8,
+                              "y": 94.0
+                            },
+                            "size": {
+                              "x": 86.4,
+                              "y": 47.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              252,
+                              227,
+                              138,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 4.0,
+                                "top_right": 4.0,
+                                "bottom_right": 4.0,
+                                "bottom_left": 4.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "40c32510-22ed-4b11-b699-ed763516b7b7",
+                          "name": "Card / Image / Label",
+                          "frame": {
+                            "pos": {
+                              "x": 288.0,
+                              "y": 197.4
+                            },
+                            "size": {
+                              "x": 144.0,
+                              "y": 56.4
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              204,
+                              204,
+                              204,
+                              204
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 3.0,
+                                "top_right": 3.0,
+                                "bottom_right": 3.0,
+                                "bottom_left": 3.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "a75f3219-6f66-45f2-b723-70c9a84a6302",
+                          "name": "Card / Image / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 720.0,
+                              "y": 470.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 24.0,
+                                "top_right": 24.0,
+                                "bottom_right": 24.0,
+                                "bottom_left": 24.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "c586a50c-ab4e-4e6a-b214-14bd4ff681da",
                   "name": "Card / Sale",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
+                      "x": 210.0,
                       "y": 170.0
                     },
                     "size": {
                       "x": 120.0,
-                      "y": 52.0
+                      "y": 50.0
                     },
                     "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            242,
+                            141,
+                            178,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            252,
+                            227,
+                            138,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 0.5
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [
+                      {
+                        "color": [
+                          81,
+                          47,
+                          59,
+                          85
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 8.0
+                        },
+                        "blur": 20.0,
+                        "spread": 0.0
+                      }
+                    ],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 24.0,
+                        "top_right": 24.0,
+                        "bottom_right": 24.0,
+                        "bottom_left": 24.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "bca4f392-787b-48ec-84c5-25b647f9412b",
+                  "name": "Card / Sale Label",
+                  "frame": {
+                    "pos": {
+                      "x": 210.0,
+                      "y": 170.0
+                    },
+                    "size": {
+                      "x": 120.0,
+                      "y": 50.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "−30%",
+                      "font_size": 20.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 20.0,
+                            "color": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "53db311a-51f4-47a5-a67d-88001fa3f32c",
+                  "name": "Card / Like",
+                  "frame": {
+                    "pos": {
+                      "x": 820.0,
+                      "y": 170.0
+                    },
+                    "size": {
+                      "x": 56.0,
+                      "y": 56.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "6198259e-4cc9-4cd3-b158-282cd48cf276",
+                  "name": "Card / Like Icon / Left",
+                  "frame": {
+                    "pos": {
+                      "x": 834.0,
+                      "y": 187.4
+                    },
+                    "size": {
+                      "x": 15.4,
+                      "y": 15.4
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "a235a8ae-4c2f-4494-ba7a-e168f806259e",
+                  "name": "Card / Like Icon / Right",
+                  "frame": {
+                    "pos": {
+                      "x": 846.6,
+                      "y": 187.4
+                    },
+                    "size": {
+                      "x": 15.4,
+                      "y": 15.4
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "48502d36-1203-4ccd-9cb5-62ac60893003",
+                  "name": "Card / Like Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 839.04,
+                      "y": 191.04
+                    },
+                    "size": {
+                      "x": 17.92,
+                      "y": 17.92
+                    },
+                    "rotation": 45.0
                   },
                   "style": {
                     "fill": [
@@ -481,197 +1454,500 @@
                   "kind": {
                     "Rectangle": {
                       "corner_radius": {
-                        "top_left": 24.0,
-                        "top_right": 24.0,
-                        "bottom_right": 24.0,
-                        "bottom_left": 24.0
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
                       }
                     }
                   }
                 },
                 {
-                  "id": "63e929ed-3e2e-4f4b-b6ae-5d4a6fb86694",
-                  "name": "Card / Sale Label",
+                  "id": "91c2a3ba-694a-4710-9c6d-bf36d8c2e4d1",
+                  "name": "Card / Thumb 1",
                   "frame": {
                     "pos": {
+                      "x": 440.0,
+                      "y": 580.0
+                    },
+                    "size": {
+                      "x": 36.0,
+                      "y": 10.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      238,
+                      238,
+                      238,
+                      238
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 5.0,
+                        "top_right": 5.0,
+                        "bottom_right": 5.0,
+                        "bottom_left": 5.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "bc49a14d-ae72-47ea-9871-c5cf56791060",
+                  "name": "Card / Thumb 2",
+                  "frame": {
+                    "pos": {
+                      "x": 490.0,
+                      "y": 580.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": 10.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      136,
+                      136,
+                      136,
+                      136
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 5.0,
+                        "top_right": 5.0,
+                        "bottom_right": 5.0,
+                        "bottom_left": 5.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "d0d9da53-c20b-49ad-aab5-306f8f7a00c6",
+                  "name": "Card / Thumb 3",
+                  "frame": {
+                    "pos": {
+                      "x": 540.0,
+                      "y": 580.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": 10.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      136,
+                      136,
+                      136,
+                      136
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 5.0,
+                        "top_right": 5.0,
+                        "bottom_right": 5.0,
+                        "bottom_left": 5.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "f27b465f-acf0-44b0-a970-70e8d60b7042",
+                  "name": "Card / Thumb 4",
+                  "frame": {
+                    "pos": {
+                      "x": 590.0,
+                      "y": 580.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": 10.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      136,
+                      136,
+                      136,
+                      136
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 5.0,
+                        "top_right": 5.0,
+                        "bottom_right": 5.0,
+                        "bottom_left": 5.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "2ba36028-d3a1-4256-afc3-f787221a2565",
+                  "name": "Card / Rating 1",
+                  "frame": {
+                    "pos": {
+                      "x": 180.0,
+                      "y": 640.0
+                    },
+                    "size": {
+                      "x": 22.0,
+                      "y": 22.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "f4faca34-03a4-4a1c-95c4-fcc5627bab86",
+                  "name": "Card / Rating 2",
+                  "frame": {
+                    "pos": {
+                      "x": 206.4,
+                      "y": 640.0
+                    },
+                    "size": {
+                      "x": 22.0,
+                      "y": 22.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "6affa089-7071-4844-84ce-54d20b603c47",
+                  "name": "Card / Rating 3",
+                  "frame": {
+                    "pos": {
+                      "x": 232.8,
+                      "y": 640.0
+                    },
+                    "size": {
+                      "x": 22.0,
+                      "y": 22.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "4b7c7731-e073-4d61-a0b4-3ae962399c56",
+                  "name": "Card / Rating 4",
+                  "frame": {
+                    "pos": {
+                      "x": 259.2,
+                      "y": 640.0
+                    },
+                    "size": {
+                      "x": 22.0,
+                      "y": 22.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "667b3417-78cf-448a-a73f-062f5f21768d",
+                  "name": "Card / Rating 5",
+                  "frame": {
+                    "pos": {
+                      "x": 285.6,
+                      "y": 640.0
+                    },
+                    "size": {
+                      "x": 22.0,
+                      "y": 22.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      214,
+                      204,
+                      212,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "ebedc274-3acd-4a12-8320-c657f3741fc9",
+                  "name": "Card / Reviews",
+                  "frame": {
+                    "pos": {
+                      "x": 320.0,
+                      "y": 638.0
+                    },
+                    "size": {
                       "x": 200.0,
-                      "y": 170.0
-                    },
-                    "size": {
-                      "x": 120.0,
-                      "y": 52.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      255,
-                      255,
-                      255,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "-30%",
-                      "font_size": 22.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Middle",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 4,
-                          "style": {
-                            "font": "Proportional",
-                            "font_size": 22.0,
-                            "color": [
-                              255,
-                              255,
-                              255,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "50a8da3d-0f30-42f5-9c36-174919a3bdc1",
-                  "name": "Card / Name",
-                  "frame": {
-                    "pos": {
-                      "x": 180.0,
-                      "y": 670.0
-                    },
-                    "size": {
-                      "x": 720.0,
-                      "y": 64.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      61,
-                      53,
-                      80,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Ceramic Pour-Over Set",
-                      "font_size": 40.0,
-                      "font": "Proportional",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 21,
-                          "style": {
-                            "font": "Proportional",
-                            "font_size": 40.0,
-                            "color": [
-                              61,
-                              53,
-                              80,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "96418c82-73a3-4f51-85c9-56d698177fe6",
-                  "name": "Card / Description",
-                  "frame": {
-                    "pos": {
-                      "x": 180.0,
-                      "y": 736.0
-                    },
-                    "size": {
-                      "x": 720.0,
-                      "y": 37.0
+                      "y": 31.0
                     },
                     "rotation": 0.0
                   },
@@ -707,8 +1983,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Hand-glazed stoneware, 600 ml carafe",
-                      "font_size": 22.0,
+                      "content": "(1,284)",
+                      "font_size": 18.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -729,15 +2005,384 @@
                   }
                 },
                 {
-                  "id": "8f311ce1-37f1-4d18-babc-1b5b3b45e091",
+                  "id": "c59956ad-d0b5-4099-926e-9e00bd9efc78",
+                  "name": "Card / Name",
+                  "frame": {
+                    "pos": {
+                      "x": 180.0,
+                      "y": 680.0
+                    },
+                    "size": {
+                      "x": 720.0,
+                      "y": 61.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      61,
+                      53,
+                      80,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Everyday Backpack",
+                      "font_size": 38.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 17,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 38.0,
+                            "color": [
+                              61,
+                              53,
+                              80,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "c00e9077-29d9-430c-8b10-0e099a090f08",
+                  "name": "Card / Description",
+                  "frame": {
+                    "pos": {
+                      "x": 180.0,
+                      "y": 740.0
+                    },
+                    "size": {
+                      "x": 720.0,
+                      "y": 36.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      133,
+                      124,
+                      153,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Recycled nylon, 20 L, laptop sleeve",
+                      "font_size": 21.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "2de6253a-ca96-4806-b51c-f36f5ed45776",
+                  "name": "Card / Swatch 1",
+                  "frame": {
+                    "pos": {
+                      "x": 180.0,
+                      "y": 792.0
+                    },
+                    "size": {
+                      "x": 30.0,
+                      "y": 30.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        242,
+                        141,
+                        178,
+                        255
+                      ],
+                      "width": 3.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "c8c2844a-b146-48c0-bc20-9a0244e462dc",
+                  "name": "Card / Swatch 2",
+                  "frame": {
+                    "pos": {
+                      "x": 224.0,
+                      "y": 792.0
+                    },
+                    "size": {
+                      "x": 30.0,
+                      "y": 30.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      168,
+                      216,
+                      234,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        255,
+                        255,
+                        255,
+                        255
+                      ],
+                      "width": 3.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "c04e9f8b-8e7e-4b9e-9834-bf8b7a139a2f",
+                  "name": "Card / Swatch 3",
+                  "frame": {
+                    "pos": {
+                      "x": 268.0,
+                      "y": 792.0
+                    },
+                    "size": {
+                      "x": 30.0,
+                      "y": 30.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      252,
+                      227,
+                      138,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        255,
+                        255,
+                        255,
+                        255
+                      ],
+                      "width": 3.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "81fb3ada-93a3-43c7-9d41-baa15233438b",
+                  "name": "Card / Swatch 4",
+                  "frame": {
+                    "pos": {
+                      "x": 312.0,
+                      "y": 792.0
+                    },
+                    "size": {
+                      "x": 30.0,
+                      "y": 30.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      61,
+                      53,
+                      80,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        255,
+                        255,
+                        255,
+                        255
+                      ],
+                      "width": 3.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "c8a466f8-ec1e-48c4-959c-f5e8cc7ef688",
                   "name": "Card / Price",
                   "frame": {
                     "pos": {
                       "x": 180.0,
-                      "y": 800.0
+                      "y": 856.0
                     },
                     "size": {
-                      "x": 200.0,
+                      "x": 220.0,
                       "y": 88.0
                     },
                     "rotation": 0.0
@@ -774,7 +2419,7 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "$49",
+                      "content": "$110",
                       "font_size": 56.0,
                       "font": "Proportional",
                       "align": "Left",
@@ -793,7 +2438,7 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 3,
+                          "len": 4,
                           "style": {
                             "font": "Proportional",
                             "font_size": 56.0,
@@ -815,16 +2460,16 @@
                   }
                 },
                 {
-                  "id": "7f726410-98db-4545-a262-dca26bd690b3",
+                  "id": "d7178acb-65bf-488b-b457-bab1a558bef4",
                   "name": "Card / Old Price",
                   "frame": {
                     "pos": {
-                      "x": 330.0,
-                      "y": 822.0
+                      "x": 320.0,
+                      "y": 878.0
                     },
                     "size": {
                       "x": 120.0,
-                      "y": 40.0
+                      "y": 37.0
                     },
                     "rotation": 0.0
                   },
@@ -860,8 +2505,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "$70",
-                      "font_size": 24.0,
+                      "content": "$140",
+                      "font_size": 22.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -882,12 +2527,67 @@
                   }
                 },
                 {
-                  "id": "676d2cda-0483-40c1-a21b-c93699039fc2",
+                  "id": "d9bab1e5-2402-490f-86ca-ee9893fbcf95",
+                  "name": "Card / Old Price Strike",
+                  "frame": {
+                    "pos": {
+                      "x": 320.0,
+                      "y": 893.0
+                    },
+                    "size": {
+                      "x": 50.0,
+                      "y": 2.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      133,
+                      124,
+                      153,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "7e061178-7745-4b7d-b06c-3145e0ebda3b",
                   "name": "Card / Add",
                   "frame": {
                     "pos": {
                       "x": 600.0,
-                      "y": 810.0
+                      "y": 850.0
                     },
                     "size": {
                       "x": 300.0,
@@ -896,16 +2596,56 @@
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      242,
-                      141,
-                      178,
-                      255
-                    ],
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            242,
+                            141,
+                            178,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            252,
+                            227,
+                            138,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 0.5
+                      }
+                    },
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
-                    "shadows": [],
+                    "shadows": [
+                      {
+                        "color": [
+                          81,
+                          47,
+                          59,
+                          85
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 8.0
+                        },
+                        "blur": 20.0,
+                        "spread": 0.0
+                      }
+                    ],
                     "inner_shadows": []
                   },
                   "visible": true,
@@ -937,12 +2677,12 @@
                   }
                 },
                 {
-                  "id": "d169aa53-0ff8-4c7f-9653-937e23eb67a0",
+                  "id": "413bc833-f9da-4bcd-a09e-b78a4a92812b",
                   "name": "Card / Add Label",
                   "frame": {
                     "pos": {
                       "x": 600.0,
-                      "y": 810.0
+                      "y": 850.0
                     },
                     "size": {
                       "x": 300.0,
@@ -983,7 +2723,7 @@
                   "kind": {
                     "Text": {
                       "content": "Add to cart",
-                      "font_size": 22.0,
+                      "font_size": 21.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -1004,7 +2744,7 @@
                           "len": 11,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 22.0,
+                            "font_size": 21.0,
                             "color": [
                               255,
                               255,

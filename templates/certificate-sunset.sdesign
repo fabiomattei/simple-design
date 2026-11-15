@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "2b571de7-fc66-4b75-a141-53e0a9c659c0",
+      "id": "0a769a6e-7cea-421c-8a81-354915b56dca",
       "name": "Page 1",
       "layers": [
         {
-          "id": "a8eaead7-b65f-437e-b5ae-c7e96aa5fd5d",
+          "id": "16bdf91a-cc90-454a-8118-77a991cc7fef",
           "name": "Certificate",
           "frame": {
             "pos": {
@@ -49,8 +49,656 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "b54a5e9f-5e5f-4e8d-90fa-103908819d48",
-                  "name": "Decoration / Sun Ring 1",
+                  "id": "472a485d-907e-41c8-bc8b-7496272a2a2c",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1400.0,
+                      "y": 1000.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            43,
+                            27,
+                            61,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 0.5,
+                          "color": [
+                            90,
+                            35,
+                            80,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            140,
+                            58,
+                            78,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "b6a1c717-0a70-4c95-97c6-73a3cf188f96",
+                  "name": "Pattern / Ray",
+                  "frame": {
+                    "pos": {
+                      "x": 648.0,
+                      "y": 95.0
+                    },
+                    "size": {
+                      "x": 1000.0,
+                      "y": 10.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      64,
+                      48,
+                      17,
+                      64
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "690e9cd9-228b-482f-ab95-1dc278dc7e30",
+                  "name": "Pattern / Rays",
+                  "frame": {
+                    "pos": {
+                      "x": 638.0,
+                      "y": -390.0
+                    },
+                    "size": {
+                      "x": 1009.225,
+                      "y": 1000.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      64,
+                      48,
+                      17,
+                      64
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "CompoundPath": {
+                      "polygons": [
+                        {
+                          "exterior": [
+                            {
+                              "x": 0.0,
+                              "y": 484.99994
+                            },
+                            {
+                              "x": 0.0,
+                              "y": 474.99994
+                            },
+                            {
+                              "x": 357.70227,
+                              "y": 475.0
+                            },
+                            {
+                              "x": 26.48883,
+                              "y": 409.11752
+                            },
+                            {
+                              "x": 28.439758,
+                              "y": 399.30966
+                            },
+                            {
+                              "x": 408.9607,
+                              "y": 475.0
+                            },
+                            {
+                              "x": 434.58997,
+                              "y": 475.0
+                            },
+                            {
+                              "x": 51.558838,
+                              "y": 316.34332
+                            },
+                            {
+                              "x": 55.38562,
+                              "y": 307.1045
+                            },
+                            {
+                              "x": 460.27527,
+                              "y": 474.81528
+                            },
+                            {
+                              "x": 94.2464,
+                              "y": 230.24261
+                            },
+                            {
+                              "x": 99.80206,
+                              "y": 221.92792
+                            },
+                            {
+                              "x": 464.19287,
+                              "y": 465.4061
+                            },
+                            {
+                              "x": 152.91113,
+                              "y": 154.1243
+                            },
+                            {
+                              "x": 159.98218,
+                              "y": 147.05322
+                            },
+                            {
+                              "x": 469.87097,
+                              "y": 456.94208
+                            },
+                            {
+                              "x": 225.29846,
+                              "y": 90.91345
+                            },
+                            {
+                              "x": 233.61316,
+                              "y": 85.35773
+                            },
+                            {
+                              "x": 477.09143,
+                              "y": 449.74872
+                            },
+                            {
+                              "x": 308.6269,
+                              "y": 43.039276
+                            },
+                            {
+                              "x": 317.86566,
+                              "y": 39.212433
+                            },
+                            {
+                              "x": 485.57654,
+                              "y": 444.1023
+                            },
+                            {
+                              "x": 399.69397,
+                              "y": 12.341583
+                            },
+                            {
+                              "x": 409.50183,
+                              "y": 10.3906555
+                            },
+                            {
+                              "x": 495.0,
+                              "y": 440.21893
+                            },
+                            {
+                              "x": 495.0,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 505.0,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 505.0,
+                              "y": 438.24902
+                            },
+                            {
+                              "x": 590.88245,
+                              "y": 6.4888306
+                            },
+                            {
+                              "x": 600.6903,
+                              "y": 8.439758
+                            },
+                            {
+                              "x": 515.192,
+                              "y": 438.26868
+                            },
+                            {
+                              "x": 683.65674,
+                              "y": 31.558746
+                            },
+                            {
+                              "x": 692.8955,
+                              "y": 35.38559
+                            },
+                            {
+                              "x": 525.1848,
+                              "y": 440.27518
+                            },
+                            {
+                              "x": 769.75745,
+                              "y": 74.24631
+                            },
+                            {
+                              "x": 778.07214,
+                              "y": 79.80203
+                            },
+                            {
+                              "x": 534.5939,
+                              "y": 444.19293
+                            },
+                            {
+                              "x": 845.87573,
+                              "y": 132.9111
+                            },
+                            {
+                              "x": 852.9468,
+                              "y": 139.98216
+                            },
+                            {
+                              "x": 543.05774,
+                              "y": 449.87122
+                            },
+                            {
+                              "x": 909.0867,
+                              "y": 205.29855
+                            },
+                            {
+                              "x": 914.64233,
+                              "y": 213.61325
+                            },
+                            {
+                              "x": 550.2512,
+                              "y": 457.09158
+                            },
+                            {
+                              "x": 956.9608,
+                              "y": 288.6269
+                            },
+                            {
+                              "x": 960.7877,
+                              "y": 297.86572
+                            },
+                            {
+                              "x": 555.8983,
+                              "y": 465.5764
+                            },
+                            {
+                              "x": 987.65845,
+                              "y": 379.69397
+                            },
+                            {
+                              "x": 989.6094,
+                              "y": 389.50183
+                            },
+                            {
+                              "x": 559.7809,
+                              "y": 475.0
+                            },
+                            {
+                              "x": 1000.0,
+                              "y": 475.00006
+                            },
+                            {
+                              "x": 1000.0,
+                              "y": 485.00006
+                            },
+                            {
+                              "x": 509.50757,
+                              "y": 485.0
+                            },
+                            {
+                              "x": 508.54175,
+                              "y": 485.1921
+                            },
+                            {
+                              "x": 507.63147,
+                              "y": 485.56915
+                            },
+                            {
+                              "x": 506.81274,
+                              "y": 486.1162
+                            },
+                            {
+                              "x": 506.11646,
+                              "y": 486.81256
+                            },
+                            {
+                              "x": 505.5691,
+                              "y": 487.63165
+                            },
+                            {
+                              "x": 505.19202,
+                              "y": 488.54196
+                            },
+                            {
+                              "x": 505.0,
+                              "y": 489.5074
+                            },
+                            {
+                              "x": 505.0,
+                              "y": 490.49234
+                            },
+                            {
+                              "x": 505.19226,
+                              "y": 491.45886
+                            },
+                            {
+                              "x": 505.56897,
+                              "y": 492.36832
+                            },
+                            {
+                              "x": 506.1161,
+                              "y": 493.1872
+                            },
+                            {
+                              "x": 506.8125,
+                              "y": 493.8836
+                            },
+                            {
+                              "x": 507.6317,
+                              "y": 494.43097
+                            },
+                            {
+                              "x": 508.54175,
+                              "y": 494.8079
+                            },
+                            {
+                              "x": 1009.225,
+                              "y": 594.4
+                            },
+                            {
+                              "x": 1007.27405,
+                              "y": 604.2079
+                            },
+                            {
+                              "x": 555.8983,
+                              "y": 514.42365
+                            },
+                            {
+                              "x": 979.26526,
+                              "y": 689.78796
+                            },
+                            {
+                              "x": 975.43835,
+                              "y": 699.02673
+                            },
+                            {
+                              "x": 550.25134,
+                              "y": 522.9085
+                            },
+                            {
+                              "x": 931.2717,
+                              "y": 777.49817
+                            },
+                            {
+                              "x": 925.71606,
+                              "y": 785.81287
+                            },
+                            {
+                              "x": 543.0575,
+                              "y": 530.12866
+                            },
+                            {
+                              "x": 867.08887,
+                              "y": 854.16
+                            },
+                            {
+                              "x": 860.0178,
+                              "y": 861.231
+                            },
+                            {
+                              "x": 534.5936,
+                              "y": 535.8068
+                            },
+                            {
+                              "x": 789.1835,
+                              "y": 916.8274
+                            },
+                            {
+                              "x": 780.8688,
+                              "y": 922.38306
+                            },
+                            {
+                              "x": 525.1847,
+                              "y": 539.7248
+                            },
+                            {
+                              "x": 700.5491,
+                              "y": 963.092
+                            },
+                            {
+                              "x": 691.3103,
+                              "y": 966.91876
+                            },
+                            {
+                              "x": 515.19226,
+                              "y": 541.7321
+                            },
+                            {
+                              "x": 604.59216,
+                              "y": 991.1759
+                            },
+                            {
+                              "x": 594.7843,
+                              "y": 993.12683
+                            },
+                            {
+                              "x": 505.0,
+                              "y": 541.75073
+                            },
+                            {
+                              "x": 505.0,
+                              "y": 1000.0
+                            },
+                            {
+                              "x": 495.0,
+                              "y": 1000.0
+                            },
+                            {
+                              "x": 495.0,
+                              "y": 539.78076
+                            },
+                            {
+                              "x": 405.59998,
+                              "y": 989.22504
+                            },
+                            {
+                              "x": 395.7921,
+                              "y": 987.2741
+                            },
+                            {
+                              "x": 485.5763,
+                              "y": 535.89856
+                            },
+                            {
+                              "x": 310.21216,
+                              "y": 959.26514
+                            },
+                            {
+                              "x": 300.9734,
+                              "y": 955.43835
+                            },
+                            {
+                              "x": 477.09155,
+                              "y": 530.2512
+                            },
+                            {
+                              "x": 222.50189,
+                              "y": 911.27167
+                            },
+                            {
+                              "x": 214.1872,
+                              "y": 905.716
+                            },
+                            {
+                              "x": 469.87134,
+                              "y": 523.0576
+                            },
+                            {
+                              "x": 145.84009,
+                              "y": 847.08887
+                            },
+                            {
+                              "x": 138.76904,
+                              "y": 840.0178
+                            },
+                            {
+                              "x": 464.1931,
+                              "y": 514.5937
+                            },
+                            {
+                              "x": 83.17261,
+                              "y": 769.1835
+                            },
+                            {
+                              "x": 77.61694,
+                              "y": 760.8688
+                            },
+                            {
+                              "x": 460.27502,
+                              "y": 505.18484
+                            },
+                            {
+                              "x": 36.90808,
+                              "y": 680.5492
+                            },
+                            {
+                              "x": 33.0813,
+                              "y": 671.3104
+                            },
+                            {
+                              "x": 458.26843,
+                              "y": 495.19208
+                            },
+                            {
+                              "x": 8.823975,
+                              "y": 584.59216
+                            },
+                            {
+                              "x": 6.873047,
+                              "y": 574.7843
+                            },
+                            {
+                              "x": 433.11243,
+                              "y": 490.0
+                            },
+                            {
+                              "x": 407.9757,
+                              "y": 485.0
+                            }
+                          ],
+                          "holes": []
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "4b3ae9ae-6260-40ec-b26c-717e9d4183d1",
+                  "name": "Pattern / Sun Ring 1",
                   "frame": {
                     "pos": {
                       "x": 838.0,
@@ -64,10 +712,10 @@
                   },
                   "style": {
                     "fill": [
-                      80,
-                      37,
-                      77,
-                      255
+                      45,
+                      16,
+                      28,
+                      51
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -95,8 +743,8 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "1d555b1c-d0ca-4e05-ab57-a2178367f6a1",
-                  "name": "Decoration / Sun Ring 2",
+                  "id": "43c2403a-4407-47bc-aead-eae437eb8eb8",
+                  "name": "Pattern / Sun Ring 2",
                   "frame": {
                     "pos": {
                       "x": 928.0,
@@ -110,10 +758,10 @@
                   },
                   "style": {
                     "fill": [
-                      114,
-                      59,
-                      70,
-                      255
+                      85,
+                      41,
+                      30,
+                      85
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -141,8 +789,8 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "746a5ba0-5bad-4945-807a-8afdff0e391b",
-                  "name": "Decoration / Sun Ring 3",
+                  "id": "dd6baf9a-56a5-43ec-904c-07cce612af8a",
+                  "name": "Pattern / Sun Ring 3",
                   "frame": {
                     "pos": {
                       "x": 1018.0,
@@ -155,10 +803,212 @@
                     "rotation": 0.0
                   },
                   "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            255,
+                            193,
+                            69,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            255,
+                            122,
+                            89,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "13c8108f-c78c-44f6-b983-dc365f2e9aaf",
+                  "name": "Sidebar",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 340.0,
+                      "y": 1000.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            255,
+                            122,
+                            89,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            191,
+                            91,
+                            67,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "d674825d-153a-4c82-a4ae-bce965901048",
+                  "name": "Sidebar / Rosette",
+                  "frame": {
+                    "pos": {
+                      "x": 70.0,
+                      "y": 300.0
+                    },
+                    "size": {
+                      "x": 200.0,
+                      "y": 200.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
                     "fill": [
-                      184,
-                      138,
-                      66,
+                      255,
+                      193,
+                      69,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 16,
+                      "inner_ratio": 0.82
+                    }
+                  }
+                },
+                {
+                  "id": "6feb42b3-4a0e-4d9d-8231-746cb129ae37",
+                  "name": "Sidebar / Medal",
+                  "frame": {
+                    "pos": {
+                      "x": 100.0,
+                      "y": 330.0
+                    },
+                    "size": {
+                      "x": 140.0,
+                      "y": 140.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      61,
+                      40,
+                      86,
                       255
                     ],
                     "stroke": null,
@@ -187,16 +1037,16 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "46eab04b-38fb-403e-bfea-c71c6eeb1056",
-                  "name": "Header / Kicker",
+                  "id": "089ec4c4-d05e-4528-96d3-791202eac695",
+                  "name": "Sidebar / Medal Text",
                   "frame": {
                     "pos": {
-                      "x": 150.0,
-                      "y": 150.0
+                      "x": 100.0,
+                      "y": 330.0
                     },
                     "size": {
-                      "x": 1100.0,
-                      "y": 43.0
+                      "x": 140.0,
+                      "y": 140.0
                     },
                     "rotation": 0.0
                   },
@@ -232,16 +1082,16 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "CERTIFICATE OF ACHIEVEMENT",
-                      "font_size": 26.0,
-                      "font": "Proportional",
+                      "content": "5Y",
+                      "font_size": 29.2,
+                      "font": "Display",
                       "align": "Center",
-                      "vertical_align": "Top",
+                      "vertical_align": "Middle",
                       "resize": "Fixed",
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -249,21 +1099,226 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 2,
+                          "style": {
+                            "font": "Display",
+                            "font_size": 29.2,
+                            "color": [
+                              255,
+                              122,
+                              89,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "bb927092-8441-4a38-8162-214160dc4bce",
+                  "id": "3442686e-444e-4e40-9d7a-67c84c706f28",
+                  "name": "Sidebar / Ribbon Left",
+                  "frame": {
+                    "pos": {
+                      "x": 110.0,
+                      "y": 480.0
+                    },
+                    "size": {
+                      "x": 60.0,
+                      "y": 160.0
+                    },
+                    "rotation": 180.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      193,
+                      69,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Polygon": {
+                      "sides": 3
+                    }
+                  }
+                },
+                {
+                  "id": "d148da85-6b7a-4e2f-bf7d-0870e2d10461",
+                  "name": "Sidebar / Ribbon Right",
+                  "frame": {
+                    "pos": {
+                      "x": 170.0,
+                      "y": 480.0
+                    },
+                    "size": {
+                      "x": 60.0,
+                      "y": 160.0
+                    },
+                    "rotation": 180.0
+                  },
+                  "style": {
+                    "fill": [
+                      207,
+                      157,
+                      56,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Polygon": {
+                      "sides": 3
+                    }
+                  }
+                },
+                {
+                  "id": "32479b1c-cdfe-437e-adba-c9104e1a8ba9",
+                  "name": "Header / Kind",
+                  "frame": {
+                    "pos": {
+                      "x": 420.0,
+                      "y": 150.0
+                    },
+                    "size": {
+                      "x": 900.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      122,
+                      89,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "CERTIFICATE OF APPRECIATION",
+                      "font_size": 24.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 27,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 24.0,
+                            "color": [
+                              255,
+                              122,
+                              89,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "836c115a-27f3-4d8d-bf28-4030320f1903",
                   "name": "Body / Presented",
                   "frame": {
                     "pos": {
-                      "x": 150.0,
-                      "y": 260.0
+                      "x": 420.0,
+                      "y": 240.0
                     },
                     "size": {
-                      "x": 1100.0,
-                      "y": 43.0
+                      "x": 900.0,
+                      "y": 40.0
                     },
                     "rotation": 0.0
                   },
@@ -300,7 +1355,7 @@
                   "kind": {
                     "Text": {
                       "content": "This certificate is proudly presented to",
-                      "font_size": 26.0,
+                      "font_size": 24.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -321,16 +1376,16 @@
                   }
                 },
                 {
-                  "id": "62dfe9f6-3985-4c95-a110-e43cbd01a343",
+                  "id": "68488b90-248c-47f0-b615-c4ce15ee0446",
                   "name": "Body / Recipient",
                   "frame": {
                     "pos": {
-                      "x": 150.0,
-                      "y": 330.0
+                      "x": 420.0,
+                      "y": 300.0
                     },
                     "size": {
-                      "x": 1100.0,
-                      "y": 128.0
+                      "x": 900.0,
+                      "y": 94.0
                     },
                     "rotation": 0.0
                   },
@@ -366,8 +1421,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Alexandra Chen",
-                      "font_size": 83.0,
+                      "content": "Daniel Okafor",
+                      "font_size": 60.2,
                       "font": "Display",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -385,10 +1440,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 14,
+                          "len": 13,
                           "style": {
                             "font": "Display",
-                            "font_size": 83.0,
+                            "font_size": 60.2,
                             "color": [
                               255,
                               241,
@@ -407,15 +1462,15 @@
                   }
                 },
                 {
-                  "id": "98113dc4-2c22-4cf9-a5d6-34b167525625",
+                  "id": "6a374286-2a64-4f9d-b422-df4042fd6175",
                   "name": "Body / Underline",
                   "frame": {
                     "pos": {
-                      "x": 400.0,
-                      "y": 480.0
+                      "x": 610.0,
+                      "y": 440.0
                     },
                     "size": {
-                      "x": 600.0,
+                      "x": 520.0,
                       "y": 2.0
                     },
                     "rotation": 0.0
@@ -462,16 +1517,16 @@
                   }
                 },
                 {
-                  "id": "24ae5f24-d4ff-4e15-8fe3-3369fc02c7c2",
+                  "id": "4bfd3315-61e6-4f32-93a6-6e098f286356",
                   "name": "Body / Reason",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 520.0
+                      "x": 460.0,
+                      "y": 480.0
                     },
                     "size": {
-                      "x": 1000.0,
-                      "y": 76.0
+                      "x": 820.0,
+                      "y": 70.0
                     },
                     "rotation": 0.0
                   },
@@ -507,8 +1562,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "for outstanding completion of the Advanced Product Design program,\ndemonstrating exceptional craft, curiosity and leadership.",
-                      "font_size": 24.0,
+                      "content": "with heartfelt thanks for five years of volunteering\nat the Westside Community Kitchen.",
+                      "font_size": 22.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -529,16 +1584,16 @@
                   }
                 },
                 {
-                  "id": "4910aaea-ec14-4698-a305-9140cba0f672",
-                  "name": "Signature / Date Value",
+                  "id": "27a739d6-5844-49b3-af42-05fe13135f5c",
+                  "name": "Signature / Date Script",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 760.0
+                      "x": 460.0,
+                      "y": 700.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 40.0
+                      "x": 320.0,
+                      "y": 49.0
                     },
                     "rotation": 0.0
                   },
@@ -574,16 +1629,16 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "March 3, 2027",
-                      "font_size": 24.0,
-                      "font": "Display",
+                      "content": "August 9, 2027",
+                      "font_size": 30.0,
+                      "font": "Handwriting",
                       "align": "Center",
                       "vertical_align": "Top",
                       "resize": "Fixed",
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": true,
+                      "bold": false,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -591,39 +1646,20 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
-                      "runs": [
-                        {
-                          "len": 13,
-                          "style": {
-                            "font": "Display",
-                            "font_size": 24.0,
-                            "color": [
-                              255,
-                              241,
-                              230,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "d4144823-1bdb-4309-a47d-21dfe128716f",
+                  "id": "0397439a-b720-43fc-81bb-5371b5e620a5",
                   "name": "Signature / Date Line",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 810.0
+                      "x": 460.0,
+                      "y": 760.0
                     },
                     "size": {
-                      "x": 360.0,
+                      "x": 320.0,
                       "y": 2.0
                     },
                     "rotation": 0.0
@@ -670,16 +1706,16 @@
                   }
                 },
                 {
-                  "id": "42523d51-e242-4e69-b11c-ffe66d4cebe6",
+                  "id": "b5177357-2621-4198-a677-a57449e5c8d4",
                   "name": "Signature / Date Label",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 826.0
+                      "x": 460.0,
+                      "y": 776.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 28.0
+                      "x": 320.0,
+                      "y": 26.0
                     },
                     "rotation": 0.0
                   },
@@ -716,7 +1752,7 @@
                   "kind": {
                     "Text": {
                       "content": "DATE",
-                      "font_size": 16.0,
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -737,16 +1773,16 @@
                   }
                 },
                 {
-                  "id": "5590a7e9-6bc0-4561-bed6-1e85731f132c",
-                  "name": "Signature / Director Value",
+                  "id": "9d13ec49-e3cb-4841-95e2-215eed3a3ce6",
+                  "name": "Signature / Chair Script",
                   "frame": {
                     "pos": {
-                      "x": 840.0,
-                      "y": 760.0
+                      "x": 960.0,
+                      "y": 700.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 40.0
+                      "x": 320.0,
+                      "y": 49.0
                     },
                     "rotation": 0.0
                   },
@@ -782,16 +1818,16 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Samuel Ortiz",
-                      "font_size": 24.0,
-                      "font": "Display",
+                      "content": "Grace Kim",
+                      "font_size": 30.0,
+                      "font": "Handwriting",
                       "align": "Center",
                       "vertical_align": "Top",
                       "resize": "Fixed",
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": true,
+                      "bold": false,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -799,39 +1835,20 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
-                      "runs": [
-                        {
-                          "len": 12,
-                          "style": {
-                            "font": "Display",
-                            "font_size": 24.0,
-                            "color": [
-                              255,
-                              241,
-                              230,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "df1b383c-8399-4846-ae76-5ad9baa95aae",
-                  "name": "Signature / Director Line",
+                  "id": "55c3a06f-aaad-433f-b7b7-340a8a70e38d",
+                  "name": "Signature / Chair Line",
                   "frame": {
                     "pos": {
-                      "x": 840.0,
-                      "y": 810.0
+                      "x": 960.0,
+                      "y": 760.0
                     },
                     "size": {
-                      "x": 360.0,
+                      "x": 320.0,
                       "y": 2.0
                     },
                     "rotation": 0.0
@@ -878,16 +1895,16 @@
                   }
                 },
                 {
-                  "id": "5f2159c2-e0c2-4806-8bdb-2e1cc4fe3100",
-                  "name": "Signature / Director Label",
+                  "id": "e0cd4509-a5ad-451c-86d9-d9c5b87c4c73",
+                  "name": "Signature / Chair Label",
                   "frame": {
                     "pos": {
-                      "x": 840.0,
-                      "y": 826.0
+                      "x": 960.0,
+                      "y": 776.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 28.0
+                      "x": 320.0,
+                      "y": 26.0
                     },
                     "rotation": 0.0
                   },
@@ -923,8 +1940,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "DIRECTOR",
-                      "font_size": 16.0,
+                      "content": "CHAIR",
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -940,138 +1957,6 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "4cee6619-1074-4827-b0bf-bce361a48dc4",
-                  "name": "Seal",
-                  "frame": {
-                    "pos": {
-                      "x": 640.0,
-                      "y": 700.0
-                    },
-                    "size": {
-                      "x": 120.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      255,
-                      122,
-                      89,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "d56438ee-aca9-4c33-91d7-0907a8bcf45a",
-                  "name": "Seal / Label",
-                  "frame": {
-                    "pos": {
-                      "x": 640.0,
-                      "y": 700.0
-                    },
-                    "size": {
-                      "x": 120.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      43,
-                      27,
-                      61,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "2027",
-                      "font_size": 26.0,
-                      "font": "Display",
-                      "align": "Center",
-                      "vertical_align": "Middle",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 4,
-                          "style": {
-                            "font": "Display",
-                            "font_size": 26.0,
-                            "color": [
-                              43,
-                              27,
-                              61,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
                       "path_attachment": null
                     }
                   }

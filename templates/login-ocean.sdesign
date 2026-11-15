@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "de9c7d76-611a-4cf5-a648-b44e986f0b65",
+      "id": "9fb617dc-06f4-407c-ab34-ef52f8e130dc",
       "name": "Page 1",
       "layers": [
         {
-          "id": "7531bd7f-d4ca-483b-a2dc-7c59de8f432c",
+          "id": "ca5eee3c-b942-4523-8bb3-065a48ad65f3",
           "name": "Login iPhone",
           "frame": {
             "pos": {
@@ -49,12 +49,92 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "b52c9c51-4f15-43f9-9ebc-d9030b9756ce",
-                  "name": "Decoration / Wave Back",
+                  "id": "548aef3a-74ad-4ebf-9fdf-504418802d01",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 390.0,
+                      "y": 844.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            234,
+                            246,
+                            248,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            211,
+                            238,
+                            242,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "0c3179e2-b7ec-4df8-92b4-cfd6e5ea9f55",
+                  "name": "Pattern / Wave Back",
                   "frame": {
                     "pos": {
                       "x": -78.0,
-                      "y": 812.8
+                      "y": 805.0
                     },
                     "size": {
                       "x": 312.0,
@@ -95,12 +175,12 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "7e0643e5-3f1b-4117-9898-fd49a7068105",
-                  "name": "Decoration / Wave Front",
+                  "id": "7b7f519b-8a92-46bf-ac7d-3bb559952e21",
+                  "name": "Pattern / Wave Front",
                   "frame": {
                     "pos": {
                       "x": 117.0,
-                      "y": 824.5
+                      "y": 820.6
                     },
                     "size": {
                       "x": 351.0,
@@ -110,10 +190,10 @@
                   },
                   "style": {
                     "fill": [
-                      170,
-                      224,
-                      219,
-                      255
+                      76,
+                      125,
+                      119,
+                      153
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -141,7 +221,350 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "5b60a703-673e-425e-a472-be9f78bd0a3e",
+                  "id": "190fa8e9-e626-403c-92bb-1e8ea1245742",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 323.18,
+                      "y": 85.85
+                    },
+                    "size": {
+                      "x": 9.52,
+                      "y": 9.52
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "8bd30698-6737-47ae-bf13-70d99cbc6c30",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 366.77,
+                      "y": 48.04
+                    },
+                    "size": {
+                      "x": 8.55,
+                      "y": 8.55
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "22d27de3-22c4-4ade-bd57-d5b0d4beb222",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 338.64,
+                      "y": 97.36
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": 10.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "37ce84d6-69d6-4b7d-bcc5-de767641491d",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 357.2,
+                      "y": 69.1
+                    },
+                    "size": {
+                      "x": 10.1,
+                      "y": 10.1
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "d38d902e-8b3c-4414-8e8f-c3e3722561c6",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 354.39,
+                      "y": 113.4
+                    },
+                    "size": {
+                      "x": 9.63,
+                      "y": 9.63
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "04e2928b-c0cc-47d1-b94f-5c994b356af8",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 348.14,
+                      "y": 15.56
+                    },
+                    "size": {
+                      "x": 4.52,
+                      "y": 4.52
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "3be6c2df-4846-450d-850d-f8db733381a5",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 314.86,
+                      "y": 17.36
+                    },
+                    "size": {
+                      "x": 7.08,
+                      "y": 7.08
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "55a54806-3d76-4624-8e07-4daf9e380d96",
                   "name": "Status / Time",
                   "frame": {
                     "pos": {
@@ -150,7 +573,7 @@
                     },
                     "size": {
                       "x": 80.0,
-                      "y": 28.0
+                      "y": 26.0
                     },
                     "rotation": 0.0
                   },
@@ -187,7 +610,7 @@
                   "kind": {
                     "Text": {
                       "content": "9:41",
-                      "font_size": 16.0,
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -195,7 +618,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -203,35 +626,679 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              11,
+                              49,
+                              66,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "6b3331eb-849a-4e06-8a50-63c6b76c0379",
-                  "name": "Brand / Mark",
+                  "id": "4abfe371-de99-4663-9bce-9029651e8463",
+                  "name": "Status / Signal 1",
                   "frame": {
                     "pos": {
-                      "x": 163.0,
-                      "y": 120.0
+                      "x": 312.0,
+                      "y": 26.0
                     },
                     "size": {
-                      "x": 64.0,
-                      "y": 64.0
+                      "x": 4.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      14,
-                      124,
-                      134,
+                      11,
+                      49,
+                      66,
                       255
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 1.0,
+                        "top_right": 1.0,
+                        "bottom_right": 1.0,
+                        "bottom_left": 1.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "18cc1a29-b733-4c43-891a-45e9f874d787",
+                  "name": "Status / Signal 2",
+                  "frame": {
+                    "pos": {
+                      "x": 318.0,
+                      "y": 23.0
+                    },
+                    "size": {
+                      "x": 4.0,
+                      "y": 9.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      11,
+                      49,
+                      66,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 1.0,
+                        "top_right": 1.0,
+                        "bottom_right": 1.0,
+                        "bottom_left": 1.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "6d782db3-731a-4dc8-87fc-0273af587b6b",
+                  "name": "Status / Signal 3",
+                  "frame": {
+                    "pos": {
+                      "x": 324.0,
+                      "y": 20.0
+                    },
+                    "size": {
+                      "x": 4.0,
+                      "y": 12.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      11,
+                      49,
+                      66,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 1.0,
+                        "top_right": 1.0,
+                        "bottom_right": 1.0,
+                        "bottom_left": 1.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "0ca3b887-2246-4ae5-b75a-1f7509f5e9f7",
+                  "name": "Status / Battery",
+                  "frame": {
+                    "pos": {
+                      "x": 336.0,
+                      "y": 18.0
+                    },
+                    "size": {
+                      "x": 26.0,
+                      "y": 13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        11,
+                        49,
+                        66,
+                        255
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 3.0,
+                        "top_right": 3.0,
+                        "bottom_right": 3.0,
+                        "bottom_left": 3.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "43881890-2cf2-4708-8fd1-a0a8fd2ceac5",
+                  "name": "Status / Charge",
+                  "frame": {
+                    "pos": {
+                      "x": 339.0,
+                      "y": 21.0
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 7.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      11,
+                      49,
+                      66,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 1.0,
+                        "top_right": 1.0,
+                        "bottom_right": 1.0,
+                        "bottom_left": 1.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "51778df5-a581-4135-ab61-39de1da7418c",
+                  "name": "Hero",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 390.0,
+                      "y": 330.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "ba519441-38f0-45d0-bc6c-1e18a8164b25",
+                          "name": "Hero / Backdrop",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 390.0,
+                              "y": 250.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": {
+                              "kind": "Radial",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    191,
+                                    230,
+                                    234,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    127,
+                                    209,
+                                    199,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.5,
+                                "y": 0.5
+                              },
+                              "to": {
+                                "x": 1.0,
+                                "y": 0.5
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "6bcb35ed-74ac-4e70-89b2-b68793741965",
+                          "name": "Hero / Halo",
+                          "frame": {
+                            "pos": {
+                              "x": 105.0,
+                              "y": 30.0
+                            },
+                            "size": {
+                              "x": 180.0,
+                              "y": 180.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              51,
+                              51,
+                              51,
+                              51
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "3e80b940-fd9a-43d4-95c6-6a9e2be414c6",
+                          "name": "Hero / Head",
+                          "frame": {
+                            "pos": {
+                              "x": 155.0,
+                              "y": 60.0
+                            },
+                            "size": {
+                              "x": 80.0,
+                              "y": 90.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              14,
+                              124,
+                              134,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "649f37b7-6148-48df-911a-b1883a69bb2a",
+                          "name": "Hero / Shoulders",
+                          "frame": {
+                            "pos": {
+                              "x": 90.0,
+                              "y": 155.0
+                            },
+                            "size": {
+                              "x": 210.0,
+                              "y": 175.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              14,
+                              124,
+                              134,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "112e341c-8116-469b-a440-3cc8180a7c1e",
+                          "name": "Hero / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 390.0,
+                              "y": 250.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 20.0,
+                                "top_right": 20.0,
+                                "bottom_right": 20.0,
+                                "bottom_left": 20.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "cb8f2b35-f630-4039-8809-0642114e38e9",
+                  "name": "Sheet",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 210.0
+                    },
+                    "size": {
+                      "x": 390.0,
+                      "y": 640.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [
+                      {
+                        "color": [
+                          1,
+                          7,
+                          9,
+                          34
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 10.0
+                        },
+                        "blur": 30.0,
+                        "spread": 0.0
+                      }
+                    ],
                     "inner_shadows": []
                   },
                   "visible": true,
@@ -263,16 +1330,16 @@
                   }
                 },
                 {
-                  "id": "1d55bed4-3d61-4f13-917e-090e4fd3f19a",
+                  "id": "7c13e243-9528-497b-9e92-96e08ae8c9f1",
                   "name": "Copy / Title",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 220.0
+                      "y": 240.0
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 49.0
+                      "y": 46.0
                     },
                     "rotation": 0.0
                   },
@@ -308,8 +1375,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Welcome back",
-                      "font_size": 30.0,
+                      "content": "Where to next?",
+                      "font_size": 28.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -327,10 +1394,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 12,
+                          "len": 14,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 30.0,
+                            "font_size": 28.0,
                             "color": [
                               11,
                               49,
@@ -349,16 +1416,16 @@
                   }
                 },
                 {
-                  "id": "9ab92bd0-07c2-473b-b331-4a77b88fc888",
+                  "id": "b5c40364-d32c-4e8d-897e-a55110d5cd3c",
                   "name": "Copy / Subtitle",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 270.0
+                      "y": 288.0
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 28.0
+                      "y": 26.0
                     },
                     "rotation": 0.0
                   },
@@ -394,8 +1461,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Sign in to continue",
-                      "font_size": 16.0,
+                      "content": "Log in to see your saved trips",
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -416,7 +1483,7 @@
                   }
                 },
                 {
-                  "id": "747ef9f7-e16a-4434-b019-feea0b7bde0b",
+                  "id": "fe11b1a9-9d1a-460e-86b0-7494037eed2b",
                   "name": "Form / Email Label",
                   "frame": {
                     "pos": {
@@ -425,7 +1492,7 @@
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 25.0
+                      "y": 24.0
                     },
                     "rotation": 0.0
                   },
@@ -462,7 +1529,7 @@
                   "kind": {
                     "Text": {
                       "content": "Email",
-                      "font_size": 14.0,
+                      "font_size": 13.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -470,7 +1537,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -478,29 +1545,203 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 5,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 13.0,
+                            "color": [
+                              11,
+                              49,
+                              66,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "c4f8c1b8-f27f-4410-90a3-b426d9800779",
+                  "id": "1051f822-3270-484b-ad5e-8eee11eede88",
                   "name": "Form / Email Field",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 366.0
+                      "y": 364.0
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 52.0
+                      "y": 50.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      255,
-                      255,
-                      255,
+                      234,
+                      246,
+                      248,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        21,
+                        31,
+                        35,
+                        68
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 14.0,
+                        "top_right": 14.0,
+                        "bottom_right": 14.0,
+                        "bottom_left": 14.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "6e4817c0-6298-467b-8904-7beff20db35e",
+                  "name": "Form / Email Icon / Left",
+                  "frame": {
+                    "pos": {
+                      "x": 46.0,
+                      "y": 379.0
+                    },
+                    "size": {
+                      "x": 11.0,
+                      "y": 11.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      79,
+                      116,
+                      130,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "177833c0-b158-45ed-8ce7-e4e9bd232f9f",
+                  "name": "Form / Email Icon / Right",
+                  "frame": {
+                    "pos": {
+                      "x": 55.0,
+                      "y": 379.0
+                    },
+                    "size": {
+                      "x": 11.0,
+                      "y": 11.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      79,
+                      116,
+                      130,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "d1341a4c-6aed-4a8f-b9c5-91759b2a8a6c",
+                  "name": "Form / Email Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 49.6,
+                      "y": 381.6
+                    },
+                    "size": {
+                      "x": 12.8,
+                      "y": 12.8
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      79,
+                      116,
+                      130,
                       255
                     ],
                     "stroke": null,
@@ -529,25 +1770,25 @@
                   "kind": {
                     "Rectangle": {
                       "corner_radius": {
-                        "top_left": 20.0,
-                        "top_right": 20.0,
-                        "bottom_right": 20.0,
-                        "bottom_left": 20.0
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
                       }
                     }
                   }
                 },
                 {
-                  "id": "9a8b0a2b-9dea-4f6c-b163-07582dd85aa7",
+                  "id": "1c0b95ba-ce09-404f-8f17-af482019bfa8",
                   "name": "Form / Email Value",
                   "frame": {
                     "pos": {
-                      "x": 48.0,
-                      "y": 382.0
+                      "x": 78.0,
+                      "y": 378.0
                     },
                     "size": {
-                      "x": 300.0,
-                      "y": 28.0
+                      "x": 260.0,
+                      "y": 26.0
                     },
                     "rotation": 0.0
                   },
@@ -584,7 +1825,7 @@
                   "kind": {
                     "Text": {
                       "content": "you@example.com",
-                      "font_size": 16.0,
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -605,16 +1846,16 @@
                   }
                 },
                 {
-                  "id": "a5b88de6-12a3-4af6-aa8f-42f8fbf14db0",
+                  "id": "2b332da5-f219-49b1-9cfc-c2fb66a7b76e",
                   "name": "Form / Password Label",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 436.0
+                      "y": 430.0
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 25.0
+                      "y": 24.0
                     },
                     "rotation": 0.0
                   },
@@ -651,7 +1892,7 @@
                   "kind": {
                     "Text": {
                       "content": "Password",
-                      "font_size": 14.0,
+                      "font_size": 13.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -659,7 +1900,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -667,29 +1908,160 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 8,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 13.0,
+                            "color": [
+                              11,
+                              49,
+                              66,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "e747a0c1-b770-4576-a785-56378ba4a2ba",
+                  "id": "0ef8abda-39e2-42e7-9d3c-1e4c85073fd3",
                   "name": "Form / Password Field",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 462.0
+                      "y": 454.0
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 52.0
+                      "y": 50.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      255,
-                      255,
-                      255,
+                      234,
+                      246,
+                      248,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        21,
+                        31,
+                        35,
+                        68
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 14.0,
+                        "top_right": 14.0,
+                        "bottom_right": 14.0,
+                        "bottom_left": 14.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "0c66b85f-f83f-4418-801f-530ea563b96b",
+                  "name": "Form / Password Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 46.0,
+                      "y": 468.0
+                    },
+                    "size": {
+                      "x": 20.0,
+                      "y": 20.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        79,
+                        116,
+                        130,
+                        255
+                      ],
+                      "width": 2.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "b814d6f1-6397-4b4f-aa80-78928fa26244",
+                  "name": "Form / Password Icon / Hand",
+                  "frame": {
+                    "pos": {
+                      "x": 55.2,
+                      "y": 472.0
+                    },
+                    "size": {
+                      "x": 1.6,
+                      "y": 6.4
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      79,
+                      116,
+                      130,
                       255
                     ],
                     "stroke": null,
@@ -718,25 +2090,80 @@
                   "kind": {
                     "Rectangle": {
                       "corner_radius": {
-                        "top_left": 20.0,
-                        "top_right": 20.0,
-                        "bottom_right": 20.0,
-                        "bottom_left": 20.0
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
                       }
                     }
                   }
                 },
                 {
-                  "id": "0096484f-1a6b-4676-b4ed-0318ad4f4dab",
+                  "id": "28390497-6a41-4e7e-88f9-54573b596f8d",
+                  "name": "Form / Password Icon / Hand 2",
+                  "frame": {
+                    "pos": {
+                      "x": 56.0,
+                      "y": 477.2
+                    },
+                    "size": {
+                      "x": 5.2,
+                      "y": 1.6
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      79,
+                      116,
+                      130,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "f92db012-ac12-486e-a234-f32d110f1a51",
                   "name": "Form / Password Value",
                   "frame": {
                     "pos": {
-                      "x": 48.0,
-                      "y": 478.0
+                      "x": 78.0,
+                      "y": 468.0
                     },
                     "size": {
-                      "x": 300.0,
-                      "y": 28.0
+                      "x": 260.0,
+                      "y": 26.0
                     },
                     "rotation": 0.0
                   },
@@ -773,7 +2200,7 @@
                   "kind": {
                     "Text": {
                       "content": "••••••••••",
-                      "font_size": 16.0,
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -794,16 +2221,16 @@
                   }
                 },
                 {
-                  "id": "807ea0dd-e299-4870-a684-eaef1d6b068f",
+                  "id": "3f50bf4d-abc4-4ee0-a93b-7a1cda36727b",
                   "name": "Form / Forgot",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 540.0
+                      "y": 526.0
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 25.0
+                      "y": 24.0
                     },
                     "rotation": 0.0
                   },
@@ -840,7 +2267,7 @@
                   "kind": {
                     "Text": {
                       "content": "Forgot password?",
-                      "font_size": 14.0,
+                      "font_size": 13.0,
                       "font": "Proportional",
                       "align": "Right",
                       "vertical_align": "Top",
@@ -848,7 +2275,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -856,35 +2283,94 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 16,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 13.0,
+                            "color": [
+                              14,
+                              124,
+                              134,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "7afa79d9-421a-4020-8a0a-97935dace31d",
+                  "id": "34eca311-0c4c-4383-ab68-02cfcd570d04",
                   "name": "Form / Sign In",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 590.0
+                      "y": 560.0
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 56.0
+                      "y": 54.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      14,
-                      124,
-                      134,
-                      255
-                    ],
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            14,
+                            124,
+                            134,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            191,
+                            230,
+                            234,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 0.5
+                      }
+                    },
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
-                    "shadows": [],
+                    "shadows": [
+                      {
+                        "color": [
+                          5,
+                          41,
+                          45,
+                          85
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 8.0
+                        },
+                        "blur": 20.0,
+                        "spread": 0.0
+                      }
+                    ],
                     "inner_shadows": []
                   },
                   "visible": true,
@@ -916,16 +2402,16 @@
                   }
                 },
                 {
-                  "id": "217e7ffa-b9d0-4ffe-bf8e-bcd2f86f9cb0",
+                  "id": "32434574-87c1-4822-ba51-e73ecc2d24c2",
                   "name": "Form / Sign In Label",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 590.0
+                      "y": 560.0
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 56.0
+                      "y": 54.0
                     },
                     "rotation": 0.0
                   },
@@ -962,7 +2448,7 @@
                   "kind": {
                     "Text": {
                       "content": "Sign in",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -983,7 +2469,7 @@
                           "len": 7,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 18.0,
+                            "font_size": 17.0,
                             "color": [
                               255,
                               255,
@@ -1002,16 +2488,71 @@
                   }
                 },
                 {
-                  "id": "b50fb43f-c334-4e5d-a17b-4f5c1c7514b3",
-                  "name": "Divider / Or",
+                  "id": "d8a37347-6398-4a62-b9ae-bd106140fc71",
+                  "name": "Divider / Left",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 666.0
+                      "y": 648.0
                     },
                     "size": {
-                      "x": 326.0,
-                      "y": 25.0
+                      "x": 130.0,
+                      "y": 1.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      26,
+                      39,
+                      43,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "a0409ea1-f077-4b7c-b183-c95ad9c4e5a1",
+                  "name": "Divider / Or",
+                  "frame": {
+                    "pos": {
+                      "x": 162.0,
+                      "y": 638.0
+                    },
+                    "size": {
+                      "x": 66.0,
+                      "y": 24.0
                     },
                     "rotation": 0.0
                   },
@@ -1048,7 +2589,7 @@
                   "kind": {
                     "Text": {
                       "content": "or",
-                      "font_size": 14.0,
+                      "font_size": 13.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -1069,27 +2610,85 @@
                   }
                 },
                 {
-                  "id": "e907b1d6-592b-457d-94e9-d1c6bf467486",
-                  "name": "Social / Button",
+                  "id": "7fdc07d5-88ab-413a-9812-65d973f7b1f4",
+                  "name": "Divider / Right",
                   "frame": {
                     "pos": {
-                      "x": 32.0,
-                      "y": 700.0
+                      "x": 228.0,
+                      "y": 648.0
                     },
                     "size": {
-                      "x": 326.0,
-                      "y": 52.0
+                      "x": 130.0,
+                      "y": 1.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      255,
-                      255,
-                      255,
-                      255
+                      26,
+                      39,
+                      43,
+                      85
                     ],
                     "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "a2d47723-1212-49a1-b242-2b5ef80ebf4c",
+                  "name": "Social / Apple",
+                  "frame": {
+                    "pos": {
+                      "x": 32.0,
+                      "y": 672.0
+                    },
+                    "size": {
+                      "x": 158.0,
+                      "y": 50.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        11,
+                        49,
+                        66,
+                        255
+                      ],
+                      "width": 2.0
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -1124,16 +2723,16 @@
                   }
                 },
                 {
-                  "id": "d085f599-0e08-482c-a84e-3dc9847149aa",
-                  "name": "Social / Label",
+                  "id": "defd421c-d1a3-4f41-9784-ef3d5514f7b8",
+                  "name": "Social / Apple Label",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 716.0
+                      "y": 672.0
                     },
                     "size": {
-                      "x": 326.0,
-                      "y": 28.0
+                      "x": 158.0,
+                      "y": 50.0
                     },
                     "rotation": 0.0
                   },
@@ -1169,16 +2768,16 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Continue with Apple",
-                      "font_size": 16.0,
+                      "content": "Apple",
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Center",
-                      "vertical_align": "Top",
+                      "vertical_align": "Middle",
                       "resize": "Fixed",
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -1186,21 +2785,184 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 5,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              11,
+                              49,
+                              66,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "f5b5dfe8-5c18-470f-b87b-c0f92915c257",
+                  "id": "0b5fae77-51d9-4520-a7d9-5019744fcf2b",
+                  "name": "Social / Google",
+                  "frame": {
+                    "pos": {
+                      "x": 200.0,
+                      "y": 672.0
+                    },
+                    "size": {
+                      "x": 158.0,
+                      "y": 50.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        11,
+                        49,
+                        66,
+                        255
+                      ],
+                      "width": 2.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 20.0,
+                        "top_right": 20.0,
+                        "bottom_right": 20.0,
+                        "bottom_left": 20.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "ea6f1c36-b8aa-4bfb-8af7-46b5aa110214",
+                  "name": "Social / Google Label",
+                  "frame": {
+                    "pos": {
+                      "x": 200.0,
+                      "y": 672.0
+                    },
+                    "size": {
+                      "x": 158.0,
+                      "y": 50.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      11,
+                      49,
+                      66,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Google",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 6,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              11,
+                              49,
+                              66,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "52ec91c9-40b0-4787-9574-94b6a2d88df4",
                   "name": "Footer / Sign Up",
                   "frame": {
                     "pos": {
                       "x": 32.0,
-                      "y": 790.0
+                      "y": 800.0
                     },
                     "size": {
                       "x": 326.0,
-                      "y": 25.0
+                      "y": 24.0
                     },
                     "rotation": 0.0
                   },
@@ -1236,8 +2998,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "New here? Create an account",
-                      "font_size": 14.0,
+                      "content": "New to Wander? Create an account",
+                      "font_size": 13.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",

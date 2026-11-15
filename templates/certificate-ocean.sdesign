@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "88d1bfbe-c501-4828-988a-899d05eabeb9",
+      "id": "d74811b5-102f-4a83-83e2-6c44a217c144",
       "name": "Page 1",
       "layers": [
         {
-          "id": "df66e8f0-f92e-4f3c-af6c-d503c20ddea6",
+          "id": "c5e51c6a-5aa3-4853-8cc2-601921d2ed54",
           "name": "Certificate",
           "frame": {
             "pos": {
@@ -49,12 +49,92 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "bf09dfd4-7227-47ad-b0f3-394ca19e0eb2",
-                  "name": "Decoration / Wave Back",
+                  "id": "178bbe23-9dc0-4a29-a3a5-6a5a7f59ee34",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1400.0,
+                      "y": 1000.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            234,
+                            246,
+                            248,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            211,
+                            238,
+                            242,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "d2ed3e06-1613-4617-ae70-ba7275bb2d24",
+                  "name": "Pattern / Wave Back",
                   "frame": {
                     "pos": {
                       "x": -280.0,
-                      "y": 920.0
+                      "y": 900.0
                     },
                     "size": {
                       "x": 1120.0,
@@ -95,12 +175,12 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "a50c6ec3-7d36-4b19-b02d-51b89c0eae07",
-                  "name": "Decoration / Wave Front",
+                  "id": "8b7331e0-c18b-441e-9e59-a5ad998c05c5",
+                  "name": "Pattern / Wave Front",
                   "frame": {
                     "pos": {
                       "x": 420.0,
-                      "y": 950.0
+                      "y": 940.0
                     },
                     "size": {
                       "x": 1260.0,
@@ -110,10 +190,10 @@
                   },
                   "style": {
                     "fill": [
-                      170,
-                      224,
-                      219,
-                      255
+                      76,
+                      125,
+                      119,
+                      153
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -141,8 +221,351 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "914fd641-b71a-4007-a529-d960a2711742",
-                  "name": "Header / Kicker",
+                  "id": "abc3682e-41c8-4f37-af34-59164b72dd36",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1302.01,
+                      "y": 61.29
+                    },
+                    "size": {
+                      "x": 28.24,
+                      "y": 28.24
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "69bf17c8-1d3a-43ac-9b84-fad0b8102a19",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1238.89,
+                      "y": 278.43
+                    },
+                    "size": {
+                      "x": 17.97,
+                      "y": 17.97
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "872ba3e0-b913-45b5-9ba2-cd9df2aee9f6",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1341.95,
+                      "y": 265.37
+                    },
+                    "size": {
+                      "x": 11.73,
+                      "y": 11.73
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "58cbfc26-269f-4c02-9644-d2852019fe9d",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1323.47,
+                      "y": 247.72
+                    },
+                    "size": {
+                      "x": 27.03,
+                      "y": 27.03
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "57ecab59-237c-44e4-9358-841b4e17a840",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1300.49,
+                      "y": 208.85
+                    },
+                    "size": {
+                      "x": 12.69,
+                      "y": 12.69
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "56bdcbfc-1cb7-468c-b452-23e44c3358e8",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1349.27,
+                      "y": 80.61
+                    },
+                    "size": {
+                      "x": 20.35,
+                      "y": 20.35
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "159afd8a-dc58-4200-9462-65a44464e5b3",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1259.43,
+                      "y": 130.93
+                    },
+                    "size": {
+                      "x": 18.75,
+                      "y": 18.75
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "770b8c2e-111a-4973-be1d-5f003fb0b175",
+                  "name": "Header / Kind",
                   "frame": {
                     "pos": {
                       "x": 150.0,
@@ -150,7 +573,7 @@
                     },
                     "size": {
                       "x": 1100.0,
-                      "y": 43.0
+                      "y": 40.0
                     },
                     "rotation": 0.0
                   },
@@ -186,8 +609,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "CERTIFICATE OF ACHIEVEMENT",
-                      "font_size": 26.0,
+                      "content": "AWARD OF EXCELLENCE",
+                      "font_size": 24.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -195,7 +618,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -203,21 +626,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 19,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 24.0,
+                            "color": [
+                              14,
+                              124,
+                              134,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "66721638-7149-45f3-ba4d-8bf6dc4982cf",
+                  "id": "2266a975-9161-4974-b8f0-eb6dc6b5240d",
                   "name": "Body / Presented",
                   "frame": {
                     "pos": {
                       "x": 150.0,
-                      "y": 260.0
+                      "y": 240.0
                     },
                     "size": {
                       "x": 1100.0,
-                      "y": 43.0
+                      "y": 40.0
                     },
                     "rotation": 0.0
                   },
@@ -254,214 +696,6 @@
                   "kind": {
                     "Text": {
                       "content": "This certificate is proudly presented to",
-                      "font_size": 26.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "a3c31685-d512-4183-8a6a-7a65066af98b",
-                  "name": "Body / Recipient",
-                  "frame": {
-                    "pos": {
-                      "x": 150.0,
-                      "y": 330.0
-                    },
-                    "size": {
-                      "x": 1100.0,
-                      "y": 148.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      11,
-                      49,
-                      66,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Alexandra Chen",
-                      "font_size": 96.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 14,
-                          "style": {
-                            "font": "Proportional",
-                            "font_size": 96.0,
-                            "color": [
-                              11,
-                              49,
-                              66,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "099aa572-a677-4146-aa2d-2fc09517efdf",
-                  "name": "Body / Underline",
-                  "frame": {
-                    "pos": {
-                      "x": 400.0,
-                      "y": 480.0
-                    },
-                    "size": {
-                      "x": 600.0,
-                      "y": 2.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      14,
-                      124,
-                      134,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "8aec7700-25d6-4090-ab46-a4837d04cc83",
-                  "name": "Body / Reason",
-                  "frame": {
-                    "pos": {
-                      "x": 200.0,
-                      "y": 520.0
-                    },
-                    "size": {
-                      "x": 1000.0,
-                      "y": 76.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      79,
-                      116,
-                      130,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "for outstanding completion of the Advanced Product Design program,\ndemonstrating exceptional craft, curiosity and leadership.",
                       "font_size": 24.0,
                       "font": "Proportional",
                       "align": "Center",
@@ -483,16 +717,16 @@
                   }
                 },
                 {
-                  "id": "cfb22966-3147-4b78-a3c0-0f9191156748",
-                  "name": "Signature / Date Value",
+                  "id": "ed9495e2-da13-4445-87a0-17afd7c95373",
+                  "name": "Body / Recipient",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 760.0
+                      "x": 150.0,
+                      "y": 300.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 46.0
+                      "x": 1100.0,
+                      "y": 133.0
                     },
                     "rotation": 0.0
                   },
@@ -528,8 +762,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "March 3, 2027",
-                      "font_size": 28.0,
+                      "content": "Riverside Robotics Club",
+                      "font_size": 86.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -547,10 +781,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 13,
+                          "len": 23,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 28.0,
+                            "font_size": 86.0,
                             "color": [
                               11,
                               49,
@@ -569,346 +803,16 @@
                   }
                 },
                 {
-                  "id": "bf0831f8-24d5-416b-9cf2-3b0cdf1ce11e",
-                  "name": "Signature / Date Line",
+                  "id": "34f21126-c135-4222-8270-8ea6713eb7cb",
+                  "name": "Body / Underline",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 810.0
+                      "x": 440.0,
+                      "y": 440.0
                     },
                     "size": {
-                      "x": 360.0,
+                      "x": 520.0,
                       "y": 2.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      11,
-                      49,
-                      66,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "705fe698-5f1c-4c8c-9d7b-a00856f1529b",
-                  "name": "Signature / Date Label",
-                  "frame": {
-                    "pos": {
-                      "x": 200.0,
-                      "y": 826.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 28.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      79,
-                      116,
-                      130,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "DATE",
-                      "font_size": 16.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "cde6f123-c2d8-4a35-8382-16634a2606ae",
-                  "name": "Signature / Director Value",
-                  "frame": {
-                    "pos": {
-                      "x": 840.0,
-                      "y": 760.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 46.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      11,
-                      49,
-                      66,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Samuel Ortiz",
-                      "font_size": 28.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 12,
-                          "style": {
-                            "font": "Proportional",
-                            "font_size": 28.0,
-                            "color": [
-                              11,
-                              49,
-                              66,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "27429de3-a5c9-4f04-8b0e-2ac9ee3d5d74",
-                  "name": "Signature / Director Line",
-                  "frame": {
-                    "pos": {
-                      "x": 840.0,
-                      "y": 810.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 2.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      11,
-                      49,
-                      66,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "07ae2ec0-b33c-4bd7-9630-b194e9449182",
-                  "name": "Signature / Director Label",
-                  "frame": {
-                    "pos": {
-                      "x": 840.0,
-                      "y": 826.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 28.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      79,
-                      116,
-                      130,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "DIRECTOR",
-                      "font_size": 16.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "e0f11816-261b-4c8b-84ae-47f6b369396f",
-                  "name": "Seal",
-                  "frame": {
-                    "pos": {
-                      "x": 640.0,
-                      "y": 700.0
-                    },
-                    "size": {
-                      "x": 120.0,
-                      "y": 120.0
                     },
                     "rotation": 0.0
                   },
@@ -917,6 +821,557 @@
                       14,
                       124,
                       134,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "845765c2-f162-46d6-b06e-34a3607d204a",
+                  "name": "Body / Reason",
+                  "frame": {
+                    "pos": {
+                      "x": 190.0,
+                      "y": 480.0
+                    },
+                    "size": {
+                      "x": 1020.0,
+                      "y": 70.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      79,
+                      116,
+                      130,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "first place, regional robotics championship —\nfor ingenuity, teamwork and a very fast robot.",
+                      "font_size": 22.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "76279100-2f80-45e7-b826-7867139d47a3",
+                  "name": "Signature / Event Script",
+                  "frame": {
+                    "pos": {
+                      "x": 190.0,
+                      "y": 700.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 49.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      11,
+                      49,
+                      66,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Regional Finals 2027",
+                      "font_size": 30.0,
+                      "font": "Handwriting",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "b438ffad-2fc6-4d2b-9878-5f7796851f96",
+                  "name": "Signature / Event Line",
+                  "frame": {
+                    "pos": {
+                      "x": 190.0,
+                      "y": 760.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 2.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      11,
+                      49,
+                      66,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "8d420947-7840-4574-8508-ee5e1d3a311f",
+                  "name": "Signature / Event Label",
+                  "frame": {
+                    "pos": {
+                      "x": 190.0,
+                      "y": 776.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 26.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      79,
+                      116,
+                      130,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "EVENT",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "e8fa9714-6709-4fcd-8665-7fcd7674d4f4",
+                  "name": "Signature / Judge Script",
+                  "frame": {
+                    "pos": {
+                      "x": 890.0,
+                      "y": 700.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 49.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      11,
+                      49,
+                      66,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Prof. Amara Diallo",
+                      "font_size": 30.0,
+                      "font": "Handwriting",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "0f512254-7272-4ff9-b09f-2add10a9c2f5",
+                  "name": "Signature / Judge Line",
+                  "frame": {
+                    "pos": {
+                      "x": 890.0,
+                      "y": 760.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 2.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      11,
+                      49,
+                      66,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "e9912522-28a8-4018-bdc5-f1f213d8f17e",
+                  "name": "Signature / Judge Label",
+                  "frame": {
+                    "pos": {
+                      "x": 890.0,
+                      "y": 776.0
+                    },
+                    "size": {
+                      "x": 320.0,
+                      "y": 26.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      79,
+                      116,
+                      130,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "JUDGE",
+                      "font_size": 15.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "61449a72-7c95-45cf-80cc-1697d7dee2c2",
+                  "name": "Seal / Rosette",
+                  "frame": {
+                    "pos": {
+                      "x": 625.0,
+                      "y": 650.0
+                    },
+                    "size": {
+                      "x": 150.0,
+                      "y": 150.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      14,
+                      124,
+                      134,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 20,
+                      "inner_ratio": 0.86
+                    }
+                  }
+                },
+                {
+                  "id": "2da779ab-ccb8-47fe-8465-f4908877b309",
+                  "name": "Seal / Disc",
+                  "frame": {
+                    "pos": {
+                      "x": 645.0,
+                      "y": 670.0
+                    },
+                    "size": {
+                      "x": 110.0,
+                      "y": 110.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      127,
+                      209,
+                      199,
                       255
                     ],
                     "stroke": null,
@@ -945,24 +1400,24 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "7083dbae-1974-47db-8e90-ac63f5d7ffc2",
+                  "id": "a5e2b0fb-7fb4-4567-993f-a24433c05cde",
                   "name": "Seal / Label",
                   "frame": {
                     "pos": {
-                      "x": 640.0,
-                      "y": 700.0
+                      "x": 645.0,
+                      "y": 670.0
                     },
                     "size": {
-                      "x": 120.0,
-                      "y": 120.0
+                      "x": 110.0,
+                      "y": 110.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      255,
-                      255,
-                      255,
+                      11,
+                      49,
+                      66,
                       255
                     ],
                     "stroke": null,
@@ -990,8 +1445,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "2027",
-                      "font_size": 26.0,
+                      "content": "1ST",
+                      "font_size": 28.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -1009,14 +1464,14 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 4,
+                          "len": 3,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 26.0,
+                            "font_size": 28.0,
                             "color": [
-                              255,
-                              255,
-                              255,
+                              11,
+                              49,
+                              66,
                               255
                             ],
                             "bold": true,

@@ -9,12 +9,14 @@
 //! - `client`: the CLI side — connects and sends one request.
 //! - `ops`: the actual command implementations, shared by both the live
 //!   server (via `app`'s `History`) and the CLI's headless fallback.
+//! - `style_ops`: what the fill/shadow/extra-shape ops build, called from `ops`.
 
 pub mod client;
 pub mod ops;
 pub mod protocol;
 pub mod registry;
 pub mod server;
+mod style_ops;
 
 pub use protocol::{Request, Response};
 pub use server::{IpcHandle, PendingCommand};

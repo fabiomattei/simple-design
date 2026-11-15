@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "1e4ebefb-3df1-43fd-8305-b75e921318c2",
+      "id": "b181da23-35f3-4e92-b867-67ae69f0a954",
       "name": "Page 1",
       "layers": [
         {
-          "id": "c274d70c-5225-4fa2-9122-cf34e89bfe28",
+          "id": "b70c8a15-abfd-432c-8e68-79237db3c00e",
           "name": "Resume A4",
           "frame": {
             "pos": {
@@ -49,8 +49,88 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "8771de74-8a28-4d15-b2dd-51ece8576944",
-                  "name": "Decoration / Frame",
+                  "id": "117e3f36-6833-445d-81df-aa075b6a9b16",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 794.0,
+                      "y": 1123.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            28,
+                            27,
+                            25,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            14,
+                            14,
+                            14,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "e3c99b2b-43d0-4e24-bc13-7d64a06a9255",
+                  "name": "Pattern / Frame",
                   "frame": {
                     "pos": {
                       "x": 27.79,
@@ -107,8 +187,8 @@
                   }
                 },
                 {
-                  "id": "c4e1e0cc-377f-4512-8f82-92cc8186b5a0",
-                  "name": "Decoration / Frame Inner",
+                  "id": "5c3c26b7-56ad-48af-a6d7-406d61a702b1",
+                  "name": "Pattern / Frame Inner",
                   "frame": {
                     "pos": {
                       "x": 35.79,
@@ -124,10 +204,10 @@
                     "fill": null,
                     "stroke": {
                       "paint": [
-                        92,
-                        78,
-                        49,
-                        255
+                        80,
+                        66,
+                        37,
+                        102
                       ],
                       "width": 1.0
                     },
@@ -165,16 +245,933 @@
                   }
                 },
                 {
-                  "id": "b4708dc3-d2ef-4cf8-8efa-7d42fdc0b02b",
+                  "id": "a2af457e-f4a6-4456-9d93-a786c40ba831",
+                  "name": "Pattern / Corner 1",
+                  "frame": {
+                    "pos": {
+                      "x": 18.79,
+                      "y": 18.79
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "ae1b66a4-1506-493c-8836-dcecfcc72aec",
+                  "name": "Pattern / Corner 2",
+                  "frame": {
+                    "pos": {
+                      "x": 757.21,
+                      "y": 18.79
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "bacfdf14-691b-4a3e-bd85-8e5a30af2e31",
+                  "name": "Pattern / Corner 3",
+                  "frame": {
+                    "pos": {
+                      "x": 18.79,
+                      "y": 1086.21
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "2e28a3eb-da0e-4490-b0f3-84ef48825108",
+                  "name": "Pattern / Corner 4",
+                  "frame": {
+                    "pos": {
+                      "x": 757.21,
+                      "y": 1086.21
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "5910bd90-f111-4bcd-ad15-ddb13a0e75fe",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 394.62,
+                      "y": -95.28
+                    },
+                    "size": {
+                      "x": 4.76,
+                      "y": 190.56
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "0f5a1bf0-04c8-4767-b607-68e8b71b31d5",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 291.88757,
+                      "y": -96.324646
+                    },
+                    "size": {
+                      "x": 190.61646,
+                      "y": 200.35724
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "CompoundPath": {
+                      "polygons": [
+                        {
+                          "exterior": [
+                            {
+                              "x": 0.092285156,
+                              "y": 110.74384
+                            },
+                            {
+                              "x": 0.0,
+                              "y": 105.984726
+                            },
+                            {
+                              "x": 88.48166,
+                              "y": 104.26862
+                            },
+                            {
+                              "x": 0.7046509,
+                              "y": 77.98992
+                            },
+                            {
+                              "x": 2.0698242,
+                              "y": 73.429886
+                            },
+                            {
+                              "x": 86.85028,
+                              "y": 98.81148
+                            },
+                            {
+                              "x": 11.288391,
+                              "y": 46.98703
+                            },
+                            {
+                              "x": 13.980713,
+                              "y": 43.06157
+                            },
+                            {
+                              "x": 86.96307,
+                              "y": 93.116844
+                            },
+                            {
+                              "x": 30.832794,
+                              "y": 20.69609
+                            },
+                            {
+                              "x": 34.595062,
+                              "y": 17.780106
+                            },
+                            {
+                              "x": 88.809204,
+                              "y": 87.72859
+                            },
+                            {
+                              "x": 57.47116,
+                              "y": 1.6280212
+                            },
+                            {
+                              "x": 61.944122,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 98.35962,
+                              "y": 100.050804
+                            },
+                            {
+                              "x": 99.81967,
+                              "y": 101.93459
+                            },
+                            {
+                              "x": 101.78531,
+                              "y": 103.28273
+                            },
+                            {
+                              "x": 104.068665,
+                              "y": 103.96632
+                            },
+                            {
+                              "x": 106.45172,
+                              "y": 103.9201
+                            },
+                            {
+                              "x": 108.70685,
+                              "y": 103.14848
+                            },
+                            {
+                              "x": 110.618744,
+                              "y": 101.72513
+                            },
+                            {
+                              "x": 112.0047,
+                              "y": 99.78609
+                            },
+                            {
+                              "x": 138.40677,
+                              "y": 17.443535
+                            },
+                            {
+                              "x": 142.93948,
+                              "y": 18.896889
+                            },
+                            {
+                              "x": 121.07013,
+                              "y": 87.10286
+                            },
+                            {
+                              "x": 160.90137,
+                              "y": 31.375885
+                            },
+                            {
+                              "x": 164.77386,
+                              "y": 34.143795
+                            },
+                            {
+                              "x": 123.12375,
+                              "y": 92.4155
+                            },
+                            {
+                              "x": 178.06784,
+                              "y": 51.51114
+                            },
+                            {
+                              "x": 180.91031,
+                              "y": 55.329254
+                            },
+                            {
+                              "x": 123.457214,
+                              "y": 98.1015
+                            },
+                            {
+                              "x": 188.26678,
+                              "y": 75.92627
+                            },
+                            {
+                              "x": 189.80774,
+                              "y": 80.42994
+                            },
+                            {
+                              "x": 122.0387,
+                              "y": 103.61779
+                            },
+                            {
+                              "x": 190.52417,
+                              "y": 102.28951
+                            },
+                            {
+                              "x": 190.61646,
+                              "y": 107.04863
+                            },
+                            {
+                              "x": 119.00366,
+                              "y": 108.43756
+                            },
+                            {
+                              "x": 184.62433,
+                              "y": 128.0831
+                            },
+                            {
+                              "x": 183.25916,
+                              "y": 132.64313
+                            },
+                            {
+                              "x": 114.64191,
+                              "y": 112.10049
+                            },
+                            {
+                              "x": 171.1308,
+                              "y": 150.84363
+                            },
+                            {
+                              "x": 168.43848,
+                              "y": 154.76909
+                            },
+                            {
+                              "x": 111.823944,
+                              "y": 115.939766
+                            },
+                            {
+                              "x": 111.48758,
+                              "y": 116.98881
+                            },
+                            {
+                              "x": 151.33218,
+                              "y": 168.39735
+                            },
+                            {
+                              "x": 147.56992,
+                              "y": 171.31334
+                            },
+                            {
+                              "x": 109.72525,
+                              "y": 122.48516
+                            },
+                            {
+                              "x": 108.22644,
+                              "y": 127.159615
+                            },
+                            {
+                              "x": 127.11948,
+                              "y": 179.06783
+                            },
+                            {
+                              "x": 122.646515,
+                              "y": 180.69585
+                            },
+                            {
+                              "x": 105.854004,
+                              "y": 134.55876
+                            },
+                            {
+                              "x": 84.75656,
+                              "y": 200.35724
+                            },
+                            {
+                              "x": 80.22385,
+                              "y": 198.90387
+                            },
+                            {
+                              "x": 103.19644,
+                              "y": 127.25719
+                            },
+                            {
+                              "x": 101.51749,
+                              "y": 122.64432
+                            },
+                            {
+                              "x": 53.96472,
+                              "y": 189.17429
+                            },
+                            {
+                              "x": 50.092224,
+                              "y": 186.40637
+                            },
+                            {
+                              "x": 99.543365,
+                              "y": 117.22044
+                            },
+                            {
+                              "x": 99.166565,
+                              "y": 116.18521
+                            },
+                            {
+                              "x": 28.057709,
+                              "y": 169.1238
+                            },
+                            {
+                              "x": 25.21524,
+                              "y": 165.30568
+                            },
+                            {
+                              "x": 96.20181,
+                              "y": 112.45813
+                            },
+                            {
+                              "x": 9.509766,
+                              "y": 142.12067
+                            },
+                            {
+                              "x": 7.968811,
+                              "y": 137.617
+                            },
+                            {
+                              "x": 91.701324,
+                              "y": 108.96709
+                            }
+                          ],
+                          "holes": [
+                            [
+                              {
+                                "x": 104.87387,
+                                "y": 117.948494
+                              },
+                              {
+                                "x": 105.56888,
+                                "y": 119.85804
+                              },
+                              {
+                                "x": 106.1893,
+                                "y": 117.92302
+                              },
+                              {
+                                "x": 105.514435,
+                                "y": 117.05228
+                              }
+                            ]
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "088410b9-e4d6-4216-bb49-957eb8826dac",
+                  "name": "Sidebar",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 260.0,
+                      "y": 1123.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      31,
+                      30,
+                      28,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "7e13d749-1807-4088-bc32-aa25eaa21add",
+                  "name": "Sidebar / Photo",
+                  "frame": {
+                    "pos": {
+                      "x": 50.0,
+                      "y": 60.0
+                    },
+                    "size": {
+                      "x": 160.0,
+                      "y": 208.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "90e4d616-92fa-4deb-81a8-c31154c4f674",
+                          "name": "Sidebar / Photo / Back",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 160.0,
+                              "y": 160.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              67,
+                              59,
+                              40,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "40b10926-bf95-4455-bf35-285696f1925c",
+                          "name": "Sidebar / Photo / Head",
+                          "frame": {
+                            "pos": {
+                              "x": 51.199997,
+                              "y": 28.800003
+                            },
+                            "size": {
+                              "x": 57.6,
+                              "y": 57.6
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              140,
+                              116,
+                              64,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "b271a428-5b10-444c-9b8d-eeedf8929d08",
+                          "name": "Sidebar / Photo / Body",
+                          "frame": {
+                            "pos": {
+                              "x": 22.400002,
+                              "y": 96.0
+                            },
+                            "size": {
+                              "x": 115.2,
+                              "y": 112.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              140,
+                              116,
+                              64,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "421ad064-7a73-4544-86b0-f6a41fc63438",
+                          "name": "Sidebar / Photo / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 160.0,
+                              "y": 160.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 80.0,
+                                "top_right": 80.0,
+                                "bottom_right": 80.0,
+                                "bottom_left": 80.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "6c40ee1c-6fa4-40e3-8442-657c29794c3d",
                   "name": "Header / Name",
                   "frame": {
                     "pos": {
-                      "x": 64.0,
-                      "y": 80.0
+                      "x": 300.0,
+                      "y": 70.0
                     },
                     "size": {
-                      "x": 666.0,
-                      "y": 73.0
+                      "x": 440.0,
+                      "y": 118.0
                     },
                     "rotation": 0.0
                   },
@@ -210,8 +1207,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Priya Natarajan",
-                      "font_size": 46.0,
+                      "content": "Marco Ricci",
+                      "font_size": 38.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -229,10 +1226,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 15,
+                          "len": 11,
                           "style": {
                             "font": "Serif",
-                            "font_size": 46.0,
+                            "font_size": 38.0,
                             "color": [
                               241,
                               233,
@@ -251,16 +1248,16 @@
                   }
                 },
                 {
-                  "id": "c7dd189c-4e21-47d0-a506-6b30a0b9c363",
+                  "id": "5468baea-98b6-4967-8d72-62036ab1a9da",
                   "name": "Header / Role",
                   "frame": {
                     "pos": {
-                      "x": 64.0,
-                      "y": 150.0
+                      "x": 300.0,
+                      "y": 190.0
                     },
                     "size": {
-                      "x": 666.0,
-                      "y": 37.0
+                      "x": 440.0,
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -296,8 +1293,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Senior Product Designer",
-                      "font_size": 22.0,
+                      "content": "FULL-STACK ENGINEER",
+                      "font_size": 16.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -305,7 +1302,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -313,21 +1310,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 19,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 16.0,
+                            "color": [
+                              201,
+                              165,
+                              92,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "00dae005-e49c-4891-897d-ad15b6b9b4d5",
+                  "id": "1db5feaf-a284-422f-a767-3b442fd2eeaa",
                   "name": "Header / Contact",
                   "frame": {
                     "pos": {
-                      "x": 64.0,
-                      "y": 192.0
+                      "x": 300.0,
+                      "y": 222.0
                     },
                     "size": {
-                      "x": 666.0,
-                      "y": 26.0
+                      "x": 440.0,
+                      "y": 25.0
                     },
                     "rotation": 0.0
                   },
@@ -363,8 +1379,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "priya@example.com · +44 20 7946 0018 · London",
-                      "font_size": 15.0,
+                      "content": "marco@example.dev · Milan",
+                      "font_size": 14.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -385,16 +1401,224 @@
                   }
                 },
                 {
-                  "id": "dc5e1c59-8b8f-45bb-9de8-4f9359d6d7a1",
-                  "name": "Header / Rule",
+                  "id": "6f519cf4-05ff-4e74-8355-8ffb7657230b",
+                  "name": "Skills / Title",
                   "frame": {
                     "pos": {
-                      "x": 64.0,
-                      "y": 236.0
+                      "x": 40.0,
+                      "y": 270.0
                     },
                     "size": {
-                      "x": 666.0,
-                      "y": 2.0
+                      "x": 200.0,
+                      "y": 32.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Skills",
+                      "font_size": 19.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 6,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 19.0,
+                            "color": [
+                              201,
+                              165,
+                              92,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "6a4cd44b-89e9-4041-a742-ce092f79420b",
+                  "name": "Skills / TypeScript",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 314.0
+                    },
+                    "size": {
+                      "x": 200.0,
+                      "y": 25.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "TypeScript",
+                      "font_size": 14.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "c422880c-20a4-4e12-aff7-a18583c2b2bb",
+                  "name": "Skills / TypeScript Track",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 338.0
+                    },
+                    "size": {
+                      "x": 180.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      33,
+                      31,
+                      27,
+                      51
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "40254f89-c551-48d4-a2c3-7cf3bd73bfb1",
+                  "name": "Skills / TypeScript Level",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 338.0
+                    },
+                    "size": {
+                      "x": 171.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
@@ -440,16 +1664,547 @@
                   }
                 },
                 {
-                  "id": "95963fda-2e70-4e8c-a2d6-c91512ae41f8",
-                  "name": "Skills / Title",
+                  "id": "cee8189c-e5f7-4e08-9480-1bc12462186c",
+                  "name": "Skills / Rust",
                   "frame": {
                     "pos": {
-                      "x": 64.0,
-                      "y": 270.0
+                      "x": 40.0,
+                      "y": 366.0
                     },
                     "size": {
                       "x": 200.0,
-                      "y": 34.0
+                      "y": 25.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Rust",
+                      "font_size": 14.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "cb8a2830-23b5-47dc-81a9-9d7ea5792601",
+                  "name": "Skills / Rust Track",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 390.0
+                    },
+                    "size": {
+                      "x": 180.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      33,
+                      31,
+                      27,
+                      51
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "395ea8c9-d2d5-4d10-9a9d-1f28769f6380",
+                  "name": "Skills / Rust Level",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 390.0
+                    },
+                    "size": {
+                      "x": 149.4,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "34bb991c-7fa3-4342-a112-1cf6ca90c4a0",
+                  "name": "Skills / PostgreSQL",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 418.0
+                    },
+                    "size": {
+                      "x": 200.0,
+                      "y": 25.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "PostgreSQL",
+                      "font_size": 14.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "671c17d8-00d6-4b5a-97f4-9f4e5553b063",
+                  "name": "Skills / PostgreSQL Track",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 442.0
+                    },
+                    "size": {
+                      "x": 180.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      33,
+                      31,
+                      27,
+                      51
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "be9b1d8e-ab79-4073-800a-1d6acac44c43",
+                  "name": "Skills / PostgreSQL Level",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 442.0
+                    },
+                    "size": {
+                      "x": 127.8,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "b8314680-93fe-41dc-a551-6f72d0b865c4",
+                  "name": "Skills / Cloud infra",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 470.0
+                    },
+                    "size": {
+                      "x": 200.0,
+                      "y": 25.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Cloud infra",
+                      "font_size": 14.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "0d1800e7-fa37-4d47-be91-ecb059e89295",
+                  "name": "Skills / Cloud infra Track",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 494.0
+                    },
+                    "size": {
+                      "x": 180.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      33,
+                      31,
+                      27,
+                      51
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "094dc087-0b5d-438b-a505-f3179ecbb003",
+                  "name": "Skills / Cloud infra Level",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 494.0
+                    },
+                    "size": {
+                      "x": 106.2,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "a27a87ae-260f-4c1e-9512-0f2564a858e4",
+                  "name": "Languages / Title",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 550.0
+                    },
+                    "size": {
+                      "x": 200.0,
+                      "y": 32.0
                     },
                     "rotation": 0.0
                   },
@@ -485,429 +2240,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Skills",
-                      "font_size": 20.0,
-                      "font": "Serif",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 6,
-                          "style": {
-                            "font": "Serif",
-                            "font_size": 20.0,
-                            "color": [
-                              201,
-                              165,
-                              92,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "4c0467e2-2dc1-4f59-891c-5bc144badd31",
-                  "name": "Skills / Interaction design",
-                  "frame": {
-                    "pos": {
-                      "x": 64.0,
-                      "y": 312.0
-                    },
-                    "size": {
-                      "x": 210.0,
-                      "y": 26.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Interaction design",
-                      "font_size": 15.0,
-                      "font": "Serif",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "4fa4a192-3c6b-4fa0-a432-d7b35d4a7182",
-                  "name": "Skills / Design systems",
-                  "frame": {
-                    "pos": {
-                      "x": 64.0,
-                      "y": 342.0
-                    },
-                    "size": {
-                      "x": 210.0,
-                      "y": 26.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Design systems",
-                      "font_size": 15.0,
-                      "font": "Serif",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "873a72dc-97be-4c44-af9a-f89d7a4ca6ee",
-                  "name": "Skills / Prototyping",
-                  "frame": {
-                    "pos": {
-                      "x": 64.0,
-                      "y": 372.0
-                    },
-                    "size": {
-                      "x": 210.0,
-                      "y": 26.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Prototyping",
-                      "font_size": 15.0,
-                      "font": "Serif",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "25592636-c50c-47f4-8839-283ad4580d85",
-                  "name": "Skills / User research",
-                  "frame": {
-                    "pos": {
-                      "x": 64.0,
-                      "y": 402.0
-                    },
-                    "size": {
-                      "x": 210.0,
-                      "y": 26.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "User research",
-                      "font_size": 15.0,
-                      "font": "Serif",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "1378147d-5ee4-4d0f-a868-964e40672b8a",
-                  "name": "Skills / Workshops",
-                  "frame": {
-                    "pos": {
-                      "x": 64.0,
-                      "y": 432.0
-                    },
-                    "size": {
-                      "x": 210.0,
-                      "y": 26.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Workshops",
-                      "font_size": 15.0,
-                      "font": "Serif",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "a4dd759a-1dcb-4434-aa52-f19f0e431798",
-                  "name": "Education / Title",
-                  "frame": {
-                    "pos": {
-                      "x": 64.0,
-                      "y": 490.0
-                    },
-                    "size": {
-                      "x": 200.0,
-                      "y": 34.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      201,
-                      165,
-                      92,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "Education",
-                      "font_size": 20.0,
+                      "content": "Languages",
+                      "font_size": 19.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -928,7 +2262,7 @@
                           "len": 9,
                           "style": {
                             "font": "Serif",
-                            "font_size": 20.0,
+                            "font_size": 19.0,
                             "color": [
                               201,
                               165,
@@ -947,24 +2281,24 @@
                   }
                 },
                 {
-                  "id": "890f70e2-f297-40e8-a0e0-dcda260c258a",
-                  "name": "Education / Degree",
+                  "id": "67c1bef2-7ebe-4e7b-a67d-b655507fa4db",
+                  "name": "Languages / English",
                   "frame": {
                     "pos": {
-                      "x": 64.0,
-                      "y": 532.0
+                      "x": 40.0,
+                      "y": 592.0
                     },
                     "size": {
-                      "x": 210.0,
-                      "y": 72.0
+                      "x": 120.0,
+                      "y": 25.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      163,
-                      154,
-                      136,
+                      241,
+                      233,
+                      216,
                       255
                     ],
                     "stroke": null,
@@ -992,8 +2326,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "MA Interaction Design\nRoyal College of Art\n2014 – 2016",
-                      "font_size": 15.0,
+                      "content": "English",
+                      "font_size": 14.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1014,7 +2348,584 @@
                   }
                 },
                 {
-                  "id": "031159f7-543a-4ee1-a5c5-b393667ced7c",
+                  "id": "3ad816c8-2510-4067-922e-87ac9140e4c9",
+                  "name": "Languages / English Level 1",
+                  "frame": {
+                    "pos": {
+                      "x": 140.0,
+                      "y": 594.0
+                    },
+                    "size": {
+                      "x": 13.0,
+                      "y": 13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "3d44739f-a408-4bac-bd5b-558b1057f47c",
+                  "name": "Languages / English Level 2",
+                  "frame": {
+                    "pos": {
+                      "x": 155.6,
+                      "y": 594.0
+                    },
+                    "size": {
+                      "x": 13.0,
+                      "y": 13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "24921438-68d9-4bd7-9833-1f4fb9653f2d",
+                  "name": "Languages / English Level 3",
+                  "frame": {
+                    "pos": {
+                      "x": 171.2,
+                      "y": 594.0
+                    },
+                    "size": {
+                      "x": 13.0,
+                      "y": 13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "1489ccd2-6a50-4aef-b98a-c9c306615213",
+                  "name": "Languages / English Level 4",
+                  "frame": {
+                    "pos": {
+                      "x": 186.8,
+                      "y": 594.0
+                    },
+                    "size": {
+                      "x": 13.0,
+                      "y": 13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "154251ab-bf35-42f1-8c3e-a7366405e98f",
+                  "name": "Languages / English Level 5",
+                  "frame": {
+                    "pos": {
+                      "x": 202.4,
+                      "y": 594.0
+                    },
+                    "size": {
+                      "x": 13.0,
+                      "y": 13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "abe3d4a6-94e0-47f8-be71-ab682a115fa4",
+                  "name": "Languages / Spanish",
+                  "frame": {
+                    "pos": {
+                      "x": 40.0,
+                      "y": 626.0
+                    },
+                    "size": {
+                      "x": 120.0,
+                      "y": 25.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Spanish",
+                      "font_size": 14.0,
+                      "font": "Serif",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "426758a8-dfbb-4710-8547-51d24d929eea",
+                  "name": "Languages / Spanish Level 1",
+                  "frame": {
+                    "pos": {
+                      "x": 140.0,
+                      "y": 628.0
+                    },
+                    "size": {
+                      "x": 13.0,
+                      "y": 13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "3af461f6-57ad-41da-9bb8-b5e5dcbfa551",
+                  "name": "Languages / Spanish Level 2",
+                  "frame": {
+                    "pos": {
+                      "x": 155.6,
+                      "y": 628.0
+                    },
+                    "size": {
+                      "x": 13.0,
+                      "y": 13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "6ae54422-07ba-4233-a498-d4e24188a909",
+                  "name": "Languages / Spanish Level 3",
+                  "frame": {
+                    "pos": {
+                      "x": 171.2,
+                      "y": 628.0
+                    },
+                    "size": {
+                      "x": 13.0,
+                      "y": 13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "f25662d0-1a7f-4215-a815-358739264ba6",
+                  "name": "Languages / Spanish Level 4",
+                  "frame": {
+                    "pos": {
+                      "x": 186.8,
+                      "y": 628.0
+                    },
+                    "size": {
+                      "x": 13.0,
+                      "y": 13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      68,
+                      65,
+                      59,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "c8bc5d7f-4a86-4acb-886d-660f0f63ece2",
+                  "name": "Languages / Spanish Level 5",
+                  "frame": {
+                    "pos": {
+                      "x": 202.4,
+                      "y": 628.0
+                    },
+                    "size": {
+                      "x": 13.0,
+                      "y": 13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      68,
+                      65,
+                      59,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "8c706b30-ce69-49bd-ae78-c3431d00835c",
                   "name": "Experience / Title",
                   "frame": {
                     "pos": {
@@ -1022,8 +2933,8 @@
                       "y": 270.0
                     },
                     "size": {
-                      "x": 430.0,
-                      "y": 34.0
+                      "x": 440.0,
+                      "y": 32.0
                     },
                     "rotation": 0.0
                   },
@@ -1060,7 +2971,7 @@
                   "kind": {
                     "Text": {
                       "content": "Experience",
-                      "font_size": 20.0,
+                      "font_size": 19.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1081,7 +2992,7 @@
                           "len": 10,
                           "style": {
                             "font": "Serif",
-                            "font_size": 20.0,
+                            "font_size": 19.0,
                             "color": [
                               201,
                               165,
@@ -1100,16 +3011,117 @@
                   }
                 },
                 {
-                  "id": "f5ab0ebb-4c70-4cd9-8623-4c004105ae24",
-                  "name": "Experience / Job 1 Role",
+                  "id": "a8f28eb6-ed3b-46de-8a1f-b03dff4a61b7",
+                  "name": "Experience / 1 Dot",
                   "frame": {
                     "pos": {
                       "x": 300.0,
-                      "y": 312.0
+                      "y": 322.0
                     },
                     "size": {
-                      "x": 430.0,
-                      "y": 30.0
+                      "x": 12.0,
+                      "y": 12.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "caea95fe-1966-4294-884e-ffa92dea760d",
+                  "name": "Experience / 1 Line",
+                  "frame": {
+                    "pos": {
+                      "x": 305.0,
+                      "y": 338.0
+                    },
+                    "size": {
+                      "x": 2.0,
+                      "y": 112.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "44e3e152-c639-4c54-a7ad-a40c49b1841d",
+                  "name": "Experience / 1 Role",
+                  "frame": {
+                    "pos": {
+                      "x": 326.0,
+                      "y": 316.0
+                    },
+                    "size": {
+                      "x": 414.0,
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -1145,8 +3157,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Lead Designer · Fintech Co.",
-                      "font_size": 17.0,
+                      "content": "Staff Engineer · Cartwheel",
+                      "font_size": 16.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1164,10 +3176,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 27,
+                          "len": 26,
                           "style": {
                             "font": "Serif",
-                            "font_size": 17.0,
+                            "font_size": 16.0,
                             "color": [
                               241,
                               233,
@@ -1186,16 +3198,16 @@
                   }
                 },
                 {
-                  "id": "095388f5-3f5d-4e39-88b8-99bcc45c9d5d",
-                  "name": "Experience / Job 1 Dates",
+                  "id": "1f5dffea-b907-4896-ac11-3c21ab0f91e7",
+                  "name": "Experience / 1 Dates",
                   "frame": {
                     "pos": {
-                      "x": 300.0,
-                      "y": 342.0
+                      "x": 326.0,
+                      "y": 344.0
                     },
                     "size": {
-                      "x": 430.0,
-                      "y": 25.0
+                      "x": 414.0,
+                      "y": 24.0
                     },
                     "rotation": 0.0
                   },
@@ -1231,8 +3243,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "2021 – Present",
-                      "font_size": 14.0,
+                      "content": "2022 – Present",
+                      "font_size": 13.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1253,16 +3265,16 @@
                   }
                 },
                 {
-                  "id": "6b43f1c2-6240-4b80-87e7-eaf7880749b2",
-                  "name": "Experience / Job 1 Summary",
+                  "id": "93c5a4be-69dd-4d99-b726-c5d2f70d7b3f",
+                  "name": "Experience / 1 Summary",
                   "frame": {
                     "pos": {
-                      "x": 300.0,
+                      "x": 326.0,
                       "y": 370.0
                     },
                     "size": {
-                      "x": 430.0,
-                      "y": 49.0
+                      "x": 414.0,
+                      "y": 46.0
                     },
                     "rotation": 0.0
                   },
@@ -1298,8 +3310,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Led the redesign of the mobile app,\nlifting activation by 18%.",
-                      "font_size": 15.0,
+                      "content": "Cut p95 API latency by 60% across 30 services.",
+                      "font_size": 14.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1320,16 +3332,117 @@
                   }
                 },
                 {
-                  "id": "5715589e-24f4-4a37-9bc7-a3c49bf61794",
-                  "name": "Experience / Job 2 Role",
+                  "id": "e302e0d5-e28d-452a-8041-84f0133268ab",
+                  "name": "Experience / 2 Dot",
                   "frame": {
                     "pos": {
                       "x": 300.0,
-                      "y": 462.0
+                      "y": 450.0
                     },
                     "size": {
-                      "x": 430.0,
-                      "y": 30.0
+                      "x": 12.0,
+                      "y": 12.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "4e349665-134f-4914-86db-a7bbb33b7600",
+                  "name": "Experience / 2 Line",
+                  "frame": {
+                    "pos": {
+                      "x": 305.0,
+                      "y": 466.0
+                    },
+                    "size": {
+                      "x": 2.0,
+                      "y": 112.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "52c4af05-1462-4b04-a3dd-cac4c79a736f",
+                  "name": "Experience / 2 Role",
+                  "frame": {
+                    "pos": {
+                      "x": 326.0,
+                      "y": 444.0
+                    },
+                    "size": {
+                      "x": 414.0,
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -1365,8 +3478,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Product Designer · Travelly",
-                      "font_size": 17.0,
+                      "content": "Senior Engineer · Loopify",
+                      "font_size": 16.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1384,10 +3497,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 27,
+                          "len": 25,
                           "style": {
                             "font": "Serif",
-                            "font_size": 17.0,
+                            "font_size": 16.0,
                             "color": [
                               241,
                               233,
@@ -1406,16 +3519,16 @@
                   }
                 },
                 {
-                  "id": "78a874c5-35a5-4786-9ae8-ad4de9e7e559",
-                  "name": "Experience / Job 2 Dates",
+                  "id": "5a530c58-a359-4940-b7fa-b0f17115aed3",
+                  "name": "Experience / 2 Dates",
                   "frame": {
                     "pos": {
-                      "x": 300.0,
-                      "y": 492.0
+                      "x": 326.0,
+                      "y": 472.0
                     },
                     "size": {
-                      "x": 430.0,
-                      "y": 25.0
+                      "x": 414.0,
+                      "y": 24.0
                     },
                     "rotation": 0.0
                   },
@@ -1451,8 +3564,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "2018 – 2021",
-                      "font_size": 14.0,
+                      "content": "2019 – 2022",
+                      "font_size": 13.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1473,16 +3586,16 @@
                   }
                 },
                 {
-                  "id": "1f514d7c-a9cb-46f1-ab93-5b6310af403b",
-                  "name": "Experience / Job 2 Summary",
+                  "id": "f8c5a3a1-63e3-41dc-937b-c77c94b2d77b",
+                  "name": "Experience / 2 Summary",
                   "frame": {
                     "pos": {
-                      "x": 300.0,
-                      "y": 520.0
+                      "x": 326.0,
+                      "y": 498.0
                     },
                     "size": {
-                      "x": 430.0,
-                      "y": 49.0
+                      "x": 414.0,
+                      "y": 46.0
                     },
                     "rotation": 0.0
                   },
@@ -1518,8 +3631,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Built the design system used by\n40 engineers across 3 platforms.",
-                      "font_size": 15.0,
+                      "content": "Owned billing: $40M ARR, zero-downtime migration.",
+                      "font_size": 14.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1540,16 +3653,62 @@
                   }
                 },
                 {
-                  "id": "58af511e-38ce-4bb7-ad69-515c1843fbb7",
-                  "name": "Experience / Job 3 Role",
+                  "id": "316677da-51ab-4873-82f9-057a8db8c48b",
+                  "name": "Experience / 3 Dot",
                   "frame": {
                     "pos": {
                       "x": 300.0,
-                      "y": 612.0
+                      "y": 578.0
                     },
                     "size": {
-                      "x": 430.0,
-                      "y": 30.0
+                      "x": 12.0,
+                      "y": 12.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "b502bb7f-70d8-4388-9936-95508a51b5f1",
+                  "name": "Experience / 3 Role",
+                  "frame": {
+                    "pos": {
+                      "x": 326.0,
+                      "y": 572.0
+                    },
+                    "size": {
+                      "x": 414.0,
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -1585,8 +3744,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "UX Designer · Agency One",
-                      "font_size": 17.0,
+                      "content": "Engineer · Startup Lab",
+                      "font_size": 16.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1604,10 +3763,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 24,
+                          "len": 22,
                           "style": {
                             "font": "Serif",
-                            "font_size": 17.0,
+                            "font_size": 16.0,
                             "color": [
                               241,
                               233,
@@ -1626,16 +3785,16 @@
                   }
                 },
                 {
-                  "id": "b97c8b30-2c51-438d-b311-07d3ff2604fd",
-                  "name": "Experience / Job 3 Dates",
+                  "id": "4f68b6f1-d8db-4f11-bf77-751ae1f52361",
+                  "name": "Experience / 3 Dates",
                   "frame": {
                     "pos": {
-                      "x": 300.0,
-                      "y": 642.0
+                      "x": 326.0,
+                      "y": 600.0
                     },
                     "size": {
-                      "x": 430.0,
-                      "y": 25.0
+                      "x": 414.0,
+                      "y": 24.0
                     },
                     "rotation": 0.0
                   },
@@ -1671,8 +3830,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "2016 – 2018",
-                      "font_size": 14.0,
+                      "content": "2016 – 2019",
+                      "font_size": 13.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1693,16 +3852,16 @@
                   }
                 },
                 {
-                  "id": "c1a2b21c-c680-480a-b33e-4d40133c8361",
-                  "name": "Experience / Job 3 Summary",
+                  "id": "29404811-77c0-4876-9c5f-2c62833d109b",
+                  "name": "Experience / 3 Summary",
                   "frame": {
                     "pos": {
-                      "x": 300.0,
-                      "y": 670.0
+                      "x": 326.0,
+                      "y": 626.0
                     },
                     "size": {
-                      "x": 430.0,
-                      "y": 49.0
+                      "x": 414.0,
+                      "y": 46.0
                     },
                     "rotation": 0.0
                   },
@@ -1738,8 +3897,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Shipped 20+ client sites for retail\nand culture brands.",
-                      "font_size": 15.0,
+                      "content": "Built three MVPs from zero to first customers.",
+                      "font_size": 14.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1760,16 +3919,16 @@
                   }
                 },
                 {
-                  "id": "bacd4278-2429-405a-9d4a-81cf639e0906",
+                  "id": "2c3125a6-db72-4bcf-8dcb-c6eb740fc3fa",
                   "name": "Profile / Card",
                   "frame": {
                     "pos": {
-                      "x": 64.0,
-                      "y": 820.0
+                      "x": 300.0,
+                      "y": 800.0
                     },
                     "size": {
-                      "x": 666.0,
-                      "y": 200.0
+                      "x": 440.0,
+                      "y": 220.0
                     },
                     "rotation": 0.0
                   },
@@ -1823,16 +3982,16 @@
                   }
                 },
                 {
-                  "id": "ae8f18c5-90c4-4976-be2e-672e85d983fa",
+                  "id": "596ae29b-7267-48dd-9498-c5814796110e",
                   "name": "Profile / Title",
                   "frame": {
                     "pos": {
-                      "x": 96.0,
-                      "y": 848.0
+                      "x": 328.0,
+                      "y": 826.0
                     },
                     "size": {
-                      "x": 600.0,
-                      "y": 34.0
+                      "x": 384.0,
+                      "y": 32.0
                     },
                     "rotation": 0.0
                   },
@@ -1869,7 +4028,7 @@
                   "kind": {
                     "Text": {
                       "content": "Profile",
-                      "font_size": 20.0,
+                      "font_size": 19.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1890,7 +4049,7 @@
                           "len": 7,
                           "style": {
                             "font": "Serif",
-                            "font_size": 20.0,
+                            "font_size": 19.0,
                             "color": [
                               201,
                               165,
@@ -1909,16 +4068,16 @@
                   }
                 },
                 {
-                  "id": "469968ab-e726-41b7-99fb-ae18ab839713",
+                  "id": "81156d98-2cd6-435f-897e-87b9e2b06e81",
                   "name": "Profile / Text",
                   "frame": {
                     "pos": {
-                      "x": 96.0,
-                      "y": 890.0
+                      "x": 328.0,
+                      "y": 868.0
                     },
                     "size": {
-                      "x": 600.0,
-                      "y": 76.0
+                      "x": 384.0,
+                      "y": 67.0
                     },
                     "rotation": 0.0
                   },
@@ -1954,8 +4113,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Designer with ten years of experience turning complex\nproblems into calm, usable products. Happiest working\nclosely with engineers and researchers.",
-                      "font_size": 16.0,
+                      "content": "Ten years turning complex problems into calm,\nusable products. Happiest working closely with\nengineers, researchers and real customers.",
+                      "font_size": 14.0,
                       "font": "Serif",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1971,6 +4130,411 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "82e7bcc6-f17c-4df4-aefe-4a122200160a",
+                  "name": "Profile / Socials / in",
+                  "frame": {
+                    "pos": {
+                      "x": 328.0,
+                      "y": 960.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 32.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        241,
+                        233,
+                        216,
+                        255
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "22afca9d-4f4a-40fd-b7d7-ac371873b03c",
+                  "name": "Profile / Socials / in Label",
+                  "frame": {
+                    "pos": {
+                      "x": 328.0,
+                      "y": 960.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 32.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "in",
+                      "font_size": 12.2,
+                      "font": "Serif",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 2,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 12.2,
+                            "color": [
+                              241,
+                              233,
+                              216,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "c3a8e1f0-1ce2-4764-92a1-fb6e6a869bb2",
+                  "name": "Profile / Socials / ig",
+                  "frame": {
+                    "pos": {
+                      "x": 369.6,
+                      "y": 960.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 32.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        241,
+                        233,
+                        216,
+                        255
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "11cd7417-1b1e-4215-bf6b-f55b292227a4",
+                  "name": "Profile / Socials / ig Label",
+                  "frame": {
+                    "pos": {
+                      "x": 369.6,
+                      "y": 960.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 32.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "ig",
+                      "font_size": 12.2,
+                      "font": "Serif",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 2,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 12.2,
+                            "color": [
+                              241,
+                              233,
+                              216,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "3c8466ef-47e6-49a0-88e9-127e708b5a0c",
+                  "name": "Profile / Socials / x",
+                  "frame": {
+                    "pos": {
+                      "x": 411.2,
+                      "y": 960.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 32.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        241,
+                        233,
+                        216,
+                        255
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "a61f31f7-be54-40ec-9cad-bfac070c857e",
+                  "name": "Profile / Socials / x Label",
+                  "frame": {
+                    "pos": {
+                      "x": 411.2,
+                      "y": 960.0
+                    },
+                    "size": {
+                      "x": 32.0,
+                      "y": 32.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "x",
+                      "font_size": 12.2,
+                      "font": "Serif",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 1,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 12.2,
+                            "color": [
+                              241,
+                              233,
+                              216,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }

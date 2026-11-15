@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "0a277ded-4932-47c8-bf84-9007e6ef06ee",
+      "id": "633690f6-5883-4c19-9d50-4ed42491a8c9",
       "name": "Page 1",
       "layers": [
         {
-          "id": "9a6fc113-85e1-4cff-a7a4-c113087df336",
+          "id": "b9f1be76-4354-4c41-a26f-9e4dc6d9025e",
           "name": "Video Thumbnail 1280x720",
           "frame": {
             "pos": {
@@ -49,12 +49,92 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "7d4cdc81-2939-4019-8c8e-dd14c91fd9ec",
-                  "name": "Decoration / Glow Pink",
+                  "id": "fc744070-a475-4ce5-8682-7aa9c7f56ab7",
+                  "name": "Background",
                   "frame": {
                     "pos": {
-                      "x": -180.0,
-                      "y": -180.0
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1280.0,
+                      "y": 720.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            11,
+                            11,
+                            26,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            26,
+                            11,
+                            46,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "d29518b3-52af-4d09-8c8c-4d62dc040909",
+                  "name": "Pattern / Glow 1",
+                  "frame": {
+                    "pos": {
+                      "x": -224.0,
+                      "y": -252.0
                     },
                     "size": {
                       "x": 576.0,
@@ -63,12 +143,37 @@
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      60,
-                      18,
-                      51,
-                      255
-                    ],
+                    "fill": {
+                      "kind": "Radial",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            102,
+                            18,
+                            60,
+                            102
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            0,
+                            0,
+                            0,
+                            0
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.5
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 0.5
+                      }
+                    },
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
@@ -95,11 +200,11 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "5c3d6f67-aa83-41e3-8fbe-e6910528f215",
-                  "name": "Decoration / Glow Cyan",
+                  "id": "f0aacda4-0e5e-4700-9c84-09682aed2d99",
+                  "name": "Pattern / Glow 2",
                   "frame": {
                     "pos": {
-                      "x": 920.0,
+                      "x": 928.0,
                       "y": 360.0
                     },
                     "size": {
@@ -109,12 +214,37 @@
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      9,
-                      49,
-                      64,
-                      255
-                    ],
+                    "fill": {
+                      "kind": "Radial",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            0,
+                            96,
+                            102,
+                            102
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            0,
+                            0,
+                            0,
+                            0
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.5
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 0.5
+                      }
+                    },
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
@@ -141,23 +271,94 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "6ced69ea-5222-4042-85d1-3df836bb6d27",
-                  "name": "Decoration / Glow Violet",
+                  "id": "24af0006-765f-4fcf-8da6-fc7a79a6475b",
+                  "name": "Pattern / Glow 3",
                   "frame": {
                     "pos": {
-                      "x": 704.0,
-                      "y": -144.0
+                      "x": 672.0,
+                      "y": -288.0
                     },
                     "size": {
-                      "x": 324.0,
-                      "y": 324.0
+                      "x": 576.0,
+                      "y": 576.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Radial",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            49,
+                            18,
+                            102,
+                            102
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            0,
+                            0,
+                            0,
+                            0
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.5
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 0.5
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "3f2832ed-f9b1-4c8f-8df0-640e2a3d52cc",
+                  "name": "Pattern / Grid",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 561.6
+                    },
+                    "size": {
+                      "x": 1280.0,
+                      "y": 158.40002
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      32,
-                      18,
+                      9,
+                      54,
                       69,
                       255
                     ],
@@ -184,439 +385,1832 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "11c15f23-0a03-4304-a1ca-84c024a72650",
-                  "name": "Host / Photo",
-                  "frame": {
-                    "pos": {
-                      "x": 760.0,
-                      "y": 90.0
-                    },
-                    "size": {
-                      "x": 440.0,
-                      "y": 540.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      0,
-                      240,
-                      255,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
                   "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 12.0,
-                        "top_right": 12.0,
-                        "bottom_right": 12.0,
-                        "bottom_left": 12.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "3dde82ad-3d21-486b-abd7-01f5b0b0113a",
-                  "name": "Host / Photo / Sun",
-                  "frame": {
-                    "pos": {
-                      "x": 1059.2,
-                      "y": 176.4
-                    },
-                    "size": {
-                      "x": 88.0,
-                      "y": 88.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      123,
-                      46,
-                      255,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "55a13ab7-3563-4740-8d7f-047c16b5e0f4",
-                  "name": "Host / Photo / Hill",
-                  "frame": {
-                    "pos": {
-                      "x": 795.2,
-                      "y": 387.0
-                    },
-                    "size": {
-                      "x": 264.0,
-                      "y": 243.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      204,
-                      85,
-                      172,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "5de3eede-422f-49ae-9e9d-08661c0ddd85",
-                  "name": "Host / Photo / Hill 2",
-                  "frame": {
-                    "pos": {
-                      "x": 944.8,
-                      "y": 441.0
-                    },
-                    "size": {
-                      "x": 220.0,
-                      "y": 189.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      98,
-                      85,
-                      255,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "649ab9e3-c188-48e7-af70-c6e9d834ad8c",
-                  "name": "Badge / Episode",
-                  "frame": {
-                    "pos": {
-                      "x": 80.0,
-                      "y": 110.0
-                    },
-                    "size": {
-                      "x": 120.0,
-                      "y": 44.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      0,
-                      240,
-                      255,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 12.0,
-                        "top_right": 12.0,
-                        "bottom_right": 12.0,
-                        "bottom_left": 12.0
-                      }
-                    }
-                  }
-                },
-                {
-                  "id": "b0bc6d5c-f5d1-412f-97cb-366dd576faa7",
-                  "name": "Badge / Episode Label",
-                  "frame": {
-                    "pos": {
-                      "x": 80.0,
-                      "y": 110.0
-                    },
-                    "size": {
-                      "x": 120.0,
-                      "y": 44.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      11,
-                      11,
-                      26,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "EP. 42",
-                      "font_size": 20.0,
-                      "font": "Monospace",
-                      "align": "Center",
-                      "vertical_align": "Middle",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
+                    "CompoundPath": {
+                      "polygons": [
                         {
-                          "len": 6,
+                          "exterior": [
+                            {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 1280.0,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 1280.0,
+                              "y": 1.5
+                            },
+                            {
+                              "x": 1225.5,
+                              "y": 1.5
+                            },
+                            {
+                              "x": 1225.5,
+                              "y": 50.400024
+                            },
+                            {
+                              "x": 1280.0,
+                              "y": 50.400024
+                            },
+                            {
+                              "x": 1280.0,
+                              "y": 51.900024
+                            },
+                            {
+                              "x": 1225.5,
+                              "y": 51.900024
+                            },
+                            {
+                              "x": 1225.5,
+                              "y": 100.80005
+                            },
+                            {
+                              "x": 1280.0,
+                              "y": 100.80005
+                            },
+                            {
+                              "x": 1280.0,
+                              "y": 102.30005
+                            },
+                            {
+                              "x": 1225.5,
+                              "y": 102.30005
+                            },
+                            {
+                              "x": 1225.5,
+                              "y": 151.20001
+                            },
+                            {
+                              "x": 1280.0,
+                              "y": 151.20001
+                            },
+                            {
+                              "x": 1280.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 1225.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 1225.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 1224.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 1224.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 1153.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 1153.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 1152.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 1152.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 1081.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 1081.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 1080.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 1080.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 1009.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 1009.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 1008.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 1008.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 937.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 937.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 936.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 936.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 865.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 865.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 864.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 864.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 793.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 793.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 792.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 792.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 721.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 721.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 720.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 720.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 649.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 649.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 648.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 648.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 577.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 577.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 576.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 576.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 505.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 505.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 504.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 504.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 433.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 433.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 432.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 432.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 361.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 361.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 360.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 360.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 289.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 289.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 288.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 288.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 217.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 217.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 216.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 216.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 145.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 145.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 144.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 144.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 73.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 73.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 72.0,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 72.0,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 1.5,
+                              "y": 152.70001
+                            },
+                            {
+                              "x": 1.5,
+                              "y": 158.40002
+                            },
+                            {
+                              "x": 0.0,
+                              "y": 158.40002
+                            }
+                          ],
+                          "holes": [
+                            [
+                              {
+                                "x": 1.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 1.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 72.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 72.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 1.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 1.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 72.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 72.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 1.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 1.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 72.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 72.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 73.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 73.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 144.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 144.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 73.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 73.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 144.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 144.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 73.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 73.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 144.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 144.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 145.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 145.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 216.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 216.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 145.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 145.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 216.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 216.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 145.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 145.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 216.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 216.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 217.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 217.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 288.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 288.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 217.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 217.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 288.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 288.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 217.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 217.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 288.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 288.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 289.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 289.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 360.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 360.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 289.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 289.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 360.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 360.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 289.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 289.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 360.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 360.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 361.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 361.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 432.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 432.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 361.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 361.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 432.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 432.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 361.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 361.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 432.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 432.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 433.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 433.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 504.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 504.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 433.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 433.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 504.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 504.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 433.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 433.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 504.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 504.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 505.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 505.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 576.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 576.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 505.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 505.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 576.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 576.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 505.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 505.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 576.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 576.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 577.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 577.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 648.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 648.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 577.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 577.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 648.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 648.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 577.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 577.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 648.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 648.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 649.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 649.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 720.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 720.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 649.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 649.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 720.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 720.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 649.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 649.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 720.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 720.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 721.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 721.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 792.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 792.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 721.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 721.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 792.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 792.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 721.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 721.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 792.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 792.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 793.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 793.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 864.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 864.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 793.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 793.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 864.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 864.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 793.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 793.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 864.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 864.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 865.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 865.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 936.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 936.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 865.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 865.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 936.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 936.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 865.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 865.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 936.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 936.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 937.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 937.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 1008.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 1008.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 937.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 937.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 1008.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 1008.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 937.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 937.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 1008.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 1008.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 1009.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 1009.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 1080.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 1080.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 1009.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 1009.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 1080.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 1080.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 1009.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 1009.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 1080.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 1080.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 1081.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 1081.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 1152.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 1152.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 1081.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 1081.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 1152.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 1152.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 1081.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 1081.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 1152.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 1152.0,
+                                "y": 102.30005
+                              }
+                            ],
+                            [
+                              {
+                                "x": 1153.5,
+                                "y": 1.5
+                              },
+                              {
+                                "x": 1153.5,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 1224.0,
+                                "y": 50.400024
+                              },
+                              {
+                                "x": 1224.0,
+                                "y": 1.5
+                              }
+                            ],
+                            [
+                              {
+                                "x": 1153.5,
+                                "y": 51.900024
+                              },
+                              {
+                                "x": 1153.5,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 1224.0,
+                                "y": 100.80005
+                              },
+                              {
+                                "x": 1224.0,
+                                "y": 51.900024
+                              }
+                            ],
+                            [
+                              {
+                                "x": 1153.5,
+                                "y": 102.30005
+                              },
+                              {
+                                "x": 1153.5,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 1224.0,
+                                "y": 151.20001
+                              },
+                              {
+                                "x": 1224.0,
+                                "y": 102.30005
+                              }
+                            ]
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "da90782e-1968-439c-ad41-c3d9d7203b4c",
+                  "name": "Art",
+                  "frame": {
+                    "pos": {
+                      "x": 60.0,
+                      "y": 60.0
+                    },
+                    "size": {
+                      "x": 500.0,
+                      "y": 600.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "570a0dc9-6e98-4648-b7b3-49efded20ed2",
+                          "name": "Art / Studio",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 500.0,
+                              "y": 600.0
+                            },
+                            "rotation": 0.0
+                          },
                           "style": {
-                            "font": "Monospace",
-                            "font_size": 20.0,
-                            "color": [
-                              11,
-                              11,
-                              26,
+                            "fill": {
+                              "kind": "Radial",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    123,
+                                    46,
+                                    255,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    26,
+                                    11,
+                                    46,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.5,
+                                "y": 0.4
+                              },
+                              "to": {
+                                "x": 1.1,
+                                "y": 0.4
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "79eb4fc1-50f0-43b0-bee2-18ebf0ea6377",
+                          "name": "Art / Shadow",
+                          "frame": {
+                            "pos": {
+                              "x": 125.0,
+                              "y": 468.0
+                            },
+                            "size": {
+                              "x": 250.0,
+                              "y": 60.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              0,
+                              0,
+                              0,
+                              48
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "6d60466a-f473-4d92-bb00-1989402140a6",
+                          "name": "Art / Pedestal",
+                          "frame": {
+                            "pos": {
+                              "x": 140.0,
+                              "y": 420.0
+                            },
+                            "size": {
+                              "x": 220.0,
+                              "y": 84.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              23,
+                              21,
+                              56,
                               255
                             ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 6.0,
+                                "top_right": 6.0,
+                                "bottom_right": 6.0,
+                                "bottom_left": 6.0
+                              }
+                            }
                           }
-                        }
-                      ],
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "e2820aec-3859-42b2-83a9-0f249c1481e2",
-                  "name": "Title",
-                  "frame": {
-                    "pos": {
-                      "x": 80.0,
-                      "y": 190.0
-                    },
-                    "size": {
-                      "x": 680.0,
-                      "y": 328.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      242,
-                      242,
-                      255,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "I tried 10\ndesign tools\nin 7 days",
-                      "font_size": 72.0,
-                      "font": "Display",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
+                        },
                         {
-                          "len": 33,
+                          "id": "d6fd412f-3fd5-40de-b67c-013a16571348",
+                          "name": "Art / Object",
+                          "frame": {
+                            "pos": {
+                              "x": 190.0,
+                              "y": 168.0
+                            },
+                            "size": {
+                              "x": 120.0,
+                              "y": 264.0
+                            },
+                            "rotation": 0.0
+                          },
                           "style": {
-                            "font": "Display",
-                            "font_size": 72.0,
-                            "color": [
-                              242,
-                              242,
+                            "fill": {
+                              "kind": "Linear",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    255,
+                                    46,
+                                    151,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    191,
+                                    34,
+                                    113,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.0,
+                                "y": 0.5
+                              },
+                              "to": {
+                                "x": 1.0,
+                                "y": 0.5
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 40.0,
+                                "top_right": 40.0,
+                                "bottom_right": 40.0,
+                                "bottom_left": 40.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "240b9976-e921-4c10-8923-a45ff95d1ea5",
+                          "name": "Art / Cap",
+                          "frame": {
+                            "pos": {
+                              "x": 220.0,
+                              "y": 120.0
+                            },
+                            "size": {
+                              "x": 60.0,
+                              "y": 60.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              123,
+                              46,
                               255,
                               255
                             ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 4.0,
+                                "top_right": 4.0,
+                                "bottom_right": 4.0,
+                                "bottom_left": 4.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "c8306337-2ac1-49ba-84fb-7ed467a4d94f",
+                          "name": "Art / Label",
+                          "frame": {
+                            "pos": {
+                              "x": 200.0,
+                              "y": 252.0
+                            },
+                            "size": {
+                              "x": 100.0,
+                              "y": 72.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              204,
+                              204,
+                              204,
+                              204
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 3.0,
+                                "top_right": 3.0,
+                                "bottom_right": 3.0,
+                                "bottom_left": 3.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "8d001ccf-93e7-4bf5-937c-0a8b49b38585",
+                          "name": "Art / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 500.0,
+                              "y": 600.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 12.0,
+                                "top_right": 12.0,
+                                "bottom_right": 12.0,
+                                "bottom_left": 12.0
+                              }
+                            }
                           }
                         }
-                      ],
-                      "path_attachment": null
+                      ]
                     }
                   }
                 },
                 {
-                  "id": "b0f15620-23d2-4bbc-a6c2-ffbbb7945420",
-                  "name": "Badge / Verdict",
+                  "id": "efab5345-bbc7-4769-80f8-d1efa5911084",
+                  "name": "Badge / Tag",
                   "frame": {
                     "pos": {
-                      "x": 80.0,
-                      "y": 560.0
+                      "x": 620.0,
+                      "y": 90.0
                     },
                     "size": {
-                      "x": 300.0,
-                      "y": 70.0
+                      "x": 140.0,
+                      "y": 46.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      38,
+                      7,
+                      23,
+                      38
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 12.0,
+                        "top_right": 12.0,
+                        "bottom_right": 12.0,
+                        "bottom_left": 12.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "34ceca5d-42d7-410a-a6ba-fd7f11590826",
+                  "name": "Badge / Tag Label",
+                  "frame": {
+                    "pos": {
+                      "x": 620.0,
+                      "y": 90.0
+                    },
+                    "size": {
+                      "x": 140.0,
+                      "y": 46.0
                     },
                     "rotation": 0.0
                   },
@@ -651,35 +2245,66 @@
                     "fixed_height": false
                   },
                   "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 12.0,
-                        "top_right": 12.0,
-                        "bottom_right": 12.0,
-                        "bottom_left": 12.0
-                      }
+                    "Text": {
+                      "content": "VLOG",
+                      "font_size": 16.8,
+                      "font": "Monospace",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Monospace",
+                            "font_size": 16.8,
+                            "color": [
+                              255,
+                              46,
+                              151,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "984a417a-040b-4459-8fa6-e085ff7348e4",
-                  "name": "Badge / Verdict Label",
+                  "id": "757a84e0-6dd0-479f-877e-30089a2c7a9c",
+                  "name": "Title",
                   "frame": {
                     "pos": {
-                      "x": 80.0,
-                      "y": 560.0
+                      "x": 620.0,
+                      "y": 160.0
                     },
                     "size": {
-                      "x": 300.0,
-                      "y": 70.0
+                      "x": 600.0,
+                      "y": 314.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      11,
-                      11,
-                      26,
+                      242,
+                      242,
+                      255,
                       255
                     ],
                     "stroke": null,
@@ -707,8 +2332,341 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "THE WINNER?",
-                      "font_size": 26.0,
+                      "content": "Cooking every\nmeal from 1980",
+                      "font_size": 68.8,
+                      "font": "Display",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 28,
+                          "style": {
+                            "font": "Display",
+                            "font_size": 68.8,
+                            "color": [
+                              242,
+                              242,
+                              255,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "8341e3b4-0db4-4b68-b071-990604048ff2",
+                  "name": "Sticker",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 40.0
+                    },
+                    "size": {
+                      "x": 160.0,
+                      "y": 160.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      0,
+                      240,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [
+                      {
+                        "color": [
+                          85,
+                          15,
+                          50,
+                          85
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 0.0
+                        },
+                        "blur": 16.8,
+                        "spread": 0.0
+                      }
+                    ],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 14,
+                      "inner_ratio": 0.8
+                    }
+                  }
+                },
+                {
+                  "id": "8564c4c5-52aa-4779-8694-c25da7c13c8b",
+                  "name": "Sticker / Label",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 40.0
+                    },
+                    "size": {
+                      "x": 160.0,
+                      "y": 160.0
+                    },
+                    "rotation": -12.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      242,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "NEW",
+                      "font_size": 29.2,
+                      "font": "Display",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 3,
+                          "style": {
+                            "font": "Display",
+                            "font_size": 29.2,
+                            "color": [
+                              242,
+                              242,
+                              255,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "1a779cd2-2531-454a-b486-2cbb3e1be023",
+                  "name": "Badge / Hook",
+                  "frame": {
+                    "pos": {
+                      "x": 620.0,
+                      "y": 570.0
+                    },
+                    "size": {
+                      "x": 340.0,
+                      "y": 76.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            255,
+                            46,
+                            151,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            123,
+                            46,
+                            255,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 0.5
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [
+                      {
+                        "color": [
+                          85,
+                          15,
+                          50,
+                          85
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 8.0
+                        },
+                        "blur": 20.0,
+                        "spread": 0.0
+                      }
+                    ],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 12.0,
+                        "top_right": 12.0,
+                        "bottom_right": 12.0,
+                        "bottom_left": 12.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "0ec58953-8412-4a09-9e0c-43f567cb3d51",
+                  "name": "Badge / Hook Label",
+                  "frame": {
+                    "pos": {
+                      "x": 620.0,
+                      "y": 570.0
+                    },
+                    "size": {
+                      "x": 340.0,
+                      "y": 76.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "IT WENT WRONG",
+                      "font_size": 23.5,
                       "font": "Monospace",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -726,14 +2684,155 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 11,
+                          "len": 13,
                           "style": {
                             "font": "Monospace",
-                            "font_size": 26.0,
+                            "font_size": 23.5,
                             "color": [
-                              11,
-                              11,
-                              26,
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "4ec154ca-ac0a-4a9b-91bf-d9333e8d356f",
+                  "name": "Duration / Back",
+                  "frame": {
+                    "pos": {
+                      "x": 440.0,
+                      "y": 600.0
+                    },
+                    "size": {
+                      "x": 100.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      0,
+                      0,
+                      0,
+                      170
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 6.0,
+                        "top_right": 6.0,
+                        "bottom_right": 6.0,
+                        "bottom_left": 6.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "583d1d14-4f33-40e0-a54f-2918ba4054dc",
+                  "name": "Duration",
+                  "frame": {
+                    "pos": {
+                      "x": 440.0,
+                      "y": 600.0
+                    },
+                    "size": {
+                      "x": 100.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "12:47",
+                      "font_size": 16.8,
+                      "font": "Monospace",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 5,
+                          "style": {
+                            "font": "Monospace",
+                            "font_size": 16.8,
+                            "color": [
+                              255,
+                              255,
+                              255,
                               255
                             ],
                             "bold": true,

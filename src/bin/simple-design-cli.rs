@@ -13,9 +13,9 @@ use simple_design::io;
 use simple_design::templates;
 use simple_design::ipc::{self, ops};
 use simple_design::ipc::protocol::{
-    AddArtboardArgs, AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs, GetLayerArgs,
-    GroupArgs, InitArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs,
-    SetFrameArgs, SetMaskArgs, SetResizingArgs, UngroupArgs,
+    AddArtboardArgs, AddFigureArgs, AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs,
+    GetLayerArgs, GroupArgs, InitArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs,
+    SetFillArgs, SetFrameArgs, SetMaskArgs, SetResizingArgs, SetShadowArgs, UngroupArgs,
 };
 use simple_design::model::{BoolOp, Document, Frame, MaskMode, TextAlign, TextFont, VerticalAlign};
 
@@ -364,6 +364,85 @@ enum Command {
         #[arg(long)]
         page: Option<Uuid>,
     },
+    /// Replace a layer's fill: one `--colors` value is a solid fill, two or
+    /// more (comma-separated hex) a gradient with evenly spaced stops.
+    /// `--from`/`--to` are `x,y` points normalized to the layer's bounds
+    /// (default: top-left to bottom-right, or for `--radial` the center to
+    /// the right edge).
+    SetFill {
+        id: Uuid,
+        #[arg(long, value_delimiter = ',', required = true)]
+        colors: Vec<HexColor>,
+        #[arg(long)]
+        radial: bool,
+        #[arg(long)]
+        from: Option<PointArg>,
+        #[arg(long)]
+        to: Option<PointArg>,
+    },
+    /// Replace a layer's drop shadow (`--inner`: its inner shadow) with one
+    /// shadow, or remove them with `--clear`. Omitted values default to a
+    /// soft black shadow 4px down, 8px blur.
+    SetShadow {
+        id: Uuid,
+        #[arg(long)]
+        inner: bool,
+        #[arg(long)]
+        clear: bool,
+        /// Hex color, RRGGBB or RRGGBBAA.
+        #[arg(long)]
+        color: Option<HexColor>,
+        #[arg(long)]
+        x: Option<f32>,
+        #[arg(long)]
+        y: Option<f32>,
+        #[arg(long)]
+        blur: Option<f32>,
+        #[arg(long)]
+        spread: Option<f32>,
+    },
+    /// Add a star, polygon or line, styled with the same flags as `add-rect`.
+    /// A line runs from the box's top-left to its bottom-right corner and
+    /// shows only its stroke.
+    AddShape {
+        #[arg(long, value_enum)]
+        kind: ShapeKindArg,
+        #[arg(long)]
+        x: f32,
+        #[arg(long)]
+        y: f32,
+        #[arg(long)]
+        w: f32,
+        #[arg(long)]
+        h: f32,
+        #[arg(long)]
+        rotation: Option<f32>,
+        /// Star only; defaults to 5.
+        #[arg(long)]
+        points: Option<u32>,
+        /// Star only: inner radius as a fraction of the outer; defaults to 0.5.
+        #[arg(long)]
+        inner_ratio: Option<f32>,
+        /// Polygon only; defaults to 6.
+        #[arg(long)]
+        sides: Option<u32>,
+        #[arg(long)]
+        page: Option<Uuid>,
+        #[arg(long)]
+        name: Option<String>,
+        #[arg(long)]
+        fill: Option<HexColor>,
+        #[arg(long)]
+        no_fill: bool,
+        #[arg(long)]
+        no_stroke: bool,
+        #[arg(long)]
+        stroke: Option<HexColor>,
+        #[arg(long)]
+        stroke_width: Option<f32>,
+        #[arg(long)]
+        parent: Option<Uuid>,
+    },
     /// Replace layers with `count` copies evenly rotated across `total_degrees`.
     RotateCopies {
         ids: Vec<Uuid>,
@@ -418,6 +497,39 @@ impl std::str::FromStr for HexColor {
             6 => Ok(HexColor(egui::Color32::from_rgb(byte(0..2)?, byte(2..4)?, byte(4..6)?))),
             8 => Ok(HexColor(egui::Color32::from_rgba_unmultiplied(byte(0..2)?, byte(2..4)?, byte(4..6)?, byte(6..8)?))),
             _ => Err(format!("invalid hex color: {s:?} (expected RRGGBB or RRGGBBAA)")),
+        }
+    }
+}
+
+/// `--from`/`--to`'s CLI type: an `x,y` pair, like `--from 0,0.5`.
+#[derive(Clone, Copy)]
+struct PointArg(Pos2);
+
+impl std::str::FromStr for PointArg {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let invalid = || format!("invalid point: {s:?} (expected x,y)");
+        let (x, y) = s.split_once(',').ok_or_else(invalid)?;
+        let x: f32 = x.trim().parse().map_err(|_| invalid())?;
+        let y: f32 = y.trim().parse().map_err(|_| invalid())?;
+        Ok(PointArg(Pos2::new(x, y)))
+    }
+}
+
+#[derive(Clone, ValueEnum)]
+enum ShapeKindArg {
+    Star,
+    Polygon,
+    Line,
+}
+
+impl ShapeKindArg {
+    fn as_str(&self) -> &'static str {
+        match self {
+            ShapeKindArg::Star => "star",
+            ShapeKindArg::Polygon => "polygon",
+            ShapeKindArg::Line => "line",
         }
     }
 }
@@ -627,6 +739,37 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
         Command::Group { ids, page } => ("group", to_value(GroupArgs { page, ids })),
         Command::Ungroup { id, page } => ("ungroup", to_value(UngroupArgs { page, id })),
         Command::Flip { axis, ids, page } => ("flip", to_value(FlipArgs { page, ids, axis: axis.as_str().to_string() })),
+        Command::SetFill { id, colors, radial, from, to } => (
+            "set_fill",
+            to_value(SetFillArgs { id, colors: colors.into_iter().map(|c| c.0).collect(), radial, from: from.map(|p| p.0), to: to.map(|p| p.0) }),
+        ),
+        Command::SetShadow { id, inner, clear, color, x, y, blur, spread } => {
+            let offset = (x.is_some() || y.is_some()).then(|| Vec2::new(x.unwrap_or(0.0), y.unwrap_or(0.0)));
+            ("set_shadow", to_value(SetShadowArgs { id, inner, clear, color: color.map(|c| c.0), offset, blur, spread }))
+        }
+        Command::AddShape {
+            kind, x, y, w, h, rotation, points, inner_ratio, sides, page, name, fill, no_fill, no_stroke, stroke, stroke_width, parent,
+        } => (
+            "add_shape",
+            to_value(AddFigureArgs {
+                shape: AddShapeArgs {
+                    page,
+                    frame: Frame { pos: Pos2::new(x, y), size: Vec2::new(w, h), rotation: rotation.unwrap_or(0.0) },
+                    name,
+                    fill: fill.map(|c| c.0),
+                    no_fill,
+                    no_stroke,
+                    stroke: stroke.map(|c| c.0),
+                    stroke_width,
+                    corner_radius: None,
+                    parent,
+                },
+                kind: kind.as_str().to_string(),
+                points,
+                inner_ratio,
+                sides,
+            }),
+        ),
         Command::RotateCopies { ids, count, total_degrees, page } => {
             ("rotate_copies", to_value(RotateCopiesArgs { page, ids, count, total_degrees }))
         }

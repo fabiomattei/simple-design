@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "3fb0c8d1-3691-46a3-8eae-b4c605d7bda5",
+      "id": "a9a027cf-7e37-46ae-a19e-95da002b5d74",
       "name": "Page 1",
       "layers": [
         {
-          "id": "c66e8884-2e5e-4c5b-b8e4-3623364fadec",
+          "id": "3b4fc411-889b-40f2-b234-fd8357281a1f",
           "name": "Invitation 5x7",
           "frame": {
             "pos": {
@@ -49,8 +49,88 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "ff9378d7-dc46-4329-a1b4-59288e2cf212",
-                  "name": "Decoration / Frame",
+                  "id": "26e2c8e7-e424-4c12-80b9-e5457b99e7c7",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1000.0,
+                      "y": 1400.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            28,
+                            27,
+                            25,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            14,
+                            14,
+                            14,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "abea5772-c3ad-45ba-bc4f-c46b12930931",
+                  "name": "Pattern / Frame",
                   "frame": {
                     "pos": {
                       "x": 35.0,
@@ -107,8 +187,8 @@
                   }
                 },
                 {
-                  "id": "8e463e66-cc15-4f5c-98d0-7562b49a04e5",
-                  "name": "Decoration / Frame Inner",
+                  "id": "e5553e1a-d91f-4165-9014-affe9c52f96e",
+                  "name": "Pattern / Frame Inner",
                   "frame": {
                     "pos": {
                       "x": 43.0,
@@ -124,9 +204,655 @@
                     "fill": null,
                     "stroke": {
                       "paint": [
+                        80,
+                        66,
+                        37,
+                        102
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "41295777-2b1c-4b02-91bb-2592610ea884",
+                  "name": "Pattern / Corner 1",
+                  "frame": {
+                    "pos": {
+                      "x": 26.0,
+                      "y": 26.0
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "77db793f-4cfb-4927-9396-cf4a242e41a9",
+                  "name": "Pattern / Corner 2",
+                  "frame": {
+                    "pos": {
+                      "x": 956.0,
+                      "y": 26.0
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "9ea3eddf-cc04-4b6c-9a60-a2889cde3362",
+                  "name": "Pattern / Corner 3",
+                  "frame": {
+                    "pos": {
+                      "x": 26.0,
+                      "y": 1356.0
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "8a92e598-7dce-4883-8bc3-70149fbb85c3",
+                  "name": "Pattern / Corner 4",
+                  "frame": {
+                    "pos": {
+                      "x": 956.0,
+                      "y": 1356.0
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 45.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "b6f2f57d-2238-496f-9b0e-b19ca2e3a229",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 497.0,
+                      "y": -120.0
+                    },
+                    "size": {
+                      "x": 6.0,
+                      "y": 240.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "65c19201-7a00-4543-a1c8-8556cbd5282f",
+                  "name": "Pattern / Fan",
+                  "frame": {
+                    "pos": {
+                      "x": 370.16022,
+                      "y": -119.7659
+                    },
+                    "size": {
+                      "x": 240.07117,
+                      "y": 247.52737
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      67,
+                      55,
+                      31,
+                      85
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "CompoundPath": {
+                      "polygons": [
+                        {
+                          "exterior": [
+                            {
+                              "x": 0.11633301,
+                              "y": 135.28433
+                            },
+                            {
+                              "x": 0.0,
+                              "y": 129.28546
+                            },
+                            {
+                              "x": 109.23352,
+                              "y": 127.16687
+                            },
+                            {
+                              "x": 1.5726929,
+                              "y": 94.93535
+                            },
+                            {
+                              "x": 3.293518,
+                              "y": 89.187416
+                            },
+                            {
+                              "x": 107.95776,
+                              "y": 120.52183
+                            },
+                            {
+                              "x": 15.279144,
+                              "y": 56.957775
+                            },
+                            {
+                              "x": 18.67276,
+                              "y": 52.009727
+                            },
+                            {
+                              "x": 108.77194,
+                              "y": 113.804634
+                            },
+                            {
+                              "x": 39.926605,
+                              "y": 24.978645
+                            },
+                            {
+                              "x": 44.668976,
+                              "y": 21.303047
+                            },
+                            {
+                              "x": 111.598114,
+                              "y": 107.65676
+                            },
+                            {
+                              "x": 73.16116,
+                              "y": 2.052124
+                            },
+                            {
+                              "x": 78.79935,
+                              "y": 0.0
+                            },
+                            {
+                              "x": 123.636475,
+                              "y": 123.18896
+                            },
+                            {
+                              "x": 124.97769,
+                              "y": 124.91941
+                            },
+                            {
+                              "x": 126.783325,
+                              "y": 126.15783
+                            },
+                            {
+                              "x": 128.88095,
+                              "y": 126.78581
+                            },
+                            {
+                              "x": 131.0701,
+                              "y": 126.743355
+                            },
+                            {
+                              "x": 133.14172,
+                              "y": 126.034515
+                            },
+                            {
+                              "x": 134.89807,
+                              "y": 124.72697
+                            },
+                            {
+                              "x": 136.17123,
+                              "y": 122.945724
+                            },
+                            {
+                              "x": 170.09137,
+                              "y": 17.155914
+                            },
+                            {
+                              "x": 175.80487,
+                              "y": 18.987877
+                            },
+                            {
+                              "x": 147.59827,
+                              "y": 106.958466
+                            },
+                            {
+                              "x": 199.49878,
+                              "y": 34.34561
+                            },
+                            {
+                              "x": 204.38007,
+                              "y": 37.834564
+                            },
+                            {
+                              "x": 150.66064,
+                              "y": 112.99217
+                            },
+                            {
+                              "x": 222.25342,
+                              "y": 59.69332
+                            },
+                            {
+                              "x": 225.83636,
+                              "y": 64.50606
+                            },
+                            {
+                              "x": 151.73462,
+                              "y": 119.67279
+                            },
+                            {
+                              "x": 236.18219,
+                              "y": 90.77821
+                            },
+                            {
+                              "x": 238.12457,
+                              "y": 96.45509
+                            },
+                            {
+                              "x": 150.71747,
+                              "y": 126.36229
+                            },
+                            {
+                              "x": 239.95483,
+                              "y": 124.63153
+                            },
+                            {
+                              "x": 240.07117,
+                              "y": 130.6304
+                            },
+                            {
+                              "x": 147.70654,
+                              "y": 132.42181
+                            },
+                            {
+                              "x": 233.211,
+                              "y": 158.02017
+                            },
+                            {
+                              "x": 231.49017,
+                              "y": 163.7681
+                            },
+                            {
+                              "x": 142.98914,
+                              "y": 137.27264
+                            },
+                            {
+                              "x": 216.59479,
+                              "y": 187.7554
+                            },
+                            {
+                              "x": 213.20111,
+                              "y": 192.70343
+                            },
+                            {
+                              "x": 137.01596,
+                              "y": 140.45152
+                            },
+                            {
+                              "x": 191.69305,
+                              "y": 210.99731
+                            },
+                            {
+                              "x": 186.95074,
+                              "y": 214.67291
+                            },
+                            {
+                              "x": 134.6836,
+                              "y": 147.23651
+                            },
+                            {
+                              "x": 133.60895,
+                              "y": 150.5881
+                            },
+                            {
+                              "x": 160.88422,
+                              "y": 225.52623
+                            },
+                            {
+                              "x": 155.24603,
+                              "y": 227.57835
+                            },
+                            {
+                              "x": 130.6185,
+                              "y": 159.91476
+                            },
+                            {
+                              "x": 102.52664,
+                              "y": 247.52737
+                            },
+                            {
+                              "x": 96.81314,
+                              "y": 245.6954
+                            },
+                            {
+                              "x": 127.268616,
+                              "y": 150.7111
+                            },
+                            {
+                              "x": 126.06482,
+                              "y": 147.40364
+                            },
+                            {
+                              "x": 64.82199,
+                              "y": 233.08707
+                            },
+                            {
+                              "x": 59.940704,
+                              "y": 229.59811
+                            },
+                            {
+                              "x": 123.47113,
+                              "y": 140.71417
+                            },
+                            {
+                              "x": 33.326813,
+                              "y": 207.82413
+                            },
+                            {
+                              "x": 29.743866,
+                              "y": 203.01138
+                            },
+                            {
+                              "x": 117.37915,
+                              "y": 137.76935
+                            },
+                            {
+                              "x": 11.049042,
+                              "y": 174.15123
+                            },
+                            {
+                              "x": 9.106659,
+                              "y": 168.47435
+                            },
+                            {
+                              "x": 112.4772,
+                              "y": 133.10509
+                            }
+                          ],
+                          "holes": []
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "bb48e32c-5ca5-4f9c-8f1b-ff576c50cc52",
+                  "name": "Panel",
+                  "frame": {
+                    "pos": {
+                      "x": 90.0,
+                      "y": 120.0
+                    },
+                    "size": {
+                      "x": 820.0,
+                      "y": 1160.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      31,
+                      30,
+                      28,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        201,
+                        165,
                         92,
-                        78,
-                        49,
                         255
                       ],
                       "width": 1.0
@@ -165,16 +891,227 @@
                   }
                 },
                 {
-                  "id": "57948f3a-4624-4a45-9009-7fcd5e1d583b",
+                  "id": "8b5c2870-fe29-4401-a0f5-1f61d8562e06",
+                  "name": "Panel / Inner Frame",
+                  "frame": {
+                    "pos": {
+                      "x": 120.0,
+                      "y": 150.0
+                    },
+                    "size": {
+                      "x": 760.0,
+                      "y": 1100.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        107,
+                        88,
+                        49,
+                        136
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "792dd8d5-905a-4d8f-a0fe-6095bed5b9e3",
+                  "name": "Ornament / 1",
+                  "frame": {
+                    "pos": {
+                      "x": 440.0,
+                      "y": 200.0
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 4,
+                      "inner_ratio": 0.3
+                    }
+                  }
+                },
+                {
+                  "id": "90c82d13-f587-4f70-8e2d-ea273a6103b3",
+                  "name": "Ornament / 2",
+                  "frame": {
+                    "pos": {
+                      "x": 492.0,
+                      "y": 200.0
+                    },
+                    "size": {
+                      "x": 26.0,
+                      "y": 26.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 4,
+                      "inner_ratio": 0.3
+                    }
+                  }
+                },
+                {
+                  "id": "e8a61f48-f3c1-490d-912c-1c4ac2574740",
+                  "name": "Ornament / 3",
+                  "frame": {
+                    "pos": {
+                      "x": 544.0,
+                      "y": 200.0
+                    },
+                    "size": {
+                      "x": 18.0,
+                      "y": 18.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      201,
+                      165,
+                      92,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 4,
+                      "inner_ratio": 0.3
+                    }
+                  }
+                },
+                {
+                  "id": "9ca47cd3-583b-482e-9a7c-c0c368899b04",
                   "name": "Header / Kicker",
                   "frame": {
                     "pos": {
-                      "x": 100.0,
-                      "y": 230.0
+                      "x": 140.0,
+                      "y": 260.0
                     },
                     "size": {
-                      "x": 800.0,
-                      "y": 37.0
+                      "x": 720.0,
+                      "y": 31.0
                     },
                     "rotation": 0.0
                   },
@@ -210,8 +1147,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "TOGETHER WITH THEIR FAMILIES",
-                      "font_size": 22.0,
+                      "content": "YOU'RE INVITED TO",
+                      "font_size": 18.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -219,7 +1156,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -227,21 +1164,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 17,
+                          "style": {
+                            "font": "Serif",
+                            "font_size": 18.0,
+                            "color": [
+                              201,
+                              165,
+                              92,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "29c9b2dd-ef82-4329-b83f-dcb315cb6ba2",
-                  "name": "Header / Names",
+                  "id": "413b0f83-7b90-4432-a1cc-2d77b31e3fd9",
+                  "name": "Header / Title",
                   "frame": {
                     "pos": {
-                      "x": 100.0,
-                      "y": 300.0
+                      "x": 140.0,
+                      "y": 310.0
                     },
                     "size": {
-                      "x": 800.0,
-                      "y": 472.0
+                      "x": 720.0,
+                      "y": 418.0
                     },
                     "rotation": 0.0
                   },
@@ -277,8 +1233,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Olivia\n&\nJames",
-                      "font_size": 104.0,
+                      "content": "Maya's\n30th\nBirthday",
+                      "font_size": 92.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -296,10 +1252,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 14,
+                          "len": 20,
                           "style": {
                             "font": "Serif",
-                            "font_size": 104.0,
+                            "font_size": 92.0,
                             "color": [
                               241,
                               233,
@@ -318,12 +1274,79 @@
                   }
                 },
                 {
-                  "id": "3becb4bf-30b3-40ea-8925-7f890b2d48b7",
-                  "name": "Divider",
+                  "id": "30ac069c-f156-4002-ae17-4cacb6fc2888",
+                  "name": "Details / Line",
+                  "frame": {
+                    "pos": {
+                      "x": 140.0,
+                      "y": 760.0
+                    },
+                    "size": {
+                      "x": 720.0,
+                      "y": 76.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      241,
+                      233,
+                      216,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "an evening of dinner, dancing\nand far too much cake",
+                      "font_size": 24.0,
+                      "font": "Serif",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "8c74da37-9850-4158-9d1e-df4d280efb5a",
+                  "name": "Details / Divider",
                   "frame": {
                     "pos": {
                       "x": 440.0,
-                      "y": 760.0
+                      "y": 856.0
                     },
                     "size": {
                       "x": 120.0,
@@ -373,83 +1396,16 @@
                   }
                 },
                 {
-                  "id": "56d66c53-30cf-439a-bc8b-eb6a1654dd5b",
-                  "name": "Details / Invite",
-                  "frame": {
-                    "pos": {
-                      "x": 120.0,
-                      "y": 810.0
-                    },
-                    "size": {
-                      "x": 760.0,
-                      "y": 88.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      241,
-                      233,
-                      216,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "request the pleasure of your company\nat the celebration of their marriage",
-                      "font_size": 28.0,
-                      "font": "Serif",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "9cb5a821-fb8d-43e1-8293-d2c96ec17db8",
+                  "id": "61827805-eb16-4423-a4b8-b7ad364207a8",
                   "name": "Details / Date",
                   "frame": {
                     "pos": {
-                      "x": 100.0,
-                      "y": 950.0
+                      "x": 140.0,
+                      "y": 890.0
                     },
                     "size": {
-                      "x": 800.0,
-                      "y": 64.0
+                      "x": 720.0,
+                      "y": 55.0
                     },
                     "rotation": 0.0
                   },
@@ -485,8 +1441,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Saturday, June 19, 2027",
-                      "font_size": 40.0,
+                      "content": "Friday, March 12, 2027",
+                      "font_size": 34.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -504,10 +1460,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 23,
+                          "len": 22,
                           "style": {
                             "font": "Serif",
-                            "font_size": 40.0,
+                            "font_size": 34.0,
                             "color": [
                               241,
                               233,
@@ -526,16 +1482,16 @@
                   }
                 },
                 {
-                  "id": "6e7ff20b-2b1a-4bb4-8c8f-acfcb78d93d3",
-                  "name": "Details / Time",
+                  "id": "a57b394d-4575-4d99-b038-ecf4454c5e62",
+                  "name": "Details / Info 1",
                   "frame": {
                     "pos": {
-                      "x": 100.0,
-                      "y": 1012.0
+                      "x": 140.0,
+                      "y": 952.0
                     },
                     "size": {
-                      "x": 800.0,
-                      "y": 43.0
+                      "x": 720.0,
+                      "y": 36.0
                     },
                     "rotation": 0.0
                   },
@@ -571,8 +1527,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Four o'clock in the afternoon",
-                      "font_size": 26.0,
+                      "content": "Eight o'clock till late",
+                      "font_size": 21.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -593,16 +1549,16 @@
                   }
                 },
                 {
-                  "id": "c42a839a-bfa1-4114-9d00-a27dd88ae94a",
-                  "name": "Details / Venue",
+                  "id": "b8abd772-4f0d-451f-8b6b-e9f99ffb2db5",
+                  "name": "Details / Info 2",
                   "frame": {
                     "pos": {
-                      "x": 100.0,
-                      "y": 1060.0
+                      "x": 140.0,
+                      "y": 996.0
                     },
                     "size": {
-                      "x": 800.0,
-                      "y": 43.0
+                      "x": 720.0,
+                      "y": 36.0
                     },
                     "rotation": 0.0
                   },
@@ -638,8 +1594,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "The Glasshouse · 21 Orchard Lane",
-                      "font_size": 26.0,
+                      "content": "Rooftop at The Merchant",
+                      "font_size": 21.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -660,26 +1616,60 @@
                   }
                 },
                 {
-                  "id": "1cb8c627-d211-4323-aea4-b1a3dd8e21c0",
+                  "id": "d15f158f-1e76-4a4a-bb03-45293f7ffc00",
                   "name": "RSVP",
                   "frame": {
                     "pos": {
-                      "x": 350.0,
-                      "y": 1170.0
+                      "x": 340.0,
+                      "y": 1060.0
                     },
                     "size": {
-                      "x": 300.0,
+                      "x": 320.0,
                       "y": 64.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      201,
-                      165,
-                      92,
-                      255
-                    ],
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            227,
+                            200,
+                            138,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 0.5,
+                          "color": [
+                            201,
+                            165,
+                            92,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            140,
+                            116,
+                            64,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.0,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 1.0
+                      }
+                    },
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
@@ -715,15 +1705,15 @@
                   }
                 },
                 {
-                  "id": "eead1d9e-2e26-4c74-a88d-e002e8256afa",
+                  "id": "7b4b6108-13a2-4fd6-a589-0367c62b288e",
                   "name": "RSVP Label",
                   "frame": {
                     "pos": {
-                      "x": 350.0,
-                      "y": 1170.0
+                      "x": 340.0,
+                      "y": 1060.0
                     },
                     "size": {
-                      "x": 300.0,
+                      "x": 320.0,
                       "y": 64.0
                     },
                     "rotation": 0.0
@@ -760,8 +1750,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "RSVP BY MAY 1",
-                      "font_size": 20.0,
+                      "content": "RSVP TO SAM",
+                      "font_size": 19.0,
                       "font": "Serif",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -779,10 +1769,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 13,
+                          "len": 11,
                           "style": {
                             "font": "Serif",
-                            "font_size": 20.0,
+                            "font_size": 19.0,
                             "color": [
                               20,
                               20,

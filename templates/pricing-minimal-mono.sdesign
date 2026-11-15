@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "ec43b153-d380-4429-a1cb-3f6b572e13cc",
+      "id": "b87766dd-7110-474a-b7d8-ab55660feba7",
       "name": "Page 1",
       "layers": [
         {
-          "id": "37b2d111-0c4e-4b55-823b-ae9131d60e76",
+          "id": "00cd8c73-b347-4be2-b55f-9deefb3da1c3",
           "name": "Pricing Page",
           "frame": {
             "pos": {
@@ -49,8 +49,8 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "7c53d423-07d2-457d-a161-b4ccf7aacb26",
-                  "name": "Decoration / Rule Top",
+                  "id": "54b4f2f1-9083-4477-8e04-e4b7042d7e62",
+                  "name": "Pattern / Rule Top",
                   "frame": {
                     "pos": {
                       "x": 61.44,
@@ -104,8 +104,8 @@
                   }
                 },
                 {
-                  "id": "7642caee-78bb-4d00-a500-5764ae5d78ab",
-                  "name": "Decoration / Rule Bottom",
+                  "id": "fcd2a65f-b489-4b9b-8355-0cb6664d5d38",
+                  "name": "Pattern / Rule Bottom",
                   "frame": {
                     "pos": {
                       "x": 61.44,
@@ -159,16 +159,204 @@
                   }
                 },
                 {
-                  "id": "d6fbdb8c-61a9-4037-9168-55358791f7e5",
-                  "name": "Nav / Logo",
+                  "id": "5668ed9f-642c-4989-b89a-1fc4f3689be7",
+                  "name": "Pattern / Dot 1",
+                  "frame": {
+                    "pos": {
+                      "x": 1372.56,
+                      "y": 37.2
+                    },
+                    "size": {
+                      "x": 6.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "f31d2b3f-9bb1-487d-a7d6-f510b5b8ea07",
+                  "name": "Pattern / Dot 2",
+                  "frame": {
+                    "pos": {
+                      "x": 1358.56,
+                      "y": 37.2
+                    },
+                    "size": {
+                      "x": 6.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "166716c6-d801-41c9-9d21-3462975765a6",
+                  "name": "Pattern / Dot 3",
+                  "frame": {
+                    "pos": {
+                      "x": 1344.56,
+                      "y": 37.2
+                    },
+                    "size": {
+                      "x": 6.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "2e4c15f8-e5ca-427a-8053-c9b6a7e8c2ae",
+                  "name": "Nav / Logo / Mark",
                   "frame": {
                     "pos": {
                       "x": 120.0,
-                      "y": 48.0
+                      "y": 44.0
                     },
                     "size": {
-                      "x": 300.0,
-                      "y": 46.0
+                      "x": 30.0,
+                      "y": 30.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Polygon": {
+                      "sides": 6
+                    }
+                  }
+                },
+                {
+                  "id": "a0932220-ed95-42ee-b791-94e5dc81dd90",
+                  "name": "Nav / Logo / Word",
+                  "frame": {
+                    "pos": {
+                      "x": 160.5,
+                      "y": 44.0
+                    },
+                    "size": {
+                      "x": 400.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -205,10 +393,10 @@
                   "kind": {
                     "Text": {
                       "content": "Flowbase",
-                      "font_size": 28.0,
+                      "font_size": 24.0,
                       "font": "Proportional",
                       "align": "Left",
-                      "vertical_align": "Top",
+                      "vertical_align": "Middle",
                       "resize": "Fixed",
                       "line_height": null,
                       "letter_spacing": 0.0,
@@ -226,7 +414,7 @@
                           "len": 8,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 28.0,
+                            "font_size": 24.0,
                             "color": [
                               17,
                               17,
@@ -245,16 +433,16 @@
                   }
                 },
                 {
-                  "id": "55591283-5cb4-4296-ac8a-0a4c06b30837",
-                  "name": "Nav / Product",
+                  "id": "6789efbc-0c35-489f-ac88-91d13975d933",
+                  "name": "Nav / CTA",
                   "frame": {
                     "pos": {
-                      "x": 820.0,
-                      "y": 54.0
+                      "x": 1180.0,
+                      "y": 36.0
                     },
                     "size": {
-                      "x": 110.0,
-                      "y": 31.0
+                      "x": 140.0,
+                      "y": 46.0
                     },
                     "rotation": 0.0
                   },
@@ -289,47 +477,35 @@
                     "fixed_height": false
                   },
                   "kind": {
-                    "Text": {
-                      "content": "Product",
-                      "font_size": 18.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
                     }
                   }
                 },
                 {
-                  "id": "24e6fc93-5305-4265-a4e2-8c4eb41bbf24",
-                  "name": "Nav / Pricing",
+                  "id": "0d8b3123-b310-4c5f-be02-72d94d243f23",
+                  "name": "Nav / CTA Label",
                   "frame": {
                     "pos": {
-                      "x": 950.0,
-                      "y": 54.0
+                      "x": 1180.0,
+                      "y": 36.0
                     },
                     "size": {
-                      "x": 110.0,
-                      "y": 31.0
+                      "x": 140.0,
+                      "y": 46.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      17,
-                      17,
-                      17,
+                      255,
+                      255,
+                      255,
                       255
                     ],
                     "stroke": null,
@@ -357,16 +533,16 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Pricing",
-                      "font_size": 18.0,
+                      "content": "Get started",
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Center",
-                      "vertical_align": "Top",
+                      "vertical_align": "Middle",
                       "resize": "Fixed",
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -374,21 +550,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 11,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 15.0,
+                            "color": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "836cb947-8676-4273-a227-6e97febf0ebd",
+                  "id": "7230fc66-0246-4f48-a0c1-7c92a7734c78",
                   "name": "Nav / Docs",
                   "frame": {
                     "pos": {
-                      "x": 1080.0,
-                      "y": 54.0
+                      "x": 1040.0,
+                      "y": 48.0
                     },
                     "size": {
-                      "x": 110.0,
-                      "y": 31.0
+                      "x": 100.0,
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -425,7 +620,7 @@
                   "kind": {
                     "Text": {
                       "content": "Docs",
-                      "font_size": 18.0,
+                      "font_size": 16.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -446,16 +641,16 @@
                   }
                 },
                 {
-                  "id": "d4cb2ed2-ac94-4e39-976d-71f08904d3c6",
-                  "name": "Nav / Sign in",
+                  "id": "7524e63a-1f7d-4b30-8bfa-58e0354e59bb",
+                  "name": "Nav / Pricing",
                   "frame": {
                     "pos": {
-                      "x": 1210.0,
-                      "y": 54.0
+                      "x": 930.0,
+                      "y": 48.0
                     },
                     "size": {
-                      "x": 110.0,
-                      "y": 31.0
+                      "x": 100.0,
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -491,8 +686,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Sign in",
-                      "font_size": 18.0,
+                      "content": "Pricing",
+                      "font_size": 16.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -513,16 +708,224 @@
                   }
                 },
                 {
-                  "id": "0da0001a-aad8-49bb-b18a-80f2bfccb414",
+                  "id": "f6d212b8-08b2-429d-bb17-fa9bb548df94",
+                  "name": "Nav / Product",
+                  "frame": {
+                    "pos": {
+                      "x": 820.0,
+                      "y": 48.0
+                    },
+                    "size": {
+                      "x": 100.0,
+                      "y": 28.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Product",
+                      "font_size": 16.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "64ce64e2-f389-49f7-956d-96a8bc1ce13b",
+                  "name": "Header / Badge",
+                  "frame": {
+                    "pos": {
+                      "x": 650.0,
+                      "y": 130.0
+                    },
+                    "size": {
+                      "x": 140.0,
+                      "y": 34.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      3,
+                      3,
+                      3,
+                      38
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "21f3ae75-3d7a-46aa-bc4d-a7ad30499b7a",
+                  "name": "Header / Badge Label",
+                  "frame": {
+                    "pos": {
+                      "x": 650.0,
+                      "y": 130.0
+                    },
+                    "size": {
+                      "x": 140.0,
+                      "y": 34.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "PRICING",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 7,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 14.0,
+                            "color": [
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "267a3ff8-6f9e-4dce-a596-6a721da0820f",
                   "name": "Header / Title",
                   "frame": {
                     "pos": {
                       "x": 120.0,
-                      "y": 150.0
+                      "y": 180.0
                     },
                     "size": {
                       "x": 1200.0,
-                      "y": 88.0
+                      "y": 82.0
                     },
                     "rotation": 0.0
                   },
@@ -559,7 +962,7 @@
                   "kind": {
                     "Text": {
                       "content": "Simple, transparent pricing",
-                      "font_size": 56.0,
+                      "font_size": 52.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -580,7 +983,7 @@
                           "len": 27,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 56.0,
+                            "font_size": 52.0,
                             "color": [
                               17,
                               17,
@@ -599,16 +1002,16 @@
                   }
                 },
                 {
-                  "id": "7db5bd65-fe67-4184-ae70-07b486eeb19d",
+                  "id": "ba77a45d-2ab5-4859-87e2-aeb679b74625",
                   "name": "Header / Subtitle",
                   "frame": {
                     "pos": {
                       "x": 120.0,
-                      "y": 240.0
+                      "y": 262.0
                     },
                     "size": {
                       "x": 1200.0,
-                      "y": 37.0
+                      "y": 36.0
                     },
                     "rotation": 0.0
                   },
@@ -644,8 +1047,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Start free. Upgrade when your team grows. Cancel anytime.",
-                      "font_size": 22.0,
+                      "content": "Start free. Upgrade when your team grows.",
+                      "font_size": 21.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -666,12 +1069,275 @@
                   }
                 },
                 {
-                  "id": "6caae773-fe3e-49b4-946c-177fab5e2b9c",
+                  "id": "a2b8c143-2e7c-4ff9-9a1b-89fecb1867fd",
+                  "name": "Toggle / Track",
+                  "frame": {
+                    "pos": {
+                      "x": 620.0,
+                      "y": 316.0
+                    },
+                    "size": {
+                      "x": 200.0,
+                      "y": 40.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      16,
+                      16,
+                      16,
+                      38
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "c04416dc-63b2-414f-8f31-0bbe50413bf7",
+                  "name": "Toggle / Knob",
+                  "frame": {
+                    "pos": {
+                      "x": 624.0,
+                      "y": 320.0
+                    },
+                    "size": {
+                      "x": 96.0,
+                      "y": 32.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "9ce47de6-6b02-448a-8b5f-62d6c621514f",
+                  "name": "Toggle / Monthly",
+                  "frame": {
+                    "pos": {
+                      "x": 624.0,
+                      "y": 326.0
+                    },
+                    "size": {
+                      "x": 96.0,
+                      "y": 25.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Monthly",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 7,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 14.0,
+                            "color": [
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "ff9921c2-bac0-49a8-b97d-2090eb4ab60e",
+                  "name": "Toggle / Yearly",
+                  "frame": {
+                    "pos": {
+                      "x": 720.0,
+                      "y": 326.0
+                    },
+                    "size": {
+                      "x": 96.0,
+                      "y": 25.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      107,
+                      107,
+                      107,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Yearly −20%",
+                      "font_size": 14.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": false,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "1d3bd26f-a58a-4dc0-b1ba-69b2b690481f",
                   "name": "Plan Starter / Card",
                   "frame": {
                     "pos": {
                       "x": 120.0,
-                      "y": 360.0
+                      "y": 410.0
                     },
                     "size": {
                       "x": 376.0,
@@ -729,16 +1395,113 @@
                   }
                 },
                 {
-                  "id": "88c4bbec-51a2-4e4c-bb3e-32b33dd6796b",
+                  "id": "350450c9-42b2-44a5-9998-514b0fba9cbd",
+                  "name": "Plan Starter / Icon / Badge",
+                  "frame": {
+                    "pos": {
+                      "x": 152.0,
+                      "y": 438.0
+                    },
+                    "size": {
+                      "x": 44.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      2,
+                      2,
+                      2,
+                      34
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "0040b247-b4ff-40de-b0fe-4976379f3dda",
+                  "name": "Plan Starter / Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 161.68,
+                      "y": 447.68
+                    },
+                    "size": {
+                      "x": 24.64,
+                      "y": 24.64
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 4,
+                      "inner_ratio": 0.3
+                    }
+                  }
+                },
+                {
+                  "id": "2b4204f1-6aec-4c1d-99f8-e0f291d59c21",
                   "name": "Plan Starter / Name",
                   "frame": {
                     "pos": {
                       "x": 152.0,
-                      "y": 436.0
+                      "y": 502.0
                     },
                     "size": {
                       "x": 312.0,
-                      "y": 46.0
+                      "y": 43.0
                     },
                     "rotation": 0.0
                   },
@@ -775,7 +1538,7 @@
                   "kind": {
                     "Text": {
                       "content": "Starter",
-                      "font_size": 28.0,
+                      "font_size": 26.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -796,7 +1559,7 @@
                           "len": 7,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 28.0,
+                            "font_size": 26.0,
                             "color": [
                               17,
                               17,
@@ -815,16 +1578,16 @@
                   }
                 },
                 {
-                  "id": "c01e191f-26d7-4a86-870c-1c1437d5e07b",
+                  "id": "0ba0dcf5-af76-49c7-a455-453e994ad0f9",
                   "name": "Plan Starter / Price",
                   "frame": {
                     "pos": {
                       "x": 152.0,
-                      "y": 486.0
+                      "y": 546.0
                     },
                     "size": {
-                      "x": 160.0,
-                      "y": 88.0
+                      "x": 180.0,
+                      "y": 85.0
                     },
                     "rotation": 0.0
                   },
@@ -861,7 +1624,7 @@
                   "kind": {
                     "Text": {
                       "content": "$0",
-                      "font_size": 56.0,
+                      "font_size": 54.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -882,7 +1645,7 @@
                           "len": 2,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 56.0,
+                            "font_size": 54.0,
                             "color": [
                               17,
                               17,
@@ -901,16 +1664,16 @@
                   }
                 },
                 {
-                  "id": "66465761-80c0-4fad-b324-016240e2f9bc",
+                  "id": "541fbaf5-7ed7-4bea-bcf9-9d8780dc883d",
                   "name": "Plan Starter / Period",
                   "frame": {
                     "pos": {
-                      "x": 220.0,
-                      "y": 520.0
+                      "x": 226.0,
+                      "y": 576.0
                     },
                     "size": {
                       "x": 120.0,
-                      "y": 31.0
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -947,7 +1710,7 @@
                   "kind": {
                     "Text": {
                       "content": "/ month",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -968,79 +1731,12 @@
                   }
                 },
                 {
-                  "id": "ed5d1545-6180-45e1-9377-3a021d8e43eb",
-                  "name": "Plan Starter / Blurb",
-                  "frame": {
-                    "pos": {
-                      "x": 152.0,
-                      "y": 574.0
-                    },
-                    "size": {
-                      "x": 312.0,
-                      "y": 31.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      107,
-                      107,
-                      107,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "For individuals getting started",
-                      "font_size": 18.0,
-                      "font": "Proportional",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "4eb708a7-6b98-485a-91b7-23d05d75aef6",
+                  "id": "1d576f1b-557d-40a0-a84a-82965e7f4fe6",
                   "name": "Plan Starter / Rule",
                   "frame": {
                     "pos": {
                       "x": 152.0,
-                      "y": 616.0
+                      "y": 642.0
                     },
                     "size": {
                       "x": 312.0,
@@ -1050,10 +1746,10 @@
                   },
                   "style": {
                     "fill": [
-                      206,
-                      206,
-                      206,
-                      255
+                      36,
+                      36,
+                      36,
+                      85
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -1090,27 +1786,30 @@
                   }
                 },
                 {
-                  "id": "a6ae2cbe-c122-4639-9ff6-d1f348d07d2e",
-                  "name": "Plan Starter / Feature 1 Dot",
+                  "id": "91a0b1f8-2eed-40bd-9359-19bcc3b74050",
+                  "name": "Plan Starter / Feature 1 Check / Short",
                   "frame": {
                     "pos": {
-                      "x": 152.0,
-                      "y": 648.0
+                      "x": 154.0,
+                      "y": 678.0
                     },
                     "size": {
-                      "x": 14.0,
-                      "y": 14.0
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -1133,19 +1832,68 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "be44977a-95d6-47df-ac1a-712e450901f9",
+                  "id": "e0e02a33-8d78-4ab5-87b1-c533481ae60f",
+                  "name": "Plan Starter / Feature 1 Check / Long",
+                  "frame": {
+                    "pos": {
+                      "x": 160.0,
+                      "y": 684.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": -13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Line"
+                },
+                {
+                  "id": "9c1f2b82-d47b-4bf5-9e81-bddca47946b0",
                   "name": "Plan Starter / Feature 1",
                   "frame": {
                     "pos": {
-                      "x": 178.0,
-                      "y": 642.0
+                      "x": 184.0,
+                      "y": 666.0
                     },
                     "size": {
-                      "x": 286.0,
-                      "y": 31.0
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -1182,7 +1930,7 @@
                   "kind": {
                     "Text": {
                       "content": "1 project",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1203,27 +1951,30 @@
                   }
                 },
                 {
-                  "id": "40a30f6f-20ed-4b7d-8685-8685792af70d",
-                  "name": "Plan Starter / Feature 2 Dot",
+                  "id": "4c44ca87-59bc-415d-bf93-1bda792667a5",
+                  "name": "Plan Starter / Feature 2 Check / Short",
                   "frame": {
                     "pos": {
-                      "x": 152.0,
-                      "y": 692.0
+                      "x": 154.0,
+                      "y": 720.0
                     },
                     "size": {
-                      "x": 14.0,
-                      "y": 14.0
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -1246,19 +1997,68 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "88bf1577-566d-48e2-bfa3-91f95c1d1362",
+                  "id": "e9dd2fa3-eaf5-4d1b-8e76-c9806a8d2b20",
+                  "name": "Plan Starter / Feature 2 Check / Long",
+                  "frame": {
+                    "pos": {
+                      "x": 160.0,
+                      "y": 726.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": -13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Line"
+                },
+                {
+                  "id": "c1ca051f-cd93-487a-9853-b12023ec4665",
                   "name": "Plan Starter / Feature 2",
                   "frame": {
                     "pos": {
-                      "x": 178.0,
-                      "y": 686.0
+                      "x": 184.0,
+                      "y": 708.0
                     },
                     "size": {
-                      "x": 286.0,
-                      "y": 31.0
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -1295,7 +2095,7 @@
                   "kind": {
                     "Text": {
                       "content": "Basic analytics",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1316,27 +2116,30 @@
                   }
                 },
                 {
-                  "id": "e73683aa-4441-45b8-901e-ce100d709c41",
-                  "name": "Plan Starter / Feature 3 Dot",
+                  "id": "cf15ea41-c843-4ebf-a24c-cd8ef1e6e970",
+                  "name": "Plan Starter / Feature 3 Check / Short",
                   "frame": {
                     "pos": {
-                      "x": 152.0,
-                      "y": 736.0
+                      "x": 154.0,
+                      "y": 762.0
                     },
                     "size": {
-                      "x": 14.0,
-                      "y": 14.0
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -1359,19 +2162,68 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "ca5ae96c-4e05-4778-95aa-822daf756b6b",
+                  "id": "5d3c244a-06da-4ca3-a673-b9f837840fce",
+                  "name": "Plan Starter / Feature 3 Check / Long",
+                  "frame": {
+                    "pos": {
+                      "x": 160.0,
+                      "y": 768.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": -13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Line"
+                },
+                {
+                  "id": "72aed083-402b-478b-8465-547b43590530",
                   "name": "Plan Starter / Feature 3",
                   "frame": {
                     "pos": {
-                      "x": 178.0,
-                      "y": 730.0
+                      "x": 184.0,
+                      "y": 750.0
                     },
                     "size": {
-                      "x": 286.0,
-                      "y": 31.0
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -1408,7 +2260,7 @@
                   "kind": {
                     "Text": {
                       "content": "Community support",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1429,27 +2281,30 @@
                   }
                 },
                 {
-                  "id": "4dfea781-cff6-49d3-9dbc-39250813d016",
+                  "id": "baedf763-b754-449a-b441-3fe15174b5f8",
                   "name": "Plan Starter / CTA",
                   "frame": {
                     "pos": {
                       "x": 152.0,
-                      "y": 828.0
+                      "y": 882.0
                     },
                     "size": {
                       "x": 312.0,
-                      "y": 56.0
+                      "y": 54.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.0
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -1484,24 +2339,24 @@
                   }
                 },
                 {
-                  "id": "0485798f-133a-4cda-a67f-afdd42fa2889",
+                  "id": "98f52484-673e-4899-a948-edb76134a9fb",
                   "name": "Plan Starter / CTA Label",
                   "frame": {
                     "pos": {
                       "x": 152.0,
-                      "y": 828.0
+                      "y": 882.0
                     },
                     "size": {
                       "x": 312.0,
-                      "y": 56.0
+                      "y": 54.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      245,
-                      245,
-                      242,
+                      17,
+                      17,
+                      17,
                       255
                     ],
                     "stroke": null,
@@ -1529,8 +2384,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Get started",
-                      "font_size": 17.0,
+                      "content": "Choose Starter",
+                      "font_size": 16.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -1548,14 +2403,14 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 11,
+                          "len": 14,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 17.0,
+                            "font_size": 16.0,
                             "color": [
-                              245,
-                              245,
-                              242,
+                              17,
+                              17,
+                              17,
                               255
                             ],
                             "bold": true,
@@ -1570,12 +2425,12 @@
                   }
                 },
                 {
-                  "id": "e5e2b1ca-f877-48df-8b2d-5171c98cd20a",
+                  "id": "84582d80-cfbe-4fb3-9163-7d52c15b2736",
                   "name": "Plan Pro / Card",
                   "frame": {
                     "pos": {
                       "x": 532.0,
-                      "y": 330.0
+                      "y": 380.0
                     },
                     "size": {
                       "x": 376.0,
@@ -1584,12 +2439,37 @@
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      255,
-                      255,
-                      255,
-                      255
-                    ],
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            233,
+                            233,
+                            233,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 0.6
+                      }
+                    },
                     "stroke": {
                       "paint": [
                         217,
@@ -1633,25 +2513,25 @@
                   }
                 },
                 {
-                  "id": "5d5e736d-e136-4bcf-9493-ec085dac99da",
+                  "id": "2c162afb-968a-43b4-a5bc-5dc92fc87902",
                   "name": "Plan Pro / Badge",
                   "frame": {
                     "pos": {
-                      "x": 564.0,
-                      "y": 358.0
+                      "x": 732.0,
+                      "y": 408.0
                     },
                     "size": {
-                      "x": 160.0,
+                      "x": 150.0,
                       "y": 30.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      217,
-                      217,
-                      212,
-                      255
+                      3,
+                      3,
+                      3,
+                      38
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -1688,15 +2568,15 @@
                   }
                 },
                 {
-                  "id": "9b8b9293-7bed-4488-9e12-7cdd987908db",
+                  "id": "4333d43f-2197-4840-9499-ab8576becfec",
                   "name": "Plan Pro / Badge Label",
                   "frame": {
                     "pos": {
-                      "x": 564.0,
-                      "y": 358.0
+                      "x": 732.0,
+                      "y": 408.0
                     },
                     "size": {
-                      "x": 160.0,
+                      "x": 150.0,
                       "y": 30.0
                     },
                     "rotation": 0.0
@@ -1774,16 +2654,113 @@
                   }
                 },
                 {
-                  "id": "c0098422-56e8-4924-b627-8a5e657da8b7",
+                  "id": "1cbab45a-e95f-4d2e-81d2-5a87f2faadca",
+                  "name": "Plan Pro / Icon / Badge",
+                  "frame": {
+                    "pos": {
+                      "x": 564.0,
+                      "y": 408.0
+                    },
+                    "size": {
+                      "x": 44.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      2,
+                      2,
+                      2,
+                      34
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "b4341aa5-c766-4cd7-9759-4bb3a54983d2",
+                  "name": "Plan Pro / Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 573.68,
+                      "y": 417.68
+                    },
+                    "size": {
+                      "x": 24.64,
+                      "y": 24.64
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "a8a0b428-2265-4c0c-ab96-d9c328fec600",
                   "name": "Plan Pro / Name",
                   "frame": {
                     "pos": {
                       "x": 564.0,
-                      "y": 406.0
+                      "y": 472.0
                     },
                     "size": {
                       "x": 312.0,
-                      "y": 46.0
+                      "y": 43.0
                     },
                     "rotation": 0.0
                   },
@@ -1820,7 +2797,7 @@
                   "kind": {
                     "Text": {
                       "content": "Pro",
-                      "font_size": 28.0,
+                      "font_size": 26.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1841,7 +2818,7 @@
                           "len": 3,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 28.0,
+                            "font_size": 26.0,
                             "color": [
                               17,
                               17,
@@ -1860,16 +2837,16 @@
                   }
                 },
                 {
-                  "id": "93ac411a-c596-4e1e-b819-b660b22e6187",
+                  "id": "62259144-baee-495f-8c9e-df4d0e137eb2",
                   "name": "Plan Pro / Price",
                   "frame": {
                     "pos": {
                       "x": 564.0,
-                      "y": 456.0
+                      "y": 516.0
                     },
                     "size": {
-                      "x": 160.0,
-                      "y": 88.0
+                      "x": 180.0,
+                      "y": 85.0
                     },
                     "rotation": 0.0
                   },
@@ -1906,7 +2883,7 @@
                   "kind": {
                     "Text": {
                       "content": "$24",
-                      "font_size": 56.0,
+                      "font_size": 54.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -1927,7 +2904,7 @@
                           "len": 3,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 56.0,
+                            "font_size": 54.0,
                             "color": [
                               17,
                               17,
@@ -1946,16 +2923,16 @@
                   }
                 },
                 {
-                  "id": "20ec21f8-ea14-4bbb-9aec-2f48906a9d75",
+                  "id": "0897786b-05b2-4db6-81a5-f271639bc142",
                   "name": "Plan Pro / Period",
                   "frame": {
                     "pos": {
-                      "x": 666.0,
-                      "y": 490.0
+                      "x": 668.0,
+                      "y": 546.0
                     },
                     "size": {
                       "x": 120.0,
-                      "y": 31.0
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -1992,7 +2969,7 @@
                   "kind": {
                     "Text": {
                       "content": "/ month",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -2013,79 +2990,12 @@
                   }
                 },
                 {
-                  "id": "5cab279d-2b8d-46f7-9450-8a807215a54a",
-                  "name": "Plan Pro / Blurb",
-                  "frame": {
-                    "pos": {
-                      "x": 564.0,
-                      "y": 544.0
-                    },
-                    "size": {
-                      "x": 312.0,
-                      "y": 31.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      107,
-                      107,
-                      107,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "For growing teams that ship fast",
-                      "font_size": 18.0,
-                      "font": "Proportional",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "3c02cec0-ce17-4386-a90b-d72c21d1fbf6",
+                  "id": "eef2e0b7-df0b-4855-a244-1b4223f72eb0",
                   "name": "Plan Pro / Rule",
                   "frame": {
                     "pos": {
                       "x": 564.0,
-                      "y": 586.0
+                      "y": 612.0
                     },
                     "size": {
                       "x": 312.0,
@@ -2095,10 +3005,10 @@
                   },
                   "style": {
                     "fill": [
-                      206,
-                      206,
-                      206,
-                      255
+                      36,
+                      36,
+                      36,
+                      85
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -2135,27 +3045,30 @@
                   }
                 },
                 {
-                  "id": "b2e03544-1df3-4738-95e4-19bf328dad2c",
-                  "name": "Plan Pro / Feature 1 Dot",
+                  "id": "f62514ce-ab04-46e0-b12e-71ccd7c2edc5",
+                  "name": "Plan Pro / Feature 1 Check / Short",
                   "frame": {
                     "pos": {
-                      "x": 564.0,
-                      "y": 618.0
+                      "x": 566.0,
+                      "y": 648.0
                     },
                     "size": {
-                      "x": 14.0,
-                      "y": 14.0
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -2178,19 +3091,68 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "19252859-47f7-40d0-8e28-36ebc9aeb3aa",
+                  "id": "3133cd0e-cc99-4829-b431-5c4588e41662",
+                  "name": "Plan Pro / Feature 1 Check / Long",
+                  "frame": {
+                    "pos": {
+                      "x": 572.0,
+                      "y": 654.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": -13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Line"
+                },
+                {
+                  "id": "2b6ffb2c-8032-44b1-8a62-9324975c2f65",
                   "name": "Plan Pro / Feature 1",
                   "frame": {
                     "pos": {
-                      "x": 590.0,
-                      "y": 612.0
+                      "x": 596.0,
+                      "y": 636.0
                     },
                     "size": {
-                      "x": 286.0,
-                      "y": 31.0
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -2227,7 +3189,7 @@
                   "kind": {
                     "Text": {
                       "content": "Unlimited projects",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -2248,27 +3210,30 @@
                   }
                 },
                 {
-                  "id": "96e16980-0a89-4562-9218-158e9300c82a",
-                  "name": "Plan Pro / Feature 2 Dot",
+                  "id": "fc72647d-efb1-46d5-b341-adc25f0a9f20",
+                  "name": "Plan Pro / Feature 2 Check / Short",
                   "frame": {
                     "pos": {
-                      "x": 564.0,
-                      "y": 662.0
+                      "x": 566.0,
+                      "y": 690.0
                     },
                     "size": {
-                      "x": 14.0,
-                      "y": 14.0
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -2291,19 +3256,68 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "d2748426-ba1a-4ede-85f9-28b39521f0f6",
+                  "id": "247dd57e-23b6-4209-b050-61bb217f7234",
+                  "name": "Plan Pro / Feature 2 Check / Long",
+                  "frame": {
+                    "pos": {
+                      "x": 572.0,
+                      "y": 696.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": -13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Line"
+                },
+                {
+                  "id": "4ed511a4-e15a-49cf-ba85-b14ba7f7f84d",
                   "name": "Plan Pro / Feature 2",
                   "frame": {
                     "pos": {
-                      "x": 590.0,
-                      "y": 656.0
+                      "x": 596.0,
+                      "y": 678.0
                     },
                     "size": {
-                      "x": 286.0,
-                      "y": 31.0
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -2340,7 +3354,7 @@
                   "kind": {
                     "Text": {
                       "content": "Advanced analytics",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -2361,27 +3375,30 @@
                   }
                 },
                 {
-                  "id": "7d9807f6-1de7-4657-b147-a887c171120f",
-                  "name": "Plan Pro / Feature 3 Dot",
+                  "id": "2a521ea1-167b-452a-8cab-a13d5c89b2a4",
+                  "name": "Plan Pro / Feature 3 Check / Short",
                   "frame": {
                     "pos": {
-                      "x": 564.0,
-                      "y": 706.0
+                      "x": 566.0,
+                      "y": 732.0
                     },
                     "size": {
-                      "x": 14.0,
-                      "y": 14.0
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -2404,19 +3421,68 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "5e1123c3-f99b-4448-8af1-e5f7dfcda637",
+                  "id": "6b7ecb7c-19c5-49fa-9d7e-083bee6c9868",
+                  "name": "Plan Pro / Feature 3 Check / Long",
+                  "frame": {
+                    "pos": {
+                      "x": 572.0,
+                      "y": 738.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": -13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Line"
+                },
+                {
+                  "id": "aac3628c-a7bd-4328-9498-18b9799e4d34",
                   "name": "Plan Pro / Feature 3",
                   "frame": {
                     "pos": {
-                      "x": 590.0,
-                      "y": 700.0
+                      "x": 596.0,
+                      "y": 720.0
                     },
                     "size": {
-                      "x": 286.0,
-                      "y": 31.0
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -2453,7 +3519,7 @@
                   "kind": {
                     "Text": {
                       "content": "Priority support",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -2474,27 +3540,30 @@
                   }
                 },
                 {
-                  "id": "484631a7-6552-4ad6-ad39-f2d450d24456",
-                  "name": "Plan Pro / Feature 4 Dot",
+                  "id": "630fa98f-f397-4f2d-9423-357ac86d52e8",
+                  "name": "Plan Pro / Feature 4 Check / Short",
                   "frame": {
                     "pos": {
-                      "x": 564.0,
-                      "y": 750.0
+                      "x": 566.0,
+                      "y": 774.0
                     },
                     "size": {
-                      "x": 14.0,
-                      "y": 14.0
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -2517,19 +3586,68 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "30b9cffd-22d2-4af6-98b4-dba2762d0ff7",
+                  "id": "ad67855e-a6be-482a-b7e6-0207e1225cd5",
+                  "name": "Plan Pro / Feature 4 Check / Long",
+                  "frame": {
+                    "pos": {
+                      "x": 572.0,
+                      "y": 780.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": -13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Line"
+                },
+                {
+                  "id": "962ac92f-88ca-40b3-94d6-bf110f9d6778",
                   "name": "Plan Pro / Feature 4",
                   "frame": {
                     "pos": {
-                      "x": 590.0,
-                      "y": 744.0
+                      "x": 596.0,
+                      "y": 762.0
                     },
                     "size": {
-                      "x": 286.0,
-                      "y": 31.0
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -2566,7 +3684,7 @@
                   "kind": {
                     "Text": {
                       "content": "Custom domains",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -2587,16 +3705,16 @@
                   }
                 },
                 {
-                  "id": "79ec4bba-6101-4171-97e2-24a0b4261be3",
+                  "id": "b551695b-7ab3-4da7-8196-878b32967351",
                   "name": "Plan Pro / CTA",
                   "frame": {
                     "pos": {
                       "x": 564.0,
-                      "y": 838.0
+                      "y": 892.0
                     },
                     "size": {
                       "x": 312.0,
-                      "y": 56.0
+                      "y": 54.0
                     },
                     "rotation": 0.0
                   },
@@ -2642,16 +3760,16 @@
                   }
                 },
                 {
-                  "id": "b6e55aed-1f16-45f7-b0b6-be1fd588901e",
+                  "id": "db84a1b1-290b-4e1c-99a7-d7e96e3c0d58",
                   "name": "Plan Pro / CTA Label",
                   "frame": {
                     "pos": {
                       "x": 564.0,
-                      "y": 838.0
+                      "y": 892.0
                     },
                     "size": {
                       "x": 312.0,
-                      "y": 56.0
+                      "y": 54.0
                     },
                     "rotation": 0.0
                   },
@@ -2687,8 +3805,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Get started",
-                      "font_size": 17.0,
+                      "content": "Choose Pro",
+                      "font_size": 16.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -2706,10 +3824,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 11,
+                          "len": 10,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 17.0,
+                            "font_size": 16.0,
                             "color": [
                               255,
                               255,
@@ -2728,12 +3846,12 @@
                   }
                 },
                 {
-                  "id": "2e7e6683-98ef-4f0b-8b08-ad4e9882ffc0",
+                  "id": "8eff5279-bfcf-4ce6-95a4-c2f727bae2f2",
                   "name": "Plan Enterprise / Card",
                   "frame": {
                     "pos": {
                       "x": 944.0,
-                      "y": 360.0
+                      "y": 410.0
                     },
                     "size": {
                       "x": 376.0,
@@ -2791,16 +3909,112 @@
                   }
                 },
                 {
-                  "id": "ff89f0a3-20cd-440b-ba87-e042b631b28c",
+                  "id": "1e2b4240-07b6-4dd2-a989-3af3186666e6",
+                  "name": "Plan Enterprise / Icon / Badge",
+                  "frame": {
+                    "pos": {
+                      "x": 976.0,
+                      "y": 438.0
+                    },
+                    "size": {
+                      "x": 44.0,
+                      "y": 44.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      2,
+                      2,
+                      2,
+                      34
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "d49b62a1-626f-4718-b02c-489bb399404b",
+                  "name": "Plan Enterprise / Icon",
+                  "frame": {
+                    "pos": {
+                      "x": 985.68,
+                      "y": 447.68
+                    },
+                    "size": {
+                      "x": 24.64,
+                      "y": 24.64
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Polygon": {
+                      "sides": 6
+                    }
+                  }
+                },
+                {
+                  "id": "1a819c5b-b705-4980-be1e-10df820a568f",
                   "name": "Plan Enterprise / Name",
                   "frame": {
                     "pos": {
                       "x": 976.0,
-                      "y": 436.0
+                      "y": 502.0
                     },
                     "size": {
                       "x": 312.0,
-                      "y": 46.0
+                      "y": 43.0
                     },
                     "rotation": 0.0
                   },
@@ -2837,7 +4051,7 @@
                   "kind": {
                     "Text": {
                       "content": "Enterprise",
-                      "font_size": 28.0,
+                      "font_size": 26.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -2858,7 +4072,7 @@
                           "len": 10,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 28.0,
+                            "font_size": 26.0,
                             "color": [
                               17,
                               17,
@@ -2877,16 +4091,16 @@
                   }
                 },
                 {
-                  "id": "4a69d8ce-4342-445d-9775-f1481fd48e4e",
+                  "id": "f8f0de0a-35b4-4e60-bf96-9ffc1f7bb5d9",
                   "name": "Plan Enterprise / Price",
                   "frame": {
                     "pos": {
                       "x": 976.0,
-                      "y": 486.0
+                      "y": 546.0
                     },
                     "size": {
-                      "x": 160.0,
-                      "y": 88.0
+                      "x": 180.0,
+                      "y": 85.0
                     },
                     "rotation": 0.0
                   },
@@ -2923,7 +4137,7 @@
                   "kind": {
                     "Text": {
                       "content": "$89",
-                      "font_size": 56.0,
+                      "font_size": 54.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -2944,7 +4158,7 @@
                           "len": 3,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 56.0,
+                            "font_size": 54.0,
                             "color": [
                               17,
                               17,
@@ -2963,16 +4177,16 @@
                   }
                 },
                 {
-                  "id": "317794dd-d319-4e0b-b7bc-d28426ba6b20",
+                  "id": "ee5d294a-3837-4c92-a1e5-a60653e22ae8",
                   "name": "Plan Enterprise / Period",
                   "frame": {
                     "pos": {
-                      "x": 1078.0,
-                      "y": 520.0
+                      "x": 1080.0,
+                      "y": 576.0
                     },
                     "size": {
                       "x": 120.0,
-                      "y": 31.0
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -3009,7 +4223,7 @@
                   "kind": {
                     "Text": {
                       "content": "/ month",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -3030,79 +4244,12 @@
                   }
                 },
                 {
-                  "id": "94a85b2a-9e10-492e-b077-ad04003d0a95",
-                  "name": "Plan Enterprise / Blurb",
-                  "frame": {
-                    "pos": {
-                      "x": 976.0,
-                      "y": 574.0
-                    },
-                    "size": {
-                      "x": 312.0,
-                      "y": 31.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      107,
-                      107,
-                      107,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": {
-                    "Text": {
-                      "content": "For organizations at scale",
-                      "font_size": 18.0,
-                      "font": "Proportional",
-                      "align": "Left",
-                      "vertical_align": "Top",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": false,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "path_attachment": null
-                    }
-                  }
-                },
-                {
-                  "id": "19509b06-47f1-4625-904b-d7343651b00f",
+                  "id": "d8c302ce-e824-46f9-9191-fa40348b6db6",
                   "name": "Plan Enterprise / Rule",
                   "frame": {
                     "pos": {
                       "x": 976.0,
-                      "y": 616.0
+                      "y": 642.0
                     },
                     "size": {
                       "x": 312.0,
@@ -3112,10 +4259,10 @@
                   },
                   "style": {
                     "fill": [
-                      206,
-                      206,
-                      206,
-                      255
+                      36,
+                      36,
+                      36,
+                      85
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -3152,27 +4299,30 @@
                   }
                 },
                 {
-                  "id": "4d6474ec-aecc-4455-8386-81492ab0274a",
-                  "name": "Plan Enterprise / Feature 1 Dot",
+                  "id": "e2d36ab0-cb98-4338-b63f-ab89f7e6d539",
+                  "name": "Plan Enterprise / Feature 1 Check / Short",
                   "frame": {
                     "pos": {
-                      "x": 976.0,
-                      "y": 648.0
+                      "x": 978.0,
+                      "y": 678.0
                     },
                     "size": {
-                      "x": 14.0,
-                      "y": 14.0
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -3195,19 +4345,68 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "bbe57736-9848-4e21-9aa9-54ffd0451175",
+                  "id": "d4f1b86d-dfbb-4a07-b98b-7891f4cc6a87",
+                  "name": "Plan Enterprise / Feature 1 Check / Long",
+                  "frame": {
+                    "pos": {
+                      "x": 984.0,
+                      "y": 684.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": -13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Line"
+                },
+                {
+                  "id": "756898ba-f65d-42a2-b56d-1f4f41f81ed2",
                   "name": "Plan Enterprise / Feature 1",
                   "frame": {
                     "pos": {
-                      "x": 1002.0,
-                      "y": 642.0
+                      "x": 1008.0,
+                      "y": 666.0
                     },
                     "size": {
-                      "x": 286.0,
-                      "y": 31.0
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -3244,7 +4443,7 @@
                   "kind": {
                     "Text": {
                       "content": "SSO & audit logs",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -3265,27 +4464,30 @@
                   }
                 },
                 {
-                  "id": "b2bdcf2e-cae8-4c71-a7c5-07069222be8c",
-                  "name": "Plan Enterprise / Feature 2 Dot",
+                  "id": "06b0fad0-1785-4a08-bfd6-0bb2fac7c2a8",
+                  "name": "Plan Enterprise / Feature 2 Check / Short",
                   "frame": {
                     "pos": {
-                      "x": 976.0,
-                      "y": 692.0
+                      "x": 978.0,
+                      "y": 720.0
                     },
                     "size": {
-                      "x": 14.0,
-                      "y": 14.0
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -3308,19 +4510,68 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "770c6663-5758-46cc-bd3c-6b1590b3d65a",
+                  "id": "84ab47a6-7b33-4210-8741-cc42b480fe56",
+                  "name": "Plan Enterprise / Feature 2 Check / Long",
+                  "frame": {
+                    "pos": {
+                      "x": 984.0,
+                      "y": 726.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": -13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Line"
+                },
+                {
+                  "id": "0df087b6-44a0-499e-ba3c-d3527ac1ec03",
                   "name": "Plan Enterprise / Feature 2",
                   "frame": {
                     "pos": {
-                      "x": 1002.0,
-                      "y": 686.0
+                      "x": 1008.0,
+                      "y": 708.0
                     },
                     "size": {
-                      "x": 286.0,
-                      "y": 31.0
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -3357,7 +4608,7 @@
                   "kind": {
                     "Text": {
                       "content": "Dedicated manager",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -3378,27 +4629,30 @@
                   }
                 },
                 {
-                  "id": "f2a299e2-4342-407f-bf97-7f78781776c9",
-                  "name": "Plan Enterprise / Feature 3 Dot",
+                  "id": "d758d01c-79bf-4190-9351-9a3050a814d1",
+                  "name": "Plan Enterprise / Feature 3 Check / Short",
                   "frame": {
                     "pos": {
-                      "x": 976.0,
-                      "y": 736.0
+                      "x": 978.0,
+                      "y": 762.0
                     },
                     "size": {
-                      "x": 14.0,
-                      "y": 14.0
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -3421,19 +4675,68 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": "Line"
                 },
                 {
-                  "id": "d03db5ce-2312-43e7-bbdc-903ebba56e36",
+                  "id": "c5aca221-c73c-4e39-b4b9-2f3d86194784",
+                  "name": "Plan Enterprise / Feature 3 Check / Long",
+                  "frame": {
+                    "pos": {
+                      "x": 984.0,
+                      "y": 768.0
+                    },
+                    "size": {
+                      "x": 10.0,
+                      "y": -13.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.8
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Line"
+                },
+                {
+                  "id": "f88dd576-9802-4cac-b486-565dddde354a",
                   "name": "Plan Enterprise / Feature 3",
                   "frame": {
                     "pos": {
-                      "x": 1002.0,
-                      "y": 730.0
+                      "x": 1008.0,
+                      "y": 750.0
                     },
                     "size": {
-                      "x": 286.0,
-                      "y": 31.0
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -3470,7 +4773,7 @@
                   "kind": {
                     "Text": {
                       "content": "99.99% uptime SLA",
-                      "font_size": 18.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -3491,27 +4794,30 @@
                   }
                 },
                 {
-                  "id": "cf34b23e-46a0-4508-932e-5a0b23a0feb8",
+                  "id": "c269ee84-2d4c-48f9-88c9-b6592fd10e97",
                   "name": "Plan Enterprise / CTA",
                   "frame": {
                     "pos": {
                       "x": 976.0,
-                      "y": 828.0
+                      "y": 882.0
                     },
                     "size": {
                       "x": 312.0,
-                      "y": 56.0
+                      "y": 54.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
-                    "fill": [
-                      17,
-                      17,
-                      17,
-                      255
-                    ],
-                    "stroke": null,
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 2.0
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -3546,24 +4852,24 @@
                   }
                 },
                 {
-                  "id": "355e6392-b912-41b7-991f-c651e84a8b4e",
+                  "id": "ad11405d-73ea-4f81-acb4-ad23778abd44",
                   "name": "Plan Enterprise / CTA Label",
                   "frame": {
                     "pos": {
                       "x": 976.0,
-                      "y": 828.0
+                      "y": 882.0
                     },
                     "size": {
                       "x": 312.0,
-                      "y": 56.0
+                      "y": 54.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      245,
-                      245,
-                      242,
+                      17,
+                      17,
+                      17,
                       255
                     ],
                     "stroke": null,
@@ -3591,8 +4897,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Contact sales",
-                      "font_size": 17.0,
+                      "content": "Choose Enterprise",
+                      "font_size": 16.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -3610,14 +4916,1108 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 13,
+                          "len": 17,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 17.0,
+                            "font_size": 16.0,
                             "color": [
-                              245,
-                              245,
-                              242,
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "667e192c-55e8-446a-a087-7716eae850ce",
+                  "name": "Proof / Avatars 1",
+                  "frame": {
+                    "pos": {
+                      "x": 560.0,
+                      "y": 960.0
+                    },
+                    "size": {
+                      "x": 36.0,
+                      "y": 46.799988
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "5e7b21ea-f29b-4a26-80a0-49ad10b9bf99",
+                          "name": "Proof / Avatars 1 / Back",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 36.0,
+                              "y": 36.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              176,
+                              176,
+                              176,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "a8b398f9-90c9-4470-8da5-c2476178981c",
+                          "name": "Proof / Avatars 1 / Head",
+                          "frame": {
+                            "pos": {
+                              "x": 11.52002,
+                              "y": 6.4799805
+                            },
+                            "size": {
+                              "x": 12.96,
+                              "y": 12.96
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "44fa5b8f-1d09-4f5f-9c21-e31c31738eae",
+                          "name": "Proof / Avatars 1 / Body",
+                          "frame": {
+                            "pos": {
+                              "x": 5.039978,
+                              "y": 21.599976
+                            },
+                            "size": {
+                              "x": 25.92,
+                              "y": 25.2
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "cd221ffa-2373-4d17-9bd4-beca7937ca4a",
+                          "name": "Proof / Avatars 1 / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 36.0,
+                              "y": 36.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 18.0,
+                                "top_right": 18.0,
+                                "bottom_right": 18.0,
+                                "bottom_left": 18.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "4d7f6abd-2418-4cc2-be0b-ba1a5502ea60",
+                  "name": "Proof / Avatars 2",
+                  "frame": {
+                    "pos": {
+                      "x": 585.2,
+                      "y": 960.0
+                    },
+                    "size": {
+                      "x": 36.0,
+                      "y": 46.799988
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "927fca37-5dd9-4395-ac0f-1fa4b51bc233",
+                          "name": "Proof / Avatars 2 / Back",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 36.0,
+                              "y": 36.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              222,
+                              222,
+                              220,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "d9c8ff70-69a6-4cbd-be11-52ccda83666c",
+                          "name": "Proof / Avatars 2 / Head",
+                          "frame": {
+                            "pos": {
+                              "x": 11.5199585,
+                              "y": 6.4799805
+                            },
+                            "size": {
+                              "x": 12.96,
+                              "y": 12.96
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              156,
+                              156,
+                              150,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "189846c8-2b1c-4029-9c24-d5a3ccd96e26",
+                          "name": "Proof / Avatars 2 / Body",
+                          "frame": {
+                            "pos": {
+                              "x": 5.039978,
+                              "y": 21.599976
+                            },
+                            "size": {
+                              "x": 25.92,
+                              "y": 25.2
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              156,
+                              156,
+                              150,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "79c2a581-f7c7-4ebf-abb3-ad15b4e193bb",
+                          "name": "Proof / Avatars 2 / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 36.0,
+                              "y": 36.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 18.0,
+                                "top_right": 18.0,
+                                "bottom_right": 18.0,
+                                "bottom_left": 18.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "0aced6e5-6f6d-47cc-a4a8-1b4ab33ab271",
+                  "name": "Proof / Avatars 3",
+                  "frame": {
+                    "pos": {
+                      "x": 610.4,
+                      "y": 960.0
+                    },
+                    "size": {
+                      "x": 36.0,
+                      "y": 46.799988
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "91c54003-ec5f-4f1e-b905-258018bdd379",
+                          "name": "Proof / Avatars 3 / Back",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 36.0,
+                              "y": 36.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              222,
+                              222,
+                              220,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "8627ffab-ac7f-4b24-89a8-82aa9c58f211",
+                          "name": "Proof / Avatars 3 / Head",
+                          "frame": {
+                            "pos": {
+                              "x": 11.5199585,
+                              "y": 6.4799805
+                            },
+                            "size": {
+                              "x": 12.96,
+                              "y": 12.96
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              156,
+                              156,
+                              150,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "5f0302bc-ce18-406a-aceb-86f1c14f3cc1",
+                          "name": "Proof / Avatars 3 / Body",
+                          "frame": {
+                            "pos": {
+                              "x": 5.039978,
+                              "y": 21.599976
+                            },
+                            "size": {
+                              "x": 25.92,
+                              "y": 25.2
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              156,
+                              156,
+                              150,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "0ba88930-3d81-4f4a-8305-1ed3f02cc1ad",
+                          "name": "Proof / Avatars 3 / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 36.0,
+                              "y": 36.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 18.0,
+                                "top_right": 18.0,
+                                "bottom_right": 18.0,
+                                "bottom_left": 18.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "199513e8-80f5-4ab8-a57f-e4630085a596",
+                  "name": "Proof / Avatars 4",
+                  "frame": {
+                    "pos": {
+                      "x": 635.6,
+                      "y": 960.0
+                    },
+                    "size": {
+                      "x": 36.0,
+                      "y": 46.799988
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "e9f87a6d-e106-410b-b47b-b3af82f16a43",
+                          "name": "Proof / Avatars 4 / Back",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 36.0,
+                              "y": 36.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              176,
+                              176,
+                              176,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "be3eb287-6d8c-4263-9bfb-57b3e43f5be4",
+                          "name": "Proof / Avatars 4 / Head",
+                          "frame": {
+                            "pos": {
+                              "x": 11.52002,
+                              "y": 6.4799805
+                            },
+                            "size": {
+                              "x": 12.96,
+                              "y": 12.96
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "901c909f-af69-4089-97e0-f4d648ac40aa",
+                          "name": "Proof / Avatars 4 / Body",
+                          "frame": {
+                            "pos": {
+                              "x": 5.040039,
+                              "y": 21.599976
+                            },
+                            "size": {
+                              "x": 25.92,
+                              "y": 25.2
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "16baa5fc-d488-43a4-b1f8-b05ea5e6c3ed",
+                          "name": "Proof / Avatars 4 / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 36.0,
+                              "y": 36.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 18.0,
+                                "top_right": 18.0,
+                                "bottom_right": 18.0,
+                                "bottom_left": 18.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "79045add-55a0-4ef3-9a32-fc45d1f86bf3",
+                  "name": "Proof / Text",
+                  "frame": {
+                    "pos": {
+                      "x": 700.0,
+                      "y": 966.0
+                    },
+                    "size": {
+                      "x": 300.0,
+                      "y": 28.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "Trusted by 12,000+ teams",
+                      "font_size": 16.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 24,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 16.0,
+                            "color": [
+                              17,
+                              17,
+                              17,
                               255
                             ],
                             "bold": true,

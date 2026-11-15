@@ -2,7 +2,7 @@
 //! `simple-design-cli`. Newline-delimited JSON, one `Request` per line in,
 //! one `Response` per line back.
 
-use egui::Color32;
+use egui::{Color32, Pos2, Vec2};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -343,6 +343,60 @@ pub struct FlipArgs {
     /// One of "horizontal" / "vertical" — same plain-string convention as
     /// `AlignArgs::edge` (`transform_ops::FlipAxis` has no `serde` derive).
     pub axis: String,
+}
+
+/// Replaces a layer's fill: one color is a solid fill, two or more a
+/// gradient with evenly spaced stops. `from`/`to` are normalized points in
+/// the layer's unrotated bounds (see `model::Gradient`); omitted, they default
+/// to `Gradient::linear`/`Gradient::radial`'s own.
+#[derive(Serialize, Deserialize)]
+pub struct SetFillArgs {
+    pub id: Uuid,
+    pub colors: Vec<Color32>,
+    #[serde(default)]
+    pub radial: bool,
+    #[serde(default)]
+    pub from: Option<Pos2>,
+    #[serde(default)]
+    pub to: Option<Pos2>,
+}
+
+/// Replaces a layer's drop shadows (`inner_shadows` when `inner`) with one
+/// shadow, each omitted field taken from `Shadow::default()` — or removes
+/// them all when `clear`.
+#[derive(Serialize, Deserialize)]
+pub struct SetShadowArgs {
+    pub id: Uuid,
+    #[serde(default)]
+    pub inner: bool,
+    #[serde(default)]
+    pub clear: bool,
+    #[serde(default)]
+    pub color: Option<Color32>,
+    #[serde(default)]
+    pub offset: Option<Vec2>,
+    #[serde(default)]
+    pub blur: Option<f32>,
+    #[serde(default)]
+    pub spread: Option<f32>,
+}
+
+/// A star, polygon or line — the shapes beyond `add_rect`/`add_ellipse`,
+/// styled through the same `AddShapeArgs` fields (`corner_radius` ignored).
+/// `kind` is "star" / "polygon" / "line", a plain string like
+/// `AlignArgs::edge`. `points`/`inner_ratio` (star) and `sides` (polygon)
+/// default to the GUI tools' own 5 / 0.5 / 6.
+#[derive(Serialize, Deserialize)]
+pub struct AddFigureArgs {
+    #[serde(flatten)]
+    pub shape: AddShapeArgs,
+    pub kind: String,
+    #[serde(default)]
+    pub points: Option<u32>,
+    #[serde(default)]
+    pub inner_ratio: Option<f32>,
+    #[serde(default)]
+    pub sides: Option<u32>,
 }
 
 #[derive(Serialize, Deserialize)]

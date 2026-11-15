@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "14258692-3b3d-476a-a3c6-ef8a4892fa4e",
+      "id": "37fbf7d4-269d-43b7-8834-6d5157cf3794",
       "name": "Page 1",
       "layers": [
         {
-          "id": "52ada78b-90f0-4422-bce9-66854215bd19",
+          "id": "6bafa41b-269f-4910-a2d0-c422ddc8e620",
           "name": "Ad Banner 1200x628",
           "frame": {
             "pos": {
@@ -49,8 +49,88 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "39378a81-5be3-482c-a71d-b49789a1b338",
-                  "name": "Decoration / Circle Pink",
+                  "id": "e58abfd0-dcae-4224-9e92-56777044cf3f",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1200.0,
+                      "y": 628.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            255,
+                            244,
+                            241,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            241,
+                            240,
+                            255,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "bb129210-4f89-44b4-9f25-27cb136596e0",
+                  "name": "Pattern / Blob Pink",
                   "frame": {
                     "pos": {
                       "x": 936.24,
@@ -64,10 +144,10 @@
                   },
                   "style": {
                     "fill": [
-                      251,
-                      210,
-                      220,
-                      255
+                      61,
+                      35,
+                      45,
+                      64
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -95,8 +175,8 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "ef572adc-6fc3-469c-aec6-ddbf3e34d26b",
-                  "name": "Decoration / Circle Blue",
+                  "id": "9c0ad644-086c-474f-8f78-4268124b873b",
+                  "name": "Pattern / Blob Blue",
                   "frame": {
                     "pos": {
                       "x": -125.6,
@@ -110,10 +190,10 @@
                   },
                   "style": {
                     "fill": [
-                      214,
-                      231,
-                      238,
-                      255
+                      63,
+                      81,
+                      88,
+                      96
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -141,24 +221,24 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "4f5e603c-c16e-4257-8ecd-5f6474fe36c1",
-                  "name": "Decoration / Circle Yellow",
+                  "id": "f423bbe0-8b8e-44da-b844-f820c259f4ab",
+                  "name": "Pattern / Confetti Dot",
                   "frame": {
                     "pos": {
-                      "x": 96.0,
-                      "y": 62.8
+                      "x": 13.35,
+                      "y": 55.8
                     },
                     "size": {
-                      "x": 75.36,
-                      "y": 75.36
+                      "x": 11.3,
+                      "y": 11.3
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      252,
-                      227,
-                      138,
+                      242,
+                      141,
+                      178,
                       255
                     ],
                     "stroke": null,
@@ -187,16 +267,16 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "2e502a15-83c4-4c68-a106-8a2f56583a01",
-                  "name": "Product / Image",
+                  "id": "e9801f37-e748-4a67-bc69-55655c05e773",
+                  "name": "Pattern / Confetti Star",
                   "frame": {
                     "pos": {
-                      "x": 680.0,
-                      "y": 74.0
+                      "x": 1096.8,
+                      "y": 0.7
                     },
                     "size": {
-                      "x": 460.0,
-                      "y": 480.0
+                      "x": 18.84,
+                      "y": 18.84
                     },
                     "rotation": 0.0
                   },
@@ -231,38 +311,42 @@
                     "fixed_height": false
                   },
                   "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 24.0,
-                        "top_right": 24.0,
-                        "bottom_right": 24.0,
-                        "bottom_left": 24.0
-                      }
+                    "Star": {
+                      "points": 4,
+                      "inner_ratio": 0.35
                     }
                   }
                 },
                 {
-                  "id": "3a948adb-2658-4cd2-b536-092cf1425528",
-                  "name": "Product / Image / Sun",
+                  "id": "46da1ef8-aa24-4f2b-ad0e-d431f069a875",
+                  "name": "Art",
                   "frame": {
                     "pos": {
-                      "x": 992.8,
-                      "y": 150.8
+                      "x": 588.0,
+                      "y": 64.0
                     },
                     "size": {
-                      "x": 92.0,
-                      "y": 92.0
+                      "x": 644.0,
+                      "y": 660.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      252,
-                      227,
-                      138,
+                      216,
+                      216,
+                      216,
                       255
                     ],
-                    "stroke": null,
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -285,120 +369,360 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "deffc248-45bf-45d6-8741-3ffaafadc6b8",
+                          "name": "Art / Sky",
+                          "frame": {
+                            "pos": {
+                              "x": 92.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 460.0,
+                              "y": 500.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": {
+                              "kind": "Linear",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    252,
+                                    227,
+                                    236,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    168,
+                                    216,
+                                    234,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.5,
+                                "y": 0.0
+                              },
+                              "to": {
+                                "x": 0.5,
+                                "y": 1.0
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "197ab0ea-975a-47d2-ba13-d9f85b5a3094",
+                          "name": "Art / Sun",
+                          "frame": {
+                            "pos": {
+                              "x": 377.2,
+                              "y": 70.0
+                            },
+                            "size": {
+                              "x": 128.8,
+                              "y": 128.8
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              252,
+                              227,
+                              138,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "91eb4d5d-9822-478d-9107-2fa7802091f7",
+                          "name": "Art / Far Peak",
+                          "frame": {
+                            "pos": {
+                              "x": 46.0,
+                              "y": 175.0
+                            },
+                            "size": {
+                              "x": 345.0,
+                              "y": 400.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              207,
+                              176,
+                              204,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Polygon": {
+                              "sides": 3
+                            }
+                          }
+                        },
+                        {
+                          "id": "040cdf10-4631-4400-8a31-7c8faa752475",
+                          "name": "Art / Near Peak",
+                          "frame": {
+                            "pos": {
+                              "x": 253.0,
+                              "y": 225.0
+                            },
+                            "size": {
+                              "x": 368.0,
+                              "y": 375.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              242,
+                              141,
+                              178,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Polygon": {
+                              "sides": 3
+                            }
+                          }
+                        },
+                        {
+                          "id": "ef0a4940-1b63-4966-a3e5-cd6b6da00a05",
+                          "name": "Art / Ground",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 410.0
+                            },
+                            "size": {
+                              "x": 644.0,
+                              "y": 250.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              252,
+                              227,
+                              138,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "7cc34f4c-48c9-4de1-b07d-d77a0187fbf0",
+                          "name": "Art / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 92.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 460.0,
+                              "y": 500.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 24.0,
+                                "top_right": 24.0,
+                                "bottom_right": 24.0,
+                                "bottom_left": 24.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
                 },
                 {
-                  "id": "26bdcb69-8ef9-4c55-909b-6963ad7b390d",
-                  "name": "Product / Image / Hill",
-                  "frame": {
-                    "pos": {
-                      "x": 716.8,
-                      "y": 338.0
-                    },
-                    "size": {
-                      "x": 276.0,
-                      "y": 216.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      227,
-                      156,
-                      189,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "cfdf95ec-75f9-466f-a283-6cd092a14c1c",
-                  "name": "Product / Image / Hill 2",
-                  "frame": {
-                    "pos": {
-                      "x": 873.2,
-                      "y": 386.0
-                    },
-                    "size": {
-                      "x": 230.0,
-                      "y": 168.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      235,
-                      225,
-                      157,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "b8592104-be0c-4095-8bf6-763844d4f934",
+                  "id": "a1165fda-f702-4562-9783-ccf5b53f1a53",
                   "name": "Copy / Badge",
                   "frame": {
                     "pos": {
                       "x": 70.0,
-                      "y": 110.0
+                      "y": 90.0
                     },
                     "size": {
-                      "x": 180.0,
+                      "x": 170.0,
                       "y": 34.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      168,
-                      216,
-                      234,
-                      255
+                      36,
+                      21,
+                      27,
+                      38
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -435,24 +759,24 @@
                   }
                 },
                 {
-                  "id": "bf404858-ba89-41be-8c65-2e2726981cc8",
+                  "id": "017b7c8a-f118-470d-a5e9-df5a696fbbd6",
                   "name": "Copy / Badge Label",
                   "frame": {
                     "pos": {
                       "x": 70.0,
-                      "y": 110.0
+                      "y": 90.0
                     },
                     "size": {
-                      "x": 180.0,
+                      "x": 170.0,
                       "y": 34.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      61,
-                      53,
-                      80,
+                      242,
+                      141,
+                      178,
                       255
                     ],
                     "stroke": null,
@@ -480,7 +804,7 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "NEW ARRIVAL",
+                      "content": "SUMMER SALE",
                       "font_size": 14.0,
                       "font": "Proportional",
                       "align": "Center",
@@ -504,9 +828,9 @@
                             "font": "Proportional",
                             "font_size": 14.0,
                             "color": [
-                              61,
-                              53,
-                              80,
+                              242,
+                              141,
+                              178,
                               255
                             ],
                             "bold": true,
@@ -521,16 +845,16 @@
                   }
                 },
                 {
-                  "id": "9dfc578b-5621-4432-ba01-b1e48bd080ee",
+                  "id": "509b10d3-718e-45d8-97ac-7ce7110f5f10",
                   "name": "Copy / Headline",
                   "frame": {
                     "pos": {
                       "x": 70.0,
-                      "y": 170.0
+                      "y": 146.0
                     },
                     "size": {
                       "x": 580.0,
-                      "y": 196.0
+                      "y": 166.0
                     },
                     "rotation": 0.0
                   },
@@ -566,8 +890,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Sound that\nmoves with you",
-                      "font_size": 64.0,
+                      "content": "Escape to\nthe coast",
+                      "font_size": 54.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -585,10 +909,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 25,
+                          "len": 19,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 64.0,
+                            "font_size": 54.0,
                             "color": [
                               61,
                               53,
@@ -607,16 +931,16 @@
                   }
                 },
                 {
-                  "id": "67abd3e9-807b-4784-a0dd-be72ba7485e6",
+                  "id": "8ebc8d57-a449-4e44-8294-51cf7ca85fe1",
                   "name": "Copy / Body",
                   "frame": {
                     "pos": {
                       "x": 70.0,
-                      "y": 360.0
+                      "y": 312.0
                     },
                     "size": {
                       "x": 560.0,
-                      "y": 70.0
+                      "y": 34.0
                     },
                     "rotation": 0.0
                   },
@@ -652,8 +976,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Wireless headphones with 40-hour battery\nand adaptive noise cancelling.",
-                      "font_size": 22.0,
+                      "content": "Beach stays from $89 a night. Book by Sunday.",
+                      "font_size": 20.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -674,16 +998,16 @@
                   }
                 },
                 {
-                  "id": "e74a7d0d-9af2-495f-8d57-e0c81adecf4b",
-                  "name": "Copy / CTA",
+                  "id": "f108b6b5-3c72-43e7-9222-8f538ceaac3f",
+                  "name": "Copy / Rating 1",
                   "frame": {
                     "pos": {
                       "x": 70.0,
-                      "y": 460.0
+                      "y": 368.0
                     },
                     "size": {
-                      "x": 300.0,
-                      "y": 60.0
+                      "x": 22.0,
+                      "y": 22.0
                     },
                     "rotation": 0.0
                   },
@@ -718,6 +1042,387 @@
                     "fixed_height": false
                   },
                   "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "71931411-ce19-4148-845e-9e7e19c771ad",
+                  "name": "Copy / Rating 2",
+                  "frame": {
+                    "pos": {
+                      "x": 96.4,
+                      "y": 368.0
+                    },
+                    "size": {
+                      "x": 22.0,
+                      "y": 22.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "13ef2980-47f1-40bf-9a69-a2eea227bbeb",
+                  "name": "Copy / Rating 3",
+                  "frame": {
+                    "pos": {
+                      "x": 122.8,
+                      "y": 368.0
+                    },
+                    "size": {
+                      "x": 22.0,
+                      "y": 22.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "0acb7cfb-6c3b-4565-bce4-503201a4dc1c",
+                  "name": "Copy / Rating 4",
+                  "frame": {
+                    "pos": {
+                      "x": 149.2,
+                      "y": 368.0
+                    },
+                    "size": {
+                      "x": 22.0,
+                      "y": 22.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "3c7e92d2-8318-4c24-ad87-bb9e28c8b649",
+                  "name": "Copy / Rating 5",
+                  "frame": {
+                    "pos": {
+                      "x": 175.6,
+                      "y": 368.0
+                    },
+                    "size": {
+                      "x": 22.0,
+                      "y": 22.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 5,
+                      "inner_ratio": 0.45
+                    }
+                  }
+                },
+                {
+                  "id": "4efdd9c3-a5ff-4aac-8001-1b10ac0b58fa",
+                  "name": "Copy / Proof",
+                  "frame": {
+                    "pos": {
+                      "x": 210.0,
+                      "y": 368.0
+                    },
+                    "size": {
+                      "x": 300.0,
+                      "y": 28.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      61,
+                      53,
+                      80,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "4.7 · 8,904 reviews",
+                      "font_size": 16.0,
+                      "font": "Proportional",
+                      "align": "Left",
+                      "vertical_align": "Top",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 19,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 16.0,
+                            "color": [
+                              61,
+                              53,
+                              80,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "72e0b988-f5b7-48c9-844f-b811e7f1b3fd",
+                  "name": "Copy / CTA",
+                  "frame": {
+                    "pos": {
+                      "x": 70.0,
+                      "y": 440.0
+                    },
+                    "size": {
+                      "x": 300.0,
+                      "y": 62.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            242,
+                            141,
+                            178,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            252,
+                            227,
+                            138,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      "to": {
+                        "x": 1.0,
+                        "y": 0.5
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [
+                      {
+                        "color": [
+                          81,
+                          47,
+                          59,
+                          85
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 8.0
+                        },
+                        "blur": 20.0,
+                        "spread": 0.0
+                      }
+                    ],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
                     "Rectangle": {
                       "corner_radius": {
                         "top_left": 24.0,
@@ -729,16 +1434,16 @@
                   }
                 },
                 {
-                  "id": "3e2d1ae8-2458-421c-b6b2-dd8542d7c6cb",
+                  "id": "55e564ef-f1d4-4c31-9fc5-fba811d8e19f",
                   "name": "Copy / CTA Label",
                   "frame": {
                     "pos": {
                       "x": 70.0,
-                      "y": 460.0
+                      "y": 440.0
                     },
                     "size": {
                       "x": 300.0,
-                      "y": 60.0
+                      "y": 62.0
                     },
                     "rotation": 0.0
                   },
@@ -774,8 +1479,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "SHOP NOW — 20% OFF",
-                      "font_size": 18.0,
+                      "content": "SEE DEALS",
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -793,10 +1498,162 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 18,
+                          "len": 9,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 18.0,
+                            "font_size": 17.0,
+                            "color": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "8c14d874-9779-482f-bedf-4efd9f193aee",
+                  "name": "Offer / Burst",
+                  "frame": {
+                    "pos": {
+                      "x": 580.0,
+                      "y": 30.0
+                    },
+                    "size": {
+                      "x": 120.0,
+                      "y": 120.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      242,
+                      141,
+                      178,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [
+                      {
+                        "color": [
+                          5,
+                          4,
+                          6,
+                          20
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 6.0
+                        },
+                        "blur": 18.0,
+                        "spread": 0.0
+                      }
+                    ],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Star": {
+                      "points": 16,
+                      "inner_ratio": 0.82
+                    }
+                  }
+                },
+                {
+                  "id": "1b1f53c1-1d98-4f40-8c74-18d6a00393c4",
+                  "name": "Offer / Label",
+                  "frame": {
+                    "pos": {
+                      "x": 580.0,
+                      "y": 30.0
+                    },
+                    "size": {
+                      "x": 120.0,
+                      "y": 120.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "-20%",
+                      "font_size": 26.0,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 4,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 26.0,
                             "color": [
                               255,
                               255,

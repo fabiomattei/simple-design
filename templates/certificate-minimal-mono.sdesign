@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "8a8b7593-9935-4474-af7a-d6d9a31f4201",
+      "id": "9759cd86-85ff-476d-a3b3-33b931f4b03c",
       "name": "Page 1",
       "layers": [
         {
-          "id": "c2d89232-0feb-4576-af72-d1e5aa62ac0e",
+          "id": "c0eeb1e8-a927-4182-96c7-e01438a535c6",
           "name": "Certificate",
           "frame": {
             "pos": {
@@ -49,8 +49,8 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "df8a3ec1-5411-4d71-8a05-b4456526e388",
-                  "name": "Decoration / Rule Top",
+                  "id": "b094b7d4-00d7-47a7-ad32-bd3f2624de26",
+                  "name": "Pattern / Rule Top",
                   "frame": {
                     "pos": {
                       "x": 60.0,
@@ -104,8 +104,8 @@
                   }
                 },
                 {
-                  "id": "a67973c8-21d9-4d83-bc1b-939a84cd0d10",
-                  "name": "Decoration / Rule Bottom",
+                  "id": "18c7bf40-6ac4-4bfc-bd3a-604243fbd7b4",
+                  "name": "Pattern / Rule Bottom",
                   "frame": {
                     "pos": {
                       "x": 60.0,
@@ -159,8 +159,146 @@
                   }
                 },
                 {
-                  "id": "80b17c67-6103-41ff-9bde-7cb7dcfaed1d",
-                  "name": "Header / Kicker",
+                  "id": "2e97e36c-4ea3-40f9-bf36-36444af1af4d",
+                  "name": "Pattern / Dot 1",
+                  "frame": {
+                    "pos": {
+                      "x": 1334.0,
+                      "y": 36.0
+                    },
+                    "size": {
+                      "x": 6.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "3640163a-029d-4da9-b9ec-2e1f64b51af7",
+                  "name": "Pattern / Dot 2",
+                  "frame": {
+                    "pos": {
+                      "x": 1320.0,
+                      "y": 36.0
+                    },
+                    "size": {
+                      "x": 6.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "26e405f3-da83-4086-ac03-e53857e86ead",
+                  "name": "Pattern / Dot 3",
+                  "frame": {
+                    "pos": {
+                      "x": 1306.0,
+                      "y": 36.0
+                    },
+                    "size": {
+                      "x": 6.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "98065408-7b47-4b5b-af39-83831e528c25",
+                  "name": "Header / Kind",
                   "frame": {
                     "pos": {
                       "x": 150.0,
@@ -168,7 +306,7 @@
                     },
                     "size": {
                       "x": 1100.0,
-                      "y": 43.0
+                      "y": 40.0
                     },
                     "rotation": 0.0
                   },
@@ -205,7 +343,7 @@
                   "kind": {
                     "Text": {
                       "content": "CERTIFICATE OF ACHIEVEMENT",
-                      "font_size": 26.0,
+                      "font_size": 24.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -213,7 +351,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -221,21 +359,40 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 26,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 24.0,
+                            "color": [
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "9cc2077d-9b08-4611-8807-1d9baf0d74be",
+                  "id": "c4e5aea3-4a6f-4400-b876-dcb4930052f3",
                   "name": "Body / Presented",
                   "frame": {
                     "pos": {
                       "x": 150.0,
-                      "y": 260.0
+                      "y": 240.0
                     },
                     "size": {
                       "x": 1100.0,
-                      "y": 43.0
+                      "y": 40.0
                     },
                     "rotation": 0.0
                   },
@@ -272,7 +429,7 @@
                   "kind": {
                     "Text": {
                       "content": "This certificate is proudly presented to",
-                      "font_size": 26.0,
+                      "font_size": 24.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -293,16 +450,16 @@
                   }
                 },
                 {
-                  "id": "d6733e1a-2cc2-4ce9-832b-53e7499aacaa",
+                  "id": "e3d0e859-03fb-4961-b229-055f0e5ada0c",
                   "name": "Body / Recipient",
                   "frame": {
                     "pos": {
                       "x": 150.0,
-                      "y": 330.0
+                      "y": 300.0
                     },
                     "size": {
                       "x": 1100.0,
-                      "y": 148.0
+                      "y": 133.0
                     },
                     "rotation": 0.0
                   },
@@ -339,7 +496,7 @@
                   "kind": {
                     "Text": {
                       "content": "Alexandra Chen",
-                      "font_size": 96.0,
+                      "font_size": 86.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -360,7 +517,7 @@
                           "len": 14,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 96.0,
+                            "font_size": 86.0,
                             "color": [
                               17,
                               17,
@@ -379,15 +536,15 @@
                   }
                 },
                 {
-                  "id": "1d00aa74-c313-4f98-ac9f-21a5d0d5031f",
+                  "id": "25789559-387c-42e4-b1e8-9ed0dc1253a6",
                   "name": "Body / Underline",
                   "frame": {
                     "pos": {
-                      "x": 400.0,
-                      "y": 480.0
+                      "x": 440.0,
+                      "y": 440.0
                     },
                     "size": {
-                      "x": 600.0,
+                      "x": 520.0,
                       "y": 2.0
                     },
                     "rotation": 0.0
@@ -434,16 +591,16 @@
                   }
                 },
                 {
-                  "id": "01841f0d-d52e-45f8-9414-423d35a02c10",
+                  "id": "8a0d2bc0-6c82-4476-ae85-4eff6e6792ae",
                   "name": "Body / Reason",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 520.0
+                      "x": 190.0,
+                      "y": 480.0
                     },
                     "size": {
-                      "x": 1000.0,
-                      "y": 76.0
+                      "x": 1020.0,
+                      "y": 70.0
                     },
                     "rotation": 0.0
                   },
@@ -480,7 +637,7 @@
                   "kind": {
                     "Text": {
                       "content": "for outstanding completion of the Advanced Product Design program,\ndemonstrating exceptional craft, curiosity and leadership.",
-                      "font_size": 24.0,
+                      "font_size": 22.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -501,16 +658,16 @@
                   }
                 },
                 {
-                  "id": "f0d6b4cd-8a20-4510-b9d7-95d8b235b6bf",
-                  "name": "Signature / Date Value",
+                  "id": "b04b0353-3edb-429e-a997-2fbada26b117",
+                  "name": "Signature / Date Script",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 760.0
+                      "x": 190.0,
+                      "y": 700.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 46.0
+                      "x": 320.0,
+                      "y": 49.0
                     },
                     "rotation": 0.0
                   },
@@ -547,15 +704,15 @@
                   "kind": {
                     "Text": {
                       "content": "March 3, 2027",
-                      "font_size": 28.0,
-                      "font": "Proportional",
+                      "font_size": 30.0,
+                      "font": "Handwriting",
                       "align": "Center",
                       "vertical_align": "Top",
                       "resize": "Fixed",
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": true,
+                      "bold": false,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -563,39 +720,20 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
-                      "runs": [
-                        {
-                          "len": 13,
-                          "style": {
-                            "font": "Proportional",
-                            "font_size": 28.0,
-                            "color": [
-                              17,
-                              17,
-                              17,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "944f466e-d826-424a-a10d-fe06cd775a57",
+                  "id": "7e72e147-ba70-4cc3-8616-d7aaaaeb15b7",
                   "name": "Signature / Date Line",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 810.0
+                      "x": 190.0,
+                      "y": 760.0
                     },
                     "size": {
-                      "x": 360.0,
+                      "x": 320.0,
                       "y": 2.0
                     },
                     "rotation": 0.0
@@ -642,16 +780,16 @@
                   }
                 },
                 {
-                  "id": "c415bb92-89cd-4b1f-8ecc-745c51474b4e",
+                  "id": "97e4fe8f-2b89-47ab-b661-2d9f2500b327",
                   "name": "Signature / Date Label",
                   "frame": {
                     "pos": {
-                      "x": 200.0,
-                      "y": 826.0
+                      "x": 190.0,
+                      "y": 776.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 28.0
+                      "x": 320.0,
+                      "y": 26.0
                     },
                     "rotation": 0.0
                   },
@@ -688,7 +826,7 @@
                   "kind": {
                     "Text": {
                       "content": "DATE",
-                      "font_size": 16.0,
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -709,16 +847,16 @@
                   }
                 },
                 {
-                  "id": "73653e4e-c07b-4d3f-aa4e-6fdcd4c2211f",
-                  "name": "Signature / Director Value",
+                  "id": "4f043b34-20fa-49b9-8957-9040f29606d7",
+                  "name": "Signature / Director Script",
                   "frame": {
                     "pos": {
-                      "x": 840.0,
-                      "y": 760.0
+                      "x": 890.0,
+                      "y": 700.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 46.0
+                      "x": 320.0,
+                      "y": 49.0
                     },
                     "rotation": 0.0
                   },
@@ -755,15 +893,15 @@
                   "kind": {
                     "Text": {
                       "content": "Samuel Ortiz",
-                      "font_size": 28.0,
-                      "font": "Proportional",
+                      "font_size": 30.0,
+                      "font": "Handwriting",
                       "align": "Center",
                       "vertical_align": "Top",
                       "resize": "Fixed",
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": true,
+                      "bold": false,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -771,39 +909,20 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
-                      "runs": [
-                        {
-                          "len": 12,
-                          "style": {
-                            "font": "Proportional",
-                            "font_size": 28.0,
-                            "color": [
-                              17,
-                              17,
-                              17,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "f1fffae2-215d-4420-a5ad-bb7877bd8aaa",
+                  "id": "b3100f53-15b4-44ba-a66a-ce2b3bd1d8ca",
                   "name": "Signature / Director Line",
                   "frame": {
                     "pos": {
-                      "x": 840.0,
-                      "y": 810.0
+                      "x": 890.0,
+                      "y": 760.0
                     },
                     "size": {
-                      "x": 360.0,
+                      "x": 320.0,
                       "y": 2.0
                     },
                     "rotation": 0.0
@@ -850,16 +969,16 @@
                   }
                 },
                 {
-                  "id": "9cf8e335-a45f-4aef-a1a6-a76fd5b361ae",
+                  "id": "0418f4b8-1088-4dce-b85b-71526dbdf0e5",
                   "name": "Signature / Director Label",
                   "frame": {
                     "pos": {
-                      "x": 840.0,
-                      "y": 826.0
+                      "x": 890.0,
+                      "y": 776.0
                     },
                     "size": {
-                      "x": 360.0,
-                      "y": 28.0
+                      "x": 320.0,
+                      "y": 26.0
                     },
                     "rotation": 0.0
                   },
@@ -896,7 +1015,7 @@
                   "kind": {
                     "Text": {
                       "content": "DIRECTOR",
-                      "font_size": 16.0,
+                      "font_size": 15.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Top",
@@ -917,16 +1036,16 @@
                   }
                 },
                 {
-                  "id": "7fde29c2-7feb-477e-9dc5-5128d24dc94f",
-                  "name": "Seal",
+                  "id": "5063aba4-9812-4d15-ac38-edb61934a5be",
+                  "name": "Seal / Rosette",
                   "frame": {
                     "pos": {
-                      "x": 640.0,
-                      "y": 700.0
+                      "x": 625.0,
+                      "y": 650.0
                     },
                     "size": {
-                      "x": 120.0,
-                      "y": 120.0
+                      "x": 150.0,
+                      "y": 150.0
                     },
                     "rotation": 0.0
                   },
@@ -937,15 +1056,7 @@
                       17,
                       255
                     ],
-                    "stroke": {
-                      "paint": [
-                        217,
-                        217,
-                        212,
-                        255
-                      ],
-                      "width": 1.0
-                    },
+                    "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -968,19 +1079,24 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": {
+                    "Star": {
+                      "points": 20,
+                      "inner_ratio": 0.86
+                    }
+                  }
                 },
                 {
-                  "id": "49e0c12b-275b-4775-a442-27bcefd4290c",
-                  "name": "Seal / Label",
+                  "id": "0f74e002-46eb-490b-a7ee-6456addfc041",
+                  "name": "Seal / Disc",
                   "frame": {
                     "pos": {
-                      "x": 640.0,
-                      "y": 700.0
+                      "x": 645.0,
+                      "y": 670.0
                     },
                     "size": {
-                      "x": 120.0,
-                      "y": 120.0
+                      "x": 110.0,
+                      "y": 110.0
                     },
                     "rotation": 0.0
                   },
@@ -1014,10 +1130,56 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "1ebeef05-4aec-4f71-92b5-0fa0cec6f8bd",
+                  "name": "Seal / Label",
+                  "frame": {
+                    "pos": {
+                      "x": 645.0,
+                      "y": 670.0
+                    },
+                    "size": {
+                      "x": 110.0,
+                      "y": 110.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
                   "kind": {
                     "Text": {
                       "content": "2027",
-                      "font_size": 26.0,
+                      "font_size": 28.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -1038,11 +1200,11 @@
                           "len": 4,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 26.0,
+                            "font_size": 28.0,
                             "color": [
-                              255,
-                              255,
-                              255,
+                              17,
+                              17,
+                              17,
                               255
                             ],
                             "bold": true,

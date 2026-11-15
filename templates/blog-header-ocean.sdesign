@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "85bbd8f0-4aaa-4de9-ab1f-0e5797d3ff9d",
+      "id": "0c546216-883d-47ea-904a-c1dfb80d81b6",
       "name": "Page 1",
       "layers": [
         {
-          "id": "07d1926d-f114-467e-9df9-6340f356f0e4",
+          "id": "cda6bca9-8b7b-40b3-8997-094ddd367c16",
           "name": "Blog Header 16:9",
           "frame": {
             "pos": {
@@ -49,12 +49,92 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "cca1e51c-d1ec-436e-92bd-e0e32104337c",
-                  "name": "Decoration / Wave Back",
+                  "id": "81ae02f9-b987-475e-8847-89af5580d3bf",
+                  "name": "Background",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1600.0,
+                      "y": 900.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": {
+                      "kind": "Linear",
+                      "stops": [
+                        {
+                          "offset": 0.0,
+                          "color": [
+                            234,
+                            246,
+                            248,
+                            255
+                          ]
+                        },
+                        {
+                          "offset": 1.0,
+                          "color": [
+                            211,
+                            238,
+                            242,
+                            255
+                          ]
+                        }
+                      ],
+                      "from": {
+                        "x": 0.5,
+                        "y": 0.0
+                      },
+                      "to": {
+                        "x": 0.5,
+                        "y": 1.0
+                      }
+                    },
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Rectangle": {
+                      "corner_radius": {
+                        "top_left": 0.0,
+                        "top_right": 0.0,
+                        "bottom_right": 0.0,
+                        "bottom_left": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "id": "f3c6fe4f-dd08-4aed-8212-418aee70953f",
+                  "name": "Pattern / Wave Back",
                   "frame": {
                     "pos": {
                       "x": -320.0,
-                      "y": 828.0
+                      "y": 810.0
                     },
                     "size": {
                       "x": 1280.0,
@@ -95,12 +175,12 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "4ab3b822-3481-4b60-9b9a-1b4324cec29b",
-                  "name": "Decoration / Wave Front",
+                  "id": "21c4f496-6556-4e5e-a882-ffa792f7bc8d",
+                  "name": "Pattern / Wave Front",
                   "frame": {
                     "pos": {
                       "x": 480.0,
-                      "y": 855.0
+                      "y": 846.0
                     },
                     "size": {
                       "x": 1440.0,
@@ -110,10 +190,10 @@
                   },
                   "style": {
                     "fill": [
-                      170,
-                      224,
-                      219,
-                      255
+                      76,
+                      125,
+                      119,
+                      153
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -141,30 +221,873 @@
                   "kind": "Oval"
                 },
                 {
-                  "id": "69519b32-8ec4-460e-a18e-59941a727759",
-                  "name": "Cover / Image",
+                  "id": "9eb2ed88-3e00-4951-8419-173dfc2e20de",
+                  "name": "Pattern / Bubble",
                   "frame": {
                     "pos": {
-                      "x": 880.0,
-                      "y": 120.0
+                      "x": 1483.09,
+                      "y": 236.85
                     },
                     "size": {
-                      "x": 600.0,
-                      "y": 660.0
+                      "x": 15.48,
+                      "y": 15.48
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "66c90bc1-aea4-445e-b446-401060b674cb",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1549.16,
+                      "y": 193.03
+                    },
+                    "size": {
+                      "x": 16.98,
+                      "y": 16.98
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "3a7af24c-3e25-4091-a51d-777fff6287f4",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1472.52,
+                      "y": 225.55
+                    },
+                    "size": {
+                      "x": 20.23,
+                      "y": 20.23
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "bf16fa00-9f10-4213-9be0-9bd9e951b5a0",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1446.74,
+                      "y": 161.59
+                    },
+                    "size": {
+                      "x": 24.96,
+                      "y": 24.96
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "a3ebeb51-20e1-48e8-ac11-a0fa949671f5",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1424.81,
+                      "y": 57.74
+                    },
+                    "size": {
+                      "x": 13.92,
+                      "y": 13.92
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "f9882542-6536-4516-997c-fd623057b6bc",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1557.48,
+                      "y": 119.42
+                    },
+                    "size": {
+                      "x": 16.06,
+                      "y": 16.06
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "ff0b9cf0-997c-4d58-bfd2-65e81786c6a3",
+                  "name": "Pattern / Bubble",
+                  "frame": {
+                    "pos": {
+                      "x": 1471.69,
+                      "y": 204.33
+                    },
+                    "size": {
+                      "x": 9.12,
+                      "y": 9.12
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        6,
+                        50,
+                        54,
+                        102
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "604658df-a955-4ce6-aa9f-b371a20b9a06",
+                  "name": "Cover / Art",
+                  "frame": {
+                    "pos": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "size": {
+                      "x": 1600.0,
+                      "y": 900.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      127,
-                      209,
-                      199,
+                      216,
+                      216,
+                      216,
+                      255
+                    ],
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "21460e72-925c-465c-8f8b-1f7065d24fb9",
+                          "name": "Cover / Art / Studio",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 1600.0,
+                              "y": 900.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": {
+                              "kind": "Radial",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    191,
+                                    230,
+                                    234,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    127,
+                                    209,
+                                    199,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.5,
+                                "y": 0.4
+                              },
+                              "to": {
+                                "x": 1.1,
+                                "y": 0.4
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 0.0,
+                                "top_right": 0.0,
+                                "bottom_right": 0.0,
+                                "bottom_left": 0.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "28c312b4-9be0-4f25-8675-8f1259fa4191",
+                          "name": "Cover / Art / Shadow",
+                          "frame": {
+                            "pos": {
+                              "x": 400.0,
+                              "y": 702.0
+                            },
+                            "size": {
+                              "x": 800.0,
+                              "y": 90.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              0,
+                              0,
+                              0,
+                              48
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "39a94dcf-e8b9-4ae7-9ea5-297a2bb39bb9",
+                          "name": "Cover / Art / Pedestal",
+                          "frame": {
+                            "pos": {
+                              "x": 448.0,
+                              "y": 630.0
+                            },
+                            "size": {
+                              "x": 704.0,
+                              "y": 126.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              238,
+                              249,
+                              248,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 6.0,
+                                "top_right": 6.0,
+                                "bottom_right": 6.0,
+                                "bottom_left": 6.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "b24acefc-85c5-4f88-bd38-991fe83d4736",
+                          "name": "Cover / Art / Object",
+                          "frame": {
+                            "pos": {
+                              "x": 608.0,
+                              "y": 252.0
+                            },
+                            "size": {
+                              "x": 384.0,
+                              "y": 396.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": {
+                              "kind": "Linear",
+                              "stops": [
+                                {
+                                  "offset": 0.0,
+                                  "color": [
+                                    14,
+                                    124,
+                                    134,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "offset": 1.0,
+                                  "color": [
+                                    10,
+                                    93,
+                                    100,
+                                    255
+                                  ]
+                                }
+                              ],
+                              "from": {
+                                "x": 0.0,
+                                "y": 0.5
+                              },
+                              "to": {
+                                "x": 1.0,
+                                "y": 0.5
+                              }
+                            },
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 40.0,
+                                "top_right": 40.0,
+                                "bottom_right": 40.0,
+                                "bottom_left": 40.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "7d58629f-8124-47b6-b0f2-50a859fc2e46",
+                          "name": "Cover / Art / Cap",
+                          "frame": {
+                            "pos": {
+                              "x": 704.0,
+                              "y": 180.0
+                            },
+                            "size": {
+                              "x": 192.0,
+                              "y": 90.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              191,
+                              230,
+                              234,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 4.0,
+                                "top_right": 4.0,
+                                "bottom_right": 4.0,
+                                "bottom_left": 4.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "667b20c5-c78c-4650-b4f4-cb4af28de9a1",
+                          "name": "Cover / Art / Label",
+                          "frame": {
+                            "pos": {
+                              "x": 640.0,
+                              "y": 378.0
+                            },
+                            "size": {
+                              "x": 320.0,
+                              "y": 108.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              204,
+                              204,
+                              204,
+                              204
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 3.0,
+                                "top_right": 3.0,
+                                "bottom_right": 3.0,
+                                "bottom_left": 3.0
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "id": "8152af50-cec8-4447-a8f1-ea0062d086ac",
+                          "name": "Cover / Art / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 1600.0,
+                              "y": 900.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 20.0,
+                                "top_right": 20.0,
+                                "bottom_right": 20.0,
+                                "bottom_left": 20.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "933714c4-1c13-42e7-ba15-1873a1e24f61",
+                  "name": "Cover / Card",
+                  "frame": {
+                    "pos": {
+                      "x": 120.0,
+                      "y": 360.0
+                    },
+                    "size": {
+                      "x": 820.0,
+                      "y": 440.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      255,
+                      255,
+                      255,
                       255
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
-                    "shadows": [],
+                    "shadows": [
+                      {
+                        "color": [
+                          1,
+                          7,
+                          9,
+                          34
+                        ],
+                        "offset": {
+                          "x": 0.0,
+                          "y": 10.0
+                        },
+                        "blur": 30.0,
+                        "spread": 0.0
+                      }
+                    ],
                     "inner_shadows": []
                   },
                   "visible": true,
@@ -196,163 +1119,25 @@
                   }
                 },
                 {
-                  "id": "67534f30-9080-4611-af69-937791371c69",
-                  "name": "Cover / Image / Sun",
-                  "frame": {
-                    "pos": {
-                      "x": 1288.0,
-                      "y": 225.6
-                    },
-                    "size": {
-                      "x": 120.0,
-                      "y": 120.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      191,
-                      230,
-                      234,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "0ec98e32-e86b-44ec-bc81-6e09377e28d4",
-                  "name": "Cover / Image / Hill",
-                  "frame": {
-                    "pos": {
-                      "x": 928.0,
-                      "y": 483.0
-                    },
-                    "size": {
-                      "x": 360.0,
-                      "y": 297.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      37,
-                      141,
-                      147,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "bb25da0d-de2d-45d9-b660-5e41888be88d",
-                  "name": "Cover / Image / Hill 2",
-                  "frame": {
-                    "pos": {
-                      "x": 1132.0,
-                      "y": 549.0
-                    },
-                    "size": {
-                      "x": 300.0,
-                      "y": 231.0
-                    },
-                    "rotation": 0.0
-                  },
-                  "style": {
-                    "fill": [
-                      178,
-                      226,
-                      227,
-                      255
-                    ],
-                    "stroke": null,
-                    "fill_opacity": 1.0,
-                    "stroke_opacity": 1.0,
-                    "shadows": [],
-                    "inner_shadows": []
-                  },
-                  "visible": true,
-                  "locked": false,
-                  "opacity": 1.0,
-                  "is_mask": false,
-                  "ignore_mask": false,
-                  "mask_mode": "Alpha",
-                  "mask_inverted": false,
-                  "bool_op": "Union",
-                  "style_id": null,
-                  "resizing": {
-                    "pin_left": false,
-                    "pin_right": false,
-                    "pin_top": false,
-                    "pin_bottom": false,
-                    "fixed_width": false,
-                    "fixed_height": false
-                  },
-                  "kind": "Oval"
-                },
-                {
-                  "id": "d2393e43-7a90-4682-a933-6920a348377c",
+                  "id": "b2fbffc7-7fba-4e5d-920f-e2c4f192b778",
                   "name": "Meta / Category",
                   "frame": {
                     "pos": {
-                      "x": 120.0,
-                      "y": 200.0
+                      "x": 170.0,
+                      "y": 400.0
                     },
                     "size": {
-                      "x": 210.0,
-                      "y": 40.0
+                      "x": 220.0,
+                      "y": 38.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      127,
-                      209,
-                      199,
-                      255
+                      2,
+                      18,
+                      20,
+                      38
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -380,33 +1165,33 @@
                   "kind": {
                     "Rectangle": {
                       "corner_radius": {
-                        "top_left": 20.0,
-                        "top_right": 20.0,
-                        "bottom_right": 20.0,
-                        "bottom_left": 20.0
+                        "top_left": 19.0,
+                        "top_right": 19.0,
+                        "bottom_right": 19.0,
+                        "bottom_left": 19.0
                       }
                     }
                   }
                 },
                 {
-                  "id": "cb3e9fec-b75f-49be-86f0-48204c9d425a",
+                  "id": "f1dd7269-899a-4bc1-82ef-a73b7e64fd2b",
                   "name": "Meta / Category Label",
                   "frame": {
                     "pos": {
-                      "x": 120.0,
-                      "y": 200.0
+                      "x": 170.0,
+                      "y": 400.0
                     },
                     "size": {
-                      "x": 210.0,
-                      "y": 40.0
+                      "x": 220.0,
+                      "y": 38.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      11,
-                      49,
-                      66,
+                      14,
+                      124,
+                      134,
                       255
                     ],
                     "stroke": null,
@@ -434,8 +1219,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "DESIGN SYSTEMS",
-                      "font_size": 15.0,
+                      "content": "FOOD",
+                      "font_size": 14.0,
                       "font": "Proportional",
                       "align": "Center",
                       "vertical_align": "Middle",
@@ -453,14 +1238,14 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 14,
+                          "len": 4,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 15.0,
+                            "font_size": 14.0,
                             "color": [
-                              11,
-                              49,
-                              66,
+                              14,
+                              124,
+                              134,
                               255
                             ],
                             "bold": true,
@@ -475,16 +1260,16 @@
                   }
                 },
                 {
-                  "id": "76c8007d-aed1-4900-9df0-c4a89ec4413d",
+                  "id": "9bb6ea42-fbd6-45da-8a1d-9eb798c6effd",
                   "name": "Title",
                   "frame": {
                     "pos": {
-                      "x": 120.0,
-                      "y": 270.0
+                      "x": 170.0,
+                      "y": 470.0
                     },
                     "size": {
                       "x": 720.0,
-                      "y": 208.0
+                      "y": 196.0
                     },
                     "rotation": 0.0
                   },
@@ -520,8 +1305,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Building a color\nsystem that scales",
-                      "font_size": 68.0,
+                      "content": "The perfect loaf,\nfive failures later",
+                      "font_size": 64.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -539,10 +1324,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 35,
+                          "len": 37,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 68.0,
+                            "font_size": 64.0,
                             "color": [
                               11,
                               49,
@@ -561,16 +1346,16 @@
                   }
                 },
                 {
-                  "id": "c525db01-9697-4900-af2a-71d28098ba87",
+                  "id": "c2608d95-6b36-42bb-85fe-2abcd8f0e626",
                   "name": "Excerpt",
                   "frame": {
                     "pos": {
-                      "x": 120.0,
-                      "y": 490.0
+                      "x": 170.0,
+                      "y": 690.0
                     },
                     "size": {
-                      "x": 700.0,
-                      "y": 76.0
+                      "x": 720.0,
+                      "y": 70.0
                     },
                     "rotation": 0.0
                   },
@@ -606,8 +1391,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "How we went from 140 ad-hoc hex values to twelve\ntokens — and what we learned along the way.",
-                      "font_size": 24.0,
+                      "content": "A practical look at what worked, what didn't\nand what we'd do differently next time.",
+                      "font_size": 22.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -628,27 +1413,35 @@
                   }
                 },
                 {
-                  "id": "4d588082-697a-46dd-876c-a62003267bf0",
+                  "id": "fecff98a-2643-432d-8204-3face274616b",
                   "name": "Author / Avatar",
                   "frame": {
                     "pos": {
-                      "x": 120.0,
-                      "y": 640.0
+                      "x": 170.0,
+                      "y": 760.0
                     },
                     "size": {
-                      "x": 64.0,
-                      "y": 64.0
+                      "x": 60.0,
+                      "y": 78.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      14,
-                      124,
-                      134,
+                      216,
+                      216,
+                      216,
                       255
                     ],
-                    "stroke": null,
+                    "stroke": {
+                      "paint": [
+                        30,
+                        30,
+                        30,
+                        255
+                      ],
+                      "width": 1.0
+                    },
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -671,19 +1464,217 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": "Oval"
+                  "kind": {
+                    "Group": {
+                      "children": [
+                        {
+                          "id": "1a2795dc-d337-4fca-a42f-aae8476f42c0",
+                          "name": "Author / Avatar / Back",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 60.0,
+                              "y": 60.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              212,
+                              240,
+                              236,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "40547dc1-601e-4518-ad64-f5b4cd2bb82a",
+                          "name": "Author / Avatar / Head",
+                          "frame": {
+                            "pos": {
+                              "x": 19.199997,
+                              "y": 10.799988
+                            },
+                            "size": {
+                              "x": 21.6,
+                              "y": 21.6
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              127,
+                              209,
+                              199,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "ef0d7d8e-95b5-4657-b093-aea26e6c4a6b",
+                          "name": "Author / Avatar / Body",
+                          "frame": {
+                            "pos": {
+                              "x": 8.399994,
+                              "y": 36.0
+                            },
+                            "size": {
+                              "x": 43.2,
+                              "y": 42.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              127,
+                              209,
+                              199,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": false,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": "Oval"
+                        },
+                        {
+                          "id": "c57e64a0-def7-48e2-afd7-2a4f71472e74",
+                          "name": "Author / Avatar / Mask",
+                          "frame": {
+                            "pos": {
+                              "x": 0.0,
+                              "y": 0.0
+                            },
+                            "size": {
+                              "x": 60.0,
+                              "y": 60.0
+                            },
+                            "rotation": 0.0
+                          },
+                          "style": {
+                            "fill": [
+                              255,
+                              255,
+                              255,
+                              255
+                            ],
+                            "stroke": null,
+                            "fill_opacity": 1.0,
+                            "stroke_opacity": 1.0,
+                            "shadows": [],
+                            "inner_shadows": []
+                          },
+                          "visible": true,
+                          "locked": false,
+                          "opacity": 1.0,
+                          "is_mask": true,
+                          "ignore_mask": false,
+                          "mask_mode": "Alpha",
+                          "mask_inverted": false,
+                          "bool_op": "Union",
+                          "style_id": null,
+                          "resizing": {
+                            "pin_left": false,
+                            "pin_right": false,
+                            "pin_top": false,
+                            "pin_bottom": false,
+                            "fixed_width": false,
+                            "fixed_height": false
+                          },
+                          "kind": {
+                            "Rectangle": {
+                              "corner_radius": {
+                                "top_left": 30.0,
+                                "top_right": 30.0,
+                                "bottom_right": 30.0,
+                                "bottom_left": 30.0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
                 },
                 {
-                  "id": "fb775032-83dd-463a-9561-81f0e93c2fcd",
+                  "id": "38e5f28f-89fd-44f1-881a-ab44835b5363",
                   "name": "Author / Name",
                   "frame": {
                     "pos": {
-                      "x": 204.0,
-                      "y": 644.0
+                      "x": 250.0,
+                      "y": 764.0
                     },
                     "size": {
                       "x": 400.0,
-                      "y": 37.0
+                      "y": 34.0
                     },
                     "rotation": 0.0
                   },
@@ -719,8 +1710,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Maya Robinson",
-                      "font_size": 22.0,
+                      "content": "Ben Okoro",
+                      "font_size": 20.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -738,10 +1729,10 @@
                       "style_id": null,
                       "runs": [
                         {
-                          "len": 13,
+                          "len": 9,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 22.0,
+                            "font_size": 20.0,
                             "color": [
                               11,
                               49,
@@ -760,16 +1751,16 @@
                   }
                 },
                 {
-                  "id": "f1ee8b15-f643-47e5-99b7-d3b9f8990135",
+                  "id": "21975cd8-dca5-486f-ad2a-13318b3a278e",
                   "name": "Author / Meta",
                   "frame": {
                     "pos": {
-                      "x": 204.0,
-                      "y": 678.0
+                      "x": 250.0,
+                      "y": 794.0
                     },
                     "size": {
                       "x": 400.0,
-                      "y": 31.0
+                      "y": 28.0
                     },
                     "rotation": 0.0
                   },
@@ -806,7 +1797,7 @@
                   "kind": {
                     "Text": {
                       "content": "Nov 15, 2027 · 8 min read",
-                      "font_size": 18.0,
+                      "font_size": 16.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",

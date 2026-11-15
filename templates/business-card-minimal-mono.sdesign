@@ -3,11 +3,11 @@
   "generator": "simple-design (companion CLI: simple-design-cli --help)",
   "pages": [
     {
-      "id": "362c7e6e-ec00-4ae9-b2a9-4c90a0f7bfaa",
+      "id": "e3b75fa0-db84-4b3d-a331-a58c895d95bd",
       "name": "Page 1",
       "layers": [
         {
-          "id": "912ae8c6-0e0f-47e6-b49c-e68fbe237333",
+          "id": "886541a7-135a-47cc-90a7-35c6a0d508fe",
           "name": "Business Card 3.5x2",
           "frame": {
             "pos": {
@@ -49,8 +49,8 @@
             "Artboard": {
               "children": [
                 {
-                  "id": "de458fdf-545c-4f03-9b05-71c49fba10da",
-                  "name": "Decoration / Rule Top",
+                  "id": "7a137b6e-3ca0-41ed-81f1-1bb3028ded6a",
+                  "name": "Pattern / Rule Top",
                   "frame": {
                     "pos": {
                       "x": 36.0,
@@ -104,8 +104,8 @@
                   }
                 },
                 {
-                  "id": "cf4d2401-bcfa-4c8e-8e48-4f9a67bf6970",
-                  "name": "Decoration / Rule Bottom",
+                  "id": "83d01f19-bff7-404d-a4bd-5e83b1579a14",
+                  "name": "Pattern / Rule Bottom",
                   "frame": {
                     "pos": {
                       "x": 36.0,
@@ -159,16 +159,16 @@
                   }
                 },
                 {
-                  "id": "2217dcb6-a881-44d1-95e3-a60ddfa87b39",
-                  "name": "Logo / Mark",
+                  "id": "ff6e4a3b-2649-4a21-ab85-3482d79a49b1",
+                  "name": "Pattern / Dot 1",
                   "frame": {
                     "pos": {
-                      "x": 80.0,
-                      "y": 80.0
+                      "x": 1008.0,
+                      "y": 16.0
                     },
                     "size": {
-                      "x": 72.0,
-                      "y": 72.0
+                      "x": 6.0,
+                      "y": 6.0
                     },
                     "rotation": 0.0
                   },
@@ -179,15 +179,7 @@
                       17,
                       255
                     ],
-                    "stroke": {
-                      "paint": [
-                        217,
-                        217,
-                        212,
-                        255
-                      ],
-                      "width": 1.0
-                    },
+                    "stroke": null,
                     "fill_opacity": 1.0,
                     "stroke_opacity": 1.0,
                     "shadows": [],
@@ -210,36 +202,119 @@
                     "fixed_width": false,
                     "fixed_height": false
                   },
-                  "kind": {
-                    "Rectangle": {
-                      "corner_radius": {
-                        "top_left": 0.0,
-                        "top_right": 0.0,
-                        "bottom_right": 0.0,
-                        "bottom_left": 0.0
-                      }
-                    }
-                  }
+                  "kind": "Oval"
                 },
                 {
-                  "id": "21d34ca1-e250-4615-97ad-d084a481ba44",
-                  "name": "Logo / Initial",
+                  "id": "a17dca6d-4436-42fa-b5a5-929a7e5bc56f",
+                  "name": "Pattern / Dot 2",
+                  "frame": {
+                    "pos": {
+                      "x": 994.0,
+                      "y": 16.0
+                    },
+                    "size": {
+                      "x": 6.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "a0dd6a57-e6ec-43bc-89b2-11dac6f88633",
+                  "name": "Pattern / Dot 3",
+                  "frame": {
+                    "pos": {
+                      "x": 980.0,
+                      "y": 16.0
+                    },
+                    "size": {
+                      "x": 6.0,
+                      "y": 6.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "ef3aae04-ffd7-4f2b-a21b-b0f4d6ec6d30",
+                  "name": "Logo / Mark",
                   "frame": {
                     "pos": {
                       "x": 80.0,
                       "y": 80.0
                     },
                     "size": {
-                      "x": 72.0,
-                      "y": 72.0
+                      "x": 54.0,
+                      "y": 54.0
                     },
                     "rotation": 0.0
                   },
                   "style": {
                     "fill": [
-                      255,
-                      255,
-                      255,
+                      17,
+                      17,
+                      17,
                       255
                     ],
                     "stroke": null,
@@ -266,58 +341,22 @@
                     "fixed_height": false
                   },
                   "kind": {
-                    "Text": {
-                      "content": "N",
-                      "font_size": 40.0,
-                      "font": "Proportional",
-                      "align": "Center",
-                      "vertical_align": "Middle",
-                      "resize": "Fixed",
-                      "line_height": null,
-                      "letter_spacing": 0.0,
-                      "paragraph_spacing": 0.0,
-                      "bold": true,
-                      "italic": false,
-                      "underline": false,
-                      "strikethrough": false,
-                      "transform": "None",
-                      "list": "None",
-                      "list_start": 1,
-                      "style_id": null,
-                      "runs": [
-                        {
-                          "len": 1,
-                          "style": {
-                            "font": "Proportional",
-                            "font_size": 40.0,
-                            "color": [
-                              255,
-                              255,
-                              255,
-                              255
-                            ],
-                            "bold": true,
-                            "italic": false,
-                            "underline": false,
-                            "strikethrough": false
-                          }
-                        }
-                      ],
-                      "path_attachment": null
+                    "Polygon": {
+                      "sides": 6
                     }
                   }
                 },
                 {
-                  "id": "75d06aae-921b-4228-bbfc-b1471476fd25",
-                  "name": "Logo / Studio",
+                  "id": "82677bd1-0d11-40a8-adb8-05db84a7fad4",
+                  "name": "Logo / Word",
                   "frame": {
                     "pos": {
-                      "x": 172.0,
-                      "y": 96.0
+                      "x": 152.9,
+                      "y": 80.0
                     },
                     "size": {
-                      "x": 500.0,
-                      "y": 49.0
+                      "x": 400.0,
+                      "y": 54.0
                     },
                     "rotation": 0.0
                   },
@@ -354,10 +393,10 @@
                   "kind": {
                     "Text": {
                       "content": "Northwind Studio",
-                      "font_size": 30.0,
+                      "font_size": 43.2,
                       "font": "Proportional",
                       "align": "Left",
-                      "vertical_align": "Top",
+                      "vertical_align": "Middle",
                       "resize": "Fixed",
                       "line_height": null,
                       "letter_spacing": 0.0,
@@ -375,7 +414,7 @@
                           "len": 16,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 30.0,
+                            "font_size": 43.2,
                             "color": [
                               17,
                               17,
@@ -394,16 +433,16 @@
                   }
                 },
                 {
-                  "id": "903afcf2-77a6-48c6-895d-869ba3c8c7e0",
+                  "id": "7bd18a05-5da6-4759-ae72-d0445230fb22",
                   "name": "Person / Name",
                   "frame": {
                     "pos": {
                       "x": 80.0,
-                      "y": 300.0
+                      "y": 280.0
                     },
                     "size": {
                       "x": 600.0,
-                      "y": 82.0
+                      "y": 79.0
                     },
                     "rotation": 0.0
                   },
@@ -440,7 +479,7 @@
                   "kind": {
                     "Text": {
                       "content": "Daniel Okafor",
-                      "font_size": 52.0,
+                      "font_size": 50.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -461,7 +500,7 @@
                           "len": 13,
                           "style": {
                             "font": "Proportional",
-                            "font_size": 52.0,
+                            "font_size": 50.0,
                             "color": [
                               17,
                               17,
@@ -480,16 +519,16 @@
                   }
                 },
                 {
-                  "id": "e5445b0c-8b58-4434-a18c-b9fae3441733",
+                  "id": "facfdf4b-6856-41bf-8e90-6382bc8fdd73",
                   "name": "Person / Role",
                   "frame": {
                     "pos": {
                       "x": 80.0,
-                      "y": 372.0
+                      "y": 350.0
                     },
                     "size": {
                       "x": 600.0,
-                      "y": 40.0
+                      "y": 34.0
                     },
                     "rotation": 0.0
                   },
@@ -525,8 +564,8 @@
                   },
                   "kind": {
                     "Text": {
-                      "content": "Creative Director",
-                      "font_size": 24.0,
+                      "content": "CREATIVE DIRECTOR",
+                      "font_size": 20.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -534,7 +573,7 @@
                       "line_height": null,
                       "letter_spacing": 0.0,
                       "paragraph_spacing": 0.0,
-                      "bold": false,
+                      "bold": true,
                       "italic": false,
                       "underline": false,
                       "strikethrough": false,
@@ -542,17 +581,36 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "runs": [
+                        {
+                          "len": 17,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 20.0,
+                            "color": [
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
                 },
                 {
-                  "id": "0683959a-c956-4a76-996f-07c5c1ffe714",
+                  "id": "e0632eda-5533-498e-b9ce-bbd1771e7ad4",
                   "name": "Divider",
                   "frame": {
                     "pos": {
                       "x": 80.0,
-                      "y": 430.0
+                      "y": 410.0
                     },
                     "size": {
                       "x": 890.0,
@@ -562,10 +620,10 @@
                   },
                   "style": {
                     "fill": [
-                      199,
-                      199,
-                      197,
-                      255
+                      36,
+                      36,
+                      36,
+                      85
                     ],
                     "stroke": null,
                     "fill_opacity": 1.0,
@@ -602,16 +660,62 @@
                   }
                 },
                 {
-                  "id": "dd3c5c86-dcd6-4d4f-b543-38dfa278f9a1",
-                  "name": "Contact / Line 1",
+                  "id": "9e5f7cb1-a130-464b-b060-09a61fec74b8",
+                  "name": "Contact / 1 Dot",
                   "frame": {
                     "pos": {
                       "x": 80.0,
-                      "y": 460.0
+                      "y": 452.0
                     },
                     "size": {
-                      "x": 300.0,
-                      "y": 32.0
+                      "x": 14.0,
+                      "y": 14.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "271aeb9e-1328-476f-9270-7c9e5139dd29",
+                  "name": "Contact / 1",
+                  "frame": {
+                    "pos": {
+                      "x": 104.0,
+                      "y": 444.0
+                    },
+                    "size": {
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -648,7 +752,7 @@
                   "kind": {
                     "Text": {
                       "content": "+1 (555) 014-2290",
-                      "font_size": 19.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -669,16 +773,62 @@
                   }
                 },
                 {
-                  "id": "5ebf3079-3ecb-4584-8110-83311287ccb3",
-                  "name": "Contact / Line 2",
+                  "id": "7a643bf7-f1a0-4758-840a-eebeca5a9620",
+                  "name": "Contact / 2 Dot",
                   "frame": {
                     "pos": {
                       "x": 390.0,
-                      "y": 460.0
+                      "y": 452.0
                     },
                     "size": {
-                      "x": 300.0,
-                      "y": 32.0
+                      "x": 14.0,
+                      "y": 14.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "88242524-dd30-48be-ab1b-7d73a06cce97",
+                  "name": "Contact / 2",
+                  "frame": {
+                    "pos": {
+                      "x": 414.0,
+                      "y": 444.0
+                    },
+                    "size": {
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -715,7 +865,7 @@
                   "kind": {
                     "Text": {
                       "content": "daniel@northwind.example",
-                      "font_size": 19.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -736,16 +886,62 @@
                   }
                 },
                 {
-                  "id": "64f7ac1d-26e8-4f49-b5ad-04bd95a75253",
-                  "name": "Contact / Line 3",
+                  "id": "4166535e-3057-4a61-9e7f-e6d1bc80142a",
+                  "name": "Contact / 3 Dot",
                   "frame": {
                     "pos": {
                       "x": 700.0,
-                      "y": 460.0
+                      "y": 452.0
                     },
                     "size": {
-                      "x": 300.0,
-                      "y": 32.0
+                      "x": 14.0,
+                      "y": 14.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "141cf944-50e0-4ea9-af8d-13af878eb9d7",
+                  "name": "Contact / 3",
+                  "frame": {
+                    "pos": {
+                      "x": 724.0,
+                      "y": 444.0
+                    },
+                    "size": {
+                      "x": 280.0,
+                      "y": 30.0
                     },
                     "rotation": 0.0
                   },
@@ -782,7 +978,7 @@
                   "kind": {
                     "Text": {
                       "content": "northwind.example",
-                      "font_size": 19.0,
+                      "font_size": 17.0,
                       "font": "Proportional",
                       "align": "Left",
                       "vertical_align": "Top",
@@ -798,6 +994,411 @@
                       "list": "None",
                       "list_start": 1,
                       "style_id": null,
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "148fd1df-bc7c-4183-9f42-2d3ee376e76e",
+                  "name": "Socials / in",
+                  "frame": {
+                    "pos": {
+                      "x": 830.0,
+                      "y": 500.0
+                    },
+                    "size": {
+                      "x": 34.0,
+                      "y": 34.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "4419de58-de31-43e4-9402-bd2d57cbd6f1",
+                  "name": "Socials / in Label",
+                  "frame": {
+                    "pos": {
+                      "x": 830.0,
+                      "y": 500.0
+                    },
+                    "size": {
+                      "x": 34.0,
+                      "y": 34.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "in",
+                      "font_size": 12.9,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 2,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 12.9,
+                            "color": [
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "d8acacb3-b918-429f-912a-c87cc0296065",
+                  "name": "Socials / ig",
+                  "frame": {
+                    "pos": {
+                      "x": 874.2,
+                      "y": 500.0
+                    },
+                    "size": {
+                      "x": 34.0,
+                      "y": 34.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "233a206f-d3a3-4059-9982-5a6f0b43a6a6",
+                  "name": "Socials / ig Label",
+                  "frame": {
+                    "pos": {
+                      "x": 874.2,
+                      "y": 500.0
+                    },
+                    "size": {
+                      "x": 34.0,
+                      "y": 34.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "ig",
+                      "font_size": 12.9,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 2,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 12.9,
+                            "color": [
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
+                      "path_attachment": null
+                    }
+                  }
+                },
+                {
+                  "id": "f311330f-3093-43e3-90d2-2db8f89311a5",
+                  "name": "Socials / x",
+                  "frame": {
+                    "pos": {
+                      "x": 918.4,
+                      "y": 500.0
+                    },
+                    "size": {
+                      "x": 34.0,
+                      "y": 34.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": null,
+                    "stroke": {
+                      "paint": [
+                        17,
+                        17,
+                        17,
+                        255
+                      ],
+                      "width": 1.5
+                    },
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": "Oval"
+                },
+                {
+                  "id": "5b941ac8-235e-41d6-9484-958d3605abb9",
+                  "name": "Socials / x Label",
+                  "frame": {
+                    "pos": {
+                      "x": 918.4,
+                      "y": 500.0
+                    },
+                    "size": {
+                      "x": 34.0,
+                      "y": 34.0
+                    },
+                    "rotation": 0.0
+                  },
+                  "style": {
+                    "fill": [
+                      17,
+                      17,
+                      17,
+                      255
+                    ],
+                    "stroke": null,
+                    "fill_opacity": 1.0,
+                    "stroke_opacity": 1.0,
+                    "shadows": [],
+                    "inner_shadows": []
+                  },
+                  "visible": true,
+                  "locked": false,
+                  "opacity": 1.0,
+                  "is_mask": false,
+                  "ignore_mask": false,
+                  "mask_mode": "Alpha",
+                  "mask_inverted": false,
+                  "bool_op": "Union",
+                  "style_id": null,
+                  "resizing": {
+                    "pin_left": false,
+                    "pin_right": false,
+                    "pin_top": false,
+                    "pin_bottom": false,
+                    "fixed_width": false,
+                    "fixed_height": false
+                  },
+                  "kind": {
+                    "Text": {
+                      "content": "x",
+                      "font_size": 12.9,
+                      "font": "Proportional",
+                      "align": "Center",
+                      "vertical_align": "Middle",
+                      "resize": "Fixed",
+                      "line_height": null,
+                      "letter_spacing": 0.0,
+                      "paragraph_spacing": 0.0,
+                      "bold": true,
+                      "italic": false,
+                      "underline": false,
+                      "strikethrough": false,
+                      "transform": "None",
+                      "list": "None",
+                      "list_start": 1,
+                      "style_id": null,
+                      "runs": [
+                        {
+                          "len": 1,
+                          "style": {
+                            "font": "Proportional",
+                            "font_size": 12.9,
+                            "color": [
+                              17,
+                              17,
+                              17,
+                              255
+                            ],
+                            "bold": true,
+                            "italic": false,
+                            "underline": false,
+                            "strikethrough": false
+                          }
+                        }
+                      ],
                       "path_attachment": null
                     }
                   }
