@@ -275,7 +275,7 @@ fn box_blur_pass(src: &[f32], dst: &mut [f32], width: usize, height: usize, radi
 
 /// Colors a coverage-only alpha buffer with a flat `color`, premultiplying
 /// as it goes — same premultiplied-`Pixmap` convention every other renderer
-/// in this codebase writes directly (see `export/mod.rs::blend_glyph_pixel`).
+/// in this codebase writes directly (see `export/glyph_raster.rs::blend_glyph_pixel`).
 fn tint_pixmap(alpha: &[f32], width: u32, height: u32, color: Color32) -> Option<Pixmap> {
     let mut pixmap = Pixmap::new(width, height)?;
     let base_a = color.a() as f32 / 255.0;

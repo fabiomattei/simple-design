@@ -223,7 +223,7 @@ fn run_index_per_char(char_count: usize, runs: &[TextRun]) -> Vec<usize> {
 ///
 /// The single shared source of truth for run-boundary/transform/list-
 /// prefix semantics across every rich-text render path — `canvas/`
-/// (`layout_paragraphs_rich`, below), `export/mod.rs`'s `draw_text_rich`, and
+/// (`layout_paragraphs_rich`, below), `export/text_rich.rs`'s `draw_text_rich`, and
 /// `text_outline.rs`'s rich outline conversion all call this rather than
 /// each re-deriving it, so they can't silently drift apart on where a run
 /// boundary actually falls.

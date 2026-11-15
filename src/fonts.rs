@@ -131,7 +131,7 @@ pub fn ab_glyph_bytes_bold(font: &TextFont) -> (Cow<'static, [u8]>, u32) {
 /// One `(bytes, face_index)` per style source a rich-text render needs to
 /// build an `ab_glyph::FontRef` from — `[0]` = `base`, `[i + 1]` =
 /// `runs[i]` — picking each source's bold or regular bytes per its own
-/// `RunStyle::bold`. Factored out of `export/mod.rs`'s `draw_text_rich` and
+/// `RunStyle::bold`. Factored out of `export/text_rich.rs`'s `draw_text_rich` and
 /// `text_outline.rs`'s `convert_to_outlines_rich` (which used to duplicate
 /// this exact selection logic) since `export/`'s new `draw_text_in_area`
 /// needs the identical resolution a third time — callers still build their

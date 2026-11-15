@@ -237,7 +237,7 @@ pub fn convert_to_outlines(layer: &Layer, roots: &[Layer]) -> Option<Vec<PathPol
 
 /// Rich-text counterpart to `convert_to_outlines`'s main loop, used when
 /// `runs` is non-empty — see `LayerKind::Text::runs`'s doc comment. Mirrors
-/// `export/mod.rs`'s `draw_text_rich` (per-run face/scale resolution, char-
+/// `export/text_rich.rs`'s `draw_text_rich` (per-run face/scale resolution, char-
 /// driven `wrap_line_rich`/tagging via `text_layout::tagged_lines`, same-
 /// face-only kerning) but produces `PathPolygon`s from each glyph's own
 /// outline instead of rasterizing. Bold runs use `fonts::
@@ -413,7 +413,7 @@ fn convert_to_outlines_rich(
     Some(polygons)
 }
 
-/// Vector counterpart to `export/mod.rs`'s `draw_text_on_path` — places
+/// Vector counterpart to `export/text_on_path.rs`'s `draw_text_on_path` — places
 /// `tagged_first_line`'s glyphs one at a time along `points`, walking arc
 /// length exactly like the raster version, but transforms each glyph's own
 /// outline contours by a plain point rotation instead of rasterizing into a
@@ -514,7 +514,7 @@ fn convert_to_outlines_on_path(
 /// convention as `text_path_geometry::point_and_tangent_at`/
 /// `shapes::rotate_point`), after scaling to pixel units and applying the
 /// italic shear (relative to the glyph's own baseline, `y = 0`, same as
-/// `export/mod.rs`'s `draw_rotated_glyph`). The vector equivalent of that
+/// `export/text_on_path.rs`'s `draw_rotated_glyph`). The vector equivalent of that
 /// function's "scratch pixmap + `Transform::post_rotate_at`" trick — a
 /// plain point rotation is all that's needed here, no rasterization to
 /// preserve.
@@ -541,7 +541,7 @@ fn place_glyph_contours_on_path(contours: Vec<Vec<Point>>, scale_factor: ab_glyp
         .collect()
 }
 
-/// Vector counterpart to `export/mod.rs`'s `draw_text_in_area` — wraps `content`
+/// Vector counterpart to `export/text_in_area.rs`'s `draw_text_in_area` — wraps `content`
 /// via the same shared, backend-agnostic `text_area_wrap::wrap_in_area`
 /// decision (an `ab_glyph`-measured `measure` closure here instead of an
 /// `egui::Galley`'s width), then places each row's glyph outlines at its own
