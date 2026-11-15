@@ -1,5 +1,5 @@
 //! File > Open Recent: the most recently opened/saved `.sdesign` paths, kept in
-//! `$XDG_CONFIG_HOME/simple-design/recent.json` (or `~/.config/...`) so the list
+//! `recent.json` in the app's config folder (see `config_dir.rs`) so the list
 //! survives restarts. Errors reading or writing it are ignored — losing the
 //! list is never worth interrupting an open or a save.
 
@@ -61,12 +61,7 @@ fn push_front(paths: &mut Vec<PathBuf>, path: PathBuf) {
 }
 
 fn storage_path() -> Option<PathBuf> {
-    let config = std::env::var_os("XDG_CONFIG_HOME")
-        .filter(|c| !c.is_empty())
-        .map(PathBuf::from)
-        .or_else(|| std::env::var_os("HOME").map(|h| PathBuf::from(h).join(".config")))
-        .or_else(|| std::env::var_os("APPDATA").map(PathBuf::from))?;
-    Some(config.join("simple-design").join("recent.json"))
+    Some(crate::config_dir::config_dir()?.join("recent.json"))
 }
 
 #[cfg(test)]

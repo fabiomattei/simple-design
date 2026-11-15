@@ -1,52 +1,52 @@
-use egui::{Align, CursorIcon, Layout, Sense, Stroke, Ui, UiBuilder};
+use egui::{Align, Color32, CursorIcon, Layout, Painter, Rect, Sense, Stroke, Ui, UiBuilder};
 
+use crate::panel_layout::{DockSide, PanelKind};
 use crate::ui::icons;
 
-/// Vertical icon strip pinned to the window's outer right edge (see `app.rs`'s
-/// `egui::Panel::right("panel_rail")`, added before the Layers/Palette/Inspector/Minimap
-/// panels so it stays outermost). Each icon directly toggles its panel's visibility bool —
-/// no action enum, since there's no history/side effect to route through `app.rs` (same
-/// direct-mutation convention as the View menu's checkboxes).
-pub fn ui(
-    ui: &mut Ui,
-    show_layers_panel: &mut bool,
-    show_palette_panel: &mut bool,
-    show_inspector_panel: &mut bool,
-    show_minimap_panel: &mut bool,
-) {
+/// Vertical icon strip pinned to one outer window edge (see `app/panel_columns.rs`, which
+/// adds it before that side's panel column so it stays outermost), with one icon per panel
+/// docked on `side`, in the given order. Clicking an icon directly toggles its panel's
+/// visibility bool — no action enum, since there's no history/side effect to route through
+/// `app.rs` (same direct-mutation convention as the View menu's checkboxes). Right-clicking
+/// one offers moving it to the opposite side; that choice is returned instead, since the
+/// caller persists it (`PanelLayout::set_side`).
+pub fn ui(ui: &mut Ui, side: DockSide, panels: &mut [(PanelKind, &mut bool)]) -> Option<PanelKind> {
+    let move_label = match side {
+        DockSide::Left => "Move to Right Side",
+        DockSide::Right => "Move to Left Side",
+    };
+    let mut moved = None;
     ui.vertical(|ui| {
         ui.add_space(4.0);
-        if icons::toggle_icon_button(ui, *show_layers_panel, icons::draw_layers_icon)
-            .on_hover_text("Layers")
-            .clicked()
-        {
-            *show_layers_panel = !*show_layers_panel;
-        }
-        if icons::toggle_icon_button(ui, *show_palette_panel, icons::draw_palette_icon)
-            .on_hover_text("Palette")
-            .clicked()
-        {
-            *show_palette_panel = !*show_palette_panel;
-        }
-        if icons::toggle_icon_button(ui, *show_inspector_panel, icons::draw_inspector_icon)
-            .on_hover_text("Inspector")
-            .clicked()
-        {
-            *show_inspector_panel = !*show_inspector_panel;
-        }
-        if icons::toggle_icon_button(ui, *show_minimap_panel, icons::draw_minimap_icon)
-            .on_hover_text("Minimap")
-            .clicked()
-        {
-            *show_minimap_panel = !*show_minimap_panel;
+        for (panel, open) in panels.iter_mut() {
+            let response = icons::toggle_icon_button(ui, **open, icon_for(*panel)).on_hover_text(panel.label());
+            if response.clicked() {
+                **open = !**open;
+            }
+            response.context_menu(|ui| {
+                if ui.button(move_label).clicked() {
+                    moved = Some(*panel);
+                    ui.close();
+                }
+            });
         }
     });
+    moved
+}
+
+fn icon_for(panel: PanelKind) -> fn(&Painter, Rect, Color32) {
+    match panel {
+        PanelKind::Layers => icons::draw_layers_icon,
+        PanelKind::Palette => icons::draw_palette_icon,
+        PanelKind::Inspector => icons::draw_inspector_icon,
+        PanelKind::Minimap => icons::draw_minimap_icon,
+    }
 }
 
 const SPLITTER_HEIGHT: f32 = 6.0;
 const SPLITTER_MIN_PANEL_HEIGHT: f32 = 60.0;
 
-/// Docks one panel's content into the shared right-side column (`app.rs`'s `panels_column`),
+/// Docks one panel's content into its side's shared column (`app/panel_columns.rs`),
 /// stacked top-to-bottom like IntelliJ IDEA's same-side tool windows. Every panel but the
 /// bottommost currently open one (`is_last`) gets a fixed height plus a mouse-draggable
 /// splitter strip below it; the bottommost one just renders directly into whatever height is

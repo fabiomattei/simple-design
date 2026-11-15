@@ -247,7 +247,7 @@ fn nothing_selected_says_so() {
     assert_eq!(found, concat(&[&["No selection"]]));
 }
 
-/// The docked panel's default width (`app.rs`'s `panels_column`).
+/// The docked panel's default width (`app/panel_columns.rs`'s `panels_column`).
 const PANEL_WIDTH: f32 = 260.0;
 
 /// Renders the inspector for one layer the way `app.rs` docks it — inside a
