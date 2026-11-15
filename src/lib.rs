@@ -28,6 +28,7 @@ pub mod selection_transform;
 pub mod shadow;
 pub mod shapes;
 pub mod system_fonts;
+pub mod system_launch;
 pub mod transform_ops;
 pub mod text_area_layout;
 pub mod text_area_wrap;

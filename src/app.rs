@@ -23,6 +23,7 @@ use crate::ui::layers_panel::LayersPanel;
 use crate::ui::pages_bar::{PagesAction, PagesBar};
 use crate::ui::palette_panel::PaletteAction;
 use crate::ui::rename_all::{self, RenameAllAction, RenameAllConfig, RenameAllState};
+use crate::ui::template_picker::{self, TemplatePickerState};
 use crate::ui::toolbar::ToolbarAction;
 use crate::ui::toolbar;
 
@@ -35,6 +36,7 @@ mod ipc_dispatch;
 /// of this file for size, same private-field-access reasoning as `ipc_dispatch`.
 mod layer_actions;
 mod panel_columns;
+mod template_picker_actions;
 
 pub struct App {
     history: History,
@@ -65,6 +67,9 @@ pub struct App {
     /// Export dialog state (toolbar Export button, ⌘E, File > Export
     /// Selection) — see `ui/export_dialog.rs`.
     export_dialog: ExportDialogState,
+    /// File > New from Template's full-window picker — see
+    /// `ui/template_picker/`. While open it replaces the editor below the menu bar.
+    template_picker: TemplatePickerState,
     /// View menu toggle for the Palette panel (`ui/palette_panel.rs`) —
     /// runtime-only, not persisted with the document (same convention as
     /// `CanvasWidget::show_rulers`/`show_grid`).
@@ -121,6 +126,7 @@ impl App {
             rename_all: RenameAllState::default(),
             last_rename_config: None,
             export_dialog: ExportDialogState::default(),
+            template_picker: TemplatePickerState::default(),
             show_palette_panel: false,
             show_layers_panel: true,
             show_inspector_panel: true,
@@ -953,7 +959,11 @@ impl eframe::App for App {
         let ctx = ui.ctx().clone();
         self.sync_ipc(&ctx);
         self.drain_ipc(&ctx);
-        self.handle_shortcuts(&ctx);
+        // The picker handles its own keys; the editor's shortcuts would act on the
+        // hidden canvas.
+        if !self.template_picker.is_open() {
+            self.handle_shortcuts(&ctx);
+        }
 
         egui::Panel::top("menu_bar").show(ui, |ui| {
             egui::MenuBar::new().ui(ui, |ui| {
@@ -962,18 +972,10 @@ impl eframe::App for App {
                         self.new_document();
                         ui.close();
                     }
-                    ui.menu_button("New from Template", |ui| {
-                        let mut chosen = None;
-                        for template in templates::all_templates() {
-                            if ui.button(&template.name).clicked() {
-                                chosen = Some(template);
-                            }
-                        }
-                        if let Some(template) = chosen {
-                            self.new_from_template(&template);
-                            ui.close();
-                        }
-                    });
+                    if ui.button("New from Template...").clicked() {
+                        self.template_picker.open();
+                        ui.close();
+                    }
                     if ui.button("Open...").clicked() {
                         self.open();
                         ui.close();
@@ -1290,6 +1292,17 @@ impl eframe::App for App {
                 });
             });
         });
+
+        if self.template_picker.is_open() {
+            let mut pick = None;
+            egui::CentralPanel::default().show(ui, |ui| {
+                pick = template_picker::ui(ui, &mut self.template_picker);
+            });
+            if let Some(pick) = pick {
+                self.apply_template_pick(pick);
+            }
+            return;
+        }
 
         egui::Panel::top("toolbar").show(ui, |ui| {
             ui.add_space(3.0);

@@ -23,11 +23,13 @@ const BUILT_IN: &[(&str, &str)] = &[
     ("Email Newsletter", include_str!("../templates/email-newsletter.sdesign")),
 ];
 
+#[derive(Clone)]
 pub enum TemplateSource {
     BuiltIn(&'static str),
     User(PathBuf),
 }
 
+#[derive(Clone)]
 pub struct Template {
     pub name: String,
     pub source: TemplateSource,
