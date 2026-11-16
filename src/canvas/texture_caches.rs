@@ -350,12 +350,22 @@ pub(super) struct CachedGradientTexture {
 #[derive(Default)]
 pub struct GradientTextureCache(HashMap<LayerId, CachedGradientTexture>);
 
+/// A gradient texture's side length for an on-screen length of `screen_len`
+/// pixels: the next power of two at or above it, capped at
+/// `NOISE_TEXTURE_MAX`. Coarser than noise's `NOISE_TEXTURE_QUANTUM` steps on
+/// purpose — a large gradient (e.g. a full-artboard radial glow) costs
+/// millions of samples to rebuild, and 32px steps rebuilt it on nearly every
+/// frame of a zoom gesture; a smooth gradient stretched up to 2x by
+/// `TextureOptions::LINEAR` looks the same, unlike noise grain.
+pub(super) fn gradient_texture_side(screen_len: f32) -> u32 {
+    (screen_len.ceil() as u32).max(1).next_power_of_two().min(NOISE_TEXTURE_MAX)
+}
+
 impl GradientTextureCache {
-    /// See `NoiseTextureCache::get_or_build` — same quantized-resolution
-    /// rationale, same per-pixel-sample-function shape.
+    /// See `NoiseTextureCache::get_or_build` — same per-pixel-sample-function
+    /// shape, but with `gradient_texture_side`'s power-of-two resolution steps.
     pub(super) fn get_or_build(&mut self, ctx: &egui::Context, layer_id: LayerId, gradient: &Gradient, local_size: Vec2, screen_size: Vec2) -> Option<egui::TextureHandle> {
-        let quantize = |v: f32| ((v.ceil() as u32).max(1)).div_ceil(NOISE_TEXTURE_QUANTUM).max(1) * NOISE_TEXTURE_QUANTUM;
-        let pixel_size = (quantize(screen_size.x).min(NOISE_TEXTURE_MAX), quantize(screen_size.y).min(NOISE_TEXTURE_MAX));
+        let pixel_size = (gradient_texture_side(screen_size.x), gradient_texture_side(screen_size.y));
         if let Some(cached) = self.0.get(&layer_id)
             && cached.gradient == *gradient && cached.local_size == local_size && cached.pixel_size == pixel_size {
                 return Some(cached.texture.clone());
@@ -529,6 +539,15 @@ mod tests {
         // A small pan stays inside the margin and grid, so the area (and the texture) is reused.
         let panned = mask_texture_region(square(1000.0), view.translate(Vec2::new(5.0, 5.0)), 8.0).0;
         assert_eq!(panned, region);
+    }
+
+    #[test]
+    fn gradient_texture_side_steps_up_to_the_next_power_of_two_and_caps() {
+        assert_eq!(gradient_texture_side(0.0), 1);
+        assert_eq!(gradient_texture_side(300.0), 512);
+        assert_eq!(gradient_texture_side(512.0), 512);
+        assert_eq!(gradient_texture_side(513.0), 1024);
+        assert_eq!(gradient_texture_side(5000.0), NOISE_TEXTURE_MAX);
     }
 
     #[test]
