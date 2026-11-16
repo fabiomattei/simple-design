@@ -6,13 +6,17 @@ sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
 command: simple-design
 
-# eframe renders via glow/wgpu (GL or Vulkan) and rfd uses xdg-desktop-portal
-# (zbus) for file dialogs -- no GTK, no home filesystem access needed.
+# eframe renders via wgpu (Vulkan or GL) and rfd uses xdg-desktop-portal
+# (zbus) for file dialogs -- no GTK needed.
 finish-args:
   - --share=ipc
   - --socket=wayland
   - --socket=fallback-x11
   - --device=dri
+  # simple-design-cli opens the paths named on its command line, which the
+  # file-chooser portal can't grant; with home access the GUI also keeps real
+  # paths for what it opens, which live mode keys instances by.
+  - --filesystem=home
 
 modules:
   - name: simple-design
@@ -23,17 +27,22 @@ modules:
       build-args:
         - --share=network
     build-commands:
-      - cargo build --release
+      - cargo build --release --locked
       - install -Dm755 target/release/simple-design /app/bin/simple-design
+      - install -Dm755 target/release/simple-design-cli /app/bin/simple-design-cli
       - install -Dm644 packaging/flatpak/io.github.fabiomattei.simple-design.desktop
         /app/share/applications/io.github.fabiomattei.simple-design.desktop
-      - install -Dm644 packaging/flatpak/icon.png
-        /app/share/icons/hicolor/256x256/apps/io.github.fabiomattei.simple-design.png
+      - install -Dm644 assets/icon/simple-design.png
+        /app/share/icons/hicolor/512x512/apps/io.github.fabiomattei.simple-design.png
       - install -Dm644 packaging/flatpak/io.github.fabiomattei.simple-design.metainfo.xml
         /app/share/metainfo/io.github.fabiomattei.simple-design.metainfo.xml
+      - install -Dm644 packaging/flatpak/io.github.fabiomattei.simple-design.xml
+        /app/share/mime/packages/io.github.fabiomattei.simple-design.xml
     sources:
       - type: dir
         path: ../..
         skip:
           - target
           - .git
+          - packaging/flatpak/builddir
+          - packaging/flatpak/.flatpak-builder

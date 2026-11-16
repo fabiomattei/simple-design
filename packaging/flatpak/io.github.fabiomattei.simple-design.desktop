@@ -2,8 +2,9 @@
 Type=Application
 Name=Simple Design
 Comment=Vector design tool
-Exec=simple-design
+Exec=simple-design %f
 Icon=io.github.fabiomattei.simple-design
 Terminal=false
 Categories=Graphics;2DGraphics;VectorGraphics;
-StartupWMClass=simple-design
+MimeType=application/x-sdesign;
+StartupWMClass=io.github.fabiomattei.simple-design

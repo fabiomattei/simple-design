@@ -150,8 +150,27 @@ Other options:
 PREFIX=/opt/simple-design ./packaging/linux/install.sh   # install somewhere else
 ```
 
-For a sandboxed install, a Flatpak manifest is included. See
-[`docs/packaging.html`](docs/packaging.html).
+## Flatpak and macOS packages
+
+Neither package needs any libraries installed on the user's system. Full
+details, including signing, are in [`docs/packaging.html`](docs/packaging.html).
+
+**Flatpak** (Linux, sandboxed; needs the Flatpak Rust SDK extension once:
+`flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//25.08`):
+
+```
+cd packaging/flatpak
+flatpak-builder --force-clean --user --install builddir io.github.fabiomattei.simple-design.yml
+flatpak run io.github.fabiomattei.simple-design
+flatpak run --command=simple-design-cli io.github.fabiomattei.simple-design file.sdesign list-layers
+```
+
+**macOS** (run on a Mac with rustup and Xcode's command-line tools): builds a
+universal `Simple Design.app` and a `.dmg` into `target/macos/`:
+
+```
+./packaging/macos/build-dmg.sh
+```
 
 
 

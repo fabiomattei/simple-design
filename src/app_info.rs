@@ -10,6 +10,8 @@ pub const AUTHORS: &str = env!("CARGO_PKG_AUTHORS");
 pub const LICENSE: &str = env!("CARGO_PKG_LICENSE");
 pub const HOMEPAGE: &str = env!("CARGO_PKG_HOMEPAGE");
 pub const ISSUES_URL: &str = concat!(env!("CARGO_PKG_REPOSITORY"), "/issues");
+/// The Flatpak's app id (`packaging/flatpak/`), which is also the window's app id there.
+pub const FLATPAK_ID: &str = "io.github.fabiomattei.simple-design";
 /// The year development started, for the copyright line.
 pub const FIRST_YEAR: u32 = 2026;
 

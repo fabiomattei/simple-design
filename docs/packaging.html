@@ -24,7 +24,7 @@
 </nav>
 <main>
 <h1>Packaging</h1>
-<p class="lede">Two ways to get a system-integrated build on Linux: a plain <code>.desktop</code> entry, or a sandboxed Flatpak.</p>
+<p class="lede">Three ways to package the app: a per-user install on Linux, a sandboxed Flatpak, and a macOS <code>.app</code>/<code>.dmg</code>.</p>
 
 <p>
 Wayland only resolves a window's icon through a <code>.desktop</code> file matched by the
@@ -71,19 +71,27 @@ Shell (<kbd>Alt</kbd>+<kbd>F2</kbd>, <code>r</code>). The shell caches app icons
 
 <h2>Flatpak (sandboxed)</h2>
 <p>
-The distributable option: a real Flatpak app, <code>io.github.fabiomattei.simple-design</code>,
-built entirely from this repo. Files live in <code>packaging/flatpak/</code>.
+The distributable Linux option: a real Flatpak app, <code>io.github.fabiomattei.simple-design</code>,
+built entirely from this repo. It needs nothing installed on the user's system besides Flatpak:
+the <code>org.freedesktop.Platform</code> runtime provides every library the app loads at
+startup (Wayland/X11, <code>libxkbcommon</code>, Vulkan/EGL, <code>libdbus</code>). Files live in
+<code>packaging/flatpak/</code>.
 </p>
 <table>
   <tr><th>File</th><th>Purpose</th></tr>
-  <tr><td><code>io.github.fabiomattei.simple-design.yml</code></td><td>The build manifest</td></tr>
-  <tr><td><code>io.github.fabiomattei.simple-design.desktop</code></td><td>Flatpak-specific desktop entry (<code>Exec=simple-design</code>, <code>Icon=&lt;app-id&gt;</code>)</td></tr>
+  <tr><td><code>io.github.fabiomattei.simple-design.yml</code></td><td>The build manifest. Installs both binaries, the icon (<code>assets/icon/simple-design.png</code>), the desktop entry, the metainfo and the MIME type</td></tr>
+  <tr><td><code>io.github.fabiomattei.simple-design.desktop</code></td><td>Flatpak-specific desktop entry (<code>Exec=simple-design %f</code>, <code>Icon</code> and <code>StartupWMClass</code> = the app id, <code>MimeType=application/x-sdesign</code>)</td></tr>
+  <tr><td><code>io.github.fabiomattei.simple-design.xml</code></td><td>Registers <code>*.sdesign</code> as <code>application/x-sdesign</code>, so files open in the app from a file manager</td></tr>
   <tr><td><code>io.github.fabiomattei.simple-design.metainfo.xml</code></td><td>AppStream metadata (license, summary, releases)</td></tr>
-  <tr><td><code>icon.png</code></td><td>256×256 square version of <code>assets/icon.png</code> — Flatpak's exporter rejects non-square icons, and the source asset is 333×346</td></tr>
 </table>
+<p>
+Inside the sandbox (<code>FLATPAK_ID</code> set), <code>src/main.rs</code> uses the Flatpak's app
+id as the window's app id, so it matches the exported desktop entry, and skips writing its own
+entry (see above).
+</p>
 
 <h3>Build setup</h3>
-<p>Runtime: <code>org.freedesktop.Platform</code> / <code>org.freedesktop.Sdk</code> 25.08, plus the <code>rust-stable</code> SDK extension (installed once, system-wide):</p>
+<p>Runtime: <code>org.freedesktop.Platform</code> / <code>org.freedesktop.Sdk</code> 25.08, plus the <code>rust-stable</code> SDK extension (installed once):</p>
 <pre><code>flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//25.08</code></pre>
 
 <h3>Build &amp; install</h3>
@@ -91,23 +99,36 @@ built entirely from this repo. Files live in <code>packaging/flatpak/</code>.
 flatpak-builder --force-clean --user --install builddir \
   io.github.fabiomattei.simple-design.yml</code></pre>
 <p>Run it with:</p>
-<pre><code>flatpak run io.github.fabiomattei.simple-design</code></pre>
+<pre><code>flatpak run io.github.fabiomattei.simple-design [file.sdesign]</code></pre>
+<p>To share it as a single file instead of installing it, export a bundle:</p>
+<pre><code>flatpak-builder --force-clean --repo=repo builddir io.github.fabiomattei.simple-design.yml
+flatpak build-bundle repo simple-design.flatpak io.github.fabiomattei.simple-design
+# on another machine: flatpak install --user simple-design.flatpak</code></pre>
+
+<h3>The CLI in the Flatpak</h3>
+<p><code>simple-design-cli</code> ships inside the Flatpak too:</p>
+<pre><code>flatpak run --command=simple-design-cli io.github.fabiomattei.simple-design file.sdesign list-layers
+# shorter, in ~/.bashrc:
+alias simple-design-cli='flatpak run --command=simple-design-cli io.github.fabiomattei.simple-design'</code></pre>
+<p>
+Live mode works across the sandbox in both directions. Inside a Flatpak, <code>ipc/registry.rs</code>
+puts the instance registry and sockets under <code>$XDG_RUNTIME_DIR/app/&lt;app id&gt;/simple-design/</code>,
+the one runtime folder Flatpak shares between every instance of the app and the host, at the
+same path on both sides. A CLI outside the sandbox (a native install) looks there as well as in
+its own folder, so it finds a sandboxed GUI too.
+</p>
 
 <h3>Sandbox permissions</h3>
-<p>
-The app requests the minimum needed to draw a window and open files — nothing broader:
-</p>
 <ul>
   <li><code>--socket=wayland</code>, <code>--socket=fallback-x11</code> — display access</li>
-  <li><code>--device=dri</code> — GPU access for the <code>glow</code>/<code>wgpu</code> renderer</li>
+  <li><code>--device=dri</code> — GPU access for the <code>wgpu</code> renderer</li>
   <li><code>--share=ipc</code> — required alongside the display sockets</li>
+  <li><code>--filesystem=home</code> — for the CLI. The GUI alone would manage without it: <code>rfd</code>
+  (the file-dialog crate) uses the <code>org.freedesktop.portal.FileChooser</code> portal, which
+  grants access to whatever the user picks. But the CLI opens the paths named on its command line,
+  which no portal can grant, and live mode keys instances by real file paths, which
+  portal-granted files don't keep. Inkscape's and GIMP's Flatpaks grant the same.</li>
 </ul>
-<p>
-No <code>--filesystem</code> permission is granted. <code>rfd</code> (the file-dialog crate)
-pulls in <code>zbus</code>, not GTK — on Linux it talks to the
-<code>org.freedesktop.portal.FileChooser</code> portal, which grants access to whatever the
-user picks in the dialog without the sandbox needing broad filesystem access up front.
-</p>
 
 <h3>Known limitation: not Flathub-ready</h3>
 <p>
@@ -119,6 +140,50 @@ with network access disabled, which means vendoring every crate as a manifest so
 <a href="https://github.com/flatpak/flatpak-builder-tools/tree/master/cargo" target="_blank" rel="noopener">flatpak-cargo-generator</a>
 into a <code>generated-sources.json</code> included as a module source). That step hasn't been
 done here.
+</p>
+
+<h2>macOS (.app and .dmg)</h2>
+<p>
+A macOS build needs no libraries on the user's Mac: the app draws with Metal and otherwise links
+only system frameworks, and Rust links its own code statically. Files live in
+<code>packaging/macos/</code>.
+</p>
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td><code>Info.plist</code></td><td>Bundle metadata, with a <code>__VERSION__</code> placeholder filled from <code>Cargo.toml</code></td></tr>
+  <tr><td><code>build-dmg.sh</code></td><td>Builds a universal (Apple Silicon + Intel) <code>Simple Design.app</code> and a drag-to-Applications <code>.dmg</code> into <code>target/macos/</code></td></tr>
+</table>
+<p>Run it on a Mac with rustup and Xcode's command-line tools (<code>xcode-select --install</code>):</p>
+<pre><code>./packaging/macos/build-dmg.sh</code></pre>
+<p>
+Without signing settings the app is only ad-hoc signed. That runs on the Mac that built it, but
+Gatekeeper blocks it on others until the user allows it in System Settings &gt; Privacy &amp;
+Security. To distribute it, sign and notarize with an Apple Developer account:
+</p>
+<pre><code># once: store notarization credentials in the keychain
+xcrun notarytool store-credentials simple-design-notary \
+  --apple-id you@example.com --team-id TEAMID --password &lt;app-specific password&gt;
+
+CODESIGN_IDENTITY="Developer ID Application: Your Name (TEAMID)" \
+NOTARY_PROFILE=simple-design-notary \
+  ./packaging/macos/build-dmg.sh</code></pre>
+<p>
+The CLI sits inside the bundle. To use it from a terminal, link it onto the <code>PATH</code>:
+</p>
+<pre><code>sudo ln -s "/Applications/Simple Design.app/Contents/MacOS/simple-design-cli" /usr/local/bin/</code></pre>
+<p>
+Live mode works as on Linux. Without <code>$XDG_RUNTIME_DIR</code>, the sockets live in the
+per-user temporary folder.
+</p>
+
+<h3>Known limitation: opening files from Finder</h3>
+<p>
+<code>.sdesign</code> files aren't registered with the app, on purpose. Finder doesn't pass a
+double-clicked file on the command line; it sends an <code>open documents</code> Apple Event,
+which winit (under eframe) doesn't forward. Registering the type would make a double-click
+launch an empty window. Wiring that event up needs an Objective-C application-delegate hook,
+which should be written and tested on a Mac. Until then, open files with File &gt; Open or
+<code>open -a "Simple Design" --args file.sdesign</code>.
 </p>
 
 <div class="footer-nav">

@@ -9,15 +9,37 @@ use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
+/// Where this process registers its instances and binds its sockets. Inside a Flatpak that is
+/// under `$XDG_RUNTIME_DIR/app/<app id>`, the one runtime folder Flatpak shares between every
+/// instance of the app (`flatpak run --command=simple-design-cli` included) and the host, at the
+/// same path on both sides, so a CLI anywhere can reach a sandboxed GUI.
 fn runtime_dir() -> PathBuf {
-    let base = std::env::var_os("XDG_RUNTIME_DIR").map(PathBuf::from).unwrap_or_else(std::env::temp_dir);
-    let dir = base.join("simple-design");
+    let base = runtime_base();
+    let dir = match std::env::var_os("FLATPAK_ID") {
+        Some(app_id) => base.join("app").join(app_id),
+        None => base,
+    }
+    .join("simple-design");
     let _ = std::fs::create_dir_all(&dir);
     dir
 }
 
-fn registry_path() -> PathBuf {
-    runtime_dir().join("instances.json")
+fn runtime_base() -> PathBuf {
+    std::env::var_os("XDG_RUNTIME_DIR").map(PathBuf::from).unwrap_or_else(std::env::temp_dir)
+}
+
+/// Every folder a running instance may have registered in: this process's own, and, outside a
+/// Flatpak, the Flatpak build's too (see `runtime_dir`).
+fn registry_dirs() -> Vec<PathBuf> {
+    let mut dirs = vec![runtime_dir()];
+    if std::env::var_os("FLATPAK_ID").is_none() {
+        dirs.push(runtime_base().join("app").join(crate::app_info::FLATPAK_ID).join("simple-design"));
+    }
+    dirs
+}
+
+fn registry_path(dir: &Path) -> PathBuf {
+    dir.join("instances.json")
 }
 
 fn canonical_key(doc_path: &Path) -> String {
@@ -35,26 +57,31 @@ pub fn socket_path_for(doc_path: &Path) -> PathBuf {
 #[derive(Default, Serialize, Deserialize)]
 struct RegistryFile(HashMap<String, String>);
 
-fn load() -> RegistryFile {
-    std::fs::read_to_string(registry_path()).ok().and_then(|s| serde_json::from_str(&s).ok()).unwrap_or_default()
+fn load(dir: &Path) -> RegistryFile {
+    std::fs::read_to_string(registry_path(dir)).ok().and_then(|s| serde_json::from_str(&s).ok()).unwrap_or_default()
 }
 
-fn store(registry: &RegistryFile) {
+fn store(dir: &Path, registry: &RegistryFile) {
     if let Ok(json) = serde_json::to_string_pretty(registry) {
-        let _ = std::fs::write(registry_path(), json);
+        let _ = std::fs::write(registry_path(dir), json);
     }
 }
 
 pub fn register(doc_path: &Path, socket_path: &Path) {
-    let mut registry = load();
+    let dir = runtime_dir();
+    let mut registry = load(&dir);
     registry.0.insert(canonical_key(doc_path), socket_path.to_string_lossy().into_owned());
-    store(&registry);
+    store(&dir, &registry);
 }
 
 pub fn unregister(doc_path: &Path) {
-    let mut registry = load();
+    unregister_in(&runtime_dir(), doc_path);
+}
+
+fn unregister_in(dir: &Path, doc_path: &Path) {
+    let mut registry = load(dir);
     registry.0.remove(&canonical_key(doc_path));
-    store(&registry);
+    store(dir, &registry);
 }
 
 /// Connects to the running instance registered for `doc_path`, if any. A
@@ -62,13 +89,14 @@ pub fn unregister(doc_path: &Path) {
 /// crashed instead of exiting cleanly) is treated as stale and removed.
 pub fn connect_live(doc_path: &Path) -> Option<UnixStream> {
     let key = canonical_key(doc_path);
-    let registry = load();
-    let socket = registry.0.get(&key)?.clone();
-    match UnixStream::connect(&socket) {
-        Ok(stream) => Some(stream),
-        Err(_) => {
-            unregister(doc_path);
-            None
+    registry_dirs().into_iter().find_map(|dir| {
+        let socket = load(&dir).0.get(&key)?.clone();
+        match UnixStream::connect(&socket) {
+            Ok(stream) => Some(stream),
+            Err(_) => {
+                unregister_in(&dir, doc_path);
+                None
+            }
         }
-    }
+    })
 }

@@ -103,6 +103,10 @@ missing it fails to load outright rather than silently.
   `instances.json`. The CLI checks that registry: found → **live mode**
   (send one newline-delimited-JSON request per connection, `ipc/protocol.rs`);
   not found → **headless mode** (load the file, mutate, save it back).
+  Inside a Flatpak (`FLATPAK_ID` set) that folder moves to
+  `$XDG_RUNTIME_DIR/app/<app id>/simple-design/`, the runtime folder Flatpak
+  shares with the host, and a CLI outside the sandbox checks there too
+  (`registry::registry_dirs`), so live mode crosses the sandbox both ways.
 - **One op implementation, both modes**: `ipc/ops.rs::apply(doc: &mut Document, op, args)`
   is called both by the live server (`app/ipc_dispatch.rs`, wrapped in a
   `History::snapshot()` so each command is one undo step) and by the CLI's

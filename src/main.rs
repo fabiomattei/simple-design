@@ -9,8 +9,14 @@ use desktop_entry::{APP_ICON_PNG, APP_ID};
 fn main() -> eframe::Result<()> {
     // Wayland ignores `with_icon` and shows the icon of the installed `.desktop` file named
     // after the app id, so keep that entry (and the icon it names) installed and current.
+    // A Flatpak exports its own entry, named after the Flatpak's app id, which the window then
+    // takes as its app id too; one written from inside the sandbox would land in its private
+    // data folder and do nothing.
+    let flatpak_id = std::env::var("FLATPAK_ID").ok();
     #[cfg(target_os = "linux")]
-    if let Err(error) = desktop_entry::install_desktop_entry() {
+    if flatpak_id.is_none()
+        && let Err(error) = desktop_entry::install_desktop_entry()
+    {
         eprintln!("simple-design: could not install the desktop entry: {error}");
     }
     let icon = eframe::icon_data::from_png_bytes(APP_ICON_PNG)
@@ -20,7 +26,7 @@ fn main() -> eframe::Result<()> {
             .with_inner_size([1280.0, 800.0])
             .with_title("Simple Design")
             .with_icon(icon)
-            .with_app_id(APP_ID),
+            .with_app_id(flatpak_id.as_deref().unwrap_or(APP_ID)),
         ..Default::default()
     };
     // An optional `.sdesign` path to open at startup — this is also what
