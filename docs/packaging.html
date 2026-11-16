@@ -27,12 +27,20 @@
 <p class="lede">Two ways to get a system-integrated build on Linux: a plain <code>.desktop</code> entry, or a sandboxed Flatpak.</p>
 
 <p>
-<code>cargo run</code> / a bare release binary never gets a dock, alt-tab, or app-grid icon on
-GNOME under Wayland. Wayland only resolves a window's icon through a <code>.desktop</code>
-file matched by the window's <code>app_id</code> — there's no other mechanism for a toolkit
-to hand the compositor an icon directly. <code>src/main.rs</code> sets
-<code>with_app_id("simple-design")</code> for exactly this reason; both packaging methods
-below rely on it matching a <code>.desktop</code> file's <code>StartupWMClass</code>.
+Wayland only resolves a window's icon through a <code>.desktop</code> file matched by the
+window's <code>app_id</code> — there's no other mechanism for a toolkit to hand the compositor
+an icon directly. <code>src/main.rs</code> sets <code>with_app_id("simple-design")</code> for
+exactly this reason; both packaging methods below rely on it matching a <code>.desktop</code>
+file's <code>StartupWMClass</code>.
+</p>
+<p>
+So that even <code>cargo run</code> gets an icon, the app also writes the icon and
+<code>~/.local/share/applications/simple-design.desktop</code> itself at startup
+(<code>src/desktop_entry.rs</code>). It points that entry at its own binary only when there is
+no entry yet, when the entry's program no longer exists, or when the entry launches a cargo
+build (<code>target/debug</code> or <code>target/release</code>) and this copy is installed.
+A working entry for another copy is never taken over, so running a build from the checkout
+doesn't hijack the applications menu from the installed app.
 </p>
 
 <h2>Desktop entry (unsandboxed)</h2>
