@@ -20,6 +20,11 @@ everything except the CLI. Read `docs/architecture.html` for the full module
 map and data model before making a non-trivial change — this file only
 summarizes it and covers what those pages don't.
 
+The `docs/` pages are also compiled into the GUI (`help_docs.rs`, opened from
+Help > Documentation), so a new page there must be added to `help_docs::FILES`
+too — `every_docs_file_is_embedded` fails until it is. The About dialog's
+version/author/license come from `Cargo.toml`'s `[package]` via `app_info.rs`.
+
 ## Commands
 
 ```

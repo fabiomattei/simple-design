@@ -10,8 +10,7 @@ use std::{env, fs, io, path::PathBuf};
 /// The window's app id, and the name of the `.desktop` file and icon installed for it.
 pub const APP_ID: &str = "simple-design";
 
-/// The lady's slipper orchid, drawn as `assets/icon/simple-design.svg`.
-pub const APP_ICON_PNG: &[u8] = include_bytes!("../assets/icon/simple-design.png");
+pub use simple_design::app_info::APP_ICON_PNG;
 
 /// Writes the icon and `simple-design.desktop`, pointing at this build, into the user's data
 /// folder, skipping files whose contents are already up to date. Returns the `.desktop` file.

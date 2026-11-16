@@ -1,3 +1,4 @@
+pub mod about_dialog;
 pub mod arrange_icons;
 pub mod color_picker;
 pub mod css_panel;

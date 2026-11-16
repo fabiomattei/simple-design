@@ -1,4 +1,5 @@
 pub mod alignment;
+pub mod app_info;
 pub mod arrange;
 pub mod boolean_ops;
 pub mod canvas;
@@ -10,6 +11,7 @@ pub mod fonts;
 pub mod grid_ops;
 pub mod grouping;
 pub mod halftone_fill;
+pub mod help_docs;
 pub mod html_export;
 pub mod history;
 pub mod image_ops;

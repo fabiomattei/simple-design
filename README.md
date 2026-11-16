@@ -126,7 +126,7 @@ needed:
 | What | Where |
 |---|---|
 | GUI (`simple-design`) and CLI (`simple-design-cli`) | `~/.local/bin/` |
-| App icon | `~/.local/share/icons/hicolor/256x256/apps/simple-design.png` |
+| App icon | `~/.local/share/icons/hicolor/512x512/apps/simple-design.png` |
 | Desktop entry (app grid, dock, "Open with") | `~/.local/share/applications/simple-design.desktop` |
 
 Afterwards, launch **Simple Design** from your desktop's app menu, or run

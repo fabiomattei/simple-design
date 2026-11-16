@@ -25,7 +25,7 @@ prefix="${PREFIX:-${HOME}/.local}"
 bin_dir="${prefix}/bin"
 applications_dir="${prefix}/share/applications"
 icons_root="${prefix}/share/icons/hicolor"
-icon_dest="${icons_root}/256x256/apps/simple-design.png"
+icon_dest="${icons_root}/512x512/apps/simple-design.png"
 desktop_dest="${applications_dir}/simple-design.desktop"
 binaries=(simple-design simple-design-cli)
 
@@ -70,9 +70,9 @@ for bin in "${binaries[@]}"; do
     echo "installed ${bin_dir}/${bin}"
 done
 
-# The square 256x256 Flatpak icon -- icon themes expect square icons, and
-# assets/icon.png is 333x346.
-install -Dm644 "${repo_root}/packaging/flatpak/icon.png" "${icon_dest}"
+# The same icon, at the same path, that the app itself writes at startup
+# (src/desktop_entry.rs).
+install -Dm644 "${repo_root}/assets/icon/simple-design.png" "${icon_dest}"
 echo "installed ${icon_dest}"
 
 mkdir -p "${applications_dir}"

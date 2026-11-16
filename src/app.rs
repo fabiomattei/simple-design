@@ -18,6 +18,7 @@ use crate::recent_files::RecentFiles;
 use crate::templates::{self, Template};
 use crate::tools::Tool;
 use crate::transform_ops::{self, FlipAxis};
+use crate::ui::about_dialog::{self, AboutDialogState};
 use crate::ui::export_dialog::{self, ExportDialogAction, ExportDialogState};
 use crate::ui::layers_panel::LayersPanel;
 use crate::ui::pages_bar::{PagesAction, PagesBar};
@@ -70,6 +71,8 @@ pub struct App {
     /// File > New from Template's full-window picker — see
     /// `ui/template_picker/`. While open it replaces the editor below the menu bar.
     template_picker: TemplatePickerState,
+    /// Help > About Simple Design — see `ui/about_dialog.rs`.
+    about_dialog: AboutDialogState,
     /// View menu toggle for the Palette panel (`ui/palette_panel.rs`) —
     /// runtime-only, not persisted with the document (same convention as
     /// `CanvasWidget::show_rulers`/`show_grid`).
@@ -127,6 +130,7 @@ impl App {
             last_rename_config: None,
             export_dialog: ExportDialogState::default(),
             template_picker: TemplatePickerState::default(),
+            about_dialog: AboutDialogState::default(),
             show_palette_panel: false,
             show_layers_panel: true,
             show_inspector_panel: true,
@@ -945,6 +949,15 @@ impl App {
     }
 }
 
+/// Writes the embedded docs out (see `help_docs`) and opens `page` in the web browser.
+fn open_help_page(page: &str) {
+    let opened = crate::help_docs::write_page(page)
+        .and_then(|path| crate::system_launch::open_with_default_app(&path));
+    if let Err(error) = opened {
+        io::show_error("Could not open the documentation", &error.to_string());
+    }
+}
+
 fn minimize_image_file_size_recursive(layer: &mut Layer) {
     crate::image_ops::minimize_image_file_size(layer);
     if let Some(children) = layer.kind.children_mut() {
@@ -1290,8 +1303,31 @@ impl eframe::App for App {
                         }
                     });
                 });
+                ui.menu_button("Help", |ui| {
+                    if ui.button("Documentation").clicked() {
+                        open_help_page(crate::help_docs::INDEX);
+                        ui.close();
+                    }
+                    if ui.button("Tools & Shortcuts").clicked() {
+                        open_help_page(crate::help_docs::FEATURES);
+                        ui.close();
+                    }
+                    ui.separator();
+                    if ui.button("Report an Issue...").clicked() {
+                        ui.ctx().open_url(egui::OpenUrl::new_tab(crate::app_info::ISSUES_URL));
+                        ui.close();
+                    }
+                    ui.separator();
+                    if ui.button("About Simple Design").clicked() {
+                        self.about_dialog.open = true;
+                        ui.close();
+                    }
+                });
             });
         });
+
+        // Before the template picker's early return, so About also opens over the picker.
+        about_dialog::ui(&ctx, &mut self.about_dialog);
 
         if self.template_picker.is_open() {
             let mut pick = None;
