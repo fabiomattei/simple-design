@@ -109,10 +109,49 @@ Open a specific file at startup so the CLI has something to talk to:
 simple-design <file.sdesign>
 ```
 
-## Update Linux installation
+## Installing (Linux)
 
-> cargo build --release
-> install -m755 target/release/simple-design ~/.local/bin/simple-design
+Requirements: a recent stable Rust toolchain from [rustup](https://rustup.rs)
+(edition 2024, so Rust 1.85 or newer) and a C toolchain for the native
+dependencies (`gcc`, plus `pkg-config` on most distros).
+
+```
+git clone <this repo> simple-design && cd simple-design
+./packaging/linux/install.sh
+```
+
+This builds a release build and installs it for your user only, no root
+needed:
+
+| What | Where |
+|---|---|
+| GUI (`simple-design`) and CLI (`simple-design-cli`) | `~/.local/bin/` |
+| App icon | `~/.local/share/icons/hicolor/256x256/apps/simple-design.png` |
+| Desktop entry (app grid, dock, "Open with") | `~/.local/share/applications/simple-design.desktop` |
+
+Afterwards, launch **Simple Design** from your desktop's app menu, or run
+`simple-design [file.sdesign]` in a terminal. If `~/.local/bin` isn't on your
+`PATH`, the script says so. Add `export PATH="$HOME/.local/bin:$PATH"` to
+`~/.bashrc` to fix it. If the icon doesn't show up right away, log out and
+back in, because GNOME caches app icons.
+
+The installed copy doesn't depend on the checkout, so you can move or delete
+it. To **update**, pull and run the script again:
+
+```
+git pull && ./packaging/linux/install.sh
+```
+
+Other options:
+
+```
+./packaging/linux/install.sh --no-build    # install an existing target/release build
+./packaging/linux/install.sh --uninstall   # remove everything the script installed
+PREFIX=/opt/simple-design ./packaging/linux/install.sh   # install somewhere else
+```
+
+For a sandboxed install, a Flatpak manifest is included. See
+[`docs/packaging.html`](docs/packaging.html).
 
 
 
