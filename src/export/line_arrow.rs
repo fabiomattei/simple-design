@@ -30,6 +30,7 @@ pub(super) fn draw_line(pixmap: &mut Pixmap, layer: &Layer, offset: egui::Vec2, 
     pixmap.stroke_path(&path, &paint, &sk_stroke, layer_transform(layer, bounds, render_scale), None);
 }
 
+#[allow(clippy::too_many_arguments)]
 pub(super) fn draw_arrow(
     pixmap: &mut Pixmap,
     layer: &Layer,

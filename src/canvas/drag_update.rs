@@ -334,6 +334,7 @@ fn resize_line(page: &mut Page, id: &LayerId, handle: &Handle, parent_offset: &V
 /// Applies one frame of a bounding-box resize to every leaf captured at drag
 /// start. Long, but a single computation: inverse-rotate the pointer, resize
 /// the overall bounds, derive the scale transform, apply it to each leaf.
+#[allow(clippy::too_many_arguments)]
 fn resize_group(
     page: &mut Page,
     doc_pos: Pos2,
@@ -404,7 +405,7 @@ fn resize_group(
     apply_resize_delta(
         page,
         layers,
-        &transform,
+        transform,
         scale,
         *scale_style,
         uniform_scale,

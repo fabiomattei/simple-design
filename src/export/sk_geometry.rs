@@ -7,6 +7,7 @@ use crate::model::{CornerRadii, Layer, PathPoint, PathPolygon};
 
 use super::paint::to_sk_paint;
 
+#[allow(clippy::too_many_arguments)]
 pub(super) fn fill_and_stroke(
     pixmap: &mut Pixmap,
     path: &tiny_skia::Path,
