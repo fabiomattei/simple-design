@@ -277,9 +277,16 @@ fn font_family(font: &TextFont) -> String {
         TextFont::Proportional | TextFont::Display | TextFont::System(_) => "sans-serif",
     };
     match font {
-        TextFont::System(name) => format!("\"{name}\", {generic}"),
+        TextFont::System(name) => format!("\"{}\", {generic}", escape_css_string(name)),
         bundled => format!("\"{}\", {generic}", bundled_family_name(bundled).unwrap_or_default()),
     }
+}
+
+/// Escapes `text` for a double-quoted CSS string. A system font name comes
+/// from the document (editable JSON), so a `"` or newline in it must not end
+/// the string and let the rest be read as CSS. `\A ` is CSS's newline escape.
+fn escape_css_string(text: &str) -> String {
+    text.replace('\\', "\\\\").replace('"', "\\\"").replace('\n', "\\A ")
 }
 
 /// `#rrggbb` when fully opaque, `rgba(...)` otherwise. `opacity` is a
@@ -420,6 +427,13 @@ mod tests {
         let style = RunStyle { font: TextFont::Display, font_size: 12.0, color: None, bold: false, italic: true, underline: false, strikethrough: true };
         let lines = run_declarations(&style, 1.0);
         assert_eq!(lines, ["font-family: \"Poppins\", sans-serif;", "font-size: 12px;", "font-weight: normal;", "font-style: italic;", "text-decoration: line-through;"]);
+    }
+
+    #[test]
+    fn system_font_name_is_escaped_inside_its_css_string() {
+        let style = RunStyle { font: TextFont::System("Evil\\\"; } body { x\n".to_string()), font_size: 12.0, color: None, bold: false, italic: false, underline: false, strikethrough: false };
+        let lines = run_declarations(&style, 1.0);
+        assert_eq!(lines[0], "font-family: \"Evil\\\\\\\"; } body { x\\A \", sans-serif;");
     }
 
     #[test]
