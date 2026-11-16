@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Designing for HTML Export — Simple Design Docs</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <a class="brand" href="index.html">Simple Design</a>
+  <div class="tagline">Developer &amp; user docs</div>
+  <ul>
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="getting-started.html">Getting Started</a></li>
+    <li><a href="features.html">Tools &amp; Features</a></li>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="text-and-fonts.html">Text &amp; Fonts</a></li>
+    <li><a href="file-format.html">File Format</a></li>
+    <li><a class="active" href="html-export.html">HTML Export</a></li>
+    <li><a href="packaging.html">Packaging</a></li>
+  </ul>
+</nav>
+<main>
+<h1>Designing for HTML Export</h1>
+<p class="lede">How to build a design so that "Export as HTML" produces clean, readable HTML and CSS instead of a pile of absolutely positioned boxes and images.</p>
+
+<p>
+The exporter never drops a layer: anything it can't describe with CSS is rendered to a PNG
+and placed where it was drawn. So every export <em>looks</em> right. Whether it's also
+<em>good HTML</em> (real elements, real text, flex rows and columns, few images) depends on
+how the design is built. This page lists the rules the exporter follows
+(<code>src/html_export/</code>, <code>src/css_rules.rs</code>) and how to design for them.
+</p>
+
+<h2>Running an export</h2>
+<ul>
+  <li><strong>File &gt; Export Selection as HTML…</strong> exports the one selected layer,
+    using the layout mode last chosen in the Export dialog.</li>
+  <li><strong>Export dialog</strong> (<kbd>⌘E</kbd>, or File &gt; Export Selection…): pick
+    <em>HTML layout</em> (<strong>Flexbox</strong> or <strong>Absolute</strong>), then
+    <strong>Export as HTML…</strong>. Format and scale only apply to PNG export, not here.</li>
+</ul>
+<p>
+You pick a folder, and the export goes into a subfolder named after the layer:
+</p>
+<pre><code>&lt;layer name&gt;/
+  index.html     one element per layer, nested like the layer tree
+  style.css      one commented rule per layer (/* layer name */ .layer-N { ... })
+  images/        PNGs for image layers and rasterized layers
+  fonts/         the bundled font files the text uses, with @font-face rules</code></pre>
+<p>
+Export an <strong>artboard</strong>: it becomes the page box, its background becomes the
+page background, and the output is sized to it. The exported layer must be visible (a hidden
+one is an error). Hidden children are left out entirely.
+</p>
+
+<h2>Choosing a layout mode</h2>
+<table>
+  <tr><th>Mode</th><th>What you get</th><th>Use it for</th></tr>
+  <tr><td><strong>Flexbox</strong> (default)</td>
+    <td>Rows, columns and grids inferred from where things sit, with <code>gap</code>,
+      <code>align-items</code> and padding. Elements that can't flow stay absolutely positioned
+      on top.</td>
+    <td>A starting point for a real page: text can grow and push content down.</td></tr>
+  <tr><td><strong>Absolute</strong></td>
+    <td>Every element at its exact <code>left</code>/<code>top</code>, nested like the layer
+      tree.</td>
+    <td>A pixel-exact mockup, or a design with lots of overlap.</td></tr>
+</table>
+<p>The rest of this page is mostly about getting good Flexbox output.</p>
+
+<h2>What becomes CSS, what becomes an image</h2>
+<table>
+  <tr><th>Layer</th><th>Exported as</th></tr>
+  <tr><td>Artboard, Group</td><td>A <code>&lt;div&gt;</code> containing its children —
+    unless a child is a <strong>mask</strong>, then the whole container becomes one PNG</td></tr>
+  <tr><td>Rectangle, Oval</td><td>A styled <code>&lt;div&gt;</code> (background, border,
+    <code>border-radius</code>, <code>box-shadow</code>) — if the fill is solid or a gradient</td></tr>
+  <tr><td>Line, Arrow</td><td>A zero-height <code>&lt;div&gt;</code> with a top border,
+    rotated. Arrowheads aren't drawn.</td></tr>
+  <tr><td>Text</td><td>A <code>&lt;div&gt;</code> with real, selectable text; rich-text runs
+    become <code>&lt;span&gt;</code>s</td></tr>
+  <tr><td>Image</td><td>An <code>&lt;img&gt;</code> of the original image bytes — unless it
+    has a color adjustment, then a rendered PNG</td></tr>
+  <tr><td>Star, Polygon, Path, Compound Path, Boolean Group</td><td>Always a PNG</td></tr>
+  <tr><td>Text on a path</td><td>Always a PNG</td></tr>
+  <tr><td>Any shape with a Noise, Halftone or Pattern fill</td><td>Always a PNG</td></tr>
+</table>
+<p>
+PNGs are rendered at 2× (sharp on high-density screens) and include the layer's drop shadows
+and opacity. They're placed by their exact bounds and never join a flex row or column.
+</p>
+<p><strong>To keep things as real HTML:</strong></p>
+<ul>
+  <li>Draw buttons, cards, chips and panels as <strong>rectangles</strong> (per-corner radius
+    is fine), not as paths or boolean shapes.</li>
+  <li>Use solid or gradient fills for anything that should stay CSS. Save noise, halftone and
+    pattern fills for decorative pieces you're happy to ship as images.</li>
+  <li>Use masks only where an image is acceptable: one mask turns its whole group into a single
+    PNG, text included. Keep the masked part in its own small group, separate from the content
+    around it.</li>
+  <li>Make icons and illustrations their own groups or path layers, so they rasterize alone
+    and don't drag neighbouring elements into the image.</li>
+</ul>
+
+<h2>Layout: how Flexbox mode reads your design</h2>
+<p>
+For each artboard and group, the exporter looks at its visible children's bounding boxes and
+cuts them apart along straight lines of empty space ("XY-cut",
+<code>html_export/layout_inference.rs</code>): first top-to-bottom into a
+<strong>column</strong>, otherwise left-to-right into a <strong>row</strong>, then cuts each
+part again. The result is nested flex rows and columns, emitted in <em>visual</em> order
+(top-to-bottom, left-to-right), with the original layer order kept through
+<code>z-index</code>.
+</p>
+
+<h3>Leave clear gutters</h3>
+<p>
+Two elements only end up in different rows (or columns) if a full-width (or full-height)
+strip of empty space separates them. Edges that touch count as separated; any overlap
+doesn't. Line things up on a grid, keep sections apart, and avoid an element that pokes into
+the next row's band.
+</p>
+
+<h3>Overlap costs you flow</h3>
+<p>
+When elements overlap so that no cut can separate them, the <strong>largest</strong> one is
+taken out of the flow and absolutely positioned, and the cut is retried on the rest. That's
+exactly right for a backdrop rectangle behind some content — the content still flows. But
+heavy overlap (badges on corners, stacked decorations) leaves many elements absolutely
+positioned. Group the overlapping pieces together so the overlap stays inside one group.
+</p>
+
+<h3>Use groups as containers</h3>
+<p>
+Every group is a container whose own children are laid out the same way, so groups decide
+the structure of the HTML. Group what belongs together — a card's background, image, title
+and text; a nav bar's links; a form's fields — and the HTML follows that structure.
+</p>
+
+<h3>Be consistent with spacing and alignment</h3>
+<ul>
+  <li>Gaps between items in a row or column that are within <strong>3 units</strong> of each
+    other become one averaged <code>gap</code>. Uneven gaps become one margin per item —
+    correct, but noisier.</li>
+  <li>Items that share a left/top edge, a center, or a right/bottom edge (again within 3 units)
+    become one <code>align-items</code>. Otherwise each item gets its own offset margin.</li>
+  <li>Snapping moves elements by at most 3 units. Use the alignment and distribute tools, or
+    a grid, so the spacing is exact.</li>
+</ul>
+
+<h3>Grids</h3>
+<p>
+A column of rows becomes <code>display: grid</code> when it's at least 2×2, every row has
+the same number of cells, each column starts at the same x in every row, cells in a row share
+a top edge, and the space between columns is even (all within 3 units). Card galleries and
+icon grids built with the grid tool usually qualify. A grid with one card missing in the last
+row doesn't — it falls back to flex rows.
+</p>
+
+<h3>What always stays absolutely positioned</h3>
+<ul>
+  <li>Rotated layers, lines and arrows, and anything rasterized.</li>
+  <li>Anything that sticks out past its container's <strong>top or left</strong> edge (flex
+    padding can't be negative). Keep children inside their artboard or group.</li>
+</ul>
+
+<h2>Text</h2>
+<ul>
+  <li><strong>Resize mode matters.</strong> In Flexbox mode, <em>Auto</em> and <em>Auto
+    Height</em> text gets <code>min-height</code>, so if the browser's text is longer it pushes
+    the following elements down instead of overlapping them. <em>Fixed</em> text keeps a fixed
+    height. <em>Auto</em> (single-line) text never wraps (<code>white-space: pre</code>); the
+    others wrap at the box width.</li>
+  <li><strong>Prefer the bundled fonts</strong> (Ubuntu, Hack, Merriweather, Poppins, Caveat):
+    their files are shipped in <code>fonts/</code>, so the browser draws the same glyphs as the
+    canvas. System fonts are referenced by name only and fall back to a generic family on a
+    machine that doesn't have them.</li>
+  <li>Only regular and bold weights ship. Italic uses the browser's slanted version.</li>
+  <li>Text color is always flat: a gradient fill on text exports as one color, the same as
+    what the canvas draws.</li>
+  <li>Carried over: size, line height, letter spacing, alignment, bold/italic,
+    underline/strikethrough, case transform, text stroke, drop shadows (without spread).
+    <strong>Not carried over:</strong> vertical alignment, paragraph spacing, list bullets or
+    numbering, and inner shadows on text. Avoid relying on them for a design meant for HTML.</li>
+  <li>Keep text as text: don't convert it to outlines, and don't put it on a path or inside a
+    masked group, or it becomes part of an image.</li>
+</ul>
+
+<h2>Styling details</h2>
+<ul>
+  <li>Fill opacity and stroke opacity are folded into the color's alpha; layer opacity becomes
+    <code>opacity</code>.</li>
+  <li>Strokes become CSS <code>border</code>s. A gradient stroke uses
+    <code>border-image</code>, which browsers draw square even on rounded corners — use solid
+    strokes on rounded shapes.</li>
+  <li>Drop and inner shadows on shapes become one <code>box-shadow</code>, following the box
+    (including its radius).</li>
+</ul>
+
+<h2>Names</h2>
+<p>
+Layer names show up in the output: the exported layer's name is the folder name and the page
+<code>&lt;title&gt;</code>, every CSS rule is headed by a <code>/* layer name */</code>
+comment, and images use it as their <code>alt</code> text. Name layers for what they are
+("Hero image", "Sign up button"), not "Rectangle 12".
+</p>
+
+<h2>Checklist</h2>
+<ul>
+  <li>Export an artboard, with everything inside it.</li>
+  <li>Group related elements; keep overlap inside groups.</li>
+  <li>Leave clean gutters between rows and columns; use exact, repeated spacing.</li>
+  <li>Rectangles and ovals with solid or gradient fills for UI; rasterize only on purpose.</li>
+  <li>No masks around content you want as HTML.</li>
+  <li>Bundled fonts, Auto Height text for paragraphs, no vertical-align/list/paragraph-spacing reliance.</li>
+  <li>Meaningful layer names.</li>
+  <li>Open <code>index.html</code> and check that the elements you expected are flowing (no
+    <code>position: absolute</code> in their rule) and that <code>images/</code> holds only what
+    you meant to rasterize.</li>
+</ul>
+
+<div class="footer-nav">
+  <a href="file-format.html">← File Format</a>
+  <a href="packaging.html">Packaging →</a>
+</div>
+</main>
+</div>
+</body>
+</html>
