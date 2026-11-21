@@ -146,7 +146,7 @@ pub(super) fn earcut_polygon(exterior: &[Pos2], holes: &[Vec<Pos2>]) -> Option<(
         }
     }
     let indices = earcutr::earcut(&flat, &hole_indices, 2).ok()?;
-    let positions: Vec<Pos2> = flat.chunks_exact(2).map(|c| Pos2::new(c[0] as f32, c[1] as f32)).collect();
+    let positions: Vec<Pos2> = flat.as_chunks::<2>().0.iter().map(|&[x, y]| Pos2::new(x as f32, y as f32)).collect();
     Some((positions, indices.into_iter().map(|i| i as u32).collect()))
 }
 
