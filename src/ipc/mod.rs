@@ -9,9 +9,12 @@
 //! - `client`: the CLI side — connects and sends one request.
 //! - `ops`: the actual command implementations, shared by both the live
 //!   server (via `app`'s `History`) and the CLI's headless fallback.
+//! - `headless_history`: undo/redo for the CLI's headless mode, as file
+//!   snapshots in the cache folder (there's no `History` without the GUI).
 //! - `style_ops`: what the fill/shadow/extra-shape ops build, called from `ops`.
 
 pub mod client;
+pub mod headless_history;
 pub mod ops;
 pub mod protocol;
 pub mod registry;

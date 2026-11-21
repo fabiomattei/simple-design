@@ -199,7 +199,28 @@ pub struct AddArtboardArgs {
 #[derive(Serialize, Deserialize)]
 pub struct SetFrameArgs {
     pub id: Uuid,
-    pub frame: Frame,
+    /// Replaces the whole frame; the fields below then adjust it. Omitted =
+    /// start from the layer's current frame, so a request can change just
+    /// one of x/y/w/h/rotation.
+    #[serde(default)]
+    pub frame: Option<Frame>,
+    #[serde(default)]
+    pub x: Option<f32>,
+    #[serde(default)]
+    pub y: Option<f32>,
+    #[serde(default)]
+    pub w: Option<f32>,
+    #[serde(default)]
+    pub h: Option<f32>,
+    #[serde(default)]
+    pub rotation: Option<f32>,
+    /// Multiplies both w and h (1.15 = 15% bigger), keeping the top-left
+    /// corner in place. Can't be combined with `w`/`h`.
+    #[serde(default)]
+    pub scale: Option<f32>,
+    /// With only one of `w`/`h`, derive the other from the current aspect ratio.
+    #[serde(default)]
+    pub keep_aspect: bool,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -235,6 +256,24 @@ pub struct AlignArgs {
 pub struct ExportPngArgs {
     pub id: Uuid,
     pub path: String,
+}
+
+/// `content_bounds`: where a layer's rendered pixels differ from a
+/// background color — e.g. where the text baked into a background image ends.
+#[derive(Serialize, Deserialize)]
+pub struct ContentBoundsArgs {
+    pub id: Uuid,
+    /// Only scan this rect, in the layer's parent-relative space (the same
+    /// space as its `frame`). Omitted = the whole layer.
+    #[serde(default)]
+    pub region: Option<egui::Rect>,
+    /// The color counted as "empty". Omitted = the region's top-left pixel.
+    #[serde(default)]
+    pub background: Option<Color32>,
+    /// Largest per-channel difference from `background` still counted as
+    /// background. Omitted = 32.
+    #[serde(default)]
+    pub tolerance: Option<u8>,
 }
 
 #[derive(Serialize, Deserialize)]

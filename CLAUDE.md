@@ -118,8 +118,16 @@ missing it fails to load outright rather than silently.
   `History`, a file path, or `App::selection`, none of which fit "pure
   function of a `Document`", so they're handled directly in
   `app/ipc_dispatch.rs` (live) / `bin/simple-design-cli.rs` (headless, where
-  `undo`/`redo`/`select` are simply rejected — there's no history or
-  selection state outside a running `App`).
+  `select` is rejected — there's no selection outside a running `App` — and
+  `undo`/`redo` step through `ipc/headless_history.rs`: each headless edit
+  snapshots the file's previous contents under `<cache_dir>/headless-history/`,
+  and undo refuses if the file changed since the last headless edit, e.g. in the GUI).
+- `set-frame` takes any subset of `--x/--y/--w/--h/--rotation`, plus
+  `--scale 1.15|115%` (from the top-left corner) or `--keep-aspect` with one of
+  `--w`/`--h`. It only changes the frame — text size and group children don't scale.
+- `content-bounds <id>` renders a layer and returns the bounding box of pixels
+  that differ from a background color (default: the scanned area's top-left
+  pixel) — for measuring what's baked into an image, e.g. where its text ends.
 - **`ctx.request_repaint()` from the socket's background thread is not
   reliable enough alone** to wake every windowing backend's idle event loop —
   confirmed hanging indefinitely in at least one dev environment.

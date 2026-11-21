@@ -24,7 +24,7 @@ use crate::model::{
 use crate::transform_ops::{self, FlipAxis};
 
 use super::protocol::{
-    AddArtboardArgs, AddFigureArgs, AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs,
+    AddArtboardArgs, AddFigureArgs, AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, ContentBoundsArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs,
     GetLayerArgs, GroupArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SetFillArgs, SetFrameArgs, SetMaskArgs,
     SetResizingArgs, SetShadowArgs, UngroupArgs,
 };
@@ -230,8 +230,8 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
         "set_frame" => {
             let args: SetFrameArgs = parse(args)?;
             let layer = doc.find_mut(args.id).ok_or_else(|| format!("layer not found: {}", args.id))?;
-            layer.frame = args.frame;
-            Ok(json!({ "id": args.id }))
+            layer.frame = resolve_frame(layer.frame, &args)?;
+            Ok(json!({ "id": args.id, "frame": layer.frame }))
         }
 
         "delete_layer" => {
@@ -277,6 +277,11 @@ pub fn apply(doc: &mut Document, op: &str, args: serde_json::Value) -> Result<se
             let layer = doc.find(args.id).ok_or_else(|| format!("layer not found: {}", args.id))?;
             crate::export::export_layer_to_png(layer, std::path::Path::new(&args.path)).map_err(|err| err.to_string())?;
             Ok(json!({ "path": args.path }))
+        }
+
+        "content_bounds" => {
+            let args: ContentBoundsArgs = parse(args)?;
+            content_bounds(doc, &args)
         }
 
         "new_page" => {
@@ -473,6 +478,124 @@ fn apply_shape_style(layer: &mut Layer, args: &AddShapeArgs) {
     if args.no_stroke {
         layer.style.stroke = None;
     }
+}
+
+/// `set_frame`'s target frame: `args.frame` (or `current`), then any of
+/// x/y/w/h/rotation/scale applied on top.
+fn resolve_frame(current: Frame, args: &SetFrameArgs) -> Result<Frame, String> {
+    let mut frame = args.frame.unwrap_or(current);
+    if let Some(x) = args.x {
+        frame.pos.x = x;
+    }
+    if let Some(y) = args.y {
+        frame.pos.y = y;
+    }
+    if let Some(rotation) = args.rotation {
+        frame.rotation = rotation;
+    }
+    if let Some(scale) = args.scale {
+        if args.w.is_some() || args.h.is_some() {
+            return Err("scale can't be combined with w/h".into());
+        }
+        if !(scale > 0.0 && scale.is_finite()) {
+            return Err(format!("scale must be a positive number, got {scale}"));
+        }
+        frame.size *= scale;
+        return Ok(frame);
+    }
+    let old = frame.size;
+    match (args.w, args.h, args.keep_aspect) {
+        (Some(_), Some(_), true) => return Err("keep_aspect needs only one of w/h — the other is derived".into()),
+        (Some(w), None, true) => {
+            if old.x == 0.0 {
+                return Err("can't keep the aspect ratio of a zero-width layer".into());
+            }
+            frame.size = Vec2::new(w, w * old.y / old.x);
+        }
+        (None, Some(h), true) => {
+            if old.y == 0.0 {
+                return Err("can't keep the aspect ratio of a zero-height layer".into());
+            }
+            frame.size = Vec2::new(h * old.x / old.y, h);
+        }
+        (w, h, _) => {
+            frame.size = Vec2::new(w.unwrap_or(old.x), h.unwrap_or(old.y));
+        }
+    }
+    Ok(frame)
+}
+
+/// Renders the layer (as `export_png` would) and finds the bounding box of
+/// the pixels that differ from the background color by more than the
+/// tolerance — a way to measure what's baked into an image (where its text
+/// ends, where a logo sits) without an external image library.
+fn content_bounds(doc: &Document, args: &ContentBoundsArgs) -> Result<serde_json::Value, String> {
+    let layer = doc.find(args.id).ok_or_else(|| format!("layer not found: {}", args.id))?;
+    let parent_offset = doc.pages.iter().find_map(|p| p.absolute_offset(args.id)).unwrap_or(Vec2::ZERO);
+    let pixmap = crate::export::render_layer(layer).ok_or("layer has no visible area")?;
+    // `render_layer` puts the layer's rotated bounds (padded by any outer
+    // shadow) at the pixmap origin, one pixel per document unit.
+    let pad = crate::shadow::outer_shadow_extent(&layer.style.shadows);
+    let origin = layer.frame.rotated_bounds().min - Vec2::splat(pad);
+    let (width, height) = (pixmap.width() as i64, pixmap.height() as i64);
+
+    let (x0, y0, x1, y1) = match args.region {
+        Some(region) => (
+            ((region.min.x - origin.x).floor() as i64).clamp(0, width),
+            ((region.min.y - origin.y).floor() as i64).clamp(0, height),
+            ((region.max.x - origin.x).ceil() as i64).clamp(0, width),
+            ((region.max.y - origin.y).ceil() as i64).clamp(0, height),
+        ),
+        None => (0, 0, width, height),
+    };
+    if x0 >= x1 || y0 >= y1 {
+        return Err("region doesn't overlap the layer".into());
+    }
+
+    let pixel = |x: i64, y: i64| {
+        let p = pixmap.pixel(x as u32, y as u32).expect("in bounds").demultiply();
+        [p.red(), p.green(), p.blue(), p.alpha()]
+    };
+    let background = match args.background {
+        Some(color) => color.to_srgba_unmultiplied(),
+        None => pixel(x0, y0),
+    };
+    let tolerance = args.tolerance.unwrap_or(32);
+    let differs = |p: [u8; 4]| {
+        // A fully transparent pixel matches a transparent background whatever its RGB.
+        if p[3] == 0 && background[3] == 0 {
+            return false;
+        }
+        p.iter().zip(background).any(|(a, b)| a.abs_diff(b) > tolerance)
+    };
+
+    let mut found: Option<(i64, i64, i64, i64)> = None;
+    for y in y0..y1 {
+        for x in x0..x1 {
+            if differs(pixel(x, y)) {
+                let (min_x, min_y, max_x, max_y) = found.get_or_insert((x, y, x, y));
+                *min_x = (*min_x).min(x);
+                *min_y = (*min_y).min(y);
+                *max_x = (*max_x).max(x);
+                *max_y = (*max_y).max(y);
+            }
+        }
+    }
+    let to_hex = |c: [u8; 4]| format!("{:02X}{:02X}{:02X}{:02X}", c[0], c[1], c[2], c[3]);
+    let Some((min_x, min_y, max_x, max_y)) = found else {
+        return Ok(json!({ "found": false, "background": to_hex(background) }));
+    };
+    let rect = egui::Rect::from_min_max(
+        origin + Vec2::new(min_x as f32, min_y as f32),
+        origin + Vec2::new((max_x + 1) as f32, (max_y + 1) as f32),
+    );
+    let rect_json = |r: egui::Rect| json!({ "x": r.min.x, "y": r.min.y, "w": r.width(), "h": r.height() });
+    Ok(json!({
+        "found": true,
+        "background": to_hex(background),
+        "bounds": rect_json(rect),
+        "page_bounds": rect_json(rect.translate(parent_offset)),
+    }))
 }
 
 fn resolve_page(doc: &Document, page: Option<Uuid>) -> Result<&Page, String> {
@@ -1012,6 +1135,53 @@ mod tests {
     }
 
     #[test]
+    fn set_frame_changes_only_the_given_fields() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 10.0, 20.0, 100.0, 50.0);
+        apply(&mut doc, "set_frame", json!({ "id": id, "w": 80.0 })).unwrap();
+        assert_eq!(doc.find(id).unwrap().frame, frame(10.0, 20.0, 80.0, 50.0));
+        apply(&mut doc, "set_frame", json!({ "id": id, "y": 0.0 })).unwrap();
+        assert_eq!(doc.find(id).unwrap().frame, frame(10.0, 0.0, 80.0, 50.0));
+    }
+
+    #[test]
+    fn set_frame_scales_from_the_top_left_and_keeps_the_aspect_ratio() {
+        let mut doc = Document::new();
+        let id = add_rect(&mut doc, 10.0, 20.0, 100.0, 50.0);
+        apply(&mut doc, "set_frame", json!({ "id": id, "scale": 1.5 })).unwrap();
+        assert_eq!(doc.find(id).unwrap().frame, frame(10.0, 20.0, 150.0, 75.0));
+
+        apply(&mut doc, "set_frame", json!({ "id": id, "w": 300.0, "keep_aspect": true })).unwrap();
+        assert_eq!(doc.find(id).unwrap().frame, frame(10.0, 20.0, 300.0, 150.0));
+        apply(&mut doc, "set_frame", json!({ "id": id, "h": 30.0, "keep_aspect": true })).unwrap();
+        assert_eq!(doc.find(id).unwrap().frame, frame(10.0, 20.0, 60.0, 30.0));
+
+        assert!(apply(&mut doc, "set_frame", json!({ "id": id, "scale": 2.0, "w": 1.0 })).is_err());
+        assert!(apply(&mut doc, "set_frame", json!({ "id": id, "w": 1.0, "h": 1.0, "keep_aspect": true })).is_err());
+        assert!(apply(&mut doc, "set_frame", json!({ "id": id, "scale": 0.0 })).is_err());
+        assert_eq!(doc.find(id).unwrap().frame, frame(10.0, 20.0, 60.0, 30.0), "a rejected request changes nothing");
+    }
+
+    #[test]
+    fn content_bounds_finds_a_shape_drawn_on_an_artboard() {
+        let mut doc = Document::new();
+        let result = apply(&mut doc, "add_artboard", json!({ "x": 100.0, "y": 100.0, "w": 200.0, "h": 100.0 })).unwrap();
+        let artboard: Uuid = serde_json::from_value(result["id"].clone()).unwrap();
+        let args = json!({ "frame": frame(20.0, 30.0, 40.0, 10.0), "fill": [255, 0, 0, 255], "no_stroke": true, "parent": artboard });
+        apply(&mut doc, "add_rect", args).unwrap();
+
+        let result = apply(&mut doc, "content_bounds", json!({ "id": artboard })).unwrap();
+        assert_eq!(result["found"], json!(true));
+        assert_eq!(result["background"], json!("FFFFFFFF"), "defaults to the artboard's own white corner");
+        assert_eq!(result["bounds"], json!({ "x": 120.0, "y": 130.0, "w": 40.0, "h": 10.0 }));
+        assert_eq!(result["page_bounds"], json!({ "x": 120.0, "y": 130.0, "w": 40.0, "h": 10.0 }));
+
+        let region = egui::Rect::from_min_size(Pos2::new(200.0, 100.0), Vec2::new(100.0, 100.0));
+        let result = apply(&mut doc, "content_bounds", json!({ "id": artboard, "region": region })).unwrap();
+        assert_eq!(result["found"], json!(false), "the rect lies outside the scanned region");
+    }
+
+    #[test]
     fn delete_layer_removes_it_and_a_second_delete_errors() {
         let mut doc = Document::new();
         let id = add_rect(&mut doc, 0.0, 0.0, 10.0, 10.0);
@@ -1139,5 +1309,6 @@ mod tests {
         assert!(!mutates("list_layers"));
         assert!(!mutates("ping"));
         assert!(!mutates("export_png"));
+        assert!(!mutates("content_bounds"));
     }
 }

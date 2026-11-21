@@ -49,9 +49,15 @@ fn canonical_key(doc_path: &Path) -> String {
 /// A short, filesystem-safe name derived from the document's canonical path
 /// — the path itself can't be used as a socket filename (it contains `/`).
 pub fn socket_path_for(doc_path: &Path) -> PathBuf {
+    runtime_dir().join(format!("{}.sock", path_hash(doc_path)))
+}
+
+/// A hex hash of the document's canonical path — a per-document file or
+/// folder name (its socket, its headless undo history).
+pub fn path_hash(doc_path: &Path) -> String {
     let mut hasher = std::collections::hash_map::DefaultHasher::new();
     canonical_key(doc_path).hash(&mut hasher);
-    runtime_dir().join(format!("{:016x}.sock", hasher.finish()))
+    format!("{:016x}", hasher.finish())
 }
 
 #[derive(Default, Serialize, Deserialize)]

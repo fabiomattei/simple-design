@@ -11,9 +11,9 @@ use uuid::Uuid;
 
 use simple_design::io;
 use simple_design::templates;
-use simple_design::ipc::{self, ops};
+use simple_design::ipc::{self, headless_history, ops};
 use simple_design::ipc::protocol::{
-    AddArtboardArgs, AddFigureArgs, AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs,
+    AddArtboardArgs, AddFigureArgs, AddImageArgs, AddShapeArgs, AddTextArgs, AlignArgs, BooleanArgs, ContentBoundsArgs, DeleteLayerArgs, ExportPngArgs, FindLayerArgs, FlipArgs,
     GetLayerArgs, GroupArgs, InitArgs, ListLayersArgs, NewPageArgs, RenameLayerArgs, RenamePageArgs, RotateCopiesArgs, SaveArgs, SelectArgs,
     SetFillArgs, SetFrameArgs, SetMaskArgs, SetResizingArgs, SetShadowArgs, UngroupArgs,
 };
@@ -233,19 +233,51 @@ enum Command {
         #[arg(long)]
         page: Option<Uuid>,
     },
-    /// Replace a layer's position/size/rotation outright.
+    /// Change a layer's position/size/rotation — any subset; omitted values
+    /// keep their current value. Prints the resulting frame. Only the frame
+    /// changes: a text layer's font size or a group's children don't scale.
     SetFrame {
         id: Uuid,
         #[arg(long)]
-        x: f32,
+        x: Option<f32>,
         #[arg(long)]
-        y: f32,
+        y: Option<f32>,
         #[arg(long)]
-        w: f32,
+        w: Option<f32>,
         #[arg(long)]
-        h: f32,
-        #[arg(long, default_value_t = 0.0)]
-        rotation: f32,
+        h: Option<f32>,
+        #[arg(long)]
+        rotation: Option<f32>,
+        /// Scale width and height, keeping the top-left corner: a factor
+        /// (`1.15`) or a percentage (`115%`). Can't be combined with --w/--h.
+        #[arg(long, conflicts_with_all = ["w", "h"])]
+        scale: Option<ScaleArg>,
+        /// With only one of --w/--h, derive the other from the current aspect ratio.
+        #[arg(long, conflicts_with = "scale")]
+        keep_aspect: bool,
+    },
+    /// Find where a layer's rendered pixels differ from a background color —
+    /// e.g. where the text baked into a background image ends. Prints the
+    /// bounding box both in the layer's parent space (`bounds`, same space as
+    /// set-frame's --x/--y) and in page space (`page_bounds`).
+    ContentBounds {
+        id: Uuid,
+        /// Only scan this rect (parent space, like the layer's own frame).
+        /// Give all four of --x/--y/--w/--h, or none for the whole layer.
+        #[arg(long, requires_all = ["y", "w", "h"])]
+        x: Option<f32>,
+        #[arg(long, requires_all = ["x", "w", "h"])]
+        y: Option<f32>,
+        #[arg(long, requires_all = ["x", "y", "h"])]
+        w: Option<f32>,
+        #[arg(long, requires_all = ["x", "y", "w"])]
+        h: Option<f32>,
+        /// Hex color counted as empty (default: the scanned area's top-left pixel).
+        #[arg(long)]
+        background: Option<HexColor>,
+        /// Largest per-channel difference (0-255) still counted as background. Default 32.
+        #[arg(long)]
+        tolerance: Option<u8>,
     },
     /// Delete a layer.
     DeleteLayer {
@@ -277,9 +309,11 @@ enum Command {
         #[arg(num_args = 0..)]
         ids: Vec<Uuid>,
     },
-    /// Undo the last change — needs a running instance (no history exists headless).
+    /// Undo the last change. Live: the GUI's own undo. Headless: restores the
+    /// file as it was before the last headless CLI edit (refused if the file
+    /// changed since, e.g. in the GUI).
     Undo,
-    /// Redo the last undone change — same requirement as `undo`.
+    /// Redo the last undone change — live or headless, like `undo`.
     Redo,
     /// Save the document — to its current path, or elsewhere with --path.
     Save {
@@ -501,6 +535,23 @@ impl std::str::FromStr for HexColor {
     }
 }
 
+/// `--scale`'s CLI type: a factor (`1.15`) or a percentage (`115%`).
+#[derive(Clone, Copy)]
+struct ScaleArg(f32);
+
+impl std::str::FromStr for ScaleArg {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let invalid = || format!("invalid scale: {s:?} (expected a factor like 1.15 or a percentage like 115%)");
+        let factor = match s.strip_suffix('%') {
+            Some(percent) => percent.trim().parse::<f32>().map_err(|_| invalid())? / 100.0,
+            None => s.parse::<f32>().map_err(|_| invalid())?,
+        };
+        if factor > 0.0 && factor.is_finite() { Ok(ScaleArg(factor)) } else { Err(invalid()) }
+    }
+}
+
 /// `--from`/`--to`'s CLI type: an `x,y` pair, like `--from 0,0.5`.
 #[derive(Clone, Copy)]
 struct PointArg(Pos2);
@@ -715,8 +766,16 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
             "add_artboard",
             to_value(AddArtboardArgs { page, x, y, w, h, preset, name, background: background.map(|c| c.0) }),
         ),
-        Command::SetFrame { id, x, y, w, h, rotation } => {
-            ("set_frame", to_value(SetFrameArgs { id, frame: Frame { pos: Pos2::new(x, y), size: Vec2::new(w, h), rotation } }))
+        Command::SetFrame { id, x, y, w, h, rotation, scale, keep_aspect } => (
+            "set_frame",
+            to_value(SetFrameArgs { id, frame: None, x, y, w, h, rotation, scale: scale.map(|s| s.0), keep_aspect }),
+        ),
+        Command::ContentBounds { id, x, y, w, h, background, tolerance } => {
+            let region = match (x, y, w, h) {
+                (Some(x), Some(y), Some(w), Some(h)) => Some(egui::Rect::from_min_size(Pos2::new(x, y), Vec2::new(w, h))),
+                _ => None,
+            };
+            ("content_bounds", to_value(ContentBoundsArgs { id, region, background: background.map(|c| c.0), tolerance }))
         }
         Command::DeleteLayer { id } => ("delete_layer", to_value(DeleteLayerArgs { id })),
         Command::Boolean { op, ids, page } => ("boolean", to_value(BooleanArgs { page, ids, op: op.into() })),
@@ -778,9 +837,11 @@ fn build_request(command: Command) -> (&'static str, serde_json::Value) {
 
 /// Runs `op` directly against the file on disk — used when no running
 /// instance has it open. `init` is the one op that must run *before* a file
-/// exists to load; `undo`/`redo` have no meaning here (there's no history
-/// outside a live `App`); `save` and every op in `ops::mutates` need the
-/// result written back, everything else is a read-only query.
+/// exists to load; `select` has no meaning here (there's no selection
+/// outside a live `App`); `undo`/`redo` step through `headless_history`'s
+/// file snapshots instead of a `History`; `save` and every op in
+/// `ops::mutates` need the result written back (and snapshotted for
+/// `undo`), everything else is a read-only query.
 fn run_headless(file: &PathBuf, op: &str, args: serde_json::Value) -> anyhow::Result<ipc::Response> {
     if op == "init" {
         if file.exists() {
@@ -804,7 +865,7 @@ fn run_headless(file: &PathBuf, op: &str, args: serde_json::Value) -> anyhow::Re
         return Ok(ipc::Response::ok(1, serde_json::json!({ "path": file })));
     }
 
-    if matches!(op, "undo" | "redo" | "select") {
+    if op == "select" {
         return Ok(ipc::Response::err(1, format!("{op} needs a running simple-design instance with this file open")));
     }
 
@@ -812,7 +873,19 @@ fn run_headless(file: &PathBuf, op: &str, args: serde_json::Value) -> anyhow::Re
         return Ok(ipc::Response::err(1, format!("{} does not exist — use `init` to create it", file.display())));
     }
 
-    let mut document = io::load_from(file)?;
+    let history_dir = headless_history::dir_for(file);
+    if matches!(op, "undo" | "redo") {
+        let Some(dir) = history_dir else {
+            return Ok(ipc::Response::err(1, "no cache folder to keep a headless undo history in"));
+        };
+        return Ok(match headless_history::step(&dir, file, op == "redo") {
+            Ok(()) => ipc::Response::ok(1, serde_json::json!({ "path": file })),
+            Err(err) => ipc::Response::err(1, err),
+        });
+    }
+
+    let before = std::fs::read(file)?;
+    let mut document: Document = serde_json::from_slice(&before)?;
 
     if op == "save" {
         let args: SaveArgs = serde_json::from_value(args)?;
@@ -825,6 +898,12 @@ fn run_headless(file: &PathBuf, op: &str, args: serde_json::Value) -> anyhow::Re
         Ok(value) => {
             if ops::mutates(op) {
                 io::save_to(file, &document)?;
+                if let Some(dir) = history_dir {
+                    // The edit itself already landed; a failed snapshot only costs its undo step.
+                    if let Err(err) = headless_history::record(&dir, &before, &std::fs::read(file)?) {
+                        eprintln!("warning: couldn't record this edit for undo: {err}");
+                    }
+                }
             }
             ipc::Response::ok(1, value)
         }
